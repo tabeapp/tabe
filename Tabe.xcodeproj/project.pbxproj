@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B5EF1C53B7241078A8212B9 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 79F34409C1C849A3B7CB89C7 /* awsconfiguration.json */; };
+		6EFE7B5D408C4E11AB784575 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 306CF6F8EE9D4F6A9C676B0B /* amplifyconfiguration.json */; };
+		7A66211B17AA8C68AA92E1FF /* Pods_Tabe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADC27F0A5B2B559D516C7267 /* Pods_Tabe.framework */; };
 		FABAC8BF257EB06E00DE8409 /* TabeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABAC8BE257EB06E00DE8409 /* TabeApp.swift */; };
 		FABAC8C1257EB06E00DE8409 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABAC8C0257EB06E00DE8409 /* ContentView.swift */; };
 		FABAC8C3257EB06F00DE8409 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FABAC8C2257EB06F00DE8409 /* Assets.xcassets */; };
@@ -14,6 +17,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		306CF6F8EE9D4F6A9C676B0B /* amplifyconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = amplifyconfiguration.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		50AE7D7E8305D3E4B2F4CA39 /* Pods-Tabe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tabe.release.xcconfig"; path = "Target Support Files/Pods-Tabe/Pods-Tabe.release.xcconfig"; sourceTree = "<group>"; };
+		79F34409C1C849A3B7CB89C7 /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = awsconfiguration.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		84509239EF93776C134C6F44 /* Pods-Tabe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tabe.debug.xcconfig"; path = "Target Support Files/Pods-Tabe/Pods-Tabe.debug.xcconfig"; sourceTree = "<group>"; };
+		872D68C1CFE94C8784D475B5 /* amplifytools.xcconfig */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.xcconfig; name = amplifytools.xcconfig; path = amplifytools.xcconfig; sourceTree = "<group>"; };
+		91E3D097FE104D4D8CD1997E /* schema.graphql */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text; name = schema.graphql; path = amplify/backend/api/amplifyDatasource/schema.graphql; sourceTree = "<group>"; };
+		ADC27F0A5B2B559D516C7267 /* Pods_Tabe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tabe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABAC8BB257EB06E00DE8409 /* Tabe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tabe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FABAC8BE257EB06E00DE8409 /* TabeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabeApp.swift; sourceTree = "<group>"; };
 		FABAC8C0257EB06E00DE8409 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -27,17 +37,51 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A66211B17AA8C68AA92E1FF /* Pods_Tabe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29C1CFF9D73DA3BA79CFAC0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ADC27F0A5B2B559D516C7267 /* Pods_Tabe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D0910E26F6C9D1BE9C2F9D8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				84509239EF93776C134C6F44 /* Pods-Tabe.debug.xcconfig */,
+				50AE7D7E8305D3E4B2F4CA39 /* Pods-Tabe.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DAEA4E2EFC2E40D2AD067ABA /* AmplifyConfig */ = {
+			isa = PBXGroup;
+			children = (
+				872D68C1CFE94C8784D475B5 /* amplifytools.xcconfig */,
+				306CF6F8EE9D4F6A9C676B0B /* amplifyconfiguration.json */,
+				79F34409C1C849A3B7CB89C7 /* awsconfiguration.json */,
+				91E3D097FE104D4D8CD1997E /* schema.graphql */,
+			);
+			name = AmplifyConfig;
+			path = .;
+			sourceTree = "<group>";
+		};
 		FABAC8B2257EB06E00DE8409 = {
 			isa = PBXGroup;
 			children = (
+				DAEA4E2EFC2E40D2AD067ABA /* AmplifyConfig */,
 				FABAC8BD257EB06E00DE8409 /* Tabe */,
 				FABAC8BC257EB06E00DE8409 /* Products */,
+				3D0910E26F6C9D1BE9C2F9D8 /* Pods */,
+				29C1CFF9D73DA3BA79CFAC0B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,9 +120,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FABAC8CA257EB06F00DE8409 /* Build configuration list for PBXNativeTarget "Tabe" */;
 			buildPhases = (
+				0CD5E073E7BA41C84421703B /* [CP] Check Pods Manifest.lock */,
 				FABAC8B7257EB06E00DE8409 /* Sources */,
 				FABAC8B8257EB06E00DE8409 /* Frameworks */,
 				FABAC8B9257EB06E00DE8409 /* Resources */,
+				2623F456E61B3E56FC85C861 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -128,10 +174,54 @@
 			files = (
 				FABAC8C6257EB06F00DE8409 /* Preview Assets.xcassets in Resources */,
 				FABAC8C3257EB06F00DE8409 /* Assets.xcassets in Resources */,
+				6EFE7B5D408C4E11AB784575 /* amplifyconfiguration.json in Resources */,
+				0B5EF1C53B7241078A8212B9 /* awsconfiguration.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0CD5E073E7BA41C84421703B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tabe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2623F456E61B3E56FC85C861 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tabe/Pods-Tabe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tabe/Pods-Tabe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tabe/Pods-Tabe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FABAC8B7257EB06E00DE8409 /* Sources */ = {
@@ -264,6 +354,7 @@
 		};
 		FABAC8CB257EB06F00DE8409 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84509239EF93776C134C6F44 /* Pods-Tabe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -286,6 +377,7 @@
 		};
 		FABAC8CC257EB06F00DE8409 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 50AE7D7E8305D3E4B2F4CA39 /* Pods-Tabe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
