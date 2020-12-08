@@ -7,6 +7,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {withAuthenticator} from 'aws-amplify-react-native';
+import WorkoutScreen from "./src/Screens/WorkoutScreen";
 
 function HomeScreen(){
     const data = ['pee pee', 'poo poo', 'oooooh'];
@@ -34,7 +35,15 @@ const App = () => {
     const Tab = createBottomTabNavigator();
 
     return (
-        <NavigationContainer>
+        <NavigationContainer theme={{
+            dark: true,
+            colors: {
+                background: 'black',
+                primary: primaryColor,
+                text: 'white',
+                card: 'gray',
+            },
+        }}>
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
@@ -73,7 +82,7 @@ const App = () => {
             >
                 <Tab.Screen name="home" component={HomeScreen}/>
                 <Tab.Screen name="explore" component={HomeScreen}/>
-                <Tab.Screen name="workout" component={HomeScreen}/>
+                <Tab.Screen name="workout" component={WorkoutScreen}/>
                 <Tab.Screen name="routines" component={HomeScreen}/>
                 <Tab.Screen name="profile" component={HomeScreen}/>
             </Tab.Navigator>
