@@ -21,6 +21,9 @@ function HomeScreen(){
     );
 }
 
+const primaryColor = '#66d6f8';
+const secondaryColor = '#356b7e';
+
 const App = () => {
     const [message, setMessage] = useState('');
 
@@ -35,8 +38,22 @@ const App = () => {
             <Tab.Navigator
                 screenOptions={({route}) => ({
                     tabBarIcon: ({focused, color, size}) => {
-                        return <Ionicons name={'ios-information-circle'} color={color} size={size}/>
+                        let iconName;
+                        if (route.name === 'home')
+                            iconName = 'home';
+                        else if(route.name === 'explore')
+                            iconName = 'search';
+                        else if(route.name === 'workout')
+                            iconName = 'barbell';
+                        else if(route.name === 'routines')
+                            iconName = 'reload';
+                        else if(route.name === 'profile')
+                            iconName = 'person';
 
+                        if(!focused)
+                            iconName += '-outline';
+
+                        return <Ionicons name={iconName} color={color} size={size}/>;
                     }
 
                 })}
@@ -44,27 +61,27 @@ const App = () => {
                     style: {
                         backgroundColor:'black',
                     },
-                    //showLabel: false,
-                    activeTintColor: 'orange',
+                    showLabel: false,
+                    activeTintColor: primaryColor,
                     activeBackgroundColor: 'gray',
-                    inactiveTintColor: 'black',
+                    inactiveTintColor: secondaryColor,
                     inactiveBackgroundColor: 'black',
 
                 }}
             >
-                <Tab.Screen name="Home" component={HomeScreen}/>
-                <Tab.Screen name="Explore" component={HomeScreen}/>
-                <Tab.Screen name="Workout" component={HomeScreen}/>
-                <Tab.Screen name="Routines" component={HomeScreen}/>
-                <Tab.Screen name="Profile" component={HomeScreen}/>
+                <Tab.Screen name="home" component={HomeScreen}/>
+                <Tab.Screen name="explore" component={HomeScreen}/>
+                <Tab.Screen name="workout" component={HomeScreen}/>
+                <Tab.Screen name="routines" component={HomeScreen}/>
+                <Tab.Screen name="profile" component={HomeScreen}/>
             </Tab.Navigator>
         </NavigationContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'orange'},
-    top: {height: 40, width: '100%', backgroundColor: 'orange', alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
+    container: {flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: primaryColor},
+    top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     box: {flex: 1, width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     bottom: {height: 40, width: '100%', backgroundColor: 'orange', alignItems: 'center', borderStyle: 'solid', borderBottomWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
