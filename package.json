@@ -15,7 +15,8 @@
     "aws-amplify": "^3.3.11",
     "aws-amplify-react-native": "^4.2.9",
     "react": "16.13.1",
-    "react-native": "0.63.4"
+    "react-native": "0.63.4",
+    "react-native-watch-connectivity": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

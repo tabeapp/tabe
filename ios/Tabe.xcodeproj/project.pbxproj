@@ -28,11 +28,11 @@
 		FA1A3BAD257F05EB007D3480 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1A3BAC257F05EB007D3480 /* Assets.xcassets */; };
 		FA1A3BB0257F05EB007D3480 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA1A3BAF257F05EB007D3480 /* Preview Assets.xcassets */; };
 		FA1A3BB5257F05EB007D3480 /* TabeWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = FA1A3B94257F05EA007D3480 /* TabeWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		FA1A3CF2257F08FB007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3CF1257F08FB007D3480 /* File.swift */; };
-		FA1A3CF3257F08FB007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3CF1257F08FB007D3480 /* File.swift */; };
-		FA1A3CF4257F08FB007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3CF1257F08FB007D3480 /* File.swift */; };
-		FA1A3CF5257F08FB007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3CF1257F08FB007D3480 /* File.swift */; };
-		FA1A3CF6257F08FB007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3CF1257F08FB007D3480 /* File.swift */; };
+		FA1A3F05257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
+		FA1A3F06257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
+		FA1A3F07257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
+		FA1A3F08257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
+		FA1A3F09257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FE6D1CAA4A94A68EBD98F275 /* libPods-Tabe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA548BB48C0F840767638AC4 /* libPods-Tabe-tvOS.a */; };
 		FFBA36844BBD2C9CAFF70BF8 /* libPods-Tabe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2452BBB14D39B2D7F5EC2214 /* libPods-Tabe-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -134,12 +134,7 @@
 		FA1A3BAF257F05EB007D3480 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA1A3BB1257F05EB007D3480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA1A3BB2257F05EB007D3480 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
-		FA1A3BC4257F06B1007D3480 /* Tabe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabe-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA1A3BC5257F06B1007D3480 /* TabeTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TabeTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA1A3BC6257F06B1007D3480 /* Tabe-tvOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabe-tvOS-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA1A3BC7257F06B1007D3480 /* Tabe-tvOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tabe-tvOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA1A3BC8257F06B1007D3480 /* TabeWatch-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TabeWatch-Bridging-Header.h"; sourceTree = "<group>"; };
-		FA1A3CF1257F08FB007D3480 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		FA1A3F04257F0B7A007D3480 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,7 +234,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				FA1A3CF1257F08FB007D3480 /* File.swift */,
+				FA1A3F04257F0B7A007D3480 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* Tabe */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* TabeTests */,
@@ -248,11 +243,6 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				EC7C94FF6FC6487ED545E9ED /* Pods */,
-				FA1A3BC4257F06B1007D3480 /* Tabe-Bridging-Header.h */,
-				FA1A3BC5257F06B1007D3480 /* TabeTests-Bridging-Header.h */,
-				FA1A3BC6257F06B1007D3480 /* Tabe-tvOS-Bridging-Header.h */,
-				FA1A3BC7257F06B1007D3480 /* Tabe-tvOSTests-Bridging-Header.h */,
-				FA1A3BC8257F06B1007D3480 /* TabeWatch-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -446,7 +436,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -454,7 +444,9 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 8N2Z544SB4;
 						LastSwiftMigration = 1220;
+						ProvisioningStyle = Automatic;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -469,6 +461,7 @@
 					};
 					FA1A3B93257F05EA007D3480 = {
 						CreatedOnToolsVersion = 12.2;
+						DevelopmentTeam = 8N2Z544SB4;
 						LastSwiftMigration = 1220;
 						ProvisioningStyle = Automatic;
 					};
@@ -752,7 +745,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* TabeTests.m in Sources */,
-				FA1A3CF3257F08FB007D3480 /* File.swift in Sources */,
+				FA1A3F06257F0B7A007D3480 /* File.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,7 +754,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				FA1A3CF2257F08FB007D3480 /* File.swift in Sources */,
+				FA1A3F05257F0B7A007D3480 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -771,7 +764,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
-				FA1A3CF4257F08FB007D3480 /* File.swift in Sources */,
+				FA1A3F07257F0B7A007D3480 /* File.swift in Sources */,
 				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -781,7 +774,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DCD954D1E0B4F2C00145EB5 /* TabeTests.m in Sources */,
-				FA1A3CF5257F08FB007D3480 /* File.swift in Sources */,
+				FA1A3F08257F0B7A007D3480 /* File.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -790,7 +783,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA1A3BA7257F05EB007D3480 /* NotificationController.swift in Sources */,
-				FA1A3CF6257F08FB007D3480 /* File.swift in Sources */,
+				FA1A3F09257F0B7A007D3480 /* File.swift in Sources */,
 				FA1A3BA5257F05EB007D3480 /* ContentView.swift in Sources */,
 				FA1A3BAB257F05EB007D3480 /* ComplicationController.swift in Sources */,
 				FA1A3BA3257F05EB007D3480 /* TabeApp.swift in Sources */,
@@ -836,7 +829,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = TabeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -861,7 +854,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TabeTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -882,9 +875,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				ENABLE_BITCODE = NO;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				INFOPLIST_FILE = Tabe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -894,6 +889,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tabe;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tabe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -907,8 +903,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				INFOPLIST_FILE = Tabe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -918,6 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tabe;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Tabe-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -952,7 +951,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -983,7 +982,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Tabe-tvOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 10.0;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
@@ -1015,7 +1014,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tabe-tvOS.app/Tabe-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Debug;
 		};
@@ -1046,13 +1045,14 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Tabe-tvOSTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tabe-tvOS.app/Tabe-tvOS";
-				TVOS_DEPLOYMENT_TARGET = 10.1;
+				TVOS_DEPLOYMENT_TARGET = 12.0;
 			};
 			name = Release;
 		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1073,6 +1073,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1082,7 +1083,6 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1098,12 +1098,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LD_VERIFY_BITCODE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1115,6 +1114,7 @@
 		83CBBA211A601CBA00E9B192 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -1135,6 +1135,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1144,7 +1145,6 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1153,16 +1153,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LD_VERIFY_BITCODE = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1170,6 +1170,7 @@
 		FA1A3BB7257F05EB007D3480 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1183,7 +1184,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TabeWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				ENABLE_PREVIEWS = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "TabeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1205,6 +1205,7 @@
 		FA1A3BB8257F05EB007D3480 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1219,7 +1220,6 @@
 				DEVELOPMENT_ASSET_PATHS = "\"TabeWatch Extension/Preview Content\"";
 				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				ENABLE_PREVIEWS = YES;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "TabeWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1252,7 +1252,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = TabeWatch_Extension;
 				INFOPLIST_FILE = TabeWatch/Info.plist;
@@ -1290,7 +1290,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				DEVELOPMENT_TEAM = 8N2Z544SB4;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				IBSC_MODULE = TabeWatch_Extension;
 				INFOPLIST_FILE = TabeWatch/Info.plist;
