@@ -43,8 +43,11 @@ const App = () => {
                             iconName = 'home';
                         else if(route.name === 'explore')
                             iconName = 'search';
-                        else if(route.name === 'workout')
+                        else if(route.name === 'workout'){
                             iconName = 'barbell';
+                            color = 'red';
+                            size *= 2.0;
+                        }
                         else if(route.name === 'routines')
                             iconName = 'reload';
                         else if(route.name === 'profile')
@@ -54,8 +57,7 @@ const App = () => {
                             iconName += '-outline';
 
                         return <Ionicons name={iconName} color={color} size={size}/>;
-                    }
-
+                    },
                 })}
                 tabBarOptions={{
                     style: {
@@ -63,9 +65,9 @@ const App = () => {
                     },
                     showLabel: false,
                     activeTintColor: primaryColor,
-                    activeBackgroundColor: 'gray',
+                    //activeBackgroundColor: '#222',
                     inactiveTintColor: secondaryColor,
-                    inactiveBackgroundColor: 'black',
+                    //inactiveBackgroundColor: 'black',
 
                 }}
             >
