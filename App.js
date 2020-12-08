@@ -1,31 +1,31 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React, {useState} from 'react';
-import {TextInput, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
+import {Text, TextInput, FlatList, View, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
 
 import {withAuthenticator} from 'aws-amplify-react-native';
 
 const App = () => {
     const [message, setMessage] = useState('');
+
+    const data = ['pee pee', 'poo poo', 'oooooh'];
     const sendMessageToAppleWatch = () => {
-        Alert.alert(`the message "${message}" has been sent`)
+        Alert.alert(`the message "${message}" has been sent`);
     };
 
     return (
         <SafeAreaView style={styles.container}>
+            <View>
+                <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text>{item}</Text>}>
 
-            <TextInput
-                onChangeText={setMessage}
-                value={message}
-                placeholder="Name"
-            />
-            <Button title="SEND" onPress={sendMessageToAppleWatch} />
+                </FlatList>
+
+
+
+
+            </View>
+            <View>
+
+            </View>
+
         </SafeAreaView>
     );
 };
