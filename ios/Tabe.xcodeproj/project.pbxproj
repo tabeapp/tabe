@@ -33,6 +33,8 @@
 		FA1A3F07257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FA1A3F08257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FA1A3F09257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
+		FAAB8A24257FE34B00E6638E /* interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAB8A23257FE34B00E6638E /* interface.storyboard */; };
+		FAAB8A33257FE55600E6638E /* interfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB8A32257FE55600E6638E /* interfaceController.swift */; };
 		FE6D1CAA4A94A68EBD98F275 /* libPods-Tabe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA548BB48C0F840767638AC4 /* libPods-Tabe-tvOS.a */; };
 		FFBA36844BBD2C9CAFF70BF8 /* libPods-Tabe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2452BBB14D39B2D7F5EC2214 /* libPods-Tabe-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -135,6 +137,8 @@
 		FA1A3BB1257F05EB007D3480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA1A3BB2257F05EB007D3480 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		FA1A3F04257F0B7A007D3480 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		FAAB8A23257FE34B00E6638E /* interface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = interface.storyboard; sourceTree = "<group>"; };
+		FAAB8A32257FE55600E6638E /* interfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interfaceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +293,7 @@
 			children = (
 				FA1A3B96257F05EB007D3480 /* Assets.xcassets */,
 				FA1A3B98257F05EB007D3480 /* Info.plist */,
+				FAAB8A23257FE34B00E6638E /* interface.storyboard */,
 			);
 			path = TabeWatch;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				FA1A3BB1257F05EB007D3480 /* Info.plist */,
 				FA1A3BB2257F05EB007D3480 /* PushNotificationPayload.apns */,
 				FA1A3BAE257F05EB007D3480 /* Preview Content */,
+				FAAB8A32257FE55600E6638E /* interfaceController.swift */,
 			);
 			path = "TabeWatch Extension";
 			sourceTree = "<group>";
@@ -539,6 +545,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAAB8A24257FE34B00E6638E /* interface.storyboard in Resources */,
 				FA1A3B97257F05EB007D3480 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -793,6 +800,7 @@
 				FA1A3BA7257F05EB007D3480 /* NotificationController.swift in Sources */,
 				FA1A3F09257F0B7A007D3480 /* File.swift in Sources */,
 				FA1A3BA5257F05EB007D3480 /* ContentView.swift in Sources */,
+				FAAB8A33257FE55600E6638E /* interfaceController.swift in Sources */,
 				FA1A3BAB257F05EB007D3480 /* ComplicationController.swift in Sources */,
 				FA1A3BA3257F05EB007D3480 /* TabeApp.swift in Sources */,
 				FA1A3BA9257F05EB007D3480 /* NotificationView.swift in Sources */,
