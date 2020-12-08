@@ -35,6 +35,7 @@
 		FA1A3F09257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FAAB8A24257FE34B00E6638E /* interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAB8A23257FE34B00E6638E /* interface.storyboard */; };
 		FAAB8A33257FE55600E6638E /* interfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB8A32257FE55600E6638E /* interfaceController.swift */; };
+		FAB3E211258021F6009CB837 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB3E210258021F6009CB837 /* Ionicons.ttf */; };
 		FE6D1CAA4A94A68EBD98F275 /* libPods-Tabe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA548BB48C0F840767638AC4 /* libPods-Tabe-tvOS.a */; };
 		FFBA36844BBD2C9CAFF70BF8 /* libPods-Tabe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2452BBB14D39B2D7F5EC2214 /* libPods-Tabe-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -139,6 +140,7 @@
 		FA1A3F04257F0B7A007D3480 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		FAAB8A23257FE34B00E6638E /* interface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = interface.storyboard; sourceTree = "<group>"; };
 		FAAB8A32257FE55600E6638E /* interfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interfaceController.swift; sourceTree = "<group>"; };
+		FAB3E210258021F6009CB837 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +256,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				EC7C94FF6FC6487ED545E9ED /* Pods */,
+				8AB8BE532B8B46E8BA521379 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -271,6 +274,14 @@
 				FA1A3B9D257F05EB007D3480 /* TabeWatch Extension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8AB8BE532B8B46E8BA521379 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FAB3E210258021F6009CB837 /* Ionicons.ttf */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		EC7C94FF6FC6487ED545E9ED /* Pods */ = {
@@ -523,6 +534,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				FAB3E211258021F6009CB837 /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,7 +586,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		1F883908D8EC1597E112A155 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;

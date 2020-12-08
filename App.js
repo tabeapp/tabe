@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {Text, TextInput, FlatList, View, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+//get custom icons eventually
+
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {withAuthenticator} from 'aws-amplify-react-native';
 
@@ -13,8 +16,6 @@ function HomeScreen(){
             <View style={styles.box}>
                 <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
                 </FlatList>
-            </View>
-            <View style={styles.bottom}>
             </View>
         </SafeAreaView>
     );
@@ -29,12 +30,33 @@ const App = () => {
 
     const Tab = createBottomTabNavigator();
 
-
     return (
         <NavigationContainer>
-            <Tab.Navigator>
+            <Tab.Navigator
+                screenOptions={({route}) => ({
+                    tabBarIcon: ({focused, color, size}) => {
+                        return <Ionicons name={'ios-information-circle'} color={color} size={size}/>
+
+                    }
+
+                })}
+                tabBarOptions={{
+                    style: {
+                        backgroundColor:'black',
+                    },
+                    //showLabel: false,
+                    activeTintColor: 'orange',
+                    activeBackgroundColor: 'gray',
+                    inactiveTintColor: 'black',
+                    inactiveBackgroundColor: 'black',
+
+                }}
+            >
                 <Tab.Screen name="Home" component={HomeScreen}/>
-                <Tab.Screen name="Settings" component={HomeScreen}/>
+                <Tab.Screen name="Explore" component={HomeScreen}/>
+                <Tab.Screen name="Workout" component={HomeScreen}/>
+                <Tab.Screen name="Routines" component={HomeScreen}/>
+                <Tab.Screen name="Profile" component={HomeScreen}/>
             </Tab.Navigator>
         </NavigationContainer>
     );
