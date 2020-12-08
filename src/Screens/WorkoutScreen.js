@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 //get custom icons eventually
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { MetallicaPPL } from "../Assets/Routines/MetallicaPPL";
 
 
 const primaryColor = '#66d6f8';
@@ -13,7 +14,7 @@ const secondaryColor = '#356b7e';
 const WorkoutScreen = () => {
     const [message, setMessage] = useState('');
 
-    const routine = true;
+    const routine = {...MetallicaPPL};
 
     const sendMessageToAppleWatch = () => {
         Alert.alert(`the message "${message}" has been sent`);
@@ -21,14 +22,24 @@ const WorkoutScreen = () => {
 
     const Tab = createBottomTabNavigator();
 
+    const workout = routine.days[routine.currentDay];
 
     return (
         <SafeAreaView>
+            <Text style={{color: 'white'}}>{routine.title}</Text>
             {
-                routine && <Text style={{color:'white'}}>baka</Text>
+                Object.entries(workout).map(([k,v]) =>
+                    <View>
+                        <Text style={{color: 'white'}}>{k}</Text>
+                        {
+                            v.map(n =>
+                                <Text style={{color: 'white'}}>{n}</Text>
+                            )
+                        }
+                    </View>
+                )
             }
         </SafeAreaView>
-
     );
 };
 
