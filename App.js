@@ -13,8 +13,9 @@ const App = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text>{item}</Text>}>
+            <View style={styles.top}></View>
+            <View style={styles.box}>
+                <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
 
                 </FlatList>
 
@@ -22,7 +23,7 @@ const App = () => {
 
 
             </View>
-            <View>
+            <View style={styles.bottom}>
 
             </View>
 
@@ -31,7 +32,10 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
+    container: {flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'orange'},
+    top: {height: 40, width: '100%', backgroundColor: 'orange', alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
+    box: {flex: 1, width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
+    bottom: {height: 40, width: '100%', backgroundColor: 'orange', alignItems: 'center', borderStyle: 'solid', borderBottomWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
 
 //export default withAuthenticator(App);
