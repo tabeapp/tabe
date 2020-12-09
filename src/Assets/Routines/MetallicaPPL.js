@@ -7,7 +7,8 @@ export const MetallicaPPL = {
     days: [
         {
             //day 0
-            deadlift: [5],
+            //just for testing
+            deadlift: [5, 5, 5],
             latPull: [12, 12, 12],
             cableRow: [12, 12, 12],
             facePull: [20, 20, 20, 20, 20],
@@ -44,7 +45,7 @@ export const MetallicaPPL = {
 };
 
 export const SampleProgress = {
-    deadlift: [6],
+    deadlift: [5, 5, 6],
     latPull: [12,12,12],
     cableRow: [12,],
     //gonna def need to update this

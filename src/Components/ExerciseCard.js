@@ -40,7 +40,7 @@ const ExerciseCard = (props) => {
     let colors;
     if(!progress)
         colors = exercise.map(_ => 'transparent');
-    else if(progress.length == exercise.length)
+    else if(progress.length === exercise.length)
         colors = exercise.map(_ => 'lightgreen');
     else colors = exercise.map((_, index) => {
         if(progress[index] >= exercise[index])
@@ -50,13 +50,25 @@ const ExerciseCard = (props) => {
     });
 
     let outlines = exercise.map(_ => primaryColor);
-    if(progress && progress.length == exercise.length)
+    if(progress && progress.length === exercise.length)
         outlines = exercise.map(_ => 'lightgreen');
 
     //weights, circles, and more fun
     const items = [];
 
     exercise.forEach((n, index) => {
+        let done = progress && progress[index] >= n;
+        if(index === exercise.length-1){
+            if(weight.amrap){
+                if(done)
+                    n = progress[index];
+                else
+                    n += '+';
+            }
+
+        }
+
+
         //add circules prop?
         items.push(<View key={index} style={{
             ...styles.circle,
@@ -64,11 +76,11 @@ const ExerciseCard = (props) => {
             borderColor: outlines[index],
         }}>
             <Text key={index} style={{ color: 'white' }}>{
-                weight.amrap && index == exercise.length - 1 ? n + '+' : n
+                n
             }</Text>
         </View>);
 
-        let completion = [primaryColor, 'lightgreen'].includes(colors[index])? 1: 0;
+        let completion = done ? 1: 0;
         if(currentSet[0] === name && currentSet[1] === index+1)
             completion = currentSet[2];
 
