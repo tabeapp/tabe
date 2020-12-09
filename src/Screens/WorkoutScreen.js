@@ -23,12 +23,42 @@ const WorkoutScreen = () => {
     const Tab = createBottomTabNavigator();
 
     const workout = routine.days[routine.currentDay];
+
+    const progress = {
+        deadlift: [6],
+        latPull: [12,12],
+    };
     //best way is to just track it as it goes such as
     /*
     {
         bench: [5,5,3,4]
     }
      */
+
+
+    const colors = {};
+    Object.entries(workout).forEach(([k,v]) => {
+        if(!progress[k])
+            colors[k] = v.map(_ => 'black');
+        else if(progress[k].length == workout[k].length)
+            colors[k] = v.map(_ => 'green');
+        else
+            colors[k] = v.map((n, index) => {
+                if(progress[k][index] >= workout[k][index])
+                    return primaryColor;
+                else
+                    return 'black';
+
+            });
+
+        //if(!progress[k])
+        //if
+        //else
+            //colors[k] = v.map()
+
+
+    });
+
 
     return (
         <SafeAreaView>
@@ -43,7 +73,7 @@ const WorkoutScreen = () => {
                             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
                                 {
                                     v.map((n, index) =>
-                                        <View key={index} style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, borderColor: primaryColor, borderStyle: 'solid'}}>
+                                        <View key={index} style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, backgroundColor: colors[k][index], borderColor: primaryColor, borderStyle: 'solid'}}>
                                             <Text key={index} style={{color: 'white'}}>{n}</Text>
                                         </View>
                                     )
@@ -59,7 +89,7 @@ const WorkoutScreen = () => {
 
 const styles = StyleSheet.create({
     title: {color: 'white'},
-    card: {margin: 5, borderRadius: 5, width: '100%', backgroundColor: '#333'},
+    card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#333'},
     container: {alignItems: 'center', justifyContent: 'center', margin: 5},
     top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     box: {flex: 1, width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 1, justifyContent: 'center'},

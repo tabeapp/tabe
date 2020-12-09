@@ -9,6 +9,7 @@ export const MetallicaPPL = {
             //day 0
             deadlift: [5],
             latPull: [12, 12, 12],
+            cableRow: [12, 12, 12]
         },
         {
             squat: [5,5,5],
