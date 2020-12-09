@@ -31,7 +31,7 @@ const WorkoutScreen = () => {
             <View style={styles.container}>{
                 Object.entries(workout).map(([k, v]) => (
                     //or maybe use react context, idfk
-                    <ExerciseCard name={k} exercise={workout[k]} progress={progress[k]} weight={routine.weight[k]}/>
+                    <ExerciseCard key={k} name={k} exercise={workout[k]} progress={progress[k]} weight={routine.weight[k]}/>
                 ))
 
             }</View>

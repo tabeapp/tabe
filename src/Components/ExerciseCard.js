@@ -40,6 +40,30 @@ const ExerciseCard = (props) => {
     if(progress && progress.length == exercise.length)
         outlines = exercise.map(_ => 'lightgreen');
 
+    //weights, circles, and more fun
+    const items = [];
+
+    exercise.forEach((n, index) => {
+        //add circules prop?
+        items.push(<View key={index} style={{
+            ...styles.circle,
+            backgroundColor: colors[index],
+            borderColor: outlines[index],
+        }}>
+            <Text key={index} style={{ color: 'white' }}>{
+                weight.amrap && index == exercise.length - 1 ? n + '+' : n
+            }</Text>
+        </View>);
+
+        if(index !== exercise.length-1)
+            items.push(<View style={{ alignSelf: 'center', flex: 1, maxWidth: 20, width: 10, height: 10, backgroundColor: 'gray' }} />);
+    });
+    //cool weight icons
+    if(weight.primary){
+        items.unshift(<WeightVisual key={'a'} weight={weight.current} reverse={true} />);
+        items.push(<WeightVisual key={'b'} weight={weight.current}/>);
+    }
+
 
     return (
         <View style={styles.card} key={exercise}>
@@ -48,39 +72,24 @@ const ExerciseCard = (props) => {
                 <Text style={{ color: 'white' }}>{weight.current}</Text>
             </View>
 
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                {
-                    weight.primary &&
-                    <WeightVisual weight={weight.current} reverse={true} />
-                }
-                {
-                    exercise.map((n, index) =>
-                        <View key={index} style={{
-                            width: 50,
-                            height: 50,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 100,
-                            borderWidth: 1,
-                            backgroundColor: colors[index],
-                            borderColor: outlines[index],
-                            borderStyle: 'solid'
-                        }}>
-                            <Text key={index} style={{ color: 'white' }}>{
-                                weight.amrap && index == exercise.length - 1 ? n + '+' : n
-                            }</Text>
-                        </View>
-                    )
-                }
-                {
-                    weight.primary && <WeightVisual weight={weight.current} />
-                }
-            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
+                items.map(i => i)
+            }</View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    circle: {
+
+        width:50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        borderWidth: 1,
+        borderStyle: 'solid'
+    },
     card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'},
 });
 
