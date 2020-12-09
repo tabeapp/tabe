@@ -67,7 +67,7 @@ const WorkoutScreen = () => {
 
                         <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
                             {
-                                routine.weight[k].primary && <WeightVisual weight={routine.weight[k].current}/>
+                                routine.weight[k].primary && <WeightVisual weight={routine.weight[k].current} reverse={true}/>
                             }
                             {
                                 v.map((n, index) =>
