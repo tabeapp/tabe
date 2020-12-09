@@ -29,6 +29,18 @@ const MidLine = (props) => {
         <View style={{ flex: 1-props.completion, backgroundColor: 'gray' }} />
     </View>
 };
+
+const RepCircle = (props) => {
+    return (<View style={{
+        ...styles.circle,
+        ...props.style
+    }}>
+        <Text style={{ color: 'white' }}>{
+            props.text
+        }</Text>
+    </View>);
+};
+
 const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
@@ -65,22 +77,11 @@ const ExerciseCard = (props) => {
                 else
                     n += '+';
             }
-
         }
 
+        items.push(<RepCircle key={index} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>);
 
-        //add circules prop?
-        items.push(<View key={index} style={{
-            ...styles.circle,
-            backgroundColor: colors[index],
-            borderColor: outlines[index],
-        }}>
-            <Text key={index} style={{ color: 'white' }}>{
-                n
-            }</Text>
-        </View>);
-
-        let completion = done ? 1: 0;
+        let completion = done ? 1 : 0;
         if(currentSet[0] === name && currentSet[1] === index+1)
             completion = currentSet[2];
 
