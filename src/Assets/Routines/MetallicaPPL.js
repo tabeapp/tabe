@@ -45,5 +45,8 @@ export const MetallicaPPL = {
 
 export const SampleProgress = {
     deadlift: [6],
-    latPull: [12,12],
+    latPull: [12,12,12],
+    cableRow: [12,],
+    //gonna def need to update this
+    currentSet: ['cableRow', 1, .3],
 };

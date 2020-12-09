@@ -32,6 +32,6 @@ const WeightVisual = props => {
             )
         }
     </View>);
-};
+}
 
 export default WeightVisual;

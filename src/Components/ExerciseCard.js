@@ -17,10 +17,24 @@ const secondaryColor = '#356b7e';
 //idk what im doing
 //const ProgressContext = React.createContext();
 
+//yes this will eventually implement timer visual
+const MidLine = (props) => {
+
+    //let color = props.completion ? 'white': 'gray';
+
+    //use key here to check a timer
+    return <View key={props.id} style={{alignSelf: 'center', maxWidth: 20, flex: 1, flexDirection: 'row'}}>
+        <View style={{ flex: props.completion, height: 4, backgroundColor: 'white' }} />
+        <View style={{ flex: 1-props.completion, height: 4, backgroundColor: 'gray' }} />
+
+    </View>
+};
 const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
     //ex: name is deadlift, exercise is [5,5,5], progress is [5,3], weight is {current: 305, amrap: true}
+    let {currentSet} = useContext(ProgressContext).progress;
+
     const {name, exercise, progress, weight} = props;
 
     let colors;
@@ -28,13 +42,12 @@ const ExerciseCard = (props) => {
         colors = exercise.map(_ => 'transparent');
     else if(progress.length == exercise.length)
         colors = exercise.map(_ => 'lightgreen');
-    else
-        colors = exercise.map((_, index) => {
-            if(progress[index] >= exercise[index])
-                return primaryColor;
-            else
-                return 'transparent';
-        });
+    else colors = exercise.map((_, index) => {
+        if(progress[index] >= exercise[index])
+            return primaryColor;
+        else
+            return 'transparent';
+    });
 
     let outlines = exercise.map(_ => primaryColor);
     if(progress && progress.length == exercise.length)
@@ -55,13 +68,21 @@ const ExerciseCard = (props) => {
             }</Text>
         </View>);
 
+        let completion = [primaryColor, 'lightgreen'].includes(colors[index])? 1: 0;
+        if(currentSet[0] === name && currentSet[1] === index+1)
+            completion = currentSet[2];
+
         if(index !== exercise.length-1)
-            items.push(<View style={{ alignSelf: 'center', flex: 1, maxWidth: 20, width: 10, height: 10, backgroundColor: 'gray' }} />);
+            items.push(<MidLine key={index+'-'} completion={completion}/>);
     });
-    //cool weight icons
+
+    //cool weight icons, trust me looks cool
     if(weight.primary){
+        items.unshift(<MidLine key={'b'} completion={1}/>);
+        items.push(<MidLine key={'y'} completion={1}/>);
+
         items.unshift(<WeightVisual key={'a'} weight={weight.current} reverse={true} />);
-        items.push(<WeightVisual key={'b'} weight={weight.current}/>);
+        items.push(<WeightVisual key={'z'} weight={weight.current}/>);
     }
 
 
