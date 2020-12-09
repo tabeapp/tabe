@@ -7,7 +7,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {withAuthenticator} from 'aws-amplify-react-native';
-import WorkoutScreen from "./src/Screens/WorkoutScreen";
+import WorkoutScreen from './src/Screens/WorkoutScreen';
+import ProgressProvider from './src/Contexts/ProgressProvider';
 
 function HomeScreen(){
     const data = ['pee pee', 'poo poo', 'oooooh'];
@@ -35,58 +36,61 @@ const App = () => {
     const Tab = createBottomTabNavigator();
 
     return (
-        <NavigationContainer theme={{
-            dark: true,
-            colors: {
-                background: 'black',
-                primary: primaryColor,
-                text: 'white',
-                card: 'gray',
-            },
-        }}>
-            <Tab.Navigator
-                screenOptions={({route}) => ({
-                    tabBarIcon: ({focused, color, size}) => {
-                        let iconName;
-                        if (route.name === 'home')
-                            iconName = 'home';
-                        else if(route.name === 'explore')
-                            iconName = 'search';
-                        else if(route.name === 'workout'){
-                            iconName = 'barbell';
-                            color = 'red';
-                            size *= 2.0;
-                        }
-                        else if(route.name === 'routines')
-                            iconName = 'reload';
-                        else if(route.name === 'profile')
-                            iconName = 'person';
+        <ProgressProvider>
 
-                        if(!focused)
-                            iconName += '-outline';
+            <NavigationContainer theme={{
+                dark: true,
+                colors: {
+                    background: 'black',
+                    primary: primaryColor,
+                    text: 'white',
+                    card: 'gray',
+                },
+            }}>
+                <Tab.Navigator
+                    screenOptions={({route}) => ({
+                        tabBarIcon: ({focused, color, size}) => {
+                            let iconName;
+                            if (route.name === 'home')
+                                iconName = 'home';
+                            else if(route.name === 'explore')
+                                iconName = 'search';
+                            else if(route.name === 'workout'){
+                                iconName = 'barbell';
+                                color = 'red';
+                                size *= 2.0;
+                            }
+                            else if(route.name === 'routines')
+                                iconName = 'reload';
+                            else if(route.name === 'profile')
+                                iconName = 'person';
 
-                        return <Ionicons name={iconName} color={color} size={size}/>;
-                    },
-                })}
-                tabBarOptions={{
-                    style: {
-                        backgroundColor:'black',
-                    },
-                    showLabel: false,
-                    activeTintColor: primaryColor,
-                    //activeBackgroundColor: '#222',
-                    inactiveTintColor: secondaryColor,
-                    //inactiveBackgroundColor: 'black',
+                            if(!focused)
+                                iconName += '-outline';
 
-                }}
-            >
-                <Tab.Screen name="home" component={HomeScreen}/>
-                <Tab.Screen name="explore" component={HomeScreen}/>
-                <Tab.Screen name="workout" component={WorkoutScreen}/>
-                <Tab.Screen name="routines" component={HomeScreen}/>
-                <Tab.Screen name="profile" component={HomeScreen}/>
-            </Tab.Navigator>
-        </NavigationContainer>
+                            return <Ionicons name={iconName} color={color} size={size}/>;
+                        },
+                    })}
+                    tabBarOptions={{
+                        style: {
+                            backgroundColor:'black',
+                        },
+                        showLabel: false,
+                        activeTintColor: primaryColor,
+                        //activeBackgroundColor: '#222',
+                        inactiveTintColor: secondaryColor,
+                        //inactiveBackgroundColor: 'black',
+
+                    }}
+                >
+                    <Tab.Screen name="home" component={HomeScreen}/>
+                    <Tab.Screen name="explore" component={HomeScreen}/>
+                    <Tab.Screen name="workout" component={WorkoutScreen}/>
+                    <Tab.Screen name="routines" component={HomeScreen}/>
+                    <Tab.Screen name="profile" component={HomeScreen}/>
+                </Tab.Navigator>
+            </NavigationContainer>
+        </ProgressProvider>
     );
 };
 

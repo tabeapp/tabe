@@ -42,3 +42,8 @@ export const MetallicaPPL = {
         },
     }
 };
+
+export const SampleProgress = {
+    deadlift: [6],
+    latPull: [12,12],
+};
