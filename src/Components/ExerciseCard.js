@@ -9,6 +9,7 @@ import { MetallicaPPL, SampleProgress } from "../Assets/Routines/MetallicaPPL";
 import WeightVisual from "../Utils/WeightVisual";
 import ProgressProvider from "../Contexts/ProgressProvider";
 import ProgressContext from "../Contexts/ProgressContext";
+import SetCircle from "./SetCircle";
 
 
 const primaryColor = '#66d6f8';
@@ -28,17 +29,6 @@ const MidLine = (props) => {
         <View style={{ flex: props.completion, backgroundColor: 'white' }} />
         <View style={{ flex: 1-props.completion, backgroundColor: 'gray' }} />
     </View>
-};
-
-const RepCircle = (props) => {
-    return (<View style={{
-        ...styles.circle,
-        ...props.style
-    }}>
-        <Text style={{ color: 'white' }}>{
-            props.text
-        }</Text>
-    </View>);
 };
 
 const ExerciseCard = (props) => {
@@ -79,7 +69,7 @@ const ExerciseCard = (props) => {
             }
         }
 
-        items.push(<RepCircle key={index} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>);
+        items.push(<SetCircle key={index} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>);
 
         let completion = done ? 1 : 0;
         if(currentSet[0] === name && currentSet[1] === index+1)
