@@ -9,6 +9,7 @@ import { MetallicaPPL, SampleProgress } from "../Assets/Routines/MetallicaPPL";
 import WeightVisual from "../Utils/WeightVisual";
 import ProgressProvider from "../Contexts/ProgressProvider";
 import ProgressContext from "../Contexts/ProgressContext";
+import ExerciseCard from "../Components/ExerciseCard";
 
 
 const primaryColor = '#66d6f8';
@@ -64,43 +65,10 @@ const WorkoutScreen = () => {
             </View>
             <View style={styles.container}>{
                 Object.entries(workout).map(([k, v]) => (
-                    <View style={styles.card} key={k}>
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ color: 'white' }}>{k}</Text>
-                            <Text style={{ color: 'white' }}>{routine.weight[k].current}</Text>
-                        </View>
-
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                            {
-                                routine.weight[k].primary &&
-                                <WeightVisual weight={routine.weight[k].current} reverse={true} />
-                            }
-                            {
-                                v.map((n, index) =>
-                                    <View key={index} style={{
-                                        width: 50,
-                                        height: 50,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderRadius: 100,
-                                        borderWidth: 1,
-                                        backgroundColor: colors[k][index],
-                                        borderColor: primaryColor,
-                                        borderStyle: 'solid'
-                                    }}>
-                                        <Text key={index} style={{ color: 'white' }}>{
-                                            routine.weight[k].amrap && index == v.length - 1 ? n + '+' : n
-                                        }</Text>
-                                    </View>
-                                )
-                            }
-                            {
-                                routine.weight[k].primary && <WeightVisual weight={routine.weight[k].current} />
-                            }
-                        </View>
-
-                    </View>
+                    //or maybe use react context, idfk
+                    <ExerciseCard name={k} exercise={workout[k]} progress={progress[k]} weight={routine.weight[k]}/>
                 ))
+
             }</View>
         </SafeAreaView>
     );
