@@ -39,26 +39,17 @@ const WorkoutScreen = () => {
     const colors = {};
     Object.entries(workout).forEach(([k,v]) => {
         if(!progress[k])
-            colors[k] = v.map(_ => 'black');
+            colors[k] = v.map(_ => 'transparent');
         else if(progress[k].length == workout[k].length)
-            colors[k] = v.map(_ => 'green');
+            colors[k] = v.map(_ => 'lightgreen');
         else
             colors[k] = v.map((n, index) => {
                 if(progress[k][index] >= workout[k][index])
                     return primaryColor;
                 else
-                    return 'black';
-
+                    return 'transparent';
             });
-
-        //if(!progress[k])
-        //if
-        //else
-            //colors[k] = v.map()
-
-
     });
-
 
     return (
         <SafeAreaView>
@@ -69,12 +60,17 @@ const WorkoutScreen = () => {
                 {
                     Object.entries(workout).map(([k,v]) => (
                         <View style={styles.card} key={k}>
-                            <Text style={{color: 'white'}}>{k}</Text>
+                            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <Text style={{color: 'white'}}>{k}</Text>
+                                <Text style={{color: 'white'}}>{routine.weight[k].current}</Text>
+                            </View>
                             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
                                 {
                                     v.map((n, index) =>
-                                        <View key={index} style={{width: 30, height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, backgroundColor: colors[k][index], borderColor: primaryColor, borderStyle: 'solid'}}>
-                                            <Text key={index} style={{color: 'white'}}>{n}</Text>
+                                        <View key={index} style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, backgroundColor: colors[k][index], borderColor: primaryColor, borderStyle: 'solid'}}>
+                                            <Text key={index} style={{color: 'white'}}>{
+                                                routine.weight[k].amrap && index == v.length-1? n + '+' : n
+                                            }</Text>
                                         </View>
                                     )
                                 }
