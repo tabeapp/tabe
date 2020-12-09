@@ -20,7 +20,7 @@ export const MetallicaPPL = {
     ],
     weight: {
         deadlift: {
-            current: 305, progress: 10, amrap: true
+            current: 305, progress: 10, amrap: true, primary: true
         },
         latPull: {
             current: 80, progress: 2.5
@@ -38,7 +38,7 @@ export const MetallicaPPL = {
             current: 15
         },
         squats: {
-            current: 225, progress: 5, amrap: true
+            current: 225, progress: 5, amrap: true, primary: true
         },
     }
 };

@@ -6,6 +6,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { MetallicaPPL } from "../Assets/Routines/MetallicaPPL";
+import WeightVisual from "../Utils/WeightVisual";
 
 
 const primaryColor = '#66d6f8';
@@ -56,36 +57,42 @@ const WorkoutScreen = () => {
             <View style={styles.top}>
                 <Text style={{color: 'black', fontSize: 20}}>{routine.title}</Text>
             </View>
-            <View style={styles.container}>
-                {
-                    Object.entries(workout).map(([k,v]) => (
-                        <View style={styles.card} key={k}>
-                            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                                <Text style={{color: 'white'}}>{k}</Text>
-                                <Text style={{color: 'white'}}>{routine.weight[k].current}</Text>
-                            </View>
-                            <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
-                                {
-                                    v.map((n, index) =>
-                                        <View key={index} style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, backgroundColor: colors[k][index], borderColor: primaryColor, borderStyle: 'solid'}}>
-                                            <Text key={index} style={{color: 'white'}}>{
-                                                routine.weight[k].amrap && index == v.length-1? n + '+' : n
-                                            }</Text>
-                                        </View>
-                                    )
-                                }
-                            </View>
+            <View style={styles.container}>{
+                Object.entries(workout).map(([k,v]) => (
+                    <View style={styles.card} key={k}>
+                        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Text style={{color: 'white'}}>{k}</Text>
+                            <Text style={{color: 'white'}}>{routine.weight[k].current}</Text>
                         </View>
-                    ))
-                }
-            </View>
+
+                        <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+                            {
+                                routine.weight[k].primary && <WeightVisual weight={routine.weight[k].current}/>
+                            }
+                            {
+                                v.map((n, index) =>
+                                    <View key={index} style={{width: 50, height: 50, justifyContent: 'center', alignItems: 'center', borderRadius: 100, borderWidth: 1, backgroundColor: colors[k][index], borderColor: primaryColor, borderStyle: 'solid'}}>
+                                        <Text key={index} style={{color: 'white'}}>{
+                                            routine.weight[k].amrap && index == v.length - 1 ? n + '+' : n
+                                        }</Text>
+                                    </View>
+                                )
+                            }
+                            {
+                                routine.weight[k].primary && <WeightVisual weight={routine.weight[k].current}/>
+                            }
+                        </View>
+
+                    </View>
+                ))
+            }</View>
         </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     title: {color: 'white'},
-    card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#333'},
+    card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'},
     container: {alignItems: 'center', justifyContent: 'center', margin: 5},
     top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     box: {flex: 1, width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
