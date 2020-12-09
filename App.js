@@ -57,8 +57,7 @@ const App = () => {
                                 iconName = 'search';
                             else if(route.name === 'workout'){
                                 iconName = 'barbell';
-                                color = 'red';
-                                size *= 2.0;
+                                color = 'red'; size *= 2.0;
                             }
                             else if(route.name === 'routines')
                                 iconName = 'reload';
@@ -83,7 +82,7 @@ const App = () => {
 
                     }}
                 >
-                    <Tab.Screen name="home" component={HomeScreen}/>
+                    <Tab.Screen name="home" component={WorkoutScreen}/>
                     <Tab.Screen name="explore" component={HomeScreen}/>
                     <Tab.Screen name="workout" component={WorkoutScreen}/>
                     <Tab.Screen name="routines" component={HomeScreen}/>
@@ -91,6 +90,7 @@ const App = () => {
                 </Tab.Navigator>
             </NavigationContainer>
         </ProgressProvider>
+        //temprorray set home to workout, it's just being annoying
     );
 };
 

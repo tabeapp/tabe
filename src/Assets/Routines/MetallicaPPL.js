@@ -48,5 +48,5 @@ export const SampleProgress = {
     latPull: [12,12,12],
     cableRow: [12,],
     //gonna def need to update this
-    currentSet: ['cableRow', 1, .3],
+    currentSet: ['cableRow', 1, .6],
 };
