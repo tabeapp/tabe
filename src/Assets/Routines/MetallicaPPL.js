@@ -4,6 +4,7 @@ export const MetallicaPPL = {
     time: 7,
     next: '?',
     currentDay: 0,
+    //would be like A B C D E C null
     days: [
         //easier to iterate through array than object keys
         [

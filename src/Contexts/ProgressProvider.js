@@ -1,8 +1,10 @@
 import React from 'react';
 import ProgressContext from './ProgressContext';
 import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
+import { SS } from "../Assets/Routines/SS";
 
 //one way to do it, custom provider object
+const routine = {...SS};
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -12,10 +14,17 @@ class ProgressProvider extends React.Component {
 
     initalizeWorkout = () => {
         //load from storage here
-        let workout = [...MetallicaPPL.days[MetallicaPPL.currentDay]];
+        //this is just a string
+        let day = routine.days[routine.currentDay % routine.time];
+        //rest day
+        if(!day)
+            return [];
+
+        let workout = routine.workouts[day];
+
         //add weight info
         workout = workout.map(e => (
-            {...e, ...MetallicaPPL.weight[e.name]}
+            {...e, ...routine.weight[e.name]}
         ));
         //add prgress
         workout = workout.map(e => (
@@ -58,8 +67,15 @@ class ProgressProvider extends React.Component {
         });
     };
 
+    //get rid of all the unnecessary stuff and
+    // just put out a good json for posting to the feed
+    generateReport = () => {
+
+
+    };
+
     state = {
-        title: ''+MetallicaPPL.title,
+        title: ''+routine.title,
         workout: this.workout,
     }
 
