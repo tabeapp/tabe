@@ -30,7 +30,7 @@ const NavBar = props => {
             if(r === 'workout') {
                 return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={() => props.navigation.navigate(r)}>
                     <Text>
-                        <Ionicons name={icon} color={'red'} size={50} />
+                        <Ionicons name={icon} color={'white'} size={50} />
                     </Text>
                 </TouchableOpacity>);
             }
@@ -44,9 +44,21 @@ const NavBar = props => {
     }</View>);
 }
 const styles = StyleSheet.create({
+    //kinda squishes the other buttons, but whatever
+    workoutButton:{
+        backgroundColor: 'red',
+        height: 80,
+        width: 80,
+        bottom: 10,
+        //this
+        marginHorizontal: -10,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'white',
+        borderWidth: 2
+    },
     button:{
-
-
     },
     navBar: {
         //borderWidth: 1,
