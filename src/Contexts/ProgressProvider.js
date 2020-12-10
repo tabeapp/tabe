@@ -70,9 +70,37 @@ class ProgressProvider extends React.Component {
     //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
     generateReport = () => {
+        //use workout
+        let workoutSummary = this.state.workout.map(e => ({
+            name: e.name,
+            sets: e.progress.filter(s => s && s !== 'c'),
+            weight: e.current
+        }));
 
+        //this is good enough to save to file
+        workoutSummary = workoutSummary.filter(e => e.sets.length);
 
+        //heres a cool string
 
+        let heaviest = workoutSummary.sort((a,b) => a.weight < b.weight)[0];
+        if(!heaviest)
+            return;
+
+        let desc = heaviest.name + ' ';
+
+        let sets = 1;
+        let reps = heaviest.sets[0];
+
+        for(let i = 1; i < heaviest.sets.length; i++){
+            if(heaviest.sets[i] === reps)
+                sets++;
+        }
+
+        desc += sets + 'x';
+        desc += reps + '@';
+        desc += heaviest.weight;
+
+        return desc;
 
     };
 
@@ -88,6 +116,7 @@ class ProgressProvider extends React.Component {
                 workout: this.state.workout,
                 title: this.state.title,
                 updateSet: this.updateSet,
+                generateReport: this.generateReport,
                 done: this.state.done
             }}>
                 {this.props.children}

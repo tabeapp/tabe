@@ -13,7 +13,7 @@ const secondaryColor = '#356b7e';
 //const ProgressContext = React.createContext();
 
 const WorkoutScreen = () => {
-    let {title, workout, done} = useContext(ProgressContext);
+    let {title, workout, done, generateReport} = useContext(ProgressContext);
 
     //const workout = routine.days[routine.currentDay];
 
@@ -29,7 +29,8 @@ const WorkoutScreen = () => {
                 ))
             }</View>
             {
-                done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
+                //done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
+                <Text style={{color:'white'}} >{generateReport()}</Text>
             }
         </SafeAreaView>
     );
