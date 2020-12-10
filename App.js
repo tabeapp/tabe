@@ -9,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {withAuthenticator} from 'aws-amplify-react-native';
 import WorkoutScreen from './src/Screens/WorkoutScreen';
 import ProgressProvider from './src/Contexts/ProgressProvider';
+import CustomWorkoutScreen from './src/Screens/CustomWorkoutScreen';
 
 function HomeScreen(){
     const data = ['pee pee', 'poo poo', 'oooooh'];
@@ -82,7 +83,7 @@ const App = () => {
 
                     }}
                 >
-                    <Tab.Screen name="home" component={WorkoutScreen}/>
+                    <Tab.Screen name="home" component={CustomWorkoutScreen}/>
                     <Tab.Screen name="explore" component={HomeScreen}/>
                     <Tab.Screen name="workout" component={WorkoutScreen}/>
                     <Tab.Screen name="routines" component={HomeScreen}/>

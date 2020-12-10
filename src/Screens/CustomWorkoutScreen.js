@@ -12,7 +12,8 @@ const secondaryColor = '#356b7e';
 //idk what im doing
 //const ProgressContext = React.createContext();
 
-const WorkoutScreen = () => {
+//completely customizable
+const CustomWorkoutScreen = () => {
     let {title, workout, done, generateReport} = useContext(ProgressContext);
 
     //const workout = routine.days[routine.currentDay];
@@ -42,4 +43,4 @@ const styles = StyleSheet.create({
 });
 
 //export default withAuthenticator(App);
-export default WorkoutScreen;
+export default CustomWorkoutScreen;

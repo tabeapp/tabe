@@ -12,7 +12,7 @@ class ProgressProvider extends React.Component {
     //load from local storage?
     //save that to contstans lol
 
-    initalizeWorkout = () => {
+    initializeWorkout = () => {
         //load from storage here
         //this is just a string
         let day = routine.days[routine.currentDay % routine.time];
@@ -24,8 +24,7 @@ class ProgressProvider extends React.Component {
 
         //add weight info
         workout = workout.map(e => (
-            {...e, ...routine.weight[e.name]}
-        ));
+            {...e, ...routine.weight[e.name]} ));
         //add prgress
         workout = workout.map(e => (
             //set to null?
@@ -33,10 +32,21 @@ class ProgressProvider extends React.Component {
         ));
         //set first set to current set
         workout[0].progress[0] = 'c';
-        return workout;
+        this.setState({workout: workout});
     }
 
-    workout = this.initalizeWorkout();
+    //just gonna have it be empty for now, initiallize workout doesn't seem to want to work rn
+    state = {
+        title: ''+routine.title,
+        workout: [],
+        done: false
+    }
+
+    initializeCustom = () => {
+        this.setState({workout: []});
+    }
+
+    //workout = this.initalizeWorkout();
 
     //redoing this whole thing
     //workout is a copy of the current day
@@ -104,15 +114,12 @@ class ProgressProvider extends React.Component {
 
     };
 
-    state = {
-        title: ''+routine.title,
-        workout: this.workout,
-        done: false
-    }
 
     render() {
         return (
             <ProgressContext.Provider value={{
+                initializeWorkout: this.initializeWorkout,
+                initializeCustom: this.initializeCustom,
                 workout: this.state.workout,
                 title: this.state.title,
                 updateSet: this.updateSet,
