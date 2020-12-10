@@ -99,7 +99,7 @@ class ProgressProvider extends React.Component {
             let newState = {...state};
             newState.workout.push({
                 name,
-                sets: defaultSets,
+                sets: [...defaultSets],
                 progress: defaultSets.map(_ => null),
                 current: defaultWeight[name],
                 primary: primaries.includes(name)
