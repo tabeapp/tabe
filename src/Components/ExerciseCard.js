@@ -69,7 +69,9 @@ const ExerciseCard = (props) => {
             }
         }
 
-        items.push(<SetCircle key={index} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>);
+        items.push(
+            <SetCircle key={index} info={[name, index]} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>
+        );
 
         let completion = done ? 1 : 0;
         if(currentSet[0] === name && currentSet[1] === index+1)
@@ -104,16 +106,6 @@ const ExerciseCard = (props) => {
 };
 
 const styles = StyleSheet.create({
-    circle: {
-
-        width:50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        borderWidth: 1,
-        borderStyle: 'solid'
-    },
     card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'},
 });
 

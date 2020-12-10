@@ -302,6 +302,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - RNAWSCognito (4.5.5):
     - React
+  - RNCPicker (1.9.4):
+    - React-Core
   - RNVectorIcons (7.1.0):
     - React
   - RNWatch (1.0.3):
@@ -360,6 +362,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - RNWatch (from `../node_modules/react-native-watch-connectivity`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -436,6 +439,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNAWSCognito:
     :path: "../node_modules/amazon-cognito-identity-js"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   RNWatch:
@@ -483,6 +488,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNAWSCognito: 576e80458f28afc55910edcc9ff59d4096e7be4a
+  RNCPicker: 2c31098349f499e7ab4da6c1ce26f7537d271062
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   RNWatch: e4c5d19506c94506860032fb68aedd5991beb985
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
