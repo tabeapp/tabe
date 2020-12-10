@@ -1,13 +1,7 @@
-import React, {useState, useContext} from 'react';
-import {Text, TextInput, FlatList, View, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React, {useContext} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { MetallicaPPL, SampleProgress } from "../Assets/Routines/MetallicaPPL";
-import WeightVisual from "../Utils/WeightVisual";
-import ProgressProvider from "../Contexts/ProgressProvider";
 import ProgressContext from "../Contexts/ProgressContext";
 import ExerciseCard from "../Components/ExerciseCard";
 
@@ -19,7 +13,7 @@ const secondaryColor = '#356b7e';
 //const ProgressContext = React.createContext();
 
 const WorkoutScreen = () => {
-    let {title, workout, weight} = useContext(ProgressContext);
+    let {title, workout, done} = useContext(ProgressContext);
 
     //const workout = routine.days[routine.currentDay];
 
@@ -34,6 +28,9 @@ const WorkoutScreen = () => {
                     <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                 ))
             }</View>
+            {
+                done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
+            }
         </SafeAreaView>
     );
 };

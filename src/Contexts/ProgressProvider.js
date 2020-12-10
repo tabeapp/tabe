@@ -54,8 +54,8 @@ class ProgressProvider extends React.Component {
             if(move) {
                 if (setN + 1 === newState.workout[exerciseN].progress.length){
                     if (exerciseN + 1 === newState.workout.length) {
-                        //???
-                        //set a workout complete flag?
+                        //gotta do somethign about that, maybe open a summary screen
+                        newState.done = true;
                     } else
                         newState.workout[exerciseN + 1].progress[0] = 'c';
                 }
@@ -72,11 +72,14 @@ class ProgressProvider extends React.Component {
     generateReport = () => {
 
 
+
+
     };
 
     state = {
         title: ''+routine.title,
         workout: this.workout,
+        done: false
     }
 
     render() {
@@ -85,6 +88,7 @@ class ProgressProvider extends React.Component {
                 workout: this.state.workout,
                 title: this.state.title,
                 updateSet: this.updateSet,
+                done: this.state.done
             }}>
                 {this.props.children}
             </ProgressContext.Provider>
