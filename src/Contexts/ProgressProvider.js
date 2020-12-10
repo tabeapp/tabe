@@ -92,7 +92,7 @@ class ProgressProvider extends React.Component {
         let reps = heaviest.sets[0];
 
         for(let i = 1; i < heaviest.sets.length; i++){
-            if(heaviest.sets[i] === reps)
+            if(heaviest.sets[i] >== reps)
                 sets++;
         }
 
