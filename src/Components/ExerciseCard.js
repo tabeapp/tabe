@@ -91,7 +91,7 @@ const ExerciseCard = (props) => {
 
         let current = prog === 'c';
         items.push(
-            <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+            <SetCircle key={index} progress={prog} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
         );
 
 
