@@ -51,7 +51,8 @@ const SetCircle = (props) => {
 
 const styles = StyleSheet.create({
     circle: {
-        width:50,
+        minWidth:20,
+        maxWidth:50,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',

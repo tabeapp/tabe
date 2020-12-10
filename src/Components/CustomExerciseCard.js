@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from "react";
 import {TouchableOpacity, Text, View, StyleSheet}  from 'react-native';
 //get custom icons eventually
 
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
+import ProgressContext from "../Contexts/ProgressContext";
 
 
 const primaryColor = '#66d6f8';
@@ -21,11 +22,14 @@ const MidLine = (props) => {
 };
 
 const SetModButton = (props) => {
+    let {updateExercise} = useContext(ProgressContext);
+
     const add = props.type === '+';
     const color = add ? 'lightgreen': 'red';
 
     return (
-        <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}>
+        <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
+            onPress={() => updateExercise(props.exerciseN, props.type)}>
             <Text style={{color: color, fontWeight: 'bold', fontSize: 15, }}>{props.type}</Text>
         </TouchableOpacity>
 

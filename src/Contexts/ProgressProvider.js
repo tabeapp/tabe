@@ -6,6 +6,9 @@ import { SS } from "../Assets/Routines/SS";
 //one way to do it, custom provider object
 const routine = {...SS};
 
+//idk
+const maxSets = 12;
+
 const defaultSets = [5,5,5,5,5];
 
 //later use user data to get weigths
@@ -13,7 +16,6 @@ const defaultWeight = {
     curl: 15,
     bench: 135,
     deadlift: 185,
-
 }
 
 const primaries = [
@@ -109,6 +111,39 @@ class ProgressProvider extends React.Component {
         });
     }
 
+    //maybe move to have progress and weight within sets array
+    updateExercise = (exN, add) => {
+        this.setState(state => {
+            let newState = {...state};
+            let exercise = newState.workout[exN];
+            if(add){
+                if(exercise.progress.length >= maxSets)
+                    return;
+
+                if(!isNaN(exercise.progress[exercise.progress.length-1]))
+                    exercise.progress.push('c');
+                //'c' or null
+                else
+                    exercise.progress.push(null);
+
+                //may need to propogate 'c' all the way to the end
+                exercise.sets.push(exercise.sets[exercise.sets.length-1]);
+            }
+            else{
+                //remove last set
+                exercise.sets.splice(exercise.sets.length-1);
+                exercise.progress.splice(exercise.progress.length-1);
+
+            }
+
+            return newState;
+
+
+
+        })
+
+}
+
     //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
     generateReport = () => {
@@ -156,6 +191,7 @@ class ProgressProvider extends React.Component {
                 title: this.state.title,
                 updateSet: this.updateSet,
                 addExercise: this.addExercise,
+                updateExercise: this.updateExercise,
                 generateReport: this.generateReport,
                 done: this.state.done
             }}>
