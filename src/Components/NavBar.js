@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { PRIMARY } from '../Constants/Theme';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import ProgressContext from "../Contexts/ProgressContext";
 
 const routes = [
     'home',
@@ -20,16 +21,31 @@ const iconMapping = {
 }
 
 const NavBar = props => {
-    const {current} = props;
+    const {initializeWorkout, initializeCustom} = useContext(ProgressContext);
+
+    const { current } = props;
     const handlePress = (r) => {
-        if(r === current)
+        if (r === current)
             return;
 
-        if(r === 'workout')
+        if (r === 'workout')
             props.navigation.navigate(r);
         else
             props.navigation.replace(r);
     }
+
+    const customStart = () => {
+        //set up
+        initializeCustom();
+        props.navigation.navigate('customworkout')
+    }
+
+    const routineStart = () => {
+
+        initializeWorkout();
+        props.navigation.navigate('workout')
+    }
+
 
     return (<View style={styles.navBar}>{
         routes.map(r => {
@@ -38,9 +54,7 @@ const NavBar = props => {
                 icon += '-outline';
 
             if(r === 'workout') {
-                return (<TouchableOpacity style={styles.workoutButton} key={r}
-                                          onPress={() => handlePress(r)}
-               onLongPress={() => props.navigation.navigate('customworkout')} >
+                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={routineStart} onLongPress={customStart}>
                     <Text>
                         <Ionicons name={icon} color={'white'} size={50} />
                     </Text>

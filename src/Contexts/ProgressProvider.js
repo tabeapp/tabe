@@ -147,7 +147,7 @@ class ProgressProvider extends React.Component {
 
         })
 
-}
+    }
 
     //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
