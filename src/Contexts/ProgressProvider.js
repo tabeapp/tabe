@@ -8,6 +8,18 @@ const routine = {...SS};
 
 const defaultSets = [5,5,5,5,5];
 
+//later use user data to get weigths
+const defaultWeight = {
+    curl: 15,
+    bench: 135,
+    deadlift: 185,
+
+}
+
+const primaries = [
+    'bench', 'deadlift', 'press', 'squat'
+];
+
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 class ProgressProvider extends React.Component {
@@ -86,8 +98,13 @@ class ProgressProvider extends React.Component {
             newState.workout.push({
                 name,
                 sets: defaultSets,
-                progress: defaultSets.map(_ => null)
+                progress: defaultSets.map(_ => null),
+                current: defaultWeight[name],
+                primary: primaries.includes(name)
+                //need to add weight info in here
             });
+            if(newState.workout.length === 1)
+                newState.workout[0].progress[0] = 'c';
             return newState;
         });
     }
