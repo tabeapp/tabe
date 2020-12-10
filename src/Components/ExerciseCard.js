@@ -35,33 +35,45 @@ const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
     //ex: name is deadlift, exercise is [5,5,5], progress is [5,3], weight is {current: 305, amrap: true}
-    let {currentSet} = useContext(ProgressContext).progress;
+    //let {currentSet} = useContext(ProgressContext);
+    //currentSet = currentSet();
 
-    const {name, exercise, progress, weight} = props;
+    //this shoudl be fine
+    //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
+    //current is 315, primary is true, amrap is true
+    const {name, sets, progress,
+        //these are copied from weight
+        current, primary, amrap} = props.exercise;
 
-    let colors;
-    if(!progress)
-        colors = exercise.map(_ => 'transparent');
-    else if(progress.length === exercise.length)
-        colors = exercise.map(_ => 'lightgreen');
-    else colors = exercise.map((_, index) => {
-        if(progress[index] >= exercise[index])
-            return primaryColor;
+
+    let colors = [];
+    let done = true;
+
+    sets.forEach((set, n) => {
+        //it'll be null
+        if(!progress[n] || progress[n] === 'c'){
+            colors.push('transparent');
+            done = false;
+        }
         else
-            return 'transparent';
+            colors.push(primaryColor);
+
     });
 
-    let outlines = exercise.map(_ => primaryColor);
-    if(progress && progress.length === exercise.length)
-        outlines = exercise.map(_ => 'lightgreen');
+    let outlines = sets.map(_ => primaryColor);
+    if(done){
+        colors = colors.map(_ => 'lightgreen');
+        outlines = sets.map(_ => 'lightgreen');
+    }
+    //if(progress && progress.length === exercise.length)
 
     //weights, circles, and more fun
     const items = [];
 
-    exercise.forEach((n, index) => {
+    sets.forEach((n, index) => {
         let done = progress && progress[index] >= n;
-        if(index === exercise.length-1){
-            if(weight.amrap){
+        if(index === sets.length-1){
+            if(amrap){
                 if(done)
                     n = progress[index];
                 else
@@ -69,33 +81,35 @@ const ExerciseCard = (props) => {
             }
         }
 
+        let current = n === 'c';
         items.push(
-            <SetCircle key={index} info={[name, index]} text={n} style={{backgroundColor: colors[index], borderColor: outlines[index]}}/>
+            <SetCircle key={index} current={current} info={[name, index]} text={n} style={{backgroundColor: current? 'red':colors[index], borderColor: outlines[index]}}/>
         );
 
         let completion = done ? 1 : 0;
-        if(currentSet[0] === name && currentSet[1] === index+1)
-            completion = currentSet[2];
 
-        if(index !== exercise.length-1)
+        //if(currentSet[0] === name && currentSet[1] === index+1)
+            //completion =
+
+        if(index !== sets.length-1)
             items.push(<MidLine key={index+'-'} completion={completion}/>);
     });
 
     //cool weight icons, trust me looks cool
-    if(weight.primary){
+    if(primary){
         items.unshift(<MidLine key={'b'} completion={1}/>);
         items.push(<MidLine key={'y'} completion={1}/>);
 
-        items.unshift(<WeightVisual key={'a'} weight={weight.current} reverse={true} />);
-        items.push(<WeightVisual key={'z'} weight={weight.current}/>);
+        items.unshift(<WeightVisual key={'a'} weight={current} reverse={true} />);
+        items.push(<WeightVisual key={'z'} weight={current}/>);
     }
 
 
     return (
-        <View style={styles.card} key={exercise}>
+        <View style={styles.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ color: 'white' }}>{name}</Text>
-                <Text style={{ color: 'white' }}>{weight.current}</Text>
+                <Text style={{ color: 'white' }}>{current}</Text>
             </View>
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{

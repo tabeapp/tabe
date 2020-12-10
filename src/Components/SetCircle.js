@@ -20,8 +20,12 @@ const SetCircle = (props) => {
     let [name, set] = props.info;
     const {updateSet} = useContext(ProgressContext);
     const handlePress = () => {
+        //locks it esssentially
+        //if(!props.current)
+            //return;
         //we could probably do something with current set, but for now just this
         updateSet(name, set, props.text);
+
 
 
 

@@ -19,21 +19,20 @@ const secondaryColor = '#356b7e';
 //const ProgressContext = React.createContext();
 
 const WorkoutScreen = () => {
-    let {routine, progress} = useContext(ProgressContext);
+    let {title, workout, weight} = useContext(ProgressContext);
 
-    const workout = routine.days[routine.currentDay];
+    //const workout = routine.days[routine.currentDay];
 
     return (
         <SafeAreaView>
             <View style={styles.top}>
-                <Text style={{color: 'black', fontSize: 20}}>{routine.title}</Text>
+                <Text style={{color: 'black', fontSize: 20}}>{title}</Text>
             </View>
             <View style={styles.container}>{
-                Object.entries(workout).map(([k, v]) => (
+                workout.map((ex, index) => (
                     //or maybe use react context, idfk
-                    <ExerciseCard key={k} name={k} exercise={workout[k]} progress={progress[k]} weight={routine.weight[k]}/>
+                    <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                 ))
-
             }</View>
         </SafeAreaView>
     );

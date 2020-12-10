@@ -5,19 +5,20 @@ export const MetallicaPPL = {
     next: '?',
     currentDay: 0,
     days: [
-        {
+        //easier to iterate through array than object keys
+        [
             //day 0
             //just for testing
-            deadlift: [5, 5, 5],
-            latPull: [12, 12, 12],
-            cableRow: [12, 12, 12],
-            facePull: [20, 20, 20, 20, 20],
-            hammerCurl: [12, 12, 12, 12],
-            dbCurl: [12, 12, 12, 12],
-        },
-        {
-            squat: [5,5,5],
-        },
+            {name: 'deadlift', sets: [5, 5, 5]},
+            {name: 'latPull', sets: [12, 12, 12]},
+            {name: 'cableRow', sets: [12, 12, 12]},
+            {name: 'facePull', sets: [20, 20, 20, 20, 20]},
+            {name: 'hammerCurl', sets: [12, 12, 12, 12]},
+            {name: 'dbCurl', sets: [12, 12, 12, 12]},
+        ],
+        [
+            {name: 'squat', sets: [5,5,5]},
+        ],
     ],
     weight: {
         deadlift: {
@@ -49,5 +50,5 @@ export const SampleProgress = {
     latPull: [12,12,12],
     cableRow: [12,],
     //gonna def need to update this
-    currentSet: ['cableRow', 1, .6],
+    //currentSet: ['cableRow', 1, .6],
 };
