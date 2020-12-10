@@ -37,14 +37,31 @@ class ProgressProvider extends React.Component {
     //you can also go back and update old sets
     updateSet = (exerciseN, setN, reps) => {
         this.setState(state => {
-            let newState = {...state}
-            if(!state.progress[exerciseN])
-                newState.progress[exerciseN] = [];
-            newState.progress[exerciseN][setN] = reps;
+            let newState = {...state};
+            //check to see if we need to move the current indicator
+            const move = newState.workout[exerciseN].progress[setN] === 'c';
+            newState.workout[exerciseN].progress[setN] = reps;
+
+            if(move){
+                if(exerciseN+1 === newState.workout.length){
+                    //???
+                    //set a workout complete flag?
+                }
+                if(setN+1 === newState.workout[exerciseN].progress.length)
+                    newState.workout[exerciseN+1].progress[0] = 'c';
+            }
+
+            //that should overwrite 'c'
+            //if that was the last set of an exercise
+
+
+            //if(!state.progress[exerciseN])
+                //newState.progress[exerciseN] = [];
+            //newState.progress[exerciseN][setN] = reps;
 
             //if that was the last rep, start the next set by adding it to prog
-            if(this.currentWorkout()[exerciseN].length === newState.progress[exerciseN].length)
-                newState.progress[exerciseN+1] = [];
+            //if(this.currentWorkout()[exerciseN].length === newState.progress[exerciseN].length)
+                //newState.progress[exerciseN+1] = [];
             //that's fucking it, we're converting to arry rather than objcs
 
 
@@ -52,9 +69,6 @@ class ProgressProvider extends React.Component {
         });
     };
 
-    currentWorkout = () => {
-        return this.state.routine.days[this.state.routine.currentDay];
-    }
 
     //might put timer in here
     //this looks at progress to determine
@@ -72,6 +86,7 @@ class ProgressProvider extends React.Component {
     state = {
         title: ''+MetallicaPPL.title,
         workout: this.workout,
+        //currentSet: [0,0],
         weight: {...MetallicaPPL.weight}//routine.weigth
         //progress: {...SampleProgress}// progress is part of  workout now
     }

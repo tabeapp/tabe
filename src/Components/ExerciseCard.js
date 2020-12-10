@@ -83,7 +83,7 @@ const ExerciseCard = (props) => {
 
         let current = n === 'c';
         items.push(
-            <SetCircle key={index} current={current} info={[name, index]} text={n} style={{backgroundColor: current? 'red':colors[index], borderColor: outlines[index]}}/>
+            <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: current? 'red':colors[index], borderColor: outlines[index]}}/>
         );
 
         let completion = done ? 1 : 0;
