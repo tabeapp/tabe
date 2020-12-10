@@ -38,7 +38,9 @@ const NavBar = props => {
                 icon += '-outline';
 
             if(r === 'workout') {
-                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={() => handlePress(r)}>
+                return (<TouchableOpacity style={styles.workoutButton} key={r}
+                                          onPress={() => handlePress(r)}
+               onLongPress={() => props.navigation.navigate('customworkout')} >
                     <Text>
                         <Ionicons name={icon} color={'white'} size={50} />
                     </Text>

@@ -10,6 +10,7 @@ import HomeScreen from './src/Screens/HomeScreen';
 import ExploreScreen from "./src/Screens/ExploreScreen";
 import RoutineScreen from "./src/Screens/RoutineScreen";
 import ProfileScreen from "./src/Screens/ProfileScreen";
+import WorkoutScreen from "./src/Screens/WorkoutScreen";
 
 const Stack = createStackNavigator();
 
@@ -24,7 +25,8 @@ const App = () => {
                 }}>
                     <Stack.Screen name="home" component={HomeScreen}/>
                     <Stack.Screen name="explore" component={ExploreScreen}/>
-                    <Stack.Screen name="workout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="routine" component={RoutineScreen}/>
                     <Stack.Screen name="profile" component={ProfileScreen}/>
                 </Stack.Navigator>
