@@ -29,7 +29,7 @@ const SetModButton = (props) => {
 
     return (
         <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
-            onPress={() => updateExercise(props.exerciseN, props.type)}>
+            onPress={() => updateExercise(props.exerciseN, add)}>
             <Text style={{color: color, fontWeight: 'bold', fontSize: 15, }}>{props.type}</Text>
         </TouchableOpacity>
 
@@ -113,8 +113,9 @@ const CustomExerciseCard = (props) => {
 
     }
 
-    items.unshift(<SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>);
-    items.push(<SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>);
+    //nah
+    //items.unshift(
+    //items.push(
 
     return (
         <View style={styles.card} key={name}>
@@ -123,9 +124,16 @@ const CustomExerciseCard = (props) => {
                 <Text style={{ color: 'white' }}>{current}</Text>
             </View>
 
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
-                items.map(i => i)
-            }</View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+
+                <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
+
+                <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
+                    items.map(i => i)
+                }</View>
+
+                <SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>
+            </View>
         </View>
     );
 };

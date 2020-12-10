@@ -51,6 +51,7 @@ const SetCircle = (props) => {
 
 const styles = StyleSheet.create({
     circle: {
+        flex: 1,
         minWidth:20,
         maxWidth:50,
         height: 50,

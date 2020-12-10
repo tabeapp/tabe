@@ -120,11 +120,16 @@ class ProgressProvider extends React.Component {
                 if(exercise.progress.length >= maxSets)
                     return;
 
-                if(!isNaN(exercise.progress[exercise.progress.length-1]))
-                    exercise.progress.push('c');
+                //if the last one is c, push null
+                //if the last one is a number, push c
+                //if the last one is null, push null
+                const lastSet = exercise.progress[exercise.progress.length-1];
+
+                if(lastSet === 'c' || lastSet === null)
+                    exercise.progress.push(null);
                 //'c' or null
                 else
-                    exercise.progress.push(null);
+                    exercise.progress.push('c');
 
                 //may need to propogate 'c' all the way to the end
                 exercise.sets.push(exercise.sets[exercise.sets.length-1]);
