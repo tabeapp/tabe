@@ -1,24 +1,25 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import NavBar from "../Components/NavBar";
+import { PRIMARY } from "../Constants/Theme";
 
-const primaryColor = '#66d6f8';
 const secondaryColor = '#356b7e';
-
 
 const HomeScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];
 
-    const routes = ['home', 'explore', 'workout']
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.topBar}></View>
-            <View style={styles.box}>
-                <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
-                </FlatList>
-            </View>
-            <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
-        </SafeAreaView>
+        <>
+            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
+            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
+                <View style={styles.topBar}></View>
+                <View style={styles.box}>
+                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
+                    </FlatList>
+                </View>
+                <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
+            </SafeAreaView>
+        </>
     );
 }
 
@@ -27,11 +28,11 @@ const styles = StyleSheet.create({
     navBar: {
 
     },
-    container: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: primaryColor },
+    container: { flex: 1, backgroundColor: PRIMARY },
     topBar: {
         height: 40,
         width: '100%',
-        backgroundColor: primaryColor,
+        backgroundColor: PRIMARY,
         alignItems: 'center',
         borderStyle: 'solid',
         borderRightWidth: 0,

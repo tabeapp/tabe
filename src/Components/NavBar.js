@@ -28,7 +28,7 @@ const NavBar = props => {
                 icon += '-outline';
 
             if(r === 'workout') {
-                return (<TouchableOpacity key={r} onPress={() => props.navigation.navigate(r)}>
+                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={() => props.navigation.navigate(r)}>
                     <Text>
                         <Ionicons name={icon} color={'red'} size={50} />
                     </Text>
@@ -36,23 +36,27 @@ const NavBar = props => {
             }
 
 
-            return (<TouchableOpacity key={r} onPress={() => props.navigation.navigate(r)}>
+            return (<TouchableOpacity style={styles.button} key={r} onPress={() => props.navigation.navigate(r)}>
                 <Text>
                     <Ionicons name={icon} color={'white'} size={40}/>
                 </Text>
-            </TouchableOpacity>);
-        })
+            </TouchableOpacity>); })
     }</View>);
 }
 const styles = StyleSheet.create({
+    button:{
+
+
+    },
     navBar: {
-        height: 100,
-        bottom: -40,
+        //borderWidth: 1,
+        //borderColor: 'red',
+        height: 60,
         width: '100%',
         flexDirection: 'row',
-        backgroundColor: 'black',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start'
+        backgroundColor: '#222',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     }
 });
 
