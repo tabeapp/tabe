@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import ProgressContext from '../Contexts/ProgressContext';
 
@@ -15,16 +15,25 @@ const RepPicker = (props) => {
     </ScrollView>);
 };
 
-
 const SetCircle = (props) => {
-    let [exerciseN, set] = props.info;
     const {updateSet} = useContext(ProgressContext);
+    //this will be undefined and shouldn't be accessible
+    //if it's current, it will be editable
+    if(!props.progress){
+        return (
+            <View style={{ ...styles.circle, ...props.style }} >
+                <Text style={{ color: 'white' }}>{
+                    props.text
+                }</Text>
+            </View>
+        );
+    }
+    let [exerciseN, setN] = props.info;
     const handlePress = () => {
         //locks it esssentially
-        //if(!props.current)
-            //return;
         //we could probably do something with current set, but for now just this
-        updateSet(exerciseN, set, props.text);
+        //parse int cuz sometimes it says 5+
+        updateSet(exerciseN, setN, parseInt(props.text));
 
 
 

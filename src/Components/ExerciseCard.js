@@ -77,10 +77,12 @@ const ExerciseCard = (props) => {
 
     sets.forEach((n, index) => {
         const prog = progress[index];
+
+        let completion = prog >= n ? 1 : 0;
         //let done = progress && progress[index] >= n;
         if(index === sets.length-1){
             if(amrap){
-                if(done)
+                if(prog >= n)
                     n = prog;
                 else
                     n += '+';
@@ -92,7 +94,6 @@ const ExerciseCard = (props) => {
             <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
         );
 
-        let completion = prog >= n ? 1 : 0;
 
         if(index !== sets.length-1)
             items.push(<MidLine key={index+'-'} completion={completion}/>);
@@ -122,9 +123,9 @@ const ExerciseCard = (props) => {
     );
 };
 
-const styles = StyleSheet.create({
-    card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'},
-});
+const styles = StyleSheet.create(
+    { card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'}, }
+);
 
 //export default withAuthenticator(App);
 export default ExerciseCard;

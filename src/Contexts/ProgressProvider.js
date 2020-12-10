@@ -42,13 +42,14 @@ class ProgressProvider extends React.Component {
             const move = newState.workout[exerciseN].progress[setN] === 'c';
             newState.workout[exerciseN].progress[setN] = reps;
 
-            if(move){
-                if(exerciseN+1 === newState.workout.length){
-                    //???
-                    //set a workout complete flag?
+            if(move) {
+                if (setN + 1 === newState.workout[exerciseN].progress.length){
+                    if (exerciseN + 1 === newState.workout.length) {
+                        //???
+                        //set a workout complete flag?
+                    } else
+                        newState.workout[exerciseN + 1].progress[0] = 'c';
                 }
-                else if(setN+1 === newState.workout[exerciseN].progress.length)
-                    newState.workout[exerciseN+1].progress[0] = 'c';
                 else
                     newState.workout[exerciseN].progress[setN+1] = 'c';
             }
@@ -58,12 +59,12 @@ class ProgressProvider extends React.Component {
 
 
             //if(!state.progress[exerciseN])
-                //newState.progress[exerciseN] = [];
+            //newState.progress[exerciseN] = [];
             //newState.progress[exerciseN][setN] = reps;
 
             //if that was the last rep, start the next set by adding it to prog
             //if(this.currentWorkout()[exerciseN].length === newState.progress[exerciseN].length)
-                //newState.progress[exerciseN+1] = [];
+            //newState.progress[exerciseN+1] = [];
             //that's fucking it, we're converting to arry rather than objcs
 
 
