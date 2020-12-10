@@ -47,20 +47,25 @@ const ExerciseCard = (props) => {
 
 
     let colors = [];
+    let outlines = [];
     let done = true;
 
     sets.forEach((set, n) => {
         //it'll be null
         if(!progress[n] || progress[n] === 'c'){
             colors.push('transparent');
+            outlines.push(secondaryColor);
             done = false;
         }
-        else
+        else{
             colors.push(primaryColor);
+            outlines.push(primaryColor);
+
+        }
 
     });
 
-    let outlines = sets.map(_ => primaryColor);
+    //let outlines = sets.map(_ => secondaryColor);
     if(done){
         colors = colors.map(_ => 'lightgreen');
         outlines = sets.map(_ => 'lightgreen');
@@ -71,25 +76,23 @@ const ExerciseCard = (props) => {
     const items = [];
 
     sets.forEach((n, index) => {
+        const prog = progress[index];
         //let done = progress && progress[index] >= n;
         if(index === sets.length-1){
             if(amrap){
                 if(done)
-                    n = progress[index];
+                    n = prog;
                 else
                     n += '+';
             }
         }
 
-        let current = progress[index] === 'c';
+        let current = prog === 'c';
         items.push(
-            <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: current? 'red':colors[index], borderColor: outlines[index]}}/>
+            <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
         );
 
-        let completion = done ? 1 : 0;
-
-        //if(currentSet[0] === name && currentSet[1] === index+1)
-            //completion =
+        let completion = prog >= n ? 1 : 0;
 
         if(index !== sets.length-1)
             items.push(<MidLine key={index+'-'} completion={completion}/>);
