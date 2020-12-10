@@ -1,27 +1,16 @@
-import React, {useState, useContext} from 'react';
-import {Text, TextInput, FlatList, View, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import React from 'react';
+import {Text, View, StyleSheet}  from 'react-native';
 //get custom icons eventually
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { MetallicaPPL, SampleProgress } from "../Assets/Routines/MetallicaPPL";
 import WeightVisual from "../Utils/WeightVisual";
-import ProgressProvider from "../Contexts/ProgressProvider";
-import ProgressContext from "../Contexts/ProgressContext";
 import SetCircle from "./SetCircle";
 
 
 const primaryColor = '#66d6f8';
 const secondaryColor = '#356b7e';
 
-//idk what im doing
-//const ProgressContext = React.createContext();
-
 //yes this will eventually implement timer visual
 const MidLine = (props) => {
-
-    //let color = props.completion ? 'white': 'gray';
 
     //use key here to check a timer
     //clever flex
@@ -34,9 +23,6 @@ const MidLine = (props) => {
 const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
-    //ex: name is deadlift, exercise is [5,5,5], progress is [5,3], weight is {current: 305, amrap: true}
-    //let {currentSet} = useContext(ProgressContext);
-    //currentSet = currentSet();
 
     //this shoudl be fine
     //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
@@ -127,5 +113,4 @@ const styles = StyleSheet.create(
     { card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'}, }
 );
 
-//export default withAuthenticator(App);
 export default ExerciseCard;

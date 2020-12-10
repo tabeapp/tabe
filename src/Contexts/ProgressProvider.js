@@ -54,54 +54,21 @@ class ProgressProvider extends React.Component {
                     newState.workout[exerciseN].progress[setN+1] = 'c';
             }
 
-            //that should overwrite 'c'
-            //if that was the last set of an exercise
-
-
-            //if(!state.progress[exerciseN])
-            //newState.progress[exerciseN] = [];
-            //newState.progress[exerciseN][setN] = reps;
-
-            //if that was the last rep, start the next set by adding it to prog
-            //if(this.currentWorkout()[exerciseN].length === newState.progress[exerciseN].length)
-            //newState.progress[exerciseN+1] = [];
-            //that's fucking it, we're converting to arry rather than objcs
-
-
             return newState;
         });
     };
 
-
-    //might put timer in here
-    //this looks at progress to determine
-    //this is the next set you're doing, pretty useful
-    /*currentSet = () => {
-        const exercises = Object.keys(this.state.progress);
-        const name = exercises[exercises.length - 1];
-
-        return [
-            name,
-            this.state.progress[name].length,
-            0.5 ];//yeah this is gonna be fun
-    }*/
-
     state = {
         title: ''+MetallicaPPL.title,
         workout: this.workout,
-        //currentSet: [0,0],
-        weight: {...MetallicaPPL.weight}//routine.weigth
-        //progress: {...SampleProgress}// progress is part of  workout now
     }
 
     render() {
         return (
             <ProgressContext.Provider value={{
                 workout: this.state.workout,
-                weight: this.state.weight,
                 title: this.state.title,
                 updateSet: this.updateSet,
-                //currentSet: this.currentSet
             }}>
                 {this.props.children}
             </ProgressContext.Provider>
