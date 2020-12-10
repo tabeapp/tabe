@@ -23,9 +23,12 @@ const NavBar = props => {
     const {current} = props;
     const handlePress = (r) => {
         if(r === current)
-           return;
+            return;
 
-        props.navigation.navigate(r);
+        if(r === 'workout')
+            props.navigation.navigate(r);
+        else
+            props.navigation.replace(r);
     }
 
     return (<View style={styles.navBar}>{
