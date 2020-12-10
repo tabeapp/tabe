@@ -1,6 +1,6 @@
 import React from 'react';
 import ProgressContext from './ProgressContext';
-import { MetallicaPPL, SampleProgress } from '../Assets/Routines/MetallicaPPL';
+import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
 
 //one way to do it, custom provider object
 
@@ -47,8 +47,10 @@ class ProgressProvider extends React.Component {
                     //???
                     //set a workout complete flag?
                 }
-                if(setN+1 === newState.workout[exerciseN].progress.length)
+                else if(setN+1 === newState.workout[exerciseN].progress.length)
                     newState.workout[exerciseN+1].progress[0] = 'c';
+                else
+                    newState.workout[exerciseN].progress[setN+1] = 'c';
             }
 
             //that should overwrite 'c'

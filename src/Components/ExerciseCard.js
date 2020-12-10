@@ -71,7 +71,7 @@ const ExerciseCard = (props) => {
     const items = [];
 
     sets.forEach((n, index) => {
-        let done = progress && progress[index] >= n;
+        //let done = progress && progress[index] >= n;
         if(index === sets.length-1){
             if(amrap){
                 if(done)
@@ -81,7 +81,7 @@ const ExerciseCard = (props) => {
             }
         }
 
-        let current = n === 'c';
+        let current = progress[index] === 'c';
         items.push(
             <SetCircle key={index} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: current? 'red':colors[index], borderColor: outlines[index]}}/>
         );
