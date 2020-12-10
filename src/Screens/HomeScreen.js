@@ -1,11 +1,15 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import NavBar from "../Components/NavBar";
 
 const primaryColor = '#66d6f8';
 const secondaryColor = '#356b7e';
 
-function HomeScreen(){
+
+const HomeScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];
+
+    const routes = ['home', 'explore', 'workout']
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topBar}></View>
@@ -13,7 +17,7 @@ function HomeScreen(){
                 <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
                 </FlatList>
             </View>
-            <View style={styles.navBar}></View>
+            <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
         </SafeAreaView>
     );
 }
