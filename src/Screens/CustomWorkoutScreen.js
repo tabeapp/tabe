@@ -13,9 +13,18 @@ const secondaryColor = '#356b7e';
 //idk what im doing
 //const ProgressContext = React.createContext();
 
+const sampleSuggestion = [
+    'bench', 'curl', 'deadlift'
+];
+
 //completely customizable
 const CustomWorkoutScreen = () => {
-    let {title, workout, done, generateReport} = useContext(ProgressContext);
+    let {title, workout, addExercise, done, generateReport} = useContext(ProgressContext);
+
+    const openExerciseSelect = () => {
+
+
+    }
 
     //const workout = routine.days[routine.currentDay];
 
@@ -30,7 +39,16 @@ const CustomWorkoutScreen = () => {
                     <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                 ))
             }</View>
-            <TouchableOpacity style={styles.configButton}>
+            <View style={{flexDirection: 'row' }}>{
+                sampleSuggestion.map(name => {
+                    return (<TouchableOpacity
+                        style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, margin: 2}}
+                        onPress={() => addExercise(name)}>
+                        <Text style={{color: 'white'}}>{name}</Text>
+                    </TouchableOpacity>);
+                })
+            }</View>
+            <TouchableOpacity style={styles.configButton} onPress={openExerciseSelect}>
                 <Text style={styles.plus}>+</Text>
             </TouchableOpacity>
             {

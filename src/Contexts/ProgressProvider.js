@@ -6,6 +6,8 @@ import { SS } from "../Assets/Routines/SS";
 //one way to do it, custom provider object
 const routine = {...SS};
 
+const defaultSets = [5,5,5,5,5];
+
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 class ProgressProvider extends React.Component {
@@ -77,6 +79,19 @@ class ProgressProvider extends React.Component {
         });
     };
 
+    //custom workout methods incoming
+    addExercise = (name) => {
+        this.setState(state => {
+            let newState = {...state};
+            newState.workout.push({
+                name,
+                sets: defaultSets,
+                progress: defaultSets.map(_ => null)
+            });
+            return newState;
+        });
+    }
+
     //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
     generateReport = () => {
@@ -123,6 +138,7 @@ class ProgressProvider extends React.Component {
                 workout: this.state.workout,
                 title: this.state.title,
                 updateSet: this.updateSet,
+                addExercise: this.addExercise,
                 generateReport: this.generateReport,
                 done: this.state.done
             }}>
