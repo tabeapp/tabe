@@ -1,7 +1,8 @@
+import 'react-native-gesture-handler';
 import React, {useState} from 'react';
 import {Text, TextInput, FlatList, View, Button, StyleSheet, Alert, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 //get custom icons eventually
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,22 +11,22 @@ import {withAuthenticator} from 'aws-amplify-react-native';
 import WorkoutScreen from './src/Screens/WorkoutScreen';
 import ProgressProvider from './src/Contexts/ProgressProvider';
 import CustomWorkoutScreen from './src/Screens/CustomWorkoutScreen';
-
-function HomeScreen(){
-    const data = ['pee pee', 'poo poo', 'oooooh'];
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.top}></View>
-            <View style={styles.box}>
-                <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
-                </FlatList>
-            </View>
-        </SafeAreaView>
-    );
-}
+import HomeScreen from './src/Screens/HomeScreen';
 
 const primaryColor = '#66d6f8';
 const secondaryColor = '#356b7e';
+
+/*const AppNavigator = createStackNavigator({
+    Home:{
+        screen: HomeScreen
+    },
+    Workout:{
+        screen:CustomWorkoutScreen
+    }
+
+
+});*/
+const Stack = createStackNavigator();
 
 const App = () => {
     const [message, setMessage] = useState('');
@@ -34,61 +35,19 @@ const App = () => {
         Alert.alert(`the message "${message}" has been sent`);
     };
 
-    const Tab = createBottomTabNavigator();
+    //const Tab = createBottomTabNavigator();
 
     return (
         <ProgressProvider>
 
-            <NavigationContainer theme={{
-                dark: true,
-                colors: {
-                    background: 'black',
-                    primary: primaryColor,
-                    text: 'white',
-                    card: 'gray',
-                },
-            }}>
-                <Tab.Navigator
-                    screenOptions={({route}) => ({
-                        tabBarIcon: ({focused, color, size}) => {
-                            let iconName;
-                            if (route.name === 'home')
-                                iconName = 'home';
-                            else if(route.name === 'explore')
-                                iconName = 'search';
-                            else if(route.name === 'workout'){
-                                iconName = 'barbell';
-                                color = 'red'; size *= 2.0;
-                            }
-                            else if(route.name === 'routines')
-                                iconName = 'reload';
-                            else if(route.name === 'profile')
-                                iconName = 'person';
-
-                            if(!focused)
-                                iconName += '-outline';
-
-                            return <Ionicons name={iconName} color={color} size={size}/>;
-                        },
-                    })}
-                    tabBarOptions={{
-                        style: {
-                            backgroundColor:'black',
-                        },
-                        showLabel: false,
-                        activeTintColor: primaryColor,
-                        //activeBackgroundColor: '#222',
-                        inactiveTintColor: secondaryColor,
-                        //inactiveBackgroundColor: 'black',
-
-                    }}
-                >
-                    <Tab.Screen name="home" component={CustomWorkoutScreen}/>
-                    <Tab.Screen name="explore" component={HomeScreen}/>
-                    <Tab.Screen name="workout" component={WorkoutScreen}/>
-                    <Tab.Screen name="routines" component={HomeScreen}/>
-                    <Tab.Screen name="profile" component={HomeScreen}/>
-                </Tab.Navigator>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{headerShown:false}}>
+                    <Stack.Screen name="home" component={HomeScreen}/>
+                    <Stack.Screen name="explore" component={HomeScreen}/>
+                    <Stack.Screen name="workout" component={CustomWorkoutScreen}/>
+                    <Stack.Screen name="routines" component={HomeScreen}/>
+                    <Stack.Screen name="profile" component={HomeScreen}/>
+                </Stack.Navigator>
             </NavigationContainer>
         </ProgressProvider>
         //temprorray set home to workout, it's just being annoying
