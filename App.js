@@ -1,12 +1,15 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 //get custom icons eventually
 
 import ProgressProvider from './src/Contexts/ProgressProvider';
 import CustomWorkoutScreen from './src/Screens/CustomWorkoutScreen';
 import HomeScreen from './src/Screens/HomeScreen';
+import ExploreScreen from "./src/Screens/ExploreScreen";
+import RoutineScreen from "./src/Screens/RoutineScreen";
+import ProfileScreen from "./src/Screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -16,12 +19,14 @@ const App = () => {
         <ProgressProvider>
 
             <NavigationContainer>
-                <Stack.Navigator screenOptions={{headerShown:false}}>
+                <Stack.Navigator intialRouteName="home" screenOptions={{headerShown:false,
+                    cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
+                }}>
                     <Stack.Screen name="home" component={HomeScreen}/>
-                    <Stack.Screen name="explore" component={HomeScreen}/>
-                    <Stack.Screen name="workout" component={CustomWorkoutScreen}/>
-                    <Stack.Screen name="routines" component={HomeScreen}/>
-                    <Stack.Screen name="profile" component={HomeScreen}/>
+                    <Stack.Screen name="explore" component={ExploreScreen}/>
+                    <Stack.Screen name="workout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="routine" component={RoutineScreen}/>
+                    <Stack.Screen name="profile" component={ProfileScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>
         </ProgressProvider>

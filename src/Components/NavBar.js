@@ -7,7 +7,7 @@ const routes = [
     'home',
     'explore',
     'workout',
-    'routines',
+    'routine',
     'profile'
 ];
 
@@ -15,12 +15,19 @@ const iconMapping = {
     home: 'home',
     explore: 'search',
     workout: 'barbell',
-    routines: 'reload',
+    routine: 'reload',
     profile: 'person'
 }
 
 const NavBar = props => {
     const {current} = props;
+    const handlePress = (r) => {
+        if(r === current)
+           return;
+
+        props.navigation.navigate(r);
+    }
+
     return (<View style={styles.navBar}>{
         routes.map(r => {
             let icon = iconMapping[r];
@@ -28,15 +35,14 @@ const NavBar = props => {
                 icon += '-outline';
 
             if(r === 'workout') {
-                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={() => props.navigation.navigate(r)}>
+                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={() => handlePress(r)}>
                     <Text>
                         <Ionicons name={icon} color={'white'} size={50} />
                     </Text>
                 </TouchableOpacity>);
             }
 
-
-            return (<TouchableOpacity style={styles.button} key={r} onPress={() => props.navigation.navigate(r)}>
+            return (<TouchableOpacity style={styles.button} key={r} onPress={() => handlePress(r)}>
                 <Text>
                     <Ionicons name={icon} color={'white'} size={40}/>
                 </Text>
