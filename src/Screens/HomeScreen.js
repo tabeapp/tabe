@@ -1,9 +1,7 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import NavBar from "../Components/NavBar";
-import { PRIMARY } from "../Constants/Theme";
-
-const secondaryColor = '#356b7e';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import NavBar from '../Components/NavBar';
+import { PRIMARY } from '../Constants/Theme';
 
 const HomeScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];
@@ -12,16 +10,15 @@ const HomeScreen = props => {
         <>
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar}></View>
+                <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>}>
-                    </FlatList>
+                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>} />
                 </View>
                 <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
             </SafeAreaView>
         </>
     );
-}
+};
 
 export default HomeScreen;
 const styles = StyleSheet.create({
@@ -40,7 +37,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 0,
         borderColor: 'black',
         borderWidth: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     box: {
         flex: 1,
@@ -50,6 +47,6 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
 });

@@ -1,53 +1,39 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Modal } from "react-native";
-//get custom icons eventually
-
-import ProgressContext from "../Contexts/ProgressContext";
-import ExerciseCard from "../Components/ExerciseCard";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import CustomExerciseCard from "../Components/CustomExerciseCard";
-import { PRIMARY } from "../Constants/Theme";
-import { CATEGORIES } from "../Constants/Exercises";
-import ExercisePicker from "../Components/ExercisePicker";
+import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import ProgressContext from '../Contexts/ProgressContext';
+import CustomExerciseCard from '../Components/CustomExerciseCard';
+import { PRIMARY } from '../Constants/Theme';
+import ExercisePicker from '../Components/ExercisePicker';
 
 
 const primaryColor = '#66d6f8';
-const secondaryColor = '#356b7e';
 
 //idk what im doing
 //const ProgressContext = React.createContext();
 //later would be generated more intelligently
 const sampleSuggestion = [
-    'bench', 'curl', 'deadlift'
+    'bench', 'curl', 'deadlift',
 ];
 
 //completely customizable
 const CustomWorkoutScreen = () => {
-    let {title, loaded, initializeCustom, workout, addExercise, done, generateReport} = useContext(ProgressContext);
+    let {loaded, initializeCustom, workout, addExercise, generateReport} = useContext(ProgressContext);
     useEffect(() => {
-        if(!loaded)
-            initializeCustom();
+        if (!loaded)
+        {initializeCustom();}
     }, []);
 
     const [modal, setModal] = useState(false);
-
 
     const addFromSuggestions = name => {
         addExercise(name);
         sampleSuggestion.splice(sampleSuggestion.indexOf(name), 1);
 
-    }
+    };
 
-    //not really sure about this
-    //like a popup would be cool
-    //might make my own
     const openExerciseSelect = () => {
         setModal(true);
-
-
-    }
-
-    //const workout = routine.days[routine.currentDay];
+    };
 
     return (
         <>
@@ -58,7 +44,6 @@ const CustomWorkoutScreen = () => {
                 </View>
                 <View style={styles.container}>{
                     workout.exercises.map((ex, index) => (
-                        //or maybe use react context, idfk
                         <CustomExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                     ))
                 }</View>
@@ -84,7 +69,6 @@ const CustomWorkoutScreen = () => {
         </>
     );
 };
-//exercise picker
 
 const styles = StyleSheet.create({
     plus: {
@@ -104,5 +88,4 @@ const styles = StyleSheet.create({
     top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
 
-//export default withAuthenticator(App);
 export default CustomWorkoutScreen;

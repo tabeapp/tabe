@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
-import {Picker} from '@react-native-picker/picker';
 import ProgressContext from '../Contexts/ProgressContext';
 
 const reps = [];
@@ -34,9 +33,6 @@ const SetCircle = (props) => {
         //we could probably do something with current set, but for now just this
         //parse int cuz sometimes it says 5+
         updateSet(exerciseN, setN, parseInt(props.text));
-
-
-
 
     };
 

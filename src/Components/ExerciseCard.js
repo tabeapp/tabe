@@ -26,11 +26,6 @@ const ExerciseCard = (props) => {
 
     //this shoudl be fine
     //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
-    //current is 315, primary is true, amrap is true
-    //const {name, sets, progress,
-    ////these are copied from weight
-    //current, primary, amrap} = props.exercise;
-
     const {name, barbell, sets} = props.exercise;
 
     let colors = [];

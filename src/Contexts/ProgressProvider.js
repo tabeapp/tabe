@@ -1,8 +1,8 @@
 import React from 'react';
 import ProgressContext from './ProgressContext';
 import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
-import { SS } from "../Assets/Routines/SS";
-import { FiveThreeOne } from "../Assets/Routines/FiveThreeOne";
+import { SS } from '../Assets/Routines/SS';
+import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
 const routine = {...FiveThreeOne};
@@ -30,6 +30,29 @@ const barbells = [
     'bench', 'deadlift', 'press', 'squat'
 ];
 
+/*
+basic workout structure:
+
+workout:{
+    name: '',
+    exercises: [
+        {
+            name:'ohp',
+            barbell: true,
+            sets:[
+                {
+                    reps: 5, weight: 150, progress: null
+                    reps: 5, weight: 150, progress: null
+                    reps: 5, weight: 150, progress: null
+                    ...
+                }
+            ]
+
+        }
+        ...
+    ] }
+*/
+
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 class ProgressProvider extends React.Component {
@@ -44,13 +67,13 @@ class ProgressProvider extends React.Component {
         done: false
     }
 
+    //load from storage here
+    //this will look at the provided routine and create a workout for the day
     initializeWorkout = () => {
-        //load from storage here
-        //this is just a string
         //this gets something like 'a'
         let day = routine.days[routine.currentDay % routine.time];
 
-        //rest day,null
+        //null means rest day
         if(!day)
             return [];
 
@@ -62,59 +85,46 @@ class ProgressProvider extends React.Component {
         for(let i = 0; i < exercises.length; i++){
             let name = exercises[i];
 
+            const exInfo = routine.info[name];
+            const setInfo = exInfo.setInfo;
+
             //the complex part
             let sets = [];
-            if(routine.info[name].setInfo.type === 'normal'){
-                sets = routine.info[name].setInfo.sets.map(reps => ({
+            if(setInfo.type === 'normal'){
+                sets = setInfo.sets.map(reps => ({
                     reps: reps,
                     progress: null,
-                    weight: routine.info[name].current
+                    weight: exInfo.current
                 }))
             }
-            else if(routine.info[name].setInfo.type === 'custom') {
+            else if(setInfo.type === 'custom') {
                 //this is [{reps:5, %: .75}...]
                 let custom = routine.customSet
-                    [routine.info[name].setInfo.name]
-                    [routine.info[name].setInfo.selector];
+                    [setInfo.name]
+                    [setInfo.selector];
 
                 sets = custom.map(set => ({
                     reps: set.reps,
                     progress: null,
-                    weight: Math.ceil(set['%'] * routine.info[name].current/5)*5
-                }))
+                    weight: Math.ceil(set['%'] * exInfo.current/5)*5
+                }));
             }
 
             //amrap for last set
-            if(routine.info[name].amrap){
+            if(exInfo.amrap){
                 sets[sets.length-1].amrap = true;
             }
 
-
-
-
-
             compiledExercises.push({
                 name: name,
-                barbell: routine.info[name].barbell,
+                barbell: exInfo.barbell,
                 sets: sets
             })
-
         }
 
-
-
-
-        /*//add weight info
-        workout = workout.map(e => (
-            {name: e, ...routine.info[e]} ));
-        //add prgress
-        workout = workout.map(e => (
-            //set to null?
-            {...e, progress: e.sets.map(_ => null)}
-        ));*/
         //set first set to current set
-
         compiledExercises[0].sets[0].progress = 'c';
+
         const workout = {
             title: routine.title + ' ' + day,
             exercises: compiledExercises
@@ -122,10 +132,6 @@ class ProgressProvider extends React.Component {
 
         this.setState({workout: workout, loaded: true});
     }
-
-    //just gonna have it be empty for now, initiallize workout doesn't seem to want to work rn
-    //loaded = this.initializeWorkout();
-
 
     initializeCustom = () => {
         this.setState({
@@ -137,34 +143,29 @@ class ProgressProvider extends React.Component {
         });
     }
 
-    //workout = this.initalizeWorkout();
-
-    //redoing this whole thing
-    //workout is a copy of the current day
-    //weight is a copy of weight info
-
     //the most simple of the workout functions
     //you can also go back and update old sets
     updateSet = (exerciseN, setN, reps) => {
         this.setState(state => {
             let newState = {...state};
+
+            const exercises = newState.workout.exercises;
             //check to see if we need to move the current indicator
-            //const move = newState.workout[exerciseN].progress[setN] === 'c';
-            const move = newState.workout.exercises[exerciseN].sets[setN].progress === 'c';
-            //newState.workout[exerciseN].progress[setN] = reps;
-            newState.workout.exercises[exerciseN].sets[setN].progress = reps;
+            const move = exercises[exerciseN].sets[setN].progress === 'c';
+
+            exercises[exerciseN].sets[setN].progress = reps;
 
             if(move) {
-                if (setN + 1 === newState.workout.exercises[exerciseN].sets.length){
-                    if (exerciseN + 1 === newState.workout.exercises.length) {
+                if (setN + 1 === exercises[exerciseN].sets.length){
+                    if (exerciseN + 1 === exercises.length) {
                         //gotta do somethign about that, maybe open a summary screen
                         newState.done = true;
                     }
                     else
-                        newState.workout.exercises[exerciseN + 1].sets[0].progress = 'c';
+                        exercises[exerciseN + 1].sets[0].progress = 'c';
                 }
                 else
-                    newState.workout.exercises[exerciseN].sets[setN+1].progress = 'c';
+                    exercises[exerciseN].sets[setN+1].progress = 'c';
             }
 
             return newState;
@@ -175,20 +176,18 @@ class ProgressProvider extends React.Component {
     addExercise = (name) => {
         this.setState(state => {
             let newState = {...state};
-            newState.workout.exercises.push({
+            const exercises = newState.workout.exercises;
+            exercises.push({
                 name,
                 sets: defaultSets.map(s => ({
                     ...s,
                     progress: null,
                     weight: defaultWeight[name]
                 })),
-                //progress: defaultSets.map(_ => null),
-                //current: defaultWeight[name],
                 barbell: barbells.includes(name)
-                //need to add weight info in here
             });
-            if(newState.workout.exercises.length === 1)
-                newState.workout.exercises[0].sets[0].progress = 'c';
+            if(exercises.length === 1)
+                exercises[0].sets[0].progress = 'c';
             return newState;
         });
     }
@@ -202,41 +201,31 @@ class ProgressProvider extends React.Component {
                 if(exercise.sets.length >= maxSets)
                     return;
 
+                const lastSet = exercise.sets[exercise.sets.length-1];
+
+                let nextProg;
+
                 //if the last one is c, push null
                 //if the last one is a number, push c
                 //if the last one is null, push null
-                const lastSet = exercise.sets[exercise.sets.length-1];//.progress;
-
-                let nextProg;
-                //copy the last set
-
                 if(lastSet.progress === 'c' || lastSet.progress === null)
                     nextProg = null;
                 //'c' or null
                 else
                     nextProg = 'c';
 
-                exercise.sets.push({...lastSet, progress: nextProg});
-
                 //may need to propogate 'c' all the way to the end
-                //exercise.sets.push(exercise.sets[exercise.sets.length-1]);
+                exercise.sets.push({...lastSet, progress: nextProg});
             }
             else{
                 //remove last set
                 exercise.sets.splice(exercise.sets.length-1);
-                //exercise.progress.splice(exercise.progress.length-1);
-
             }
 
             return newState;
-
-
-
         })
-
     }
 
-    //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
     generateReport = () => {
         let report = {};
@@ -289,45 +278,8 @@ class ProgressProvider extends React.Component {
         //get rid of empty
         report.exercises = report.exercises.filter(ex => ex.work.length);
 
-
-
-
-
-
-        /*//use workout
-        let workoutSummary = this.state.workout.exercises.map(e => ({
-            name: e.name,
-            sets: e.progress.filter(s => s && s !== 'c'),
-            weight: e.current
-        }));
-
-        //this is good enough to save to file
-        workoutSummary = workoutSummary.filter(e => e.sets.length);
-
-        //heres a cool string
-
-        let heaviest = workoutSummary.sort((a,b) => a.weight < b.weight)[0];
-        if(!heaviest)
-            return;
-
-        let desc = heaviest.name + ' ';
-
-        let sets = 1;
-        let reps = heaviest.sets[0];
-
-        for(let i = 1; i < heaviest.sets.length; i++){
-            if(heaviest.sets[i] >= reps)
-                sets++;
-        }
-
-        desc += sets + 'x';
-        desc += reps + '@';
-        desc += heaviest.weight;*/
-
         return JSON.stringify(report);
-
     };
-
 
     render() {
         return (
