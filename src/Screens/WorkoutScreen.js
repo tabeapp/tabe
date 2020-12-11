@@ -13,7 +13,11 @@ const secondaryColor = '#356b7e';
 //const ProgressContext = React.createContext();
 
 const WorkoutScreen = () => {
-    let {title, workout, done, generateReport} = useContext(ProgressContext);
+    let {title, workout, loaded, initializeWorkout, done, generateReport} = useContext(ProgressContext);
+    useEffect(() => {
+        if(!loaded)
+            initializeWorkout();
+    }, []);
 
     //const workout = routine.days[routine.currentDay];
 

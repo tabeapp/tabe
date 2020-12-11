@@ -27,6 +27,12 @@ const primaries = [
 class ProgressProvider extends React.Component {
     //load from local storage?
     //save that to contstans lol
+    state = {
+        loaded: false,
+        title: ''+routine.title,
+        workout: [],
+        done: false
+    }
 
     initializeWorkout = () => {
         //load from storage here
@@ -48,15 +54,12 @@ class ProgressProvider extends React.Component {
         ));
         //set first set to current set
         workout[0].progress[0] = 'c';
-        this.setState({workout: workout});
+        this.setState({workout: workout, loaded: true});
     }
 
     //just gonna have it be empty for now, initiallize workout doesn't seem to want to work rn
-    state = {
-        title: ''+routine.title,
-        workout: [],
-        done: false
-    }
+    //loaded = this.initializeWorkout();
+
 
     initializeCustom = () => {
         this.setState({workout: []});
@@ -190,6 +193,7 @@ class ProgressProvider extends React.Component {
     render() {
         return (
             <ProgressContext.Provider value={{
+                loaded: this.state.loaded,
                 initializeWorkout: this.initializeWorkout,
                 initializeCustom: this.initializeCustom,
                 workout: this.state.workout,

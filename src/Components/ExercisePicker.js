@@ -3,6 +3,7 @@ import { TouchableOpacity, Modal, Text, View } from 'react-native';
 import { EXERCISES } from '../Constants/Exercises';
 import ProgressContext from "../Contexts/ProgressContext";
 
+//make it possible to cancel
 const ExercisePicker = props => {
     let {addExercise} = useContext(ProgressContext);
     //props.visible
