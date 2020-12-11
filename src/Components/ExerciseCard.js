@@ -74,11 +74,11 @@ const ExerciseCard = (props) => {
         //let done = progress && progress[index] >= n;
         //if(index === sets.length-1){
         let text = reps;
-        //this isn't workign
-        if(amrap && !progress)
-            text = reps + '+';
-
         let current = progress === 'c';
+
+        //this isn't workign
+        if(amrap && (!progress|| current))
+            text = reps + '+';
 
         if(current)
             currentWeight = weight;

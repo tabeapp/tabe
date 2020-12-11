@@ -78,7 +78,7 @@ class ProgressProvider extends React.Component {
             }
 
             //amrap for last set
-            if(routine.info[name].setInfo.amrap){
+            if(routine.info[name].amrap){
                 sets[sets.length-1].amrap = true;
             }
 
@@ -136,19 +136,21 @@ class ProgressProvider extends React.Component {
         this.setState(state => {
             let newState = {...state};
             //check to see if we need to move the current indicator
-            const move = newState.workout[exerciseN].progress[setN] === 'c';
-            newState.workout[exerciseN].progress[setN] = reps;
+            //const move = newState.workout[exerciseN].progress[setN] === 'c';
+            const move = newState.workout.exercises[exerciseN].sets[setN].progress === 'c';
+            //newState.workout[exerciseN].progress[setN] = reps;
+            newState.workout.exercises[exerciseN].sets[setN].reps = reps;
 
             if(move) {
-                if (setN + 1 === newState.workout[exerciseN].progress.length){
-                    if (exerciseN + 1 === newState.workout.length) {
+                if (setN + 1 === newState.workout.exercises[exerciseN].sets.length){
+                    if (exerciseN + 1 === newState.workout.exercises.length) {
                         //gotta do somethign about that, maybe open a summary screen
                         newState.done = true;
                     } else
-                        newState.workout[exerciseN + 1].progress[0] = 'c';
+                        newState.workout.exercises[exerciseN + 1].sets[0].progress = 'c';
                 }
                 else
-                    newState.workout[exerciseN].progress[setN+1] = 'c';
+                    newState.workout.exercises[exerciseN].sets[setN+1].progress = 'c';
             }
 
             return newState;
