@@ -1,5 +1,5 @@
-import React, {useEffect, useContext} from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import { Button, StyleSheet, Text, TouchableOpacity, View, SafeAreaView, Modal } from "react-native";
 //get custom icons eventually
 
 import ProgressContext from "../Contexts/ProgressContext";
@@ -7,6 +7,8 @@ import ExerciseCard from "../Components/ExerciseCard";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import CustomExerciseCard from "../Components/CustomExerciseCard";
 import { PRIMARY } from "../Constants/Theme";
+import { CATEGORIES } from "../Constants/Exercises";
+import ExercisePicker from "../Components/ExercisePicker";
 
 
 const primaryColor = '#66d6f8';
@@ -14,7 +16,6 @@ const secondaryColor = '#356b7e';
 
 //idk what im doing
 //const ProgressContext = React.createContext();
-
 //later would be generated more intelligently
 const sampleSuggestion = [
     'bench', 'curl', 'deadlift'
@@ -23,6 +24,9 @@ const sampleSuggestion = [
 //completely customizable
 const CustomWorkoutScreen = () => {
     let {title, workout, addExercise, done, generateReport} = useContext(ProgressContext);
+
+    const [modal, setModal] = useState(false);
+
 
     const addFromSuggestions = name => {
         addExercise(name);
@@ -34,6 +38,7 @@ const CustomWorkoutScreen = () => {
     //like a popup would be cool
     //might make my own
     const openExerciseSelect = () => {
+        setModal(true);
 
 
     }
@@ -66,6 +71,7 @@ const CustomWorkoutScreen = () => {
                 <TouchableOpacity style={styles.configButton} onPress={openExerciseSelect}>
                     <Text style={styles.plus}>+</Text>
                 </TouchableOpacity>
+                <ExercisePicker visible={modal} close={() => setModal(false)}/>
                 {
                     //done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
                     <Text style={{color:'white'}} >{generateReport()}</Text>
@@ -74,6 +80,7 @@ const CustomWorkoutScreen = () => {
         </>
     );
 };
+//exercise picker
 
 const styles = StyleSheet.create({
     plus: {

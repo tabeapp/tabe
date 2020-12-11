@@ -37,7 +37,7 @@ const NavBar = props => {
     const customStart = () => {
         //set up
         initializeCustom();
-        props.navigation.navigate('customworkout')
+        props.navigation.navigate('customworkout');
     }
 
     const routineStart = () => {
