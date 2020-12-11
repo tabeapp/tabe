@@ -23,7 +23,11 @@ const sampleSuggestion = [
 
 //completely customizable
 const CustomWorkoutScreen = () => {
-    let {title, workout, addExercise, done, generateReport} = useContext(ProgressContext);
+    let {title, loaded, initializeCustom, workout, addExercise, done, generateReport} = useContext(ProgressContext);
+    useEffect(() => {
+        if(!loaded)
+            initializeCustom();
+    }, []);
 
     const [modal, setModal] = useState(false);
 
@@ -50,10 +54,10 @@ const CustomWorkoutScreen = () => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <Text style={{color: 'black', fontSize: 20}}>{title}</Text>
+                    <Text style={{color: 'black', fontSize: 20}}>{workout.title}</Text>
                 </View>
                 <View style={styles.container}>{
-                    workout.map((ex, index) => (
+                    workout.exercises.map((ex, index) => (
                         //or maybe use react context, idfk
                         <CustomExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                     ))

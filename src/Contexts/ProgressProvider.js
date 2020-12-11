@@ -128,7 +128,13 @@ class ProgressProvider extends React.Component {
 
 
     initializeCustom = () => {
-        this.setState({workout: []});
+        this.setState({
+            workout: {
+                title: 'Custom Workout',
+                exercises: []
+            },
+            loaded: true
+        });
     }
 
     //workout = this.initalizeWorkout();
