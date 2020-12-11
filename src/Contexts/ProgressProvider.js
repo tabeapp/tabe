@@ -229,10 +229,13 @@ class ProgressProvider extends React.Component {
             };
 
             //scan and compile into somethign like 2x3@150, 1x5@180
+            if(!exercise.sets[0])
+                continue;
+
             let curWeight = exercise.sets[0].weight;
             let curReps = exercise.sets[0].reps;
             let curRun = 1;
-            for(let j = 1; j = exercise.sets.length; j++){
+            for(let j = 1; j < exercise.sets.length; j++){
                 const set = exercise.sets[j];
 
                 if(set.weight === curWeight && set.reps === curReps)

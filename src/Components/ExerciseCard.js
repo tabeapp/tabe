@@ -63,7 +63,9 @@ const ExerciseCard = (props) => {
     const items = [];
 
     //default is that of last set
-    let currentWeight = sets[sets.length-1].weight;
+    let currentWeight = 0;
+    if(sets[sets.length-1])
+        currentWeight = sets[sets.length-1].weight;
 
     sets.forEach((set,index) => {
         const {amrap, progress, reps, weight} = set;
@@ -71,7 +73,8 @@ const ExerciseCard = (props) => {
         let completion = progress >= reps ? 1 : 0;
         //let done = progress && progress[index] >= n;
         //if(index === sets.length-1){
-        let text = progress;
+        let text = reps;
+        //this isn't workign
         if(amrap && !progress)
             text = reps + '+';
 
