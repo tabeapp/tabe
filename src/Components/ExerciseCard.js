@@ -62,6 +62,13 @@ const ExerciseCard = (props) => {
     //weights, circles, and more fun
     const items = [];
 
+    //only show if they're different or it's custom
+    let showWeightLabel = false;
+    sets.forEach(s => {
+        if(s.weight !== sets[0].weight)
+            showWeightLabel = true;
+    })
+
     //default is that of last set
     let currentWeight = 0;
     if(sets[sets.length-1])
@@ -84,7 +91,15 @@ const ExerciseCard = (props) => {
             currentWeight = weight;
 
         items.push(
-            <SetCircle key={index} progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+            <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
+                <SetCircle progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+                {
+                    showWeightLabel &&
+                    <Text style={{color: 'white', alignSelf: 'center'}}>{
+                        weight
+                    }</Text>
+                }
+            </View>
         );
 
         if(index !== sets.length-1)
@@ -109,7 +124,7 @@ const ExerciseCard = (props) => {
             </View>
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
-                items.map(i => i)
+                items//.map(i => i)
             }</View>
         </View>
     );

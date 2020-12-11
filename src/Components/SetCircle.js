@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         flex: 1,
         minWidth:20,
         maxWidth:50,
-        height: 50,
+        minHeight: 50,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,

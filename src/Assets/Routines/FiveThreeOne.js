@@ -27,7 +27,7 @@ export const FiveThreeOne = {
                 //best var title?
                 type: 'custom',
                 name: '5/3/1',
-                selector: 0 //this is the week number-1
+                selector: 2 //this is the week number-1
             },
             //progress 5lb after every 4 weeks
             progress: {
