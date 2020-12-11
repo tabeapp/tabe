@@ -46,9 +46,8 @@ export const FiveThreeOne = {
         chinup: {
             current: 10,
             setInfo: {
-                sets: 5,
-                reps: 10,
-                '%': 1.0
+                type:'normal',
+                sets: [10,10,10,10,10]
             }
         },
     },

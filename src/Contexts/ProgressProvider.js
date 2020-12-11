@@ -80,7 +80,7 @@ class ProgressProvider extends React.Component {
                 sets = custom.map(set => ({
                     reps: set.reps,
                     progress: null,
-                    weight: set['%'] * routine.info[name].current
+                    weight: Math.ceil(set['%'] * routine.info[name].current/5)*5
                 }))
             }
 
@@ -116,7 +116,7 @@ class ProgressProvider extends React.Component {
 
         compiledExercises[0].sets[0].progress = 'c';
         const workout = {
-            title: routine.name + ' ' + day,
+            title: routine.title + ' ' + day,
             exercises: compiledExercises
         };
 
@@ -152,14 +152,15 @@ class ProgressProvider extends React.Component {
             //const move = newState.workout[exerciseN].progress[setN] === 'c';
             const move = newState.workout.exercises[exerciseN].sets[setN].progress === 'c';
             //newState.workout[exerciseN].progress[setN] = reps;
-            newState.workout.exercises[exerciseN].sets[setN].reps = reps;
+            newState.workout.exercises[exerciseN].sets[setN].progress = reps;
 
             if(move) {
                 if (setN + 1 === newState.workout.exercises[exerciseN].sets.length){
                     if (exerciseN + 1 === newState.workout.exercises.length) {
                         //gotta do somethign about that, maybe open a summary screen
                         newState.done = true;
-                    } else
+                    }
+                    else
                         newState.workout.exercises[exerciseN + 1].sets[0].progress = 'c';
                 }
                 else
@@ -257,18 +258,18 @@ class ProgressProvider extends React.Component {
                 continue;
 
             let curWeight = exercise.sets[0].weight;
-            let curReps = exercise.sets[0].reps;
+            let curReps = exercise.sets[0].progress;
             let curRun = 1;
             for(let j = 1; j < exercise.sets.length; j++){
                 const set = exercise.sets[j];
 
-                if(set.weight === curWeight && set.reps === curReps)
+                if(set.weight === curWeight && set.progress === curReps)
                     curRun++;
                 else{
                     //save and restart counter
                     exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
                     curWeight = set.weight;
-                    curReps = set.reps;
+                    curReps = set.progress;
                     curRun = 1;
                 }
 
@@ -276,10 +277,19 @@ class ProgressProvider extends React.Component {
             //save the last one
             exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
 
+            //will this filter out 0s?
+            exReport.work = exReport.work.filter(s =>
+                s.reps && s.reps !== 'c'
+            )
+
             report.exercises.push(exReport);
         }
 
         //report is now good to save, I think
+        //get rid of empty
+        report.exercises = report.exercises.filter(ex => ex.work.length);
+
+
 
 
 
