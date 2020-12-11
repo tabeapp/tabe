@@ -5,32 +5,59 @@ export const SS = {
     currentDay: 0,
     workouts: {
         A: [
-            {name: 'squat', sets: [5, 5, 5]},
-            {name: 'press', sets: [5, 5, 5]},
-            {name: 'deadlift', sets: [5]},
+            'squat',
+            'bench',
+            'deadlift'
         ],
         B: [
-            {name: 'squat', sets: [5, 5, 5]},
-            {name: 'bench', sets: [5, 5, 5]},
-            {name: 'deadlift', sets: [5]},
+            'squat',
+            'bench',
+            'deadlift'
         ],
     },
     days: [
         'A', null, 'B', null, 'A', null, null,
         'B', null, 'A', null, 'B', null, null,
     ],
-    weight: {
+    info: {
         squat: {
-            current: 235, progress: 5, amrap: true, primary: true
+            current: 235,
+            amrap: true,
+            barbell: true,
+            progress: {
+                amount: 5,
+                rate: 'session',
+            },
+            setInfo: {
+                type: 'normal',
+                sets: [5,5,5]
+            }
         },
         bench: {
-            current: 190, progress: 5, amrap: true, primary: true
-        },
-        press: {
-            current: 150, progress: 5, amrap: true, primary: true
+            current: 190,
+            amrap: true,
+            barbell: true,
+            progress: {
+                amount: 5,
+                rate: 7,
+            },
+            setInfo: {
+                type:'normal',
+                sets: [5,5,5]
+            }
         },
         deadlift: {
-            current: 305, progress: 5, amrap: true, primary: true
-        },
+            current: 305,
+            amrap: true,
+            barbell: true,
+            progress: {
+                amount: 10,
+                rate: 7,
+            },
+            setInfo: {
+                type:'normal',
+                sets: [5,5,5]
+            }
+        }
     }
 }

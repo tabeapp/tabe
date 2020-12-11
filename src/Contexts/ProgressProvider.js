@@ -5,7 +5,7 @@ import { SS } from '../Assets/Routines/SS';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
-const routine = {...FiveThreeOne};
+const routine = {...SS};
 
 //idk
 const maxSets = 12;
