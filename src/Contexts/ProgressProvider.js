@@ -10,7 +10,14 @@ const routine = {...FiveThreeOne};
 //idk
 const maxSets = 12;
 
-const defaultSets = [5,5,5,5,5];
+//5x5
+const defaultSets = [
+    { reps: 5 },
+    { reps: 5 },
+    { reps: 5 },
+    { reps: 5 },
+    { reps: 5 },
+];
 
 //later use user data to get weigths
 const defaultWeight = {
@@ -19,7 +26,7 @@ const defaultWeight = {
     deadlift: 185,
 }
 
-const primaries = [
+const barbells = [
     'bench', 'deadlift', 'press', 'squat'
 ];
 
@@ -161,16 +168,20 @@ class ProgressProvider extends React.Component {
     addExercise = (name) => {
         this.setState(state => {
             let newState = {...state};
-            newState.workout.push({
+            newState.workout.exercises.push({
                 name,
-                sets: [...defaultSets],
-                progress: defaultSets.map(_ => null),
-                current: defaultWeight[name],
-                primary: primaries.includes(name)
+                sets: defaultSets.map(s => ({
+                    ...s,
+                    progress: null,
+                    weight: defaultWeight[name]
+                })),
+                //progress: defaultSets.map(_ => null),
+                //current: defaultWeight[name],
+                barbell: barbells.includes(name)
                 //need to add weight info in here
             });
-            if(newState.workout.length === 1)
-                newState.workout[0].progress[0] = 'c';
+            if(newState.workout.exercises.length === 1)
+                newState.workout.exercises[0].sets[0].progress = 'c';
             return newState;
         });
     }
@@ -179,29 +190,34 @@ class ProgressProvider extends React.Component {
     updateExercise = (exN, add) => {
         this.setState(state => {
             let newState = {...state};
-            let exercise = newState.workout[exN];
+            let exercise = newState.workout.exercises[exN];
             if(add){
-                if(exercise.progress.length >= maxSets)
+                if(exercise.sets.length >= maxSets)
                     return;
 
                 //if the last one is c, push null
                 //if the last one is a number, push c
                 //if the last one is null, push null
-                const lastSet = exercise.progress[exercise.progress.length-1];
+                const lastSet = exercise.sets[exercise.sets.length-1];//.progress;
+
+                let nextProg;
+                //copy the last set
 
                 if(lastSet === 'c' || lastSet === null)
-                    exercise.progress.push(null);
+                    nextProg = null;
                 //'c' or null
                 else
-                    exercise.progress.push('c');
+                    nextProg = 'c';
+
+                exercise.sets.push({...lastSet, progress: nextProg});
 
                 //may need to propogate 'c' all the way to the end
-                exercise.sets.push(exercise.sets[exercise.sets.length-1]);
+                //exercise.sets.push(exercise.sets[exercise.sets.length-1]);
             }
             else{
                 //remove last set
                 exercise.sets.splice(exercise.sets.length-1);
-                exercise.progress.splice(exercise.progress.length-1);
+                //exercise.progress.splice(exercise.progress.length-1);
 
             }
 
