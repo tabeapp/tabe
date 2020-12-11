@@ -1,8 +1,8 @@
-export const SS = {
+export const SS1 = {
     title: 'Starting Strength',
     time: 14,
     next: '?',
-    currentDay: 0,
+    currentDay: 2,
     workouts: {
         A: [
             'squat',
@@ -39,7 +39,7 @@ export const SS = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7,
+                rate: 'session',
             },
             setInfo: {
                 type:'normal',
@@ -52,12 +52,25 @@ export const SS = {
             barbell: true,
             progress: {
                 amount: 10,
-                rate: 7,
+                rate: 'session',
+            },
+            setInfo: {
+                type:'normal',
+                sets: [5]
+            }
+        },
+        press: {
+            current: 155,
+            amrap: true,
+            barbell: true,
+            progress: {
+                amount: 5,
+                rate: 'session',
             },
             setInfo: {
                 type:'normal',
                 sets: [5,5,5]
             }
-        }
+        },
     }
 }

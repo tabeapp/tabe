@@ -1,11 +1,11 @@
 import React from 'react';
 import ProgressContext from './ProgressContext';
 import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
-import { SS } from '../Assets/Routines/SS';
+import { SS1 } from '../Assets/Routines/SS1';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
-const routine = {...MetallicaPPL};
+const routine = {...FiveThreeOne};
 
 //idk
 const maxSets = 12;
