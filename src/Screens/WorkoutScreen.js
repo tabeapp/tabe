@@ -27,7 +27,7 @@ const WorkoutScreen = () => {
                 <Text style={{color: 'black', fontSize: 20}}>{workout.title}</Text>
             </View>
             <View style={styles.container}>{
-                workout.map((ex, index) => (
+                workout.exercises.map((ex, index) => (
                     //or maybe use react context, idfk
                     <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                 ))

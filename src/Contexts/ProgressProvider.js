@@ -30,8 +30,10 @@ class ProgressProvider extends React.Component {
     //save that to contstans lol
     state = {
         loaded: false,
-        title: ''+routine.title,
-        workout: [],
+        workout: {
+            title: ''+routine.title,
+            exercises: []
+        },
         done: false
     }
 
@@ -212,8 +214,51 @@ class ProgressProvider extends React.Component {
     //get rid of all the unnecessary stuff and
     // just put out a good json for posting to the feed
     generateReport = () => {
-        //use workout
-        let workoutSummary = this.state.workout.map(e => ({
+        let report = {};
+        report.name = this.state.workout.title;
+        report.time = new Date().getTime();//get current time;
+
+        report.exercises = [];
+
+        for(let i = 0; i < this.state.workout.exercises.length; i++){
+            const exercise = this.state.workout.exercises[i];
+
+            let exReport = {
+                name: exercise.name,
+                work: []
+            };
+
+            //scan and compile into somethign like 2x3@150, 1x5@180
+            let curWeight = exercise.sets[0].weight;
+            let curReps = exercise.sets[0].reps;
+            let curRun = 1;
+            for(let j = 1; j = exercise.sets.length; j++){
+                const set = exercise.sets[j];
+
+                if(set.weight === curWeight && set.reps === curReps)
+                    curRun++;
+                else{
+                    //save and restart counter
+                    exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
+                    curWeight = set.weight;
+                    curReps = set.reps;
+                    curRun = 1;
+                }
+
+            }
+            //save the last one
+            exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
+
+            report.exercises.push(exReport);
+        }
+
+        //report is now good to save, I think
+
+
+
+
+        /*//use workout
+        let workoutSummary = this.state.workout.exercises.map(e => ({
             name: e.name,
             sets: e.progress.filter(s => s && s !== 'c'),
             weight: e.current
@@ -240,9 +285,9 @@ class ProgressProvider extends React.Component {
 
         desc += sets + 'x';
         desc += reps + '@';
-        desc += heaviest.weight;
+        desc += heaviest.weight;*/
 
-        return desc;
+        return JSON.stringify(report);
 
     };
 
