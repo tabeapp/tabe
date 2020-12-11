@@ -209,7 +209,7 @@ class ProgressProvider extends React.Component {
                 let nextProg;
                 //copy the last set
 
-                if(lastSet === 'c' || lastSet === null)
+                if(lastSet.progress === 'c' || lastSet.progress === null)
                     nextProg = null;
                 //'c' or null
                 else
