@@ -5,7 +5,7 @@ import { SS } from '../Assets/Routines/SS';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
-const routine = {...SS};
+const routine = {...MetallicaPPL};
 
 //idk
 const maxSets = 12;
@@ -56,6 +56,10 @@ workout:{
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 class ProgressProvider extends React.Component {
+    componentDidMount() {
+        this.initializeWorkout()
+    }
+
     //load from local storage?
     //save that to contstans lol
     state = {

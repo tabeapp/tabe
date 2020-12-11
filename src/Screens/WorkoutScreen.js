@@ -9,12 +9,7 @@ import { PRIMARY } from '../Constants/Theme';
 const primaryColor = '#66d6f8';
 
 const WorkoutScreen = () => {
-    let { workout, loaded, initializeWorkout, generateReport} = useContext(ProgressContext);
-
-    useEffect(() => {
-        if (!loaded)
-        {initializeWorkout();}
-    }, []);
+    let { workout, generateReport} = useContext(ProgressContext);
 
     return (
         <>
