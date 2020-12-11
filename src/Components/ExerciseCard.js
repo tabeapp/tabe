@@ -63,11 +63,9 @@ const ExerciseCard = (props) => {
     const items = [];
 
     //only show if they're different or it's custom
-    let showWeightLabel = false;
-    sets.forEach(s => {
-        if(s.weight !== sets[0].weight)
-            showWeightLabel = true;
-    })
+    const showWeightLabel = !sets.every(s =>
+        s.weight === sets[0].weight
+    );
 
     //default is that of last set
     let currentWeight = 0;
