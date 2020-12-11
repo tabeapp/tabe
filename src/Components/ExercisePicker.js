@@ -20,6 +20,7 @@ const ExercisePicker = props => {
         list = EXERCISES[category].map(ex =>
             <TouchableOpacity
                 onPress={() => {
+                    setCategory('');
                     props.close();
                     addExercise(ex);
                 }}
