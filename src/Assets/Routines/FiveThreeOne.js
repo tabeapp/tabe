@@ -3,33 +3,34 @@
 export const FiveThreeOne = {
     title: '5/3/1',
     time: 7,
-    currentDay: 0,
+    currentDay: 3,
     workouts: {
         A:[
             'press', 'dip', 'chinup',
         ],
-        B:[],
-        C:[],
-        D:[],
+        B:[
+            'deadlift', 'goodMorning', 'hangingLegRaise'
+        ],
+        C:[
+            'bench', 'dbPress', 'dbRow'
+        ],
+        D:[
+            'squat', 'legPress', 'legCurl'
+        ],
     },
     days: [
         'A', 'B', null, 'C', 'D', null, null,
     ],
     info:{
         press: {
-            //i just don't know how to best put this
-            //a week number tracker is ideal
             current: 150,
             amrap: true,
             barbell: true,
-            //either setInfo is an object
             setInfo:{
-                //best var title?
                 type: 'custom',
                 name: '5/3/1',
-                selector: 2 //this is the week number-1
+                selector: 0 //this is the week number-1
             },
-            //progress 5lb after every 4 weeks
             progress: {
                 amount: 5,
                 rate: 28
@@ -37,13 +38,96 @@ export const FiveThreeOne = {
         },
         dip: {
             current: 10,
-            //or set info is an array
             setInfo: {
                 type:'normal',
                 sets: [15,15,15,15,15]
             }
         },
         chinup: {
+            current: 10,
+            setInfo: {
+                type:'normal',
+                sets: [10,10,10,10,10]
+            }
+        },
+        deadlift:{
+            current: 315,
+            amrap: true,
+            barbell: true,
+            setInfo:{
+                type: 'custom',
+                name: '5/3/1',
+                selector: 0 //this is the week number-1
+            },
+            progress: {
+                amount: 5,
+                rate: 28
+            }
+        },
+        goodMorning: {
+            current: 10,
+            setInfo: {
+                type:'normal',
+                sets: [12,12,12,12,12]
+            }
+        },
+        hangingLegRaise: {
+            current: 10,
+            setInfo: {
+                type: 'normal',
+                sets: [10, 10, 10, 10, 10]
+            }
+        },
+        bench: {
+            current: 195,
+            amrap: true,
+            barbell: true,
+            setInfo:{
+                type: 'custom',
+                name: '5/3/1',
+                selector: 0 //this is the week number-1
+            },
+            progress: {
+                amount: 5,
+                rate: 28
+            }
+        },
+        dbPress: {
+            current: 10,
+            setInfo: {
+                type:'normal',
+                sets: [15,15,15,15,15]
+            }
+        },
+        dbRow: {
+            current: 10,
+            setInfo: {
+                type:'normal',
+                sets: [10,10,10,10,10]
+            }
+        },
+        squat: {
+            current: 235,
+            amrap: true,
+            barbell: true,
+            setInfo:{
+                type: 'custom',
+                name: '5/3/1',
+                selector: 0 //this is the week number-1
+            },
+            progress: {
+                amount: 5,
+                rate: 28
+            }
+        },
+        legPress: {
+            current: 10,
+            setInfo: {
+                type:'normal',
+                sets: [15,15,15,15,15]
+            }
+        },
+        legCurl: {
             current: 10,
             setInfo: {
                 type:'normal',
@@ -75,6 +159,4 @@ export const FiveThreeOne = {
             ]
         ]
     }
-
-
 }
