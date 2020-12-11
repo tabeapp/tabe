@@ -56,12 +56,6 @@ workout:{
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 class ProgressProvider extends React.Component {
-    componentDidMount() {
-        this.initializeWorkout()
-    }
-
-    //load from local storage?
-    //save that to contstans lol
     state = {
         loaded: false,
         workout: {
@@ -70,6 +64,14 @@ class ProgressProvider extends React.Component {
         },
         done: false
     }
+
+    componentDidMount() {
+        if(!this.state.loaded)
+            this.initializeWorkout()
+    }
+
+    //load from local storage?
+    //save that to contstans lol
 
     //load from storage here
     //this will look at the provided routine and create a workout for the day
