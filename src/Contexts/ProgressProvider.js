@@ -2,9 +2,10 @@ import React from 'react';
 import ProgressContext from './ProgressContext';
 import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
 import { SS } from "../Assets/Routines/SS";
+import { FiveThreeOne } from "../Assets/Routines/FiveThreeOne";
 
 //one way to do it, custom provider object
-const routine = {...SS};
+const routine = {...FiveThreeOne};
 
 //idk
 const maxSets = 12;
@@ -37,23 +38,79 @@ class ProgressProvider extends React.Component {
     initializeWorkout = () => {
         //load from storage here
         //this is just a string
+        //this gets something like 'a'
         let day = routine.days[routine.currentDay % routine.time];
-        //rest day
+
+        //rest day,null
         if(!day)
             return [];
 
-        let workout = routine.workouts[day];
+        //this gets ['ohp', 'dip', 'chinup']
+        let exercises = routine.workouts[day];
 
-        //add weight info
+        let compiledExercises = [];
+
+        for(let i = 0; i < exercises.length; i++){
+            let name = exercises[i];
+
+            //the complex part
+            let sets = [];
+            if(routine.info[name].setInfo.type === 'normal'){
+                sets = routine.info[name].setInfo.sets.map(reps => ({
+                    reps: reps,
+                    progress: null,
+                    weight: routine.info[name].current
+                }))
+            }
+            else if(routine.info[name].setInfo.type === 'custom') {
+                //this is [{reps:5, %: .75}...]
+                let custom = routine.customSet
+                    [routine.info[name].setInfo.name]
+                    [routine.info[name].setInfo.selector];
+
+                sets = custom.map(set => ({
+                    reps: set.reps,
+                    progress: null,
+                    weight: set['%'] * routine.info[name].current
+                }))
+            }
+
+            //amrap for last set
+            if(routine.info[name].setInfo.amrap){
+                sets[sets.length-1].amrap = true;
+            }
+
+
+
+
+
+            compiledExercises.push({
+                name: name,
+                barbell: routine.info[name].barbell,
+                sets: sets
+            })
+
+        }
+
+
+
+
+        /*//add weight info
         workout = workout.map(e => (
-            {...e, ...routine.weight[e.name]} ));
+            {name: e, ...routine.info[e]} ));
         //add prgress
         workout = workout.map(e => (
             //set to null?
             {...e, progress: e.sets.map(_ => null)}
-        ));
+        ));*/
         //set first set to current set
-        workout[0].progress[0] = 'c';
+
+        compiledExercises[0].sets[0].progress = 'c';
+        const workout = {
+            title: routine.name + ' ' + day,
+            exercises: compiledExercises
+        };
+
         this.setState({workout: workout, loaded: true});
     }
 

@@ -24,7 +24,7 @@ const WorkoutScreen = () => {
     return (
         <SafeAreaView>
             <View style={styles.top}>
-                <Text style={{color: 'black', fontSize: 20}}>{title}</Text>
+                <Text style={{color: 'black', fontSize: 20}}>{workout.title}</Text>
             </View>
             <View style={styles.container}>{
                 workout.map((ex, index) => (

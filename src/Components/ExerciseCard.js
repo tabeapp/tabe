@@ -27,18 +27,19 @@ const ExerciseCard = (props) => {
     //this shoudl be fine
     //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
     //current is 315, primary is true, amrap is true
-    const {name, sets, progress,
-        //these are copied from weight
-        current, primary, amrap} = props.exercise;
+    //const {name, sets, progress,
+    ////these are copied from weight
+    //current, primary, amrap} = props.exercise;
 
+    const {name, barbell, sets} = props.exercise;
 
     let colors = [];
     let outlines = [];
     let done = true;
 
-    sets.forEach((set, n) => {
+    sets.forEach(set => {
         //it'll be null
-        if(!progress[n] || progress[n] === 'c'){
+        if(!set.progress || set.progress === 'c'){
             colors.push('transparent');
             outlines.push(secondaryColor);
             done = false;
@@ -61,37 +62,39 @@ const ExerciseCard = (props) => {
     //weights, circles, and more fun
     const items = [];
 
-    sets.forEach((n, index) => {
-        const prog = progress[index];
+    //default is that of last set
+    let currentWeight = sets[sets.length-1].weight;
 
-        let completion = prog >= n ? 1 : 0;
+    sets.forEach((set,index) => {
+        const {amrap, progress, reps, weight} = set;
+
+        let completion = progress >= reps ? 1 : 0;
         //let done = progress && progress[index] >= n;
-        if(index === sets.length-1){
-            if(amrap){
-                if(prog >= n)
-                    n = prog;
-                else
-                    n += '+';
-            }
-        }
+        //if(index === sets.length-1){
+        let text = progress;
+        if(amrap && !progress)
+            text = reps + '+';
 
-        let current = prog === 'c';
+        let current = progress === 'c';
+
+        if(current)
+            currentWeight = weight;
+
         items.push(
-            <SetCircle key={index} progress={prog} current={current} info={[props.exerciseN, index]} text={n} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+            <SetCircle key={index} progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
         );
-
 
         if(index !== sets.length-1)
             items.push(<MidLine key={index+'-'} completion={completion}/>);
     });
 
     //cool weight icons, trust me looks cool
-    if(primary){
+    if(barbell){
         items.unshift(<MidLine key={'b'} completion={1}/>);
         items.push(<MidLine key={'y'} completion={1}/>);
 
-        items.unshift(<WeightVisual key={'a'} weight={current} reverse={true} />);
-        items.push(<WeightVisual key={'z'} weight={current}/>);
+        items.unshift(<WeightVisual key={'a'} weight={currentWeight} reverse={true} />);
+        items.push(<WeightVisual key={'z'} weight={currentWeight}/>);
     }
 
 
@@ -99,7 +102,7 @@ const ExerciseCard = (props) => {
         <View style={styles.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={{ color: 'white' }}>{name}</Text>
-                <Text style={{ color: 'white' }}>{current}</Text>
+                <Text style={{ color: 'white' }}>{currentWeight}</Text>
             </View>
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
