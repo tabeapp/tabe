@@ -1,4 +1,5 @@
 import React from 'react';
+import SmoothPicker from 'react-native-smooth-picker';
 import { View, FlatList, ScrollView, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { PRIMARY } from "../Constants/Theme";
@@ -43,8 +44,20 @@ const NumericSelector = () => {
     );*/
 
     return (
+        <SmoothPicker
+            style={{height: 70, borderRadius: 5, backgroundColor: 'white', maxWidth: 100}}
+            offsetSelection={26}
+            magnet
+            scrollAnimation
+            data={Array.from({length: 200}, (_,i) => i*5)}
+            onSelected={({item}) => {console.log(item)/*this is key*/}}
+            renderItem={({item}) => (
+                <Text key={item} style={{textAlign: 'center', fontSize: 40}}>{item}</Text>
+            )}
+        />
 
-        <Picker
+        //this has a weird gray box
+        /*<Picker
             selectedValue={0}
             style={{width: 100}}
             itemStyle={{fontSize: 40, borderRadius: 5, height: 70, backgroundColor:'white'}}
@@ -52,10 +65,10 @@ const NumericSelector = () => {
         >
             {
                 temp.map(item =>
-                    <Picker.Item label={''+item} value={item} style={{borderWidth: 1, borderColor: 'red' }}/>
+                    <Picker.Item label={''+item} value={item} style={{}}/>
                 )
             }
-        </Picker>
+        </Picker>*/
 
     );
 };
