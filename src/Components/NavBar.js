@@ -20,7 +20,7 @@ const iconMapping = {
 };
 
 const NavBar = props => {
-    const {initializeWorkout, initializeCustom} = useContext(ProgressContext);
+    const {checkRoutine, initializeWorkout, initializeCustom} = useContext(ProgressContext);
 
     const { current } = props;
     const handlePress = (r) => {
@@ -39,10 +39,14 @@ const NavBar = props => {
         props.navigation.navigate('customworkout');
     };
 
-    const routineStart = () => {
-
-        initializeWorkout();
-        props.navigation.navigate('workout');
+    const routineStart = async () => {
+        let hasRoutine = await checkRoutine();
+        if(hasRoutine){
+            initializeWorkout();
+            props.navigation.navigate('workout');
+        }else{
+            props.navigation.navigate('routinesetup');
+        }
     };
 
     return (<View style={styles.navBar}>{

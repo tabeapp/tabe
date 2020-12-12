@@ -109,6 +109,17 @@ class ProgressProvider extends React.Component {
         }
     }
 
+    //this checks if the user is following a routine as of now
+    //if not it returns false
+    //used for navigation, setting up new routine
+    checkRoutine = async () => {
+        const routine = await AsyncStorage.getItem('@currentRoutine');
+
+        //just return false for testing for now
+        return false;
+        //return routine !== null;
+    }
+
     //load from local storage?
     //save that to contstans lol
 
@@ -342,6 +353,7 @@ class ProgressProvider extends React.Component {
         return (
             <ProgressContext.Provider value={{
                 loaded: this.state.loaded,
+                checkRoutine: this.checkRoutine,
                 initializeWorkout: this.initializeWorkout,
                 initializeCustom: this.initializeCustom,
                 workout: this.state.workout,
