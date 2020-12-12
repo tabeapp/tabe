@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SmoothPicker from 'react-native-smooth-picker';
-import { View, FlatList, ScrollView, Text } from "react-native";
+import { WrapperList, View, FlatList, ScrollView, Text } from "react-native";
 
 //im making my own, screw the libs
 //notes:
@@ -49,19 +49,26 @@ const NumericSelector = () => {
     );*/
 
     return (
-        <SmoothPicker
-            style={{height: 70, borderRadius: 5, backgroundColor: 'white', maxWidth: 100}}
-            onSelected={({_, index}) => {setSelected(index)/*this is key*/}}
-            data={temp}
-            renderItem={({item, index}) => {
-                const color = index===selected?'blue':'black';
-                return (
-                    <Text key={item} style={{backgroundColor: 'gray', borderColor: 'red', borderWidth: 1, color: color, textAlign: 'center', fontSize: 40}}>{
-                        item
-                    }</Text>
-                )
-            }}
-        />
+        <View style={{height: 50, borderRadius: 5, backgroundColor: 'white', width: 100}} >
+            <SmoothPicker
+                onSelected={({_, index}) => {setSelected(index)/*this is key*/}}
+                snapInterval={50}
+                //offsetSelection={-10}
+                scrollAnimation
+                data={temp}
+                snapToAlignment={'start'}
+                //startMargin={10}
+                initialScrollToIndex={5}
+                renderItem={({item, index}) => {
+                    const color = index===selected?'blue':'black';
+                    return (
+                        <Text key={item} style={{height: 50, backgroundColor: index%2?'white':'gray', color: color, textAlign: 'center', fontSize: 40}}>{
+                            item
+                        }</Text>
+                    )
+                }}
+            />
+        </View>
 
         //this has a weird gray box
         /*<Picker
