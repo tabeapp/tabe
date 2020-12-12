@@ -120,6 +120,11 @@ class ProgressProvider extends React.Component {
         //return routine !== null;
     }
 
+    setRoutine = async routine => {
+        //no you don't just save teh routine string, you actually need the object
+        await AsyncStorage.setItem('@currentRoutine', routine);
+    }
+
     //load from local storage?
     //save that to contstans lol
 
@@ -354,6 +359,7 @@ class ProgressProvider extends React.Component {
             <ProgressContext.Provider value={{
                 loaded: this.state.loaded,
                 checkRoutine: this.checkRoutine,
+                setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
                 initializeCustom: this.initializeCustom,
                 workout: this.state.workout,

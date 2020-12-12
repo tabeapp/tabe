@@ -11,7 +11,8 @@ import ExploreScreen from "./src/Screens/ExploreScreen";
 import RoutineScreen from "./src/Screens/RoutineScreen";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import WorkoutScreen from "./src/Screens/WorkoutScreen";
-import RoutineSetupScreen from "./src/Screens/RoutineSetupScreen";
+import ChooseRoutineScreen from "./src/Screens/ChooseRoutineScreen";
+import RoutineSetupScreen from "./src/Screens/RoutineSetupSreen";
 
 const Stack = createStackNavigator();
 
@@ -21,12 +22,13 @@ const App = () => {
         <ProgressProvider>
 
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="routinesetup" screenOptions={{headerShown:false,
+                <Stack.Navigator initialRouteName="chooseroutine" screenOptions={{headerShown:false,
                     cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
                 }}>
                     <Stack.Screen name="home" component={HomeScreen}/>
                     <Stack.Screen name="explore" component={ExploreScreen}/>
-                    <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="routinesetup" component={RoutineSetupScreen} />
                     <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="routine" component={RoutineScreen}/>
