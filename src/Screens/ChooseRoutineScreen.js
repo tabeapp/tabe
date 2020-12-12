@@ -71,7 +71,8 @@ const ChooseRoutineScreen = props => {
                     onPress={handleCustomPress}
                     style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
                 >
-                    <Text style={{color: 'white'}}>Custom</Text>
+                    <Text style={{fontSize: 20, color: 'white'}}>Custom</Text>
+                    <Text style={{color: 'white'}}>Build your own routine</Text>
                 </TouchableOpacity>
             </SafeAreaView>
         </>

@@ -22,7 +22,7 @@ const App = () => {
         <ProgressProvider>
 
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="chooseroutine" screenOptions={{headerShown:false,
+                <Stack.Navigator initialRouteName="routinesetup" screenOptions={{headerShown:false,
                     cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
                 }}>
                     <Stack.Screen name="home" component={HomeScreen}/>
