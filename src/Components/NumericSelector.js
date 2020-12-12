@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import SmoothPicker from 'react-native-smooth-picker';
 import { WrapperList, View, FlatList, ScrollView, Text } from "react-native";
+import { PRIMARY } from "../Constants/Theme";
+import { Picker } from "@react-native-picker/picker";
 
 //im making my own, screw the libs
 //notes:
@@ -10,10 +12,6 @@ const NumericSelector = () => {
 
     const [selected, setSelected] = useState(0);
 
-    const onViewableItemsChanged = ({viewableItems, changed}) => {
-        console.log('Visible items are', viewableItems);
-        console.log('Change in this iteration', changed)
-    };
     //props will include a onchnage, which will updated teh reps or wahtever
     //props should also include min, max, increment
 
@@ -31,59 +29,43 @@ const NumericSelector = () => {
     //const temp = Array.from({length: 200}, (_,i) => i*5);
 
 
-    //how the fuck do you keep this from growin
-    /*return (
-        <FlatList
-            style={{maxWidth: 80, borderRadius: 5, height: 50, backgroundColor: 'white'}}
-            data={temp}
-            keyExtractor={item => item}
-            renderItem={renderNumber}
-            onViewableItemsChanged={
-                ({viewableItems, changed}) => {
-                    console.log('Visible items are', viewableItems);
-                    console.log('Change in this iteration', changed)
-                }
-            }
-            viewabilityConfig={{itemVisiblePercentThreshold: 50}}
-        />
-    );*/
-
+    //so fucking close, but also dumb as fuck
+    /*
     return (
-        <View style={{height: 50, borderRadius: 5, backgroundColor: 'white', width: 100}} >
+        <View style={{height: 80, borderRadius: 5, backgroundColor: 'white', width: 100}} >
             <SmoothPicker
-                onSelected={({_, index}) => {setSelected(index)/*this is key*/}}
+                onSelected={({_, index}) => {console.log(index);setSelected(index+1)}}
                 snapInterval={50}
-                //offsetSelection={-10}
-                scrollAnimation
                 data={temp}
-                snapToAlignment={'start'}
-                //startMargin={10}
-                initialScrollToIndex={5}
+                snapToAlignment={'center'}
+                startMargin={0.000001}//this is so fucking stupid
+                endMargin={0.000001}
                 renderItem={({item, index}) => {
-                    const color = index===selected?'blue':'black';
+                    const color = index===selected?PRIMARY:'white';
                     return (
-                        <Text key={item} style={{height: 50, backgroundColor: index%2?'white':'gray', color: color, textAlign: 'center', fontSize: 40}}>{
+                        <Text key={item} style={{height: 50, backgroundColor: color, textAlign: 'center', fontSize: 40}}>{
                             item
                         }</Text>
                     )
                 }}
             />
-        </View>
+        </View>*/
 
         //this has a weird gray box
-        /*<Picker
-            selectedValue={0}
+        return (<Picker
+            selectedValue={selected}
             style={{width: 100}}
             itemStyle={{fontSize: 40, borderRadius: 5, height: 70, backgroundColor:'white'}}
-            //onValueChange={() => {}}
+            onValueChange={(value) => {
+                setSelected(value)
+            }}
         >
             {
                 temp.map(item =>
                     <Picker.Item label={''+item} value={item} style={{}}/>
                 )
             }
-        </Picker>*/
-
+        </Picker>
     );
 };
 
