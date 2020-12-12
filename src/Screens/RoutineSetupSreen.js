@@ -6,6 +6,7 @@ import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
 import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
+import NumericSelector from "../Components/NumericSelector";
 
 const primaryColor = '#66d6f8';
 
@@ -41,6 +42,7 @@ const RoutineSetupScreen = props => {
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
                                 <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
 
+                                <NumericSelector/>
                                 <ScrollView style={{maxWidth: 60, height: 50, backgroundColor: 'white'}}>
                                     <Text style={{fontSize: 40}}>10</Text>
                                     <Text style={{fontSize: 40}}>10</Text>
@@ -48,7 +50,10 @@ const RoutineSetupScreen = props => {
 
                                 <Text style={{fontSize: 20, color: 'white'}}>x</Text>
 
-                                <Text style={{fontSize: 40, backgroundColor: 'white'}}>115</Text>
+                                <ScrollView style={{maxWidth: 70, height: 50, backgroundColor: 'white'}}>
+                                    <Text style={{fontSize: 40}}>115</Text>
+                                    <Text style={{fontSize: 40}}>120</Text>
+                                </ScrollView>
 
 
                             </View>
