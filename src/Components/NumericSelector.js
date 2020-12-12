@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SmoothPicker from 'react-native-smooth-picker';
 import { View, FlatList, ScrollView, Text } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { PRIMARY } from "../Constants/Theme";
 
 //im making my own, screw the libs
 //notes:
 //min reps is 0, max reps is lets say 50 width __ is good
 //min weight is 0, max weight is... 1000, width __ is good
 const NumericSelector = () => {
+
+    const [selected, setSelected] = useState(0);
+
     const onViewableItemsChanged = ({viewableItems, changed}) => {
         console.log('Visible items are', viewableItems);
         console.log('Change in this iteration', changed)
@@ -24,6 +25,10 @@ const NumericSelector = () => {
         <Text style={{textAlign: 'center', fontSize: 40}}>{
             item
         }</Text>;
+
+
+
+    //const temp = Array.from({length: 200}, (_,i) => i*5);
 
 
     //how the fuck do you keep this from growin
@@ -46,14 +51,16 @@ const NumericSelector = () => {
     return (
         <SmoothPicker
             style={{height: 70, borderRadius: 5, backgroundColor: 'white', maxWidth: 100}}
-            offsetSelection={26}
-            magnet
-            scrollAnimation
-            data={Array.from({length: 200}, (_,i) => i*5)}
-            onSelected={({item}) => {console.log(item)/*this is key*/}}
-            renderItem={({item}) => (
-                <Text key={item} style={{textAlign: 'center', fontSize: 40}}>{item}</Text>
-            )}
+            onSelected={({_, index}) => {setSelected(index)/*this is key*/}}
+            data={temp}
+            renderItem={({item, index}) => {
+                const color = index===selected?'blue':'black';
+                return (
+                    <Text key={item} style={{backgroundColor: 'gray', borderColor: 'red', borderWidth: 1, color: color, textAlign: 'center', fontSize: 40}}>{
+                        item
+                    }</Text>
+                )
+            }}
         />
 
         //this has a weird gray box
