@@ -28,7 +28,7 @@ const NumericSelector = () => {
         <Picker
             selectedValue={selected}
             style={{width: 100}}
-            itemStyle={{fontSize: 40, borderRadius: 5, height: 70, backgroundColor:'white'}}
+            itemStyle={{fontSize: 40, borderRadius: 5, height: 70}}
             onValueChange={(value) => {
                 setSelected(value)
             }}
