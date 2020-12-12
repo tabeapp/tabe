@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList, ScrollView, Text } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { PRIMARY } from "../Constants/Theme";
 
 //im making my own, screw the libs
 //notes:
@@ -42,18 +43,19 @@ const NumericSelector = () => {
     );*/
 
     return (
-        <View style={{height: 60}}>
 
-            <Picker
-                selectedValue={0}
-                style={{top: -90, height: 0, width: 80, borderRadius: 5, backgroundColor: 'white'}}
-                //onValueChange={() => {}}
-            >{
+        <Picker
+            selectedValue={0}
+            style={{width: 100}}
+            itemStyle={{fontSize: 40, borderRadius: 5, height: 70, backgroundColor:'white'}}
+            //onValueChange={() => {}}
+        >
+            {
                 temp.map(item =>
-                    <Picker.Item style={{color: 'white'}} label={''+item} value={item}/>
+                    <Picker.Item label={''+item} value={item} style={{borderWidth: 1, borderColor: 'red' }}/>
                 )
-            }</Picker>
-        </View>
+            }
+        </Picker>
 
     );
 };
