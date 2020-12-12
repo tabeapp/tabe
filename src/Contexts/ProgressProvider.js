@@ -204,6 +204,7 @@ class ProgressProvider extends React.Component {
                 if (setN + 1 === exercises[exerciseN].sets.length){
                     if (exerciseN + 1 === exercises.length) {
                         //gotta do somethign about that, maybe open a summary screen
+                        //call generate report from here
                         newState.done = true;
                         AsyncStorage.removeItem('@currentWorkout');
                     }
@@ -324,7 +325,17 @@ class ProgressProvider extends React.Component {
         //get rid of empty
         report.exercises = report.exercises.filter(ex => ex.work.length);
 
-        return JSON.stringify(report);
+        let x = '';
+        report.exercises.forEach(ex => {
+            x += ex.name + ' ';
+            ex.work.forEach(info => {
+                x += info.sets + 'x' + info.reps + '@' + info.weight + ',';
+            });
+            x = x.substring(0, x.length-1);
+            x += '\n';
+        });
+
+        return x;
     };
 
     render() {
