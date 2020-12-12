@@ -41,7 +41,10 @@ const RoutineSetupScreen = props => {
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
                                 <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
 
-                                <Text style={{backgroundColor:'white', fontSize: 40}}>10</Text>
+                                <ScrollView style={{maxWidth: 60, height: 50, backgroundColor: 'white'}}>
+                                    <Text style={{fontSize: 40}}>10</Text>
+                                    <Text style={{fontSize: 40}}>10</Text>
+                                </ScrollView>
 
                                 <Text style={{fontSize: 20, color: 'white'}}>x</Text>
 
