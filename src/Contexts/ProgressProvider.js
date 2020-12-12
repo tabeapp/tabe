@@ -1,5 +1,7 @@
 import React from 'react';
+import {AppState} from 'react-native';
 import ProgressContext from './ProgressContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
 import { SS1 } from '../Assets/Routines/SS1';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
@@ -66,8 +68,45 @@ class ProgressProvider extends React.Component {
     }
 
     componentDidMount() {
-        if(!this.state.loaded)
-            this.initializeWorkout()
+        AppState.addEventListener('change', this.handleAppStateChange);
+
+        (async () => {
+            try {
+                const val = await AsyncStorage.getItem('@currentWorkout');
+
+                //if there is no current workout, reinitalize
+                if (val === null)
+                    this.initializeWorkout();
+                //if there is a workout, use that
+                else{
+                    this.setState({
+                        workout: JSON.parse(val)
+                    });
+                }
+            }catch(e){
+            }
+        })();
+
+        //if(!this.state.loaded)
+        //this.initializeWorkout()
+    }
+
+    //save
+    //it's either this or save on every change
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange);
+    }
+
+    handleAppStateChange = nextAppState => {
+        if(nextAppState === 'inactive') {
+            (async () => {
+                try {
+                    await AsyncStorage.setItem('@currentWorkout',
+                        JSON.stringify(this.state.workout)
+                    );
+                } catch (e) { }
+            })();
+        }
     }
 
     //load from local storage?
@@ -166,6 +205,7 @@ class ProgressProvider extends React.Component {
                     if (exerciseN + 1 === exercises.length) {
                         //gotta do somethign about that, maybe open a summary screen
                         newState.done = true;
+                        AsyncStorage.removeItem('@currentWorkout');
                     }
                     else
                         exercises[exerciseN + 1].sets[0].progress = 'c';
