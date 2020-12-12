@@ -43,18 +43,10 @@ const RoutineSetupScreen = props => {
                                 <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
 
                                 <NumericSelector/>
-                                <ScrollView style={{maxWidth: 60, height: 50, backgroundColor: 'white'}}>
-                                    <Text style={{fontSize: 40}}>10</Text>
-                                    <Text style={{fontSize: 40}}>10</Text>
-                                </ScrollView>
 
                                 <Text style={{fontSize: 20, color: 'white'}}>x</Text>
 
-                                <ScrollView style={{maxWidth: 70, height: 50, backgroundColor: 'white'}}>
-                                    <Text style={{fontSize: 40}}>115</Text>
-                                    <Text style={{fontSize: 40}}>120</Text>
-                                </ScrollView>
-
+                                <NumericSelector/>
 
                             </View>
                         </View>
