@@ -21,7 +21,7 @@ export const SSDefault = {
     ],
     info: {
         squat: {
-            current: 235,
+            def1RM: 145,
             amrap: true,
             barbell: true,
             progress: {
@@ -34,7 +34,7 @@ export const SSDefault = {
             }
         },
         bench: {
-            current: 190,
+            def1RM: 105,
             amrap: true,
             barbell: true,
             progress: {
@@ -47,7 +47,7 @@ export const SSDefault = {
             }
         },
         deadlift: {
-            current: 305,
+            def1RM: 165,
             amrap: true,
             barbell: true,
             progress: {
@@ -60,7 +60,7 @@ export const SSDefault = {
             }
         },
         press: {
-            current: 155,
+            def1RM: 70,
             amrap: true,
             barbell: true,
             progress: {

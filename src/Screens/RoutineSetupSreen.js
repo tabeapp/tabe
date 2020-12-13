@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from "react";
 import {TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
@@ -6,10 +6,9 @@ import { PRIMARY } from '../Constants/Theme';
 import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
 import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
 import NumericSelector from '../Components/NumericSelector';
+import ProgressContext from "../Contexts/ProgressContext";
 
 const primaryColor = '#66d6f8';
-
-const defaultRoutine = 'MetallicaPPL';
 
 const repNumbers = {
     def: 1,
@@ -20,18 +19,12 @@ const repNumbers = {
 
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
+    const {generateRoutine} = useContext(ProgressContext);
+
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
-    let chosenRoutine = defaultRoutine;
 
-    let loadRoutine;
-
-    //load from web or something later
-    if(chosenRoutine === 'Starting Strength')
-        loadRoutine = SSDefault;
-    //so this takes the 1rm effort and multiplies it by .7 for 5, .4 for 12, .32 for 20
-    else if(chosenRoutine === 'MetallicaPPL')
-        loadRoutine = MetallicaPPLDefault;
+    const loadRoutine = SSDefault;
 
     const idk = Object.entries(loadRoutine.info).map(([k,v]) => ({
         name: k,
@@ -39,11 +32,19 @@ const RoutineSetupScreen = props => {
         weight: v.def1RM
     })).filter(i => !i.name.includes('.ez'));
 
-    const [maxEffort, setMaxEffort] = useState(idk);
+    const [maxEfforts, setMaxEfforts] = useState(idk);
+
+    const handleNext = () => {
+        //generate a routine we're gonna do this in the contextprovider
+        generateRoutine(loadRoutine, maxEfforts);
+
+        //start the workout
+        //navigate('workout')
+    };
 
     //this feels really fucking convoluted
     const updateRep = (ex, reps) => {
-        setMaxEffort(maxEffort.map(e => {
+        setMaxEfforts(maxEfforts.map(e => {
             if(e.name === ex)
                 return {...e, reps};
             return e;
@@ -52,7 +53,7 @@ const RoutineSetupScreen = props => {
 
     //this can't be right
     const updateWeight = (ex, weight) => {
-        setMaxEffort(maxEffort.map(e => {
+        setMaxEfforts(maxEfforts.map(e => {
             if(e.name === ex)
                 return {...e, weight};
             return e;
@@ -65,19 +66,19 @@ const RoutineSetupScreen = props => {
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.topButton}>
-                        <Text style={{justifySelf: 'flex-end', color: 'white', fontSize: 20}}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Back
                         </Text>
                     </TouchableOpacity>
                     <Text style={{justifySelf: 'center', fontSize: 20}}>Routine Setup</Text>
-                    <TouchableOpacity style={styles.topButton}>
-                        <Text style={{justifySelf: 'flex-end', color: 'white', fontSize: 20}}>
+                    <TouchableOpacity onPress={handleNext} style={styles.topButton}>
+                        <Text style={{color: 'white', fontSize: 20}}>
                             Begin
                         </Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView>{
-                    maxEffort.map(ex =>
+                    maxEfforts.map(ex =>
                         <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
                             <Text style={{fontSize: 20, color: 'white'}}>{ex.name}</Text>
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>

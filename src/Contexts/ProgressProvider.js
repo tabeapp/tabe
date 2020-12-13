@@ -97,6 +97,7 @@ class ProgressProvider extends React.Component {
         AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
+    //this saves workout to storage when the app is closed
     handleAppStateChange = nextAppState => {
         if(nextAppState === 'inactive') {
             (async () => {
@@ -118,6 +119,23 @@ class ProgressProvider extends React.Component {
         //just return false for testing for now
         return false;
         //return routine !== null;
+    }
+
+    generateRoutine = (baseRoutine, efforts) => {
+        const routine = {...baseRoutine};
+        efforts.forEach(ex => {
+            //clear that, don't need it
+            routine.info[ex.name].def1RM = undefined;
+
+            //step 1, calculate one rep max
+            let orm = ex.weight*ex.reps;
+            //step 2, multiply * .9 to get training orm
+            orm *= .9;
+
+            //step 3, 5/3/1 will just take that orm, starting strength will use 5RM
+            routine.info[ex.name].current = orm*???;
+        })
+        this.setRoutine(routine).then();
     }
 
     setRoutine = async routine => {
@@ -358,6 +376,7 @@ class ProgressProvider extends React.Component {
         return (
             <ProgressContext.Provider value={{
                 loaded: this.state.loaded,
+                generateRoutine: this.generateRoutine,
                 checkRoutine: this.checkRoutine,
                 setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
