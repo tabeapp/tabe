@@ -79,11 +79,11 @@ class ProgressProvider extends React.Component {
                 const val = await AsyncStorage.getItem('@currentRoutine');
 
                 //if there is no current workout, reinitalize
-                /*if (val !== null){
+                if (val !== null){
                     this.setState({
                         routine: JSON.parse(val)
                     });
-                }*/
+                }
             }catch(e){
             }
         })();
