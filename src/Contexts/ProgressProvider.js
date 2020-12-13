@@ -70,20 +70,20 @@ class ProgressProvider extends React.Component {
 
     componentDidMount() {
         AppState.addEventListener('change', this.handleAppStateChange);
+        //don't initialize the workout, just load the routine if it's there
+
+        //load the routine, if it exists
+        //if it exists, also load the workout
 
         (async () => {
             try {
-                const val = await AsyncStorage.getItem('@currentWorkout');
+                const val = await AsyncStorage.getItem('@currentRoutine');
 
                 //if there is no current workout, reinitalize
-                if (val === null)
-                    this.initializeWorkout();
-                //if there is a workout, use that
-                else{
+                if (val !== null)
                     this.setState({
-                        workout: JSON.parse(val)
+                        routine: JSON.parse(val)
                     });
-                }
             }catch(e){
             }
         })();
@@ -124,6 +124,7 @@ class ProgressProvider extends React.Component {
 
     generateRoutine = (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
+        routine.currentDay = 0;
 
         //need to iterate because of press vs press.ez
         efforts.forEach(ex => {
@@ -148,20 +149,23 @@ class ProgressProvider extends React.Component {
             else
                 routineEx.current = orm;
 
+            routineEx.current = Math.floor(routineEx.current/5)*5;
+
             const ez = routine.info[ex.name + '.ez'];
             if(ez){
                 if(ez.setInfo.type === 'normal')
                     ez.current = orm/(1+ez.setInfo.sets[0]/30);
                 else
                     ez.current = orm;
+                ez.current = Math.floor(ez.current/5)*5;
             }
 
         });
-        console.log(routine);
         this.setRoutine(routine).then();
     }
 
     setRoutine = async routine => {
+        this.setState({routine});
         //no you don't just save teh routine string, you actually need the object
         await AsyncStorage.setItem('@currentRoutine', JSON.stringify(routine));
     }
@@ -400,6 +404,7 @@ class ProgressProvider extends React.Component {
         return (
             <ProgressContext.Provider value={{
                 loaded: this.state.loaded,
+                routine: this.state.routine,
                 generateRoutine: this.generateRoutine,
                 checkRoutine: this.checkRoutine,
                 setRoutine: this.setRoutine,

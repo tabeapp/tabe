@@ -3,7 +3,7 @@
 export const FiveThreeOneDefault = {
     title: '5/3/1',
     time: 7,
-    currentDay: 3,
+    //currentDay: 3,
     workouts: {
         A:[
             'press', 'dip', 'chinup',
@@ -23,7 +23,7 @@ export const FiveThreeOneDefault = {
     ],
     info:{
         press: {
-            current: 150,
+            current: 140,
             amrap: true,
             barbell: true,
             setInfo:{
@@ -37,21 +37,21 @@ export const FiveThreeOneDefault = {
             }
         },
         dip: {
-            current: 10,
+            current: 80,
             setInfo: {
                 type:'normal',
                 sets: [15,15,15,15,15]
             }
         },
         chinup: {
-            current: 10,
+            current: 50,
             setInfo: {
                 type:'normal',
                 sets: [10,10,10,10,10]
             }
         },
         deadlift:{
-            current: 315,
+            current: 330,
             amrap: true,
             barbell: true,
             setInfo:{
@@ -65,7 +65,7 @@ export const FiveThreeOneDefault = {
             }
         },
         goodMorning: {
-            current: 10,
+            current: 95,
             setInfo: {
                 type:'normal',
                 sets: [12,12,12,12,12]
@@ -79,7 +79,7 @@ export const FiveThreeOneDefault = {
             }
         },
         bench: {
-            current: 195,
+            current: 215,
             amrap: true,
             barbell: true,
             setInfo:{
@@ -93,21 +93,21 @@ export const FiveThreeOneDefault = {
             }
         },
         dbPress: {
-            current: 10,
+            current: 55,
             setInfo: {
                 type:'normal',
                 sets: [15,15,15,15,15]
             }
         },
         dbRow: {
-            current: 10,
+            current: 45,
             setInfo: {
                 type:'normal',
                 sets: [10,10,10,10,10]
             }
         },
         squat: {
-            current: 235,
+            current: 285,
             amrap: true,
             barbell: true,
             setInfo:{
@@ -121,14 +121,14 @@ export const FiveThreeOneDefault = {
             }
         },
         legPress: {
-            current: 10,
+            current: 375,
             setInfo: {
                 type:'normal',
                 sets: [15,15,15,15,15]
             }
         },
         legCurl: {
-            current: 10,
+            current: 125,
             setInfo: {
                 type:'normal',
                 sets: [10,10,10,10,10]

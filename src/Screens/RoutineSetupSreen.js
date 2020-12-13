@@ -20,7 +20,7 @@ const repNumbers = {
 
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
-    const {generateRoutine} = useContext(ProgressContext);
+    const {initializeWorkout, generateRoutine} = useContext(ProgressContext);
 
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
@@ -39,8 +39,10 @@ const RoutineSetupScreen = props => {
         //generate a routine we're gonna do this in the contextprovider
         generateRoutine(loadRoutine, maxEfforts);
 
+        initializeWorkout();
         //start the workout
         //navigate('workout')
+        props.navigation.navigate('workout');
     };
 
     //this feels really fucking convoluted
