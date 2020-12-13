@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
@@ -23,9 +23,11 @@ const repNumbers = {
 const RoutineSetupScreen = props => {
     //let { workout, generateReport} = useContext(ProgressContext);
 
+
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
     let chosenRoutine = defaultRoutine;
+
 
     let loadRoutine;
 
@@ -36,6 +38,33 @@ const RoutineSetupScreen = props => {
     else if(chosenRoutine === 'MetallicaPPL')
         loadRoutine = MetallicaPPLDefault;
 
+
+    const idk = Object.entries(loadRoutine.info).map(([k,v]) => ({
+        name: k,
+        reps: 1,
+        weight: v.def1RM
+    })).filter(i => !i.name.includes('.ez'));
+
+    const [maxEffort, setMaxEffort] = useState(idk);
+
+    //this feels really fucking convoluted
+    const updateRep = (ex, reps) => {
+        setMaxEffort(maxEffort.map(e => {
+            if(e.name === ex)
+                return {...e, reps};
+            return e;
+        }));
+    };
+
+    //this can't be right
+    const updateWeight = (ex, weight) => {
+        setMaxEffort(maxEffort.map(e => {
+            if(e.name === ex)
+                return {...e, weight};
+            return e;
+        }));
+    };
+
     return (
         <>
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
@@ -44,18 +73,17 @@ const RoutineSetupScreen = props => {
                     <Text style={{color: 'black', fontSize: 20}}>Routine Setup</Text>
                 </View>
                 <ScrollView>{
-                    Object.entries(loadRoutine.info).map(([k,v]) =>
-                        !k.includes('.ez') &&
-                        <View key={k} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
-                            <Text style={{fontSize: 20, color: 'white'}}>{k}</Text>
+                    maxEffort.map(ex =>
+                        <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
+                            <Text style={{fontSize: 20, color: 'white'}}>{ex.name}</Text>
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
                                 <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
 
-                                <NumericSelector onChange={() => {}} numInfo={repNumbers}/>
+                                <NumericSelector onChange={reps => updateRep(ex.name, reps)} numInfo={repNumbers}/>
 
                                 <Text style={{fontSize: 20, color: 'white'}}>x</Text>
 
-                                <NumericSelector onChange={() => {}} numInfo={{def: v.def1RM, min: 0, max: 1000, increment: 5}}/>
+                                <NumericSelector onChange={weight => updateWeight(ex.name, weight)} numInfo={{def: ex.weight, min: 0, max: 1000, increment: 5}}/>
                             </View>
                         </View>
                     )
