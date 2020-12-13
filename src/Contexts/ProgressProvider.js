@@ -7,7 +7,7 @@ import { SS1 } from '../Assets/Routines/SS1';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
-const routine = {...FiveThreeOne};
+const routineDef = {...FiveThreeOne};
 
 //idk
 const maxSets = 12;
@@ -60,8 +60,9 @@ workout:{
 class ProgressProvider extends React.Component {
     state = {
         loaded: false,
+        routine: routineDef,
         workout: {
-            title: ''+routine.title,
+            title: ''+routineDef.title,
             exercises: []
         },
         done: false
@@ -123,24 +124,46 @@ class ProgressProvider extends React.Component {
 
     generateRoutine = (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
+
+        //need to iterate because of press vs press.ez
         efforts.forEach(ex => {
+            const routineEx = routine.info[ex.name];
             //clear that, don't need it
-            routine.info[ex.name].def1RM = undefined;
+            routineEx.def1RM = undefined;
 
             //step 1, calculate one rep max
-            let orm = ex.weight*ex.reps;
+            //using epley
+            let orm = ex.weight*(1+ex.reps/30);
             //step 2, multiply * .9 to get training orm
             orm *= .9;
 
+            //orm = w * (1+r/30)
+            //orm/(1+r/30) = w
+
             //step 3, 5/3/1 will just take that orm, starting strength will use 5RM
-            routine.info[ex.name].current = orm*???;
-        })
+            //if normal, all sets have the same reps
+            if(routineEx.setInfo.type === 'normal')
+                routineEx.current = orm/(1+routineEx.setInfo.sets[0]/30);
+            //otherwise, just use the orm, like in 5/3/1
+            else
+                routineEx.current = orm;
+
+            const ez = routine.info[ex.name + '.ez'];
+            if(ez){
+                if(ez.setInfo.type === 'normal')
+                    ez.current = orm/(1+ez.setInfo.sets[0]/30);
+                else
+                    ez.current = orm;
+            }
+
+        });
+        console.log(routine);
         this.setRoutine(routine).then();
     }
 
     setRoutine = async routine => {
         //no you don't just save teh routine string, you actually need the object
-        await AsyncStorage.setItem('@currentRoutine', routine);
+        await AsyncStorage.setItem('@currentRoutine', JSON.stringify(routine));
     }
 
     //load from local storage?
@@ -149,22 +172,23 @@ class ProgressProvider extends React.Component {
     //load from storage here
     //this will look at the provided routine and create a workout for the day
     initializeWorkout = () => {
+        const ro = this.state.routine;
         //this gets something like 'a'
-        let day = routine.days[routine.currentDay % routine.time];
+        let day = ro.days[ro.currentDay % ro.time];
 
         //null means rest day
         if(!day)
             return [];
 
         //this gets ['ohp', 'dip', 'chinup']
-        let exercises = routine.workouts[day];
+        let exercises = ro.workouts[day];
 
         let compiledExercises = [];
 
         for(let i = 0; i < exercises.length; i++){
             let name = exercises[i];
 
-            const exInfo = routine.info[name];
+            const exInfo = ro.info[name];
             const setInfo = exInfo.setInfo;
 
             //the complex part
@@ -178,7 +202,7 @@ class ProgressProvider extends React.Component {
             }
             else if(setInfo.type === 'custom') {
                 //this is [{reps:5, %: .75}...]
-                let custom = routine.customSet
+                let custom = ro.customSet
                     [setInfo.name]
                     [setInfo.selector];
 
@@ -205,7 +229,7 @@ class ProgressProvider extends React.Component {
         compiledExercises[0].sets[0].progress = 'c';
 
         const workout = {
-            title: routine.title + ' ' + day,
+            title: ro.title + ' ' + day,
             exercises: compiledExercises
         };
 

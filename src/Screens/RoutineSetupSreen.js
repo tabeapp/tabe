@@ -70,7 +70,7 @@ const RoutineSetupScreen = props => {
                             Back
                         </Text>
                     </TouchableOpacity>
-                    <Text style={{justifySelf: 'center', fontSize: 20}}>Routine Setup</Text>
+                    <Text style={{fontSize: 20}}>Routine Setup</Text>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
                         <Text style={{color: 'white', fontSize: 20}}>
                             Begin
