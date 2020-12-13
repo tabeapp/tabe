@@ -6,7 +6,7 @@ export const SSDefault = {
     workouts: {
         A: [
             'squat',
-            'bench',
+            'press',
             'deadlift'
         ],
         B: [
@@ -21,7 +21,8 @@ export const SSDefault = {
     ],
     info: {
         squat: {
-            def1RM: 145,
+            //maybe change this to current, for consitency
+            current: 145,
             amrap: true,
             barbell: true,
             progress: {
@@ -34,7 +35,7 @@ export const SSDefault = {
             }
         },
         bench: {
-            def1RM: 105,
+            current: 105,
             amrap: true,
             barbell: true,
             progress: {
@@ -47,7 +48,7 @@ export const SSDefault = {
             }
         },
         deadlift: {
-            def1RM: 165,
+            current: 165,
             amrap: true,
             barbell: true,
             progress: {
@@ -60,7 +61,7 @@ export const SSDefault = {
             }
         },
         press: {
-            def1RM: 70,
+            current: 70,
             amrap: true,
             barbell: true,
             progress: {

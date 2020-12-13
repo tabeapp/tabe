@@ -7,6 +7,7 @@ import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
 import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
 import NumericSelector from '../Components/NumericSelector';
 import ProgressContext from "../Contexts/ProgressContext";
+import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
 
 const primaryColor = '#66d6f8';
 
@@ -24,12 +25,12 @@ const RoutineSetupScreen = props => {
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
 
-    const loadRoutine = SSDefault;
+    const loadRoutine = FiveThreeOneDefault;
 
     const idk = Object.entries(loadRoutine.info).map(([k,v]) => ({
         name: k,
         reps: 1,
-        weight: v.def1RM
+        weight: v.current
     })).filter(i => !i.name.includes('.ez'));
 
     const [maxEfforts, setMaxEfforts] = useState(idk);

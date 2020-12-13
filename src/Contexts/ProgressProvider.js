@@ -128,8 +128,6 @@ class ProgressProvider extends React.Component {
         //need to iterate because of press vs press.ez
         efforts.forEach(ex => {
             const routineEx = routine.info[ex.name];
-            //clear that, don't need it
-            routineEx.def1RM = undefined;
 
             //step 1, calculate one rep max
             //using epley
@@ -141,6 +139,8 @@ class ProgressProvider extends React.Component {
             //orm/(1+r/30) = w
 
             //step 3, 5/3/1 will just take that orm, starting strength will use 5RM
+            //the calculation isn't perfect, but who cares tbh
+            //the current weight will incrmement anyways, and you can change it if you need
             //if normal, all sets have the same reps
             if(routineEx.setInfo.type === 'normal')
                 routineEx.current = orm/(1+routineEx.setInfo.sets[0]/30);
