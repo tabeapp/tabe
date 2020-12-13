@@ -52,7 +52,8 @@ export const MetallicaPPLDefault = {
     ],
     info: {
         deadlift: {
-            current: 305,
+            //needs a failure object with strikes and deload amt
+            def1RM: 100,
             amrap: true,
             barbell: true,
             progress: {
@@ -65,7 +66,7 @@ export const MetallicaPPLDefault = {
             }
         },
         latPull: {
-            current: 80,
+            def1RM: 80,
             progress: {
                 amount: 2.5,
                 rate: 7
@@ -76,7 +77,7 @@ export const MetallicaPPLDefault = {
             }
         },
         cableRow: {
-            current: 120,
+            def1RM: 70,
             progress: {
                 amount: 5,
                 rate: 7
@@ -87,28 +88,28 @@ export const MetallicaPPLDefault = {
             }
         },
         facePull: {
-            current: 50,
+            def1RM: 60,
             setInfo: {
                 type: 'normal',
                 sets: [20,20,20,20,20]
             }
         },
         hammerCurl: {
-            current: 20,
+            def1RM: 50,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12,12]
             }
         },
         dbCurl: {
-            current: 15,
+            def1RM: 40,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12,12]
             }
         },
         bench: {
-            current: 190,
+            def1RM: 205,
             amrap: true,
             barbell: true,
             progress: {
@@ -121,7 +122,7 @@ export const MetallicaPPLDefault = {
             }
         },
         'press.ez': {
-            current: 110,
+            def1RM: 110,
             amrap: true,
             barbell: true,
             progress: {
@@ -134,35 +135,35 @@ export const MetallicaPPLDefault = {
             }
         },
         dbPress: {
-            current: 35,
+            def1RM: 35,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12]
             }
         },
         pushdown: {
-            current: 30,
+            def1RM: 30,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12]
             }
         },
         overheadExt: {
-            current: 40,
+            def1RM: 40,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12]
             }
         },
         latRaise: {
-            current: 10,
+            def1RM: 10,
             setInfo: {
                 type: 'normal',
                 sets: [20,20,20]
             }
         },
         squat: {
-            current: 235,
+            def1RM: 235,
             amrap: true,
             barbell: true,
             progress: {
@@ -175,7 +176,7 @@ export const MetallicaPPLDefault = {
             }
         },
         rdl: {
-            current: 130,
+            def1RM: 130,
             barbell: true,
             progress: {
                 amount: 5,
@@ -187,7 +188,7 @@ export const MetallicaPPLDefault = {
             }
         },
         legPress: {
-            current: 190,
+            def1RM: 190,
             progress: {
                 amount: 5,
                 rate: 7
@@ -198,7 +199,7 @@ export const MetallicaPPLDefault = {
             }
         },
         legCurl: {
-            current: 125,
+            def1RM: 125,
             progress: {
                 amount: 5,
                 rate: 7
@@ -209,14 +210,14 @@ export const MetallicaPPLDefault = {
             }
         },
         calfRaise: {
-            current: 100,
+            def1RM: 100,
             setInfo: {
                 type: 'normal',
                 sets: [12,12,12,12,12]
             }
         },
         row: {
-            current: 140,
+            def1RM: 140,
             amrap: true,
             barbell: true,
             progress: {
@@ -229,7 +230,7 @@ export const MetallicaPPLDefault = {
             }
         },
         press: {
-            current: 155,
+            def1RM: 155,
             amrap: true,
             barbell: true,
             progress: {
@@ -242,7 +243,7 @@ export const MetallicaPPLDefault = {
             }
         },
         'bench.ez': {
-            current: 130,
+            def1RM: 130,
             amrap: true,
             barbell: true,
             progress: {
@@ -257,10 +258,3 @@ export const MetallicaPPLDefault = {
     }
 };
 
-export const SampleProgress = {
-    deadlift: [5, 5, 6],
-    latPull: [12,12,12],
-    cableRow: [12,],
-    //gonna def need to update this
-    //currentSet: ['cableRow', 1, .6],
-};

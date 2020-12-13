@@ -10,7 +10,14 @@ import NumericSelector from "../Components/NumericSelector";
 
 const primaryColor = '#66d6f8';
 
-const defaultRoutine = 'MetallicaPPL'
+const defaultRoutine = 'MetallicaPPL';
+
+const repNumbers = {
+    def: 1,
+    min: 1,
+    max: 10,
+    increment: 1
+};
 
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
@@ -25,6 +32,7 @@ const RoutineSetupScreen = props => {
     //load from web or something later
     if(chosenRoutine === 'Starting Strength')
         loadRoutine = SSDefault;
+    //so this takes the 1rm effort and multiplies it by .7 for 5, .4 for 12, .32 for 20
     else if(chosenRoutine === 'MetallicaPPL')
         loadRoutine = MetallicaPPLDefault;
 
@@ -37,17 +45,17 @@ const RoutineSetupScreen = props => {
                 </View>
                 <ScrollView>{
                     Object.entries(loadRoutine.info).map(([k,v]) =>
-                        <View style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
+                        !k.includes('.ez') &&
+                        <View key={k} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
                             <Text style={{fontSize: 20, color: 'white'}}>{k}</Text>
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
                                 <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
 
-                                <NumericSelector/>
+                                <NumericSelector onChange={() => {}} numInfo={repNumbers}/>
 
                                 <Text style={{fontSize: 20, color: 'white'}}>x</Text>
 
-                                <NumericSelector/>
-
+                                <NumericSelector onChange={() => {}} numInfo={{def: v.def1RM, min: 0, max: 1000, increment: 5}}/>
                             </View>
                         </View>
                     )
