@@ -22,10 +22,17 @@ const repNumbers = {
 const RoutineSetupScreen = props => {
     const {initializeWorkout, generateRoutine} = useContext(ProgressContext);
 
+    //the object will be sent
+    let loadRoutine = props.route.params.routine;
+
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
+    //switch (props.route.params.routine) {
+    //case "reload":
+    //
+    //}
 
-    const loadRoutine = FiveThreeOneDefault;
+    //const loadRoutine = FiveThreeOneDefault;
 
     const idk = Object.entries(loadRoutine.info).map(([k,v]) => ({
         name: k,
@@ -35,9 +42,9 @@ const RoutineSetupScreen = props => {
 
     const [maxEfforts, setMaxEfforts] = useState(idk);
 
-    const handleNext = () => {
+    const handleNext = async () => {
         //generate a routine we're gonna do this in the contextprovider
-        generateRoutine(loadRoutine, maxEfforts);
+        await generateRoutine(loadRoutine, maxEfforts);
 
         initializeWorkout();
         //start the workout

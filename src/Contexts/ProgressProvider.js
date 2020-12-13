@@ -7,7 +7,6 @@ import { SS1 } from '../Assets/Routines/SS1';
 import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
-const routineDef = {...FiveThreeOne};
 
 //idk
 const maxSets = 12;
@@ -60,9 +59,9 @@ workout:{
 class ProgressProvider extends React.Component {
     state = {
         loaded: false,
-        routine: routineDef,
+        routine: null,
         workout: {
-            title: ''+routineDef.title,
+            title: '',
             exercises: []
         },
         done: false
@@ -80,10 +79,11 @@ class ProgressProvider extends React.Component {
                 const val = await AsyncStorage.getItem('@currentRoutine');
 
                 //if there is no current workout, reinitalize
-                if (val !== null)
+                /*if (val !== null){
                     this.setState({
                         routine: JSON.parse(val)
                     });
+                }*/
             }catch(e){
             }
         })();
@@ -115,19 +115,22 @@ class ProgressProvider extends React.Component {
     //if not it returns false
     //used for navigation, setting up new routine
     checkRoutine = async () => {
-        const routine = await AsyncStorage.getItem('@currentRoutine');
+        return this.state.routine;
+        //const routine = await AsyncStorage.getItem('@currentRoutine');
 
         //just return false for testing for now
-        return false;
+        //return false;
         //return routine !== null;
     }
 
-    generateRoutine = (baseRoutine, efforts) => {
+    generateRoutine = async (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
         routine.currentDay = 0;
 
         //need to iterate because of press vs press.ez
-        efforts.forEach(ex => {
+        //efforts.forEach(ex => {
+        for(let i = 0; i < efforts.length; i++){
+            const ex = efforts[i];
             const routineEx = routine.info[ex.name];
 
             //step 1, calculate one rep max
@@ -160,12 +163,14 @@ class ProgressProvider extends React.Component {
                 ez.current = Math.floor(ez.current/5)*5;
             }
 
-        });
-        this.setRoutine(routine).then();
+        }
+        await this.setRoutine(routine);
+        //this.setRoutine(routine).then();
     }
 
     setRoutine = async routine => {
-        this.setState({routine});
+        this.setState({routine: routine});
+        //console.log(this.state.routine);
         //no you don't just save teh routine string, you actually need the object
         await AsyncStorage.setItem('@currentRoutine', JSON.stringify(routine));
     }

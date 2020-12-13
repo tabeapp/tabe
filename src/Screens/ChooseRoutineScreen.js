@@ -4,6 +4,9 @@ import {TouchableOpacity, StyleSheet, Text, View, SafeAreaView} from 'react-nati
 
 import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
+import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
+import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
+import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
 
 const primaryColor = '#66d6f8';
 
@@ -11,18 +14,22 @@ const routines = [
     {
         title: 'Starting Strength',
         description: 'Linear Progression for novices',
+        obj: SSDefault
     },
     {
         title: 'Stronglifts 5x5',
-        description: 'Classic 5x5 program'
+        description: 'Classic 5x5 program',
+        //obj: Stronglifts55Default
     },
     {
         title: '5/3/1',
         description: 'For intermediate lifters',
+        obj: FiveThreeOneDefault
     },
     {
         title: 'Metallica PPL',
         description: 'Novice program with plenty of accessory work',
+        obj: MetallicaPPLDefault
     },
     //just add them as you think of stuff
 ]
@@ -38,7 +45,7 @@ const ChooseRoutineScreen = props => {
 
     const handleRoutinePress = async r => {
         //no we need to set values first
-        props.navigation.navigate('routinesetup', {routine: r.title});
+        props.navigation.navigate('routinesetup', {routine: r.obj});
         //await setRoutine(r);
         //initializeWorkout();
         //props.navigation.navigate('workout');

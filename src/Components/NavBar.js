@@ -25,12 +25,12 @@ const NavBar = props => {
     const { current } = props;
     const handlePress = (r) => {
         if (r === current)
-        {return;}
+            return;
 
         if (r === 'workout')
-        {props.navigation.navigate(r);}
+            props.navigation.navigate(r);
         else
-        {props.navigation.replace(r);}
+            props.navigation.replace(r);
     };
 
     const customStart = () => {
@@ -45,7 +45,7 @@ const NavBar = props => {
             initializeWorkout();
             props.navigation.navigate('workout');
         }else{
-            props.navigation.navigate('routinesetup');
+            props.navigation.navigate('chooseroutine');
         }
     };
 
