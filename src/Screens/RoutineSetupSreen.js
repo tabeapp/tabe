@@ -1,12 +1,11 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState} from 'react';
 import {TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
-import ProgressContext from "../Contexts/ProgressContext";
-import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
-import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
-import NumericSelector from "../Components/NumericSelector";
+import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
+import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
+import NumericSelector from '../Components/NumericSelector';
 
 const primaryColor = '#66d6f8';
 
@@ -21,13 +20,9 @@ const repNumbers = {
 
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
-    //let { workout, generateReport} = useContext(ProgressContext);
-
-
     //this will be sent on navigation
     //routinechosen = props.route.params.routine
     let chosenRoutine = defaultRoutine;
-
 
     let loadRoutine;
 
@@ -37,7 +32,6 @@ const RoutineSetupScreen = props => {
     //so this takes the 1rm effort and multiplies it by .7 for 5, .4 for 12, .32 for 20
     else if(chosenRoutine === 'MetallicaPPL')
         loadRoutine = MetallicaPPLDefault;
-
 
     const idk = Object.entries(loadRoutine.info).map(([k,v]) => ({
         name: k,
@@ -70,7 +64,17 @@ const RoutineSetupScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <Text style={{color: 'black', fontSize: 20}}>Routine Setup</Text>
+                    <TouchableOpacity style={styles.topButton}>
+                        <Text style={{justifySelf: 'flex-end', color: 'white', fontSize: 20}}>
+                            Back
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{justifySelf: 'center', fontSize: 20}}>Routine Setup</Text>
+                    <TouchableOpacity style={styles.topButton}>
+                        <Text style={{justifySelf: 'flex-end', color: 'white', fontSize: 20}}>
+                            Begin
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 <ScrollView>{
                     maxEffort.map(ex =>
@@ -88,19 +92,22 @@ const RoutineSetupScreen = props => {
                         </View>
                     )
                 }</ScrollView>
+                {/*
+                not sure if we need this, defaults are set anyways
                 <View style={styles.bottom}>
                     <TouchableOpacity style={{marginBottom: 5, justifyContent: 'center', alignItems: 'center', height: 40, width: '100%', borderColor: PRIMARY, borderWidth: 1}}>
                         <Text style={{color: 'white', fontSize: 20}}>Skip and use Default Weights</Text>
                     </TouchableOpacity>
-                </View>
+                </View>*/}
             </SafeAreaView>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
     container: {flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', margin: 5},
-    top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
+    top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
     bottom: {width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
 
