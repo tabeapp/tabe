@@ -13,6 +13,7 @@ import ProfileScreen from "./src/Screens/ProfileScreen";
 import WorkoutScreen from "./src/Screens/WorkoutScreen";
 import ChooseRoutineScreen from "./src/Screens/ChooseRoutineScreen";
 import RoutineSetupScreen from "./src/Screens/RoutineSetupSreen";
+import ReportScreen from "./src/Screens/ReportScreen";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const App = () => {
                     <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                    <Stack.Screen name="report" component={ReportScreen}/>
                     <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="routine" component={RoutineScreen}/>
                     <Stack.Screen name="profile" component={ProfileScreen}/>

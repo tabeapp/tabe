@@ -402,7 +402,7 @@ class ProgressProvider extends React.Component {
             x += '\n';
         });
 
-        return x;
+        return report;
     };
 
     render() {

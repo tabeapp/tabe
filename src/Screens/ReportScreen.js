@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from "react-native";
 //get custom icons eventually
 
@@ -8,16 +8,17 @@ import { PRIMARY } from '../Constants/Theme';
 
 const primaryColor = '#66d6f8';
 
-const WorkoutScreen = props => {
-    let { workout, generateReport} = useContext(ProgressContext);
+const ReportScreen = props => {
+    let { generateReport} = useContext(ProgressContext);
+
+    const [summary, setSummary] = useState(generateReport());
+    //useEffect(() =>
+        //setSummary(generateReport())
+    //)
+
+    //console.log('summary ' + JSON.stringify(workout));
 
     const handleNext = () => {
-        //take the workout
-        //compile it into a report
-        //show it to the user on a new screen
-        props.navigation.navigate('report', {
-            report: generateReport()
-        });
     };
 
     return (
@@ -27,35 +28,45 @@ const WorkoutScreen = props => {
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.topButton}>
                         <Text style={{color: 'white', fontSize: 20}}>
-                            Discard
                         </Text>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>{workout.title}</Text>
+                    <Text style={{fontSize: 20}}>Workout Summary</Text>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
                         <Text style={{color: 'white', fontSize: 20}}>
                             Next
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.container}>{
-                    workout.exercises.map((ex, index) => (
-                        <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
-                    ))
-                }</View>
-                {
-                    //done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
-                    //<Text style={{color:'white'}} >{generateReport()}</Text>
-                }
+                <View style={styles.container}>
+                    <View style={{flexDirection: 'row'}}>
+                        <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
+                        <Text style={{color:'white'}}>Zyzz</Text>
+                    </View>
+                    <Text style={{color:'white'}}>{summary.name}</Text>
+                    <Text style={{color:'white'}}>lorem ipsum fsad fd saf dsa fd saf dsajfdjsfjds afjds afj dsafd saf dsajf dsjf d fif dsa fjdsa fjdsa fjdsa fjds fjds afjd safjds</Text>
+                    {
+                        summary.exercises.map(ex =>
+                            <View>
+                                <Text style={{color:'white'}}>{ex.name}</Text>
+                                {
+                                    ex.work.map(set => <Text style={{color:'white'}}>{set.sets + ' ' + set.reps + ' ' + set.weight}</Text>)
+
+                                }
+
+                            </View>
+                        )
+                    }
+                </View>
             </SafeAreaView>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {alignItems: 'center', justifyContent: 'center', margin: 5},
+    container: {justifyContent: 'center', margin: 5},
     //top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
     topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
 });
 
-export default WorkoutScreen;
+export default ReportScreen;
