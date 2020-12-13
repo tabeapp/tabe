@@ -131,7 +131,7 @@ class ProgressProvider extends React.Component {
 
             //step 1, calculate one rep max
             //using epley
-            let orm = ex.weight*(1+ex.reps/30);
+            let orm = ex.reps === 1 ? ex.weight : ex.weight*(1+ex.reps/30);
             //step 2, multiply * .9 to get training orm
             orm *= .9;
 
