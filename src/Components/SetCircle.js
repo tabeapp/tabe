@@ -3,9 +3,9 @@ import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native
 import { Picker } from '@react-native-picker/picker';
 import ProgressContext from '../Contexts/ProgressContext';
 
-const reps = [];
-for(let i = 0; i < 20; i++)
-    reps.push(i)
+//const reps = [];
+//for(let i = 0; i < 20; i++)
+    //reps.push(i)
 
 //fine, I'll do it msyelf
 //add haptic feedback later
@@ -18,14 +18,21 @@ const RepPicker = (props) => {
 const SetCircle = (props) => {
     const {updateSet} = useContext(ProgressContext);
 
-    const [reps, setReps] = useState(props.setInfo.reps);
+    //ok this is kinda confusing, but props.setInfo.reps is how much you're supposed to do
+    const [prog, setProg] = useState(props.setInfo.reps);
+    //const [reps, setReps] = useState(props.setInfo.reps);
     //this will be undefined and shouldn't be accessible
-    //if it's current, it will be editable
-    if(!props.setInfo.progress){
+
+    //only if it's current, it will be editable
+    //if(props.setInfo.progress !== 'c'){
+    if(!props.current){
+        let text = props.setInfo.reps;
+        if(props.setInfo.amrap)
+            text += '+';
         return (
             <View style={{ ...styles.circle, ...props.style }} >
                 <Text style={{ color: 'white' }}>{
-                    props.text
+                    text
                 }</Text>
             </View>
         );
@@ -35,7 +42,7 @@ const SetCircle = (props) => {
         //locks it esssentially
         //we could probably do something with current set, but for now just this
         //parse int cuz sometimes it says 5+
-        updateSet(exerciseN, setN, props.setInfo.reps);
+        updateSet(exerciseN, setN, prog);
 
     };
 
@@ -46,20 +53,26 @@ const SetCircle = (props) => {
 
     //we're copying numeric selector
     //we really should pass down amrap
+
+    /*const temp = [];
+    //for some reason I think react really really doesn't like this line
+    for(let i = 0; i < props.setInfo.amrap?props.setInfo.reps:40; i++)
+        temp.push(i)*/
     const temp = [0,1,2,3,4,5];
-    //for(let i = 0; i < props.sets; i++)
+
 
     return (
-        <View
+        <TouchableOpacity
+            onPress={handlePress}
             style={{ ...styles.circle, ...props.style }}
         >
             <Text style={{color:'white'}}>^</Text>
             <Picker
                 style={{width: 50, height: 50}}
-                selectedValue={reps}
+                selectedValue={prog}
                 itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                 onValueChange={(value) => {
-                    setReps(value);
+                    setProg(value);
                     onChange(value);
                 }}
             >
@@ -69,7 +82,7 @@ const SetCircle = (props) => {
                 }
             </Picker>
             <Text style={{color:'white', transform: [{rotate: '180deg'}]}}>^</Text>
-        </View>
+        </TouchableOpacity>
     );
     /*<TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>
         <Text style={{ color: 'white' }}>{
