@@ -85,7 +85,7 @@ const ExerciseCard = (props) => {
 
         items.push(
             <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
-                <SetCircle progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+                <SetCircle setInfo={set} progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
                 {
                     showWeightLabel &&
                     <Text style={{color: 'white', alignSelf: 'center'}}>{

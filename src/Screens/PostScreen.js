@@ -8,6 +8,7 @@ import { PRIMARY } from '../Constants/Theme';
 
 const primaryColor = '#66d6f8';
 
+//yes this is a copy of report screen
 const PostScreen = props => {
     //this will ALWAYS be passed a param of id,
     //sometimes it'll just be passed the workout itself

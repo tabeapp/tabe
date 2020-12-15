@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import ProgressContext from '../Contexts/ProgressContext';
 
 const reps = [];
@@ -16,9 +17,11 @@ const RepPicker = (props) => {
 
 const SetCircle = (props) => {
     const {updateSet} = useContext(ProgressContext);
+
+    const [reps, setReps] = useState(props.setInfo.sets);
     //this will be undefined and shouldn't be accessible
     //if it's current, it will be editable
-    if(!props.progress){
+    if(!props.setInfo.progress){
         return (
             <View style={{ ...styles.circle, ...props.style }} >
                 <Text style={{ color: 'white' }}>{
@@ -32,17 +35,45 @@ const SetCircle = (props) => {
         //locks it esssentially
         //we could probably do something with current set, but for now just this
         //parse int cuz sometimes it says 5+
-        updateSet(exerciseN, setN, parseInt(props.text));
+        updateSet(exerciseN, setN, props.setInfo.reps);
 
     };
 
+    const onChange = value => {
+        //send to context here too
+
+    }
+
+    //we're copying numeric selector
+    //we really should pass down amrap
+    const temp = [0,1,2,3,4,5];
+    //for(let i = 0; i < props.sets; i++)
+
     return (
-        <TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>
-            <Text style={{ color: 'white' }}>{
-                props.text
-            }</Text>
-        </TouchableOpacity>
+        <View
+            style={{ ...styles.circle, ...props.style }}
+        >
+            <Picker
+                style={{width: 50}}
+                selectedValue={1}
+                itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                onValueChange={(value) => {
+                    setReps(value);
+                    onChange(value);
+                }}
+            >
+                {
+                    temp.map(item =>
+                        <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                }
+            </Picker>
+        </View>
     );
+    /*<TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>
+        <Text style={{ color: 'white' }}>{
+            props.text
+        }</Text>
+    </TouchableOpacity>*/
 };
 
 const styles = StyleSheet.create({
@@ -60,3 +91,4 @@ const styles = StyleSheet.create({
 });
 
 export default SetCircle;
+

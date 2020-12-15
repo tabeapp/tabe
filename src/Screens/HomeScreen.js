@@ -31,7 +31,7 @@ const HomeScreen = props => {
                             </View>
 
                             <Text style={{fontSize: 40, color: 'white'}}>
-                                {item.name}
+                                {item.title}
                             </Text>
                             <Text style={{color:'white'}}>
                                 {item.description}
