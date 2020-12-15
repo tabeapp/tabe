@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { TextInput, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 //get custom icons eventually
 
 import ProgressContext from '../Contexts/ProgressContext';
@@ -10,15 +10,19 @@ const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
     let { report, generateReport} = useContext(ProgressContext);
+    //you know what fuck this, report will always be sent as an object.
 
     //should this be passed as params or generated here?
     //const [rep, setRep] = useState(report);
 
-    console.log(report);
+    //console.log(report);
     //const [title, setTitle] = useState(props.route.params.report.name);
     //const [description, setDescription] = useState(props.route.params.report.summary);
-    //const [title, setTitle] = useState(report?report.name:'');
-    //const [description, setDescription] = useState(report?report.summary:'');
+
+    //report should almost always not be null, even if it is the user can just add their own title
+    const [title, setTitle] = useState(report?report.name:'');
+
+    const [description, setDescription] = useState(report?report.summary:'');
     //useEffect(() =>
         //setSummary(generateReport())
     //)
@@ -45,20 +49,41 @@ const ReportScreen = props => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container}>
-                    <View style={{flexDirection: 'row'}}>
+                    <View style={{alignItems: 'center', flexDirection: 'row'}}>
                         <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                         <Text style={{color:'white'}}>Zyzz</Text>
                     </View>
-                    <Text style={{fontSize: 40, color:'white'}}>{report&&report.name}</Text>
-                    <Text style={{color:'white'}}>{report&&report.summary}</Text>
+                    <TextInput
+                        style={{fontSize: 40, color: 'white'}}
+                        value={title}
+                        onChangeText={setTitle}
+                    />
+                    <TextInput
+                        style={{color:'white'}}
+                        value={description}
+                        onChangeText={setDescription}
+                    />
                     {
-                        report && report.exercises.map(ex =>
-                            <View style={{padding: 4, backGroundColor: '#333'}} key={ex.name}>
-                                <Text style={{color:'white'}}>{ex.name}</Text>
-                                {
-                                    ex.work.map(set => <Text style={{color:'white'}}>{set.sets + ' ' + set.reps + ' ' + set.weight}</Text>)
-                                }
-                            </View>
+                        report && report.exercises.map((ex, index) =>
+                            index === 0?
+                                //first one is biggest
+                                <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                                    <Text style={{fontSize: 40, color:'white'}}>{ex.name}</Text>
+                                    {
+                                        ex.work.map(set => <Text style={{fontSize:40, color:'white'}}>
+                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                        </Text>)
+                                    }
+                                </View>
+                                :
+                                <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                                    <Text style={{fontSize: 20, color:'white'}}>{ex.name}</Text>
+                                    {
+                                        ex.work.map(set => <Text style={{fontSize: 20, color:'white'}}>
+                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                        </Text>)
+                                    }
+                                </View>
                         )
                     }
                 </View>
