@@ -451,15 +451,43 @@ class ProgressProvider extends React.Component {
                 'deadlift': 0,
                 'press': 0
             };
+        else
+            userStats = JSON.parse(userStats);
 
         report.exercises.forEach(ex => {
-            if(!(ex in userStats)){
+            if(!(ex.name in userStats))
+                return;
+
+            //calculate the largest 5rm for the day
+            let fiveRM = -1;
+
+            ex.work.forEach(info => {
+                //this has sets, weight, and reps
+
+                //just use the weight if there were 5 reps, otherwise formula
+                let calculated = info.reps === 5?
+                    info.weight :
+                    6*(info.weight*(1+info.reps/30))/7;
+
+                calculated = Math.floor(calculated);
+
+                if(calculated > fiveRM)
+                    fiveRM = calculated;
+
+            });
+
+            //this would be a good place to detect PRs
+            //maybe this should be ran before showing the summary...
+            if(fiveRM > userStats[ex.name])
+                userStats[ex.name] = fiveRM;
 
 
-            }
+
+
 
         })
 
+        console.log(userStats);
 
         AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
 
