@@ -430,6 +430,18 @@ class ProgressProvider extends React.Component {
         return report;
     };
 
+    //this is a big array of workouts
+    saveWorkout = async workoutData => {
+        AsyncStorage.getItem('@workouts', (_, result) => {
+            let workouts = [];
+            if(result !== null)
+                workouts = JSON.parse(result);
+
+            workouts.push(workoutData);
+            AsyncStorage.setItem('@workouts', JSON.stringify(workouts));
+        });
+    };
+
     render() {
         return (
             <ProgressContext.Provider value={{
@@ -441,6 +453,7 @@ class ProgressProvider extends React.Component {
                 setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
                 initializeCustom: this.initializeCustom,
+                saveWorkout: this.saveWorkout,
                 workout: this.state.workout,
                 title: this.state.title,
                 updateSet: this.updateSet,

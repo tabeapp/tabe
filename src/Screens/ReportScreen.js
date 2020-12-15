@@ -9,7 +9,7 @@ import { PRIMARY } from '../Constants/Theme';
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let { report, generateReport} = useContext(ProgressContext);
+    let { report, saveWorkout, generateReport} = useContext(ProgressContext);
     //you know what fuck this, report will always be sent as an object.
 
     //should this be passed as params or generated here?
@@ -24,12 +24,16 @@ const ReportScreen = props => {
 
     const [description, setDescription] = useState(report?report.summary:'');
     //useEffect(() =>
-        //setSummary(generateReport())
+    //setSummary(generateReport())
     //)
 
     //console.log('summary ' + JSON.stringify(workout));
 
     const handleNext = () => {
+        //combine workout and title and description
+        saveWorkout({...report, title: title, description: description})
+        props.navigation.navigate('home');
+
     };
 
     return (
