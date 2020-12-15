@@ -74,9 +74,10 @@ const ReportScreen = props => {
                                 <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
                                     <Text style={{fontSize: 40, color:'white'}}>{ex.name}</Text>
                                     {
-                                        ex.work.map(set => <Text style={{fontSize:40, color:'white'}}>
-                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Text>)
+                                        ex.work.map((set,i) =>
+                                            <Text key={i} style={{fontSize:40, color:'white'}}>
+                                                {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                            </Text>)
                                     }
                                 </View>
                                 :

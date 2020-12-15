@@ -1,10 +1,19 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
+import ProgressContext from "../Contexts/ProgressContext";
 
 const HomeScreen = props => {
-    const data = ['pee pee', 'poo poo', 'oooooh'];
+    //what's the best way to load
+    let {getPosts} = useContext(ProgressContext);
+    const [posts, setPosts] = useState([]);
+    //const data = await getPosts();
+
+    //only will run once, right? right?
+    useEffect( () => {
+        getPosts().then(v => setPosts(v))
+    })
 
     return (
         <>
@@ -12,7 +21,7 @@ const HomeScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>} />
+                    <FlatList data={posts} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{JSON.stringify(item)}</Text>} />
                 </View>
                 <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
             </SafeAreaView>

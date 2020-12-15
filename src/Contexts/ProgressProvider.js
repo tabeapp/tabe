@@ -442,6 +442,14 @@ class ProgressProvider extends React.Component {
         });
     };
 
+    //yes this will ideally load from server
+    getPosts = async () => {
+        const val = await AsyncStorage.getItem('@workouts');
+        if(val === null)
+            return [];
+        return JSON.parse(val);
+    }
+
     render() {
         return (
             <ProgressContext.Provider value={{
@@ -460,6 +468,7 @@ class ProgressProvider extends React.Component {
                 addExercise: this.addExercise,
                 updateExercise: this.updateExercise,
                 generateReport: this.generateReport,
+                getPosts: this.getPosts,
                 done: this.state.done
             }}>
                 {this.props.children}
