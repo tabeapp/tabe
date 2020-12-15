@@ -11,7 +11,13 @@ const primaryColor = '#66d6f8';
 const ReportScreen = props => {
     let { generateReport} = useContext(ProgressContext);
 
+    //should this be passed as params or generated here?
     const [summary, setSummary] = useState(generateReport());
+
+    //const [title, setTitle] = useState(props.route.params.report.name);
+    //const [description, setDescription] = useState(props.route.params.report.summary);
+    const [title, setTitle] = useState(summary.name);
+    const [description, setDescription] = useState(summary.summary);
     //useEffect(() =>
         //setSummary(generateReport())
     //)
@@ -42,17 +48,15 @@ const ReportScreen = props => {
                         <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                         <Text style={{color:'white'}}>Zyzz</Text>
                     </View>
-                    <Text style={{color:'white'}}>{summary.name}</Text>
-                    <Text style={{color:'white'}}>lorem ipsum fsad fd saf dsa fd saf dsajfdjsfjds afjds afj dsafd saf dsajf dsjf d fif dsa fjdsa fjdsa fjdsa fjds fjds afjd safjds</Text>
+                    <Text style={{fontSize: 40, color:'white'}}>{title}</Text>
+                    <Text style={{color:'white'}}>{description}</Text>
                     {
                         summary.exercises.map(ex =>
-                            <View>
+                            <View style={{padding: 4, backGroundColor: '#333'}} key={ex.name}>
                                 <Text style={{color:'white'}}>{ex.name}</Text>
                                 {
                                     ex.work.map(set => <Text style={{color:'white'}}>{set.sets + ' ' + set.reps + ' ' + set.weight}</Text>)
-
                                 }
-
                             </View>
                         )
                     }

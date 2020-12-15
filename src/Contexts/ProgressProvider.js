@@ -396,11 +396,11 @@ class ProgressProvider extends React.Component {
         report.exercises.forEach(ex => {
             x += ex.name + ' ';
             ex.work.forEach(info => {
-                x += info.sets + 'x' + info.reps + '@' + info.weight + ',';
+                x += info.sets + 'x' + info.reps + '@' + info.weight + ', ';
             });
-            x = x.substring(0, x.length-1);
-            x += '\n';
         });
+        x = x.substring(0, x.length-2);
+        report.summary = x;
 
         return report;
     };
