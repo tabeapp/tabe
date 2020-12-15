@@ -463,11 +463,12 @@ class ProgressProvider extends React.Component {
 
             ex.work.forEach(info => {
                 //this has sets, weight, and reps
+                const repCount = info.reps > 10? 10 : info.reps
 
                 //just use the weight if there were 5 reps, otherwise formula
-                let calculated = info.reps === 5?
+                let calculated = repCount === 5?
                     info.weight :
-                    6*(info.weight*(1+info.reps/30))/7;
+                    6*(info.weight*(1+repCount/30))/7;
 
                 calculated = Math.floor(calculated);
 
@@ -497,6 +498,12 @@ class ProgressProvider extends React.Component {
         //also if you hit all the sets
         //update routine weights
 
+        workout.exercises.forEach(ex => {
+
+            //ex has name, and array of sets
+
+        })
+
 
     };
 
@@ -504,7 +511,7 @@ class ProgressProvider extends React.Component {
     //this is a big array of workouts
     saveWorkout = async workoutData => {
         //finally clear it
-        AsyncStorage.deleteItem('@currentWorkout');
+        await AsyncStorage.removeItem('@currentWorkout');
         AsyncStorage.getItem('@workouts', (_, result) => {
             let workouts = [];
             if(result !== null)
@@ -536,6 +543,7 @@ class ProgressProvider extends React.Component {
                 setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
                 updateSet: this.updateSet,
+                analyzeWorkout: this.analyzeWorkout,
                 generateReport: this.generateReport,
                 saveWorkout: this.saveWorkout,
                 getPosts: this.getPosts,

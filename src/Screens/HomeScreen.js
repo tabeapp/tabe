@@ -36,8 +36,8 @@ const HomeScreen = props => {
                             <Text style={{color:'white'}}>
                                 {item.description}
                             </Text>
-                            <Text style={{color:'white'}}>{item.exercises[0].name}</Text>
-                            <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0].work[0])}</Text>
+                            <Text style={{color:'white'}}>{item.exercises[0]&&item.exercises[0].name}</Text>
+                            <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Text>
                         </TouchableOpacity>
                     }
                     />
