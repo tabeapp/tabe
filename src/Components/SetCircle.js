@@ -18,7 +18,7 @@ const RepPicker = (props) => {
 const SetCircle = (props) => {
     const {updateSet} = useContext(ProgressContext);
 
-    const [reps, setReps] = useState(props.setInfo.sets);
+    const [reps, setReps] = useState(props.setInfo.reps);
     //this will be undefined and shouldn't be accessible
     //if it's current, it will be editable
     if(!props.setInfo.progress){
@@ -53,9 +53,10 @@ const SetCircle = (props) => {
         <View
             style={{ ...styles.circle, ...props.style }}
         >
+            <Text style={{color:'white'}}>^</Text>
             <Picker
-                style={{width: 50}}
-                selectedValue={1}
+                style={{width: 50, height: 50}}
+                selectedValue={reps}
                 itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                 onValueChange={(value) => {
                     setReps(value);
@@ -67,6 +68,7 @@ const SetCircle = (props) => {
                         <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
                 }
             </Picker>
+            <Text style={{color:'white', transform: [{rotate: '180deg'}]}}>^</Text>
         </View>
     );
     /*<TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>
