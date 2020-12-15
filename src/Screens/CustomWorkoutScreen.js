@@ -40,10 +40,10 @@ const CustomWorkoutScreen = () => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <Text style={{color: 'black', fontSize: 20}}>{workout.title}</Text>
+                    <Text style={{color: 'black', fontSize: 20}}>{workout?workout.title:''}</Text>
                 </View>
                 <View style={styles.container}>{
-                    workout.exercises.map((ex, index) => (
+                    workout&&workout.exercises.map((ex, index) => (
                         <CustomExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                     ))
                 }</View>

@@ -42,6 +42,7 @@ const NavBar = props => {
     const routineStart = async () => {
         let hasRoutine = await checkRoutine();
         if(hasRoutine){
+            //no it's possible it's already loaded
             initializeWorkout();
             props.navigation.navigate('workout');
         }else{

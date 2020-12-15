@@ -60,10 +60,12 @@ class ProgressProvider extends React.Component {
     state = {
         loaded: false,
         routine: null,
-        workout: {
-            title: '',
-            exercises: []
-        },
+        //workout: {
+            //title: '',
+            //exercises: []
+        //},
+        workout: null,
+        report: null,
         done: false
     }
 
@@ -72,7 +74,6 @@ class ProgressProvider extends React.Component {
         //don't initialize the workout, just load the routine if it's there
 
         //load the routine, if it exists
-        //if it exists, also load the workout
 
         (async () => {
             try {
@@ -83,6 +84,18 @@ class ProgressProvider extends React.Component {
                     this.setState({
                         routine: JSON.parse(val)
                     });
+
+                    //if it exists, also load the workout
+                    const workout = await AsyncStorage.getItem('@currentWorkout');
+                    console.log(workout);
+                    if(workout !== null){
+                        this.setState({
+                            workout: JSON.parse(workout)
+                        }, this.generateReport)//yeah we need this
+                    }
+
+
+
                 }
             }catch(e){
             }
@@ -181,6 +194,10 @@ class ProgressProvider extends React.Component {
     //load from storage here
     //this will look at the provided routine and create a workout for the day
     initializeWorkout = () => {
+        //this might be loaded on component mount form asyncStorage
+        if(this.state.workout)
+            return;
+
         const ro = this.state.routine;
         //this gets something like 'a'
         let day = ro.days[ro.currentDay % ro.time];
@@ -342,6 +359,13 @@ class ProgressProvider extends React.Component {
 
     // just put out a good json for posting to the feed
     generateReport = () => {
+        //just default for the report
+        if(!this.state.workout)
+            return {
+                name: '',
+                exercises: []
+            };
+
         let report = {};
         report.name = this.state.workout.title;
         report.time = new Date().getTime();//get current time;
@@ -402,6 +426,7 @@ class ProgressProvider extends React.Component {
         x = x.substring(0, x.length-2);
         report.summary = x;
 
+        this.setState({report: report});
         return report;
     };
 
@@ -410,6 +435,7 @@ class ProgressProvider extends React.Component {
             <ProgressContext.Provider value={{
                 loaded: this.state.loaded,
                 routine: this.state.routine,
+                report: this.state.report,
                 generateRoutine: this.generateRoutine,
                 checkRoutine: this.checkRoutine,
                 setRoutine: this.setRoutine,

@@ -30,7 +30,7 @@ const WorkoutScreen = props => {
                             Discard
                         </Text>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>{workout.title}</Text>
+                    <Text style={{fontSize: 20}}>{workout?workout.title:''}</Text>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
                         <Text style={{color: 'white', fontSize: 20}}>
                             Next
@@ -38,7 +38,7 @@ const WorkoutScreen = props => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container}>{
-                    workout.exercises.map((ex, index) => (
+                    workout&&workout.exercises.map((ex, index) => (
                         <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
                     ))
                 }</View>
