@@ -112,8 +112,9 @@ class ProgressProvider extends React.Component {
     }
 
     //this saves workout to storage when the app is closed
+    //funny enough, this doesn't actually handle 'reload js'
     handleAppStateChange = nextAppState => {
-        if(nextAppState === 'inactive') {
+        if(nextAppState === 'inactive' || nextAppState === 'background') {
             (async () => {
                 try {
                     await AsyncStorage.setItem('@currentWorkout',
@@ -290,7 +291,7 @@ class ProgressProvider extends React.Component {
                         //gotta do somethign about that, maybe open a summary screen
                         //call generate report from here
                         newState.done = true;
-                        AsyncStorage.removeItem('@currentWorkout');
+                        //AsyncStorage.removeItem('@currentWorkout');
                     }
                     else
                         exercises[exerciseN + 1].sets[0].progress = 'c';
@@ -299,6 +300,9 @@ class ProgressProvider extends React.Component {
                     exercises[exerciseN].sets[setN+1].progress = 'c';
             }
 
+            //should we do this to sync with server?
+            //definitely the watch
+            //AsyncStorage.setItem('@currentWorkout', JSON.stringify(newState.workout));
             return newState;
         });
     };
@@ -430,8 +434,49 @@ class ProgressProvider extends React.Component {
         return report;
     };
 
+    //we need to use state.workout, it has more info
+    analyzeWorkout = async () => {
+        const workout = {...this.state.workout};
+        const report = {...this.state.report};
+
+        //so what are we looking for
+        //prs
+
+        //finally, user info comes into play
+        let userStats = await AsyncStorage.getItem('@userStats');
+        if(userStats === null)
+            userStats = {
+                'bench': 0,
+                'squat': 0,
+                'deadlift': 0,
+                'press': 0
+            };
+
+        report.exercises.forEach(ex => {
+            if(!(ex in userStats)){
+
+
+            }
+
+        })
+
+
+        AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
+
+
+
+
+        //also if you hit all the sets
+        //update routine weights
+
+
+    };
+
+
     //this is a big array of workouts
     saveWorkout = async workoutData => {
+        //finally clear it
+        AsyncStorage.deleteItem('@currentWorkout');
         AsyncStorage.getItem('@workouts', (_, result) => {
             let workouts = [];
             if(result !== null)
@@ -453,23 +498,26 @@ class ProgressProvider extends React.Component {
     render() {
         return (
             <ProgressContext.Provider value={{
-                loaded: this.state.loaded,
+
                 routine: this.state.routine,
+                workout: this.state.workout,
                 report: this.state.report,
+
                 generateRoutine: this.generateRoutine,
                 checkRoutine: this.checkRoutine,
                 setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
-                initializeCustom: this.initializeCustom,
-                saveWorkout: this.saveWorkout,
-                workout: this.state.workout,
-                title: this.state.title,
                 updateSet: this.updateSet,
+                generateReport: this.generateReport,
+                saveWorkout: this.saveWorkout,
+                getPosts: this.getPosts,
+
+                initializeCustom: this.initializeCustom,
                 addExercise: this.addExercise,
                 updateExercise: this.updateExercise,
-                generateReport: this.generateReport,
-                getPosts: this.getPosts,
-                done: this.state.done
+                title: this.state.title,
+                loaded: this.state.loaded,
+                done: this.state.done,
             }}>
                 {this.props.children}
             </ProgressContext.Provider>

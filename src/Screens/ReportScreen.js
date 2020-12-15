@@ -9,7 +9,7 @@ import { PRIMARY } from '../Constants/Theme';
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let { report, saveWorkout, generateReport} = useContext(ProgressContext);
+    let { report, saveWorkout, analyzeWorkout, generateReport} = useContext(ProgressContext);
     //you know what fuck this, report will always be sent as an object.
 
     //should this be passed as params or generated here?
@@ -30,8 +30,14 @@ const ReportScreen = props => {
     //console.log('summary ' + JSON.stringify(workout));
 
     const handleNext = () => {
+        //idk what else to call this
+        //but essentially increment progressing weights, look for prs, etc
+        analyzeWorkout();
+
         //combine workout and title and description
-        saveWorkout({...report, title: title, description: description})
+        saveWorkout({...report, title: title, description: description});
+
+
         props.navigation.navigate('home');
 
     };

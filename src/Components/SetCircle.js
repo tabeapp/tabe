@@ -29,6 +29,8 @@ const SetCircle = (props) => {
         let text = props.setInfo.reps;
         if(props.setInfo.amrap)
             text += '+';
+        if(props.setInfo.progress && props.setInfo.progress !== 'c')
+            text = props.setInfo.progress;
         return (
             <View style={{ ...styles.circle, ...props.style }} >
                 <Text style={{ color: 'white' }}>{
@@ -46,10 +48,6 @@ const SetCircle = (props) => {
 
     };
 
-    const onChange = value => {
-        //send to context here too
-
-    }
 
     //we're copying numeric selector
     //we really should pass down amrap
@@ -58,7 +56,11 @@ const SetCircle = (props) => {
     //for some reason I think react really really doesn't like this line
     for(let i = 0; i < props.setInfo.amrap?props.setInfo.reps:40; i++)
         temp.push(i)*/
-    const temp = [0,1,2,3,4,5];
+    //const temp = [0,1,2,3,4,5];
+    const temp = [];
+    const limit = props.setInfo.amrap?40:props.setInfo.reps;
+    for(let i = 0; i <= limit; i++)
+        temp.push(i);
 
 
     return (
@@ -73,7 +75,6 @@ const SetCircle = (props) => {
                 itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                 onValueChange={(value) => {
                     setProg(value);
-                    onChange(value);
                 }}
             >
                 {
