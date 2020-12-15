@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import React, {useEffect, useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
@@ -21,7 +21,24 @@ const HomeScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={posts} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{JSON.stringify(item)}</Text>} />
+                    <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
+                        <View style={{backgroundColor: '#333', margin: 3}}>
+                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                                <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
+                                <Text style={{color:'white'}}>Zyzz</Text>
+                            </View>
+
+                            <Text style={{fontSize: 40, color: 'white'}}>
+                                {item.name}
+                            </Text>
+                            <Text style={{color:'white'}}>
+                                {item.description}
+                            </Text>
+                            <Text style={{color:'white'}}>{item.exercises[0].name}</Text>
+                            <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0].work[0])}</Text>
+                        </View>
+                    }
+                    />
                 </View>
                 <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
             </SafeAreaView>
