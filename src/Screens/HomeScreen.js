@@ -1,4 +1,4 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
+import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import React, {useEffect, useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
@@ -22,7 +22,9 @@ const HomeScreen = props => {
                 <View style={styles.topBar} />
                 <View style={styles.box}>
                     <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
-                        <View style={{backgroundColor: '#333', margin: 3}}>
+                        <TouchableOpacity
+                            onPress={() => props.navigation.navigate('post', {workout: item})}
+                            style={{backgroundColor: '#333', margin: 3}}>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                                 <Text style={{color:'white'}}>Zyzz</Text>
@@ -36,7 +38,7 @@ const HomeScreen = props => {
                             </Text>
                             <Text style={{color:'white'}}>{item.exercises[0].name}</Text>
                             <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0].work[0])}</Text>
-                        </View>
+                        </TouchableOpacity>
                     }
                     />
                 </View>
