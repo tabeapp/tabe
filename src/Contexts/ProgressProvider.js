@@ -134,53 +134,35 @@ class ProgressProvider extends React.Component {
         //return routine !== null;
     }
 
-    //HOW THE FUCK WOULDI DO THIS
-    //so this is interesting
-    //when to override rest?
-    //trying to do a workout on the same day as the "last workout date"
-    //or if the current day is a rest and you do anything
-    //or if the current day is a rest but it's been 2 days since the last workout, just inc
-    //if the current day is null, that's a rest day
-    //if the current day is null and its not bee
-    //if the current day is a workout, just do this workout no matter what
+
+    //fuck this, we're just gonna use the "next workout date"
+
     checkRest = () => {
-
-        const ro = {...this.state.routine};
-
-        //first figure out difference between today and last workout
-        let last = new Date();
-        if(ro.lastWorkoutTime)
-            last = new Date(ro.lastWorkoutTime);
-        const today = new Date();
-
-        //don't double lol
-        if(last.getDate() === today.getDate() && last.getMonth() === today.getMonth()){
-            console.log('same day')
+        //easy
+        //if the current time is before the nextWorkout time, take a rest
+        const now = new Date().getTime();
+        if(now < this.state.routine.nextWorkoutTime)
             return true;
-        }
 
-        //force an advance through rest days if necessary
-        //now advance last until we get to today
-        while(last.getDate() !== today.getDate() || last.getMonth() !== today.getMonth()){
-            //console.log(last);
-            if(ro.days[ro.currentDay] === null) {
-                ro.currentDay++;
-            }
-            last.setDate(last.getDate() + 1);
+        //if it's after, advance currentday until there's a workout
+        //and return false
+        const ro = {...this.state.routine};
+        while(!ro.days[ro.currentDay%ro.time]){
+            ro.currentDay++;
+
         }
-        //also save ro cuz days changed
         this.setState({routine: ro});
 
-        //if after advancing, it's still a rest, return true
-        return ro.days[ro.currentDay] === null;
-
+        return false;
     }
 
     generateRoutine = async (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
         routine.currentDay = 0;
         //just setting this to dumb value for now
-        //routine.lastWorkoutDate = -1;
+        //next work out is today, buddy
+        //set it to super early in the morning for easy comparison
+        routine.nextWorkoutTime = new Date().setHours(0).setMinutes(0).getTime();
 
         //need to iterate because of press vs press.ez
         //efforts.forEach(ex => {
@@ -616,11 +598,28 @@ class ProgressProvider extends React.Component {
             });
         }
 
-        //of course, increment the day
-        newRoutine.currentDay++;
+        //just look over this logic to make sure it's good
 
-        //this is for checking if the rest day was taken
-        newRoutine.lastWorkoutTime = new Date().getTime();
+        //scan through the routine to find next workout
+        let nextWorkoutTime = new Date();
+        //not a rest day
+        let daysToNext = 1;
+        //scan through days to find next workout day
+        //limit 14, just in case of errors
+        while(!newRoutine.days[(newRoutine.currentDay+daysToNext)%newRoutine.time] && daysToNext < 14)
+            daysToNext++;
+
+        //we now know how many days until next workout
+        nextWorkoutTime = nextWorkoutTime.setDate(nextWorkoutTime.getDate() + daysToNext);
+        //set to midnight
+        nextWorkoutTime.setHours(0).setMinutes(0);
+        //and save
+        newRoutine.nextWorkoutTime = nextWorkoutTime.getTime();
+
+
+
+        //increment day
+        newRoutine.currentDay++;
 
         //and finally, save the thing
         this.setState({routine: newRoutine})
