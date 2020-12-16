@@ -54,8 +54,8 @@ const NavBar = props => {
             else{
                 console.log('no workout for you, take a breather')
                 Alert.alert(
-                    "AlertTitle",
-                    "My Alert Msg",
+                    "Recovery Day",
+                    "Are you sure you want to skip recovery?",
                     [
                         {
                             text: "Cancel",//don't do the workout
@@ -64,7 +64,10 @@ const NavBar = props => {
                         },
                         {
                             text: "Override",
-                            onPress: () => {/*context.overrideRest*/},
+                            onPress: () => {
+                                initializeWorkout();
+                                props.navigation.navigate('workout');
+                            },
                         }
                     ],
                     {cancelable: false}

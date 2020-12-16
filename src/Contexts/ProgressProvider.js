@@ -234,12 +234,23 @@ class ProgressProvider extends React.Component {
 
         console.log(ro.currentDay);
         let day = ro.days[ro.currentDay % ro.time];
-
-        console.log(day);
+        //here's the deal.
+        //calling initworkout means get the next workout, even if it's a rest day
+        //so we need to advance time to the next workout
+        //of course this means we also have to save routine
 
         //null means rest day
-        if(!day)
-            return [];
+        //if(!day)
+            //return [];
+
+        while(!day){
+            console.log(day);
+
+            ro.currentDay++;
+            day = ro.days[ro.currentDay % ro.time];
+        }
+        console.log(day);
+
 
         //this gets ['ohp', 'dip', 'chinup']
         let exercises = ro.workouts[day];
@@ -294,7 +305,8 @@ class ProgressProvider extends React.Component {
             exercises: compiledExercises
         };
 
-        this.setState({workout: workout, loaded: true});
+        //the current day might've been advanced, so save ro to routine
+        this.setState({routine: ro, workout: workout, loaded: true});
     }
 
     initializeCustom = () => {
@@ -614,11 +626,16 @@ class ProgressProvider extends React.Component {
         while(!newRoutine.days[(newRoutine.currentDay+daysToNext)%newRoutine.time] && daysToNext < 14)
             daysToNext++;
 
+        //temporarily set it to minutes to test it out
+        /*nextWorkoutTime.setMinutes(nextWorkoutTime.getMinutes() + daysToNext);
+        nextWorkoutTime.setSeconds(0);*/
+
         //we now know how many days until next workout
         nextWorkoutTime.setDate(nextWorkoutTime.getDate() + daysToNext);
         //set to midnight
         nextWorkoutTime.setHours(0);
         nextWorkoutTime.setMinutes(0);
+        nextWorkoutTime.setSeconds(0);
         console.log('next workout: ' + nextWorkoutTime);
         //and save
         newRoutine.nextWorkoutTime = nextWorkoutTime.getTime();
