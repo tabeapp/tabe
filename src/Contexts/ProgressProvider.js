@@ -152,7 +152,8 @@ class ProgressProvider extends React.Component {
             ro.currentDay++;
 
         }
-        this.setState({routine: ro});
+        this.setRoutine(ro);
+        //this.setState({routine: ro});
 
         return false;
     }
@@ -212,6 +213,7 @@ class ProgressProvider extends React.Component {
         //this.setRoutine(routine).then();
     }
 
+    //i think we need to call this in a few other places, routine isn't being saved to local store
     setRoutine = async routine => {
         this.setState({routine: routine});
         //console.log(this.state.routine);
@@ -306,6 +308,7 @@ class ProgressProvider extends React.Component {
         };
 
         //the current day might've been advanced, so save ro to routine
+        AsyncStorage.setItem('@currentRoutine', JSON.stringify(ro));
         this.setState({routine: ro, workout: workout, loaded: true});
     }
 
@@ -646,7 +649,8 @@ class ProgressProvider extends React.Component {
         newRoutine.currentDay++;
 
         //and finally, save the thing
-        this.setState({routine: newRoutine})
+        this.setRoutine(newRoutine)
+        //this.setState({routine: newRoutine})
     };
 
 
