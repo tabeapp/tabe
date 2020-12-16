@@ -538,9 +538,11 @@ class ProgressProvider extends React.Component {
             });
         }
 
-        let statProgress = JSON.parse(await AsyncStorage.getItem('@progress'));
+        let statProgress = await AsyncStorage.getItem('@progress');
         if(statProgress === null)
             statProgress = [];
+        else
+            statProgress = JSON.parse(statProgress);
 
         statProgress.push({
             time: report.time,
