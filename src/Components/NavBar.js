@@ -46,9 +46,11 @@ const NavBar = props => {
             let isRest = checkRest();
             console.log('isrest ' + isRest);
 
-            //no it's possible it's already loaded
-            initializeWorkout();
-            props.navigation.navigate('workout');
+            if(!isRest){
+                //no it's possible it's already loaded
+                initializeWorkout();
+                props.navigation.navigate('workout');
+            }
         }else{
             props.navigation.navigate('chooseroutine');
         }

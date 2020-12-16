@@ -141,6 +141,7 @@ class ProgressProvider extends React.Component {
         //easy
         //if the current time is before the nextWorkout time, take a rest
         const now = new Date().getTime();
+        //even if this isn't initialized, it should work as it just returns the current day
         if(now < this.state.routine.nextWorkoutTime)
             return true;
 
@@ -162,7 +163,10 @@ class ProgressProvider extends React.Component {
         //just setting this to dumb value for now
         //next work out is today, buddy
         //set it to super early in the morning for easy comparison
-        routine.nextWorkoutTime = new Date().setHours(0).setMinutes(0).getTime();
+        let nextW = new Date();
+        nextW.setHours(0);
+        nextW.setMinutes(0);
+        routine.nextWorkoutTime = nextW.getTime();
 
         //need to iterate because of press vs press.ez
         //efforts.forEach(ex => {
@@ -588,7 +592,8 @@ class ProgressProvider extends React.Component {
                     exInfo.strikes++;
 
                     //deload if you hit 3 strikes
-                    if (exInfo.strikes >= newRoutine.failure.strikesToDeload) {
+                    //im maybe too lazy to add failure to all the routines
+                    if (newRoutine.failure && exInfo.strikes >= newRoutine.failure.strikesToDeload) {
                         exInfo.strikes = 0;
                         exInfo.current *= newRoutine.failure.deload;
                     }
@@ -610,9 +615,11 @@ class ProgressProvider extends React.Component {
             daysToNext++;
 
         //we now know how many days until next workout
-        nextWorkoutTime = nextWorkoutTime.setDate(nextWorkoutTime.getDate() + daysToNext);
+        nextWorkoutTime.setDate(nextWorkoutTime.getDate() + daysToNext);
         //set to midnight
-        nextWorkoutTime.setHours(0).setMinutes(0);
+        nextWorkoutTime.setHours(0);
+        nextWorkoutTime.setMinutes(0);
+        console.log('next workout: ' + nextWorkoutTime);
         //and save
         newRoutine.nextWorkoutTime = nextWorkoutTime.getTime();
 
