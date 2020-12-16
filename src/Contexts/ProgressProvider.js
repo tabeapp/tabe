@@ -2,9 +2,6 @@ import React from 'react';
 import {AppState} from 'react-native';
 import ProgressContext from './ProgressContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MetallicaPPL } from '../Assets/Routines/MetallicaPPL';
-import { SS1 } from '../Assets/Routines/SS1';
-import { FiveThreeOne } from '../Assets/Routines/FiveThreeOne';
 
 //one way to do it, custom provider object
 
@@ -140,6 +137,8 @@ class ProgressProvider extends React.Component {
     generateRoutine = async (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
         routine.currentDay = 0;
+        //just setting this to dumb value for now
+        routine.lastWorkoutDate = -1;
 
         //need to iterate because of press vs press.ez
         //efforts.forEach(ex => {
@@ -204,7 +203,11 @@ class ProgressProvider extends React.Component {
 
         const ro = this.state.routine;
         //this gets something like 'a'
+
+        console.log(ro.currentDay);
         let day = ro.days[ro.currentDay % ro.time];
+
+        console.log(day);
 
         //null means rest day
         if(!day)
@@ -458,37 +461,39 @@ class ProgressProvider extends React.Component {
         else
             userStats = JSON.parse(userStats);
 
-        report.exercises.forEach(ex => {
-            if(!(ex.name in userStats))
-                return;
+        if(report.exercises){
+            report.exercises.forEach(ex => {
+                if(!(ex.name in userStats))
+                    return;
 
-            //calculate the largest 5rm for the day
-            let fiveRM = -1;
+                //calculate the largest 5rm for the day
+                let fiveRM = -1;
 
-            ex.work.forEach(info => {
-                //this has sets, weight, and reps
-                const repCount = info.reps > 10? 10 : info.reps
+                ex.work.forEach(info => {
+                    //this has sets, weight, and reps
+                    const repCount = info.reps > 10? 10 : info.reps
 
-                //just use the weight if there were 5 reps, otherwise formula
-                let calculated = repCount === 5?
-                    info.weight :
-                    6*(info.weight*(1+repCount/30))/7;
+                    //just use the weight if there were 5 reps, otherwise formula
+                    let calculated = repCount === 5?
+                        info.weight :
+                        6*(info.weight*(1+repCount/30))/7;
 
-                calculated = Math.floor(calculated);
+                    calculated = Math.floor(calculated);
 
-                if(calculated > fiveRM)
-                    fiveRM = calculated;
+                    if(calculated > fiveRM)
+                        fiveRM = calculated;
 
-            });
+                });
 
-            //this would be a good place to detect PRs
-            //maybe this should be ran before showing the summary...
-            if(fiveRM > userStats[ex.name])
-                userStats[ex.name] = fiveRM;
+                //this would be a good place to detect PRs
+                //maybe this should be ran before showing the summary...
+                if(fiveRM > userStats[ex.name])
+                    userStats[ex.name] = fiveRM;
 
-            //would be a good idea to save 5rm to some list, use later for graph
+                //would be a good idea to save 5rm to some list, use later for graph
 
-        })
+            })
+        }
 
         console.log(userStats);
 
@@ -500,71 +505,80 @@ class ProgressProvider extends React.Component {
         const newRoutine = {...this.state.routine};
 
         //check for progression
-        workout.exercises.forEach(ex => {
+        if(workout.exercises) {
+            workout.exercises.forEach(ex => {
 
-            //ex has name, and array of sets
-            //this is what we added
-            const exInfo = newRoutine.info[ex.name];
+                //ex has name, and array of sets
+                //this is what we added
+                const exInfo = newRoutine.info[ex.name];
 
-            //this exercise doesn't progress
-            if(!exInfo.progress)
-                return;
+                //this exercise doesn't progress
+                if (!exInfo.progress)
+                    return;
 
-            //check if progress >= reps for every set
-            //then you have completed it
-            //maybe have some minimum for
-            const passed = ex.sets.every(set => set.progress >= set.reps)
+                //check if progress >= reps for every set
+                //then you have completed it
+                //maybe have some minimum for
+                const passed = ex.sets.every(set => set.progress >= set.reps)
 
-            //if you dont pass, you dont decremenent the counter
-            if (passed){
-                //progress every session
-                //i need to add a countdown
-                ////progress rate is a number, 7 or 28 nvm
-                //the problem is it that if there is a a break, it could be more than 7 days
+                //if you dont pass, you dont decremenent the counter
+                if (passed) {
+                    //progress every session
+                    //i need to add a countdown
+                    ////progress rate is a number, 7 or 28 nvm
+                    //the problem is it that if there is a a break, it could be more than 7 days
 
-                //best idea: is to have progress rate as depending on how many times it's done
-                //this also handles the problem of "light" days, as they could have a separate countdown
+                    //best idea: is to have progress rate as depending on how many times it's done
+                    //this also handles the problem of "light" days, as they could have a separate countdown
 
-                //decrement teh counter
-                exInfo.progress.countdown--;
-                if(exInfo.progress.countdown === 0){
-                    //reset the counter
-                    exInfo.progress.countdown = exInfo.progress.rate;
-                    //the actual progression
-                    exInfo.current += exInfo.progress.amount;
+                    //decrement teh counter
+                    exInfo.progress.countdown--;
+                    if (exInfo.progress.countdown === 0) {
+                        //reset the counter
+                        exInfo.progress.countdown = exInfo.progress.rate;
+                        //the actual progression
+                        exInfo.current += exInfo.progress.amount;
+                    }
                 }
-            }
-        });
-
-        //check the failures
-        workout.exercises.forEach(ex => {
-            //fail one, fail the exercise
-            const failure = ex.sets.some(set => {
-                //I'll add this feature later, but metallica ppl has a minimum of 8 for some reps
-                //otherwise just use
-                if(set.minReps)
-                    return set.progress < set.minReps;
-                else
-                    return set.progress < set.reps;
             });
 
-            if(failure){
 
-                const exInfo = newRoutine.info[ex.name];
-                //this won't be initialized on routine creation
-                if(!exInfo.strikes)
-                    exInfo.strikes = 0;
-                exInfo.strikes++;
+            //check the failures
+            workout.exercises.forEach(ex => {
+                //fail one, fail the exercise
+                const failure = ex.sets.some(set => {
+                    //I'll add this feature later, but metallica ppl has a minimum of 8 for some reps
+                    //otherwise just use
+                    if (set.minReps)
+                        return set.progress < set.minReps;
+                    else
+                        return set.progress < set.reps;
+                });
 
-                //deload if you hit 3 strikes
-                if(exInfo.strikes >= newRoutine.failure.strikesToDeload){
-                    exInfo.strikes = 0;
-                    exInfo.current *= newRoutine.failure.deload;
+                if (failure) {
+
+                    const exInfo = newRoutine.info[ex.name];
+                    //this won't be initialized on routine creation
+                    if (!exInfo.strikes)
+                        exInfo.strikes = 0;
+                    exInfo.strikes++;
+
+                    //deload if you hit 3 strikes
+                    if (exInfo.strikes >= newRoutine.failure.strikesToDeload) {
+                        exInfo.strikes = 0;
+                        exInfo.current *= newRoutine.failure.deload;
+                    }
+                    //add a strike for failure
                 }
-                //add a strike for failure
-            }
 
-        })
+            });
+        }
+
+        //of course, increment the day
+        newRoutine.currentDay++;
+
+        //this is for checking if the rest day was taken
+        newRoutine.lastWorkoutTime = new Date().getTime();
 
         //and finally, save the thing
         this.setState({routine: newRoutine})
@@ -583,6 +597,9 @@ class ProgressProvider extends React.Component {
             workouts.push(workoutData);
             AsyncStorage.setItem('@workouts', JSON.stringify(workouts));
         });
+        //need to clear workout from state as well
+        //and the report, it doesn't get cleared
+        this.setState({report: null, workout: null});
     };
 
     //yes this will ideally load from server

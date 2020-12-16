@@ -11,9 +11,11 @@ const HomeScreen = props => {
     //const data = await getPosts();
 
     //only will run once, right? right?
-    useEffect( () => {
-        getPosts().then(v => setPosts(v))
-    })
+    //how the fuck am i supposed to do this
+    //ok this is fucked, truning it off for no
+    //useEffect( () => {
+        //getPosts().then(v => setPosts(v))
+    //})
 
     return (
         <>
@@ -22,6 +24,7 @@ const HomeScreen = props => {
                 <View style={styles.topBar} />
                 <View style={styles.box}>
                     <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
+                        item.exercises &&
                         <TouchableOpacity
                             onPress={() => props.navigation.navigate('post', {workout: item})}
                             style={{backgroundColor: '#333', margin: 3}}>
