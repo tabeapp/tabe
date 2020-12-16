@@ -33,7 +33,7 @@ export const FiveThreeOneDefault = {
             },
             progress: {
                 amount: 5,
-                rate: 28
+                rate: 4
             }
         },
         dip: {
@@ -61,7 +61,7 @@ export const FiveThreeOneDefault = {
             },
             progress: {
                 amount: 5,
-                rate: 28
+                rate: 4
             }
         },
         goodMorning: {
@@ -89,7 +89,7 @@ export const FiveThreeOneDefault = {
             },
             progress: {
                 amount: 5,
-                rate: 28
+                rate: 4
             }
         },
         dbPress: {
@@ -117,7 +117,7 @@ export const FiveThreeOneDefault = {
             },
             progress: {
                 amount: 5,
-                rate: 28
+                rate: 4
             }
         },
         legPress: {

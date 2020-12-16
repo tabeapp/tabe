@@ -50,6 +50,10 @@ export const MetallicaPPLDefault = {
     days: [
         'Pull1', 'Push1', 'Legs', 'Pull2', 'Push2', 'Legs', null
     ],
+    failure: {
+        strikesToDeload: 3,
+        deload: .9
+    },
     info: {
         deadlift: {
             //needs a failure object with strikes and deload amt
@@ -58,7 +62,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 10,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -69,7 +73,7 @@ export const MetallicaPPLDefault = {
             current: 80,
             progress: {
                 amount: 2.5,
-                rate: 7
+                rate: 2
             },
             setInfo: {
                 type: 'normal',
@@ -80,7 +84,7 @@ export const MetallicaPPLDefault = {
             current: 70,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 2
             },
             setInfo: {
                 type: 'normal',
@@ -114,7 +118,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -127,7 +131,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -168,7 +172,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 'session'
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -180,7 +184,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 2
             },
             setInfo: {
                 type: 'normal',
@@ -191,7 +195,7 @@ export const MetallicaPPLDefault = {
             current: 190,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 2
             },
             setInfo: {
                 type: 'normal',
@@ -202,7 +206,7 @@ export const MetallicaPPLDefault = {
             current: 125,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 2
             },
             setInfo: {
                 type: 'normal',
@@ -222,7 +226,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -235,7 +239,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -248,7 +252,7 @@ export const MetallicaPPLDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 7
+                rate: 1
             },
             setInfo: {
                 type: 'normal',

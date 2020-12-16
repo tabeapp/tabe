@@ -27,7 +27,7 @@ export const SSDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 'session',
+                rate: 1
             },
             setInfo: {
                 type: 'normal',
@@ -40,7 +40,7 @@ export const SSDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 'session',
+                rate: 1
             },
             setInfo: {
                 type:'normal',
@@ -53,7 +53,7 @@ export const SSDefault = {
             barbell: true,
             progress: {
                 amount: 10,
-                rate: 'session',
+                rate: 1
             },
             setInfo: {
                 type:'normal',
@@ -66,7 +66,7 @@ export const SSDefault = {
             barbell: true,
             progress: {
                 amount: 5,
-                rate: 'session',
+                rate: 1
             },
             setInfo: {
                 type:'normal',

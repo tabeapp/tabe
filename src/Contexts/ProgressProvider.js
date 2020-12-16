@@ -145,7 +145,10 @@ class ProgressProvider extends React.Component {
         //efforts.forEach(ex => {
         for(let i = 0; i < efforts.length; i++){
             const ex = efforts[i];
+            //progress is copied in right here
             const routineEx = routine.info[ex.name];
+            //if(routineEx.progress.rate !== 'session')
+            routineEx.progress.countdown = routineEx.progress.rate;
 
             //step 1, calculate one rep max
             //using epley
@@ -435,6 +438,7 @@ class ProgressProvider extends React.Component {
     };
 
     //we need to use state.workout, it has more info
+    //holy shit this is so complex
     analyzeWorkout = async () => {
         const workout = {...this.state.workout};
         const report = {...this.state.report};
@@ -482,9 +486,7 @@ class ProgressProvider extends React.Component {
             if(fiveRM > userStats[ex.name])
                 userStats[ex.name] = fiveRM;
 
-
-
-
+            //would be a good idea to save 5rm to some list, use later for graph
 
         })
 
@@ -493,18 +495,79 @@ class ProgressProvider extends React.Component {
         AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
 
 
-
-
         //also if you hit all the sets
         //update routine weights
+        const newRoutine = {...this.state.routine};
 
+        //check for progression
         workout.exercises.forEach(ex => {
 
             //ex has name, and array of sets
+            //this is what we added
+            const exInfo = newRoutine.info[ex.name];
+
+            //this exercise doesn't progress
+            if(!exInfo.progress)
+                return;
+
+            //check if progress >= reps for every set
+            //then you have completed it
+            //maybe have some minimum for
+            const passed = ex.sets.every(set => set.progress >= set.reps)
+
+            //if you dont pass, you dont decremenent the counter
+            if (passed){
+                //progress every session
+                //i need to add a countdown
+                ////progress rate is a number, 7 or 28 nvm
+                //the problem is it that if there is a a break, it could be more than 7 days
+
+                //best idea: is to have progress rate as depending on how many times it's done
+                //this also handles the problem of "light" days, as they could have a separate countdown
+
+                //decrement teh counter
+                exInfo.progress.countdown--;
+                if(exInfo.progress.countdown === 0){
+                    //reset the counter
+                    exInfo.progress.countdown = exInfo.progress.rate;
+                    //the actual progression
+                    exInfo.current += exInfo.progress.amount;
+                }
+            }
+        });
+
+        //check the failures
+        workout.exercises.forEach(ex => {
+            //fail one, fail the exercise
+            const failure = ex.sets.some(set => {
+                //I'll add this feature later, but metallica ppl has a minimum of 8 for some reps
+                //otherwise just use
+                if(set.minReps)
+                    return set.progress < set.minReps;
+                else
+                    return set.progress < set.reps;
+            });
+
+            if(failure){
+
+                const exInfo = newRoutine.info[ex.name];
+                //this won't be initialized on routine creation
+                if(!exInfo.strikes)
+                    exInfo.strikes = 0;
+                exInfo.strikes++;
+
+                //deload if you hit 3 strikes
+                if(exInfo.strikes >= newRoutine.failure.strikesToDeload){
+                    exInfo.strikes = 0;
+                    exInfo.current *= newRoutine.failure.deload;
+                }
+                //add a strike for failure
+            }
 
         })
 
-
+        //and finally, save the thing
+        this.setState({routine: newRoutine})
     };
 
 
