@@ -20,7 +20,7 @@ const iconMapping = {
 };
 
 const NavBar = props => {
-    const {checkRoutine, initializeWorkout, initializeCustom} = useContext(ProgressContext);
+    const {checkRoutine, checkRest, initializeWorkout, initializeCustom} = useContext(ProgressContext);
 
     const { current } = props;
     const handlePress = (r) => {
@@ -42,6 +42,10 @@ const NavBar = props => {
     const routineStart = async () => {
         let hasRoutine = await checkRoutine();
         if(hasRoutine){
+            //if it's a rest day, ask for confirmation
+            let isRest = checkRest();
+            console.log('isrest ' + isRest);
+
             //no it's possible it's already loaded
             initializeWorkout();
             props.navigation.navigate('workout');

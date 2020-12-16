@@ -134,11 +134,53 @@ class ProgressProvider extends React.Component {
         //return routine !== null;
     }
 
+    //HOW THE FUCK WOULDI DO THIS
+    //so this is interesting
+    //when to override rest?
+    //trying to do a workout on the same day as the "last workout date"
+    //or if the current day is a rest and you do anything
+    //or if the current day is a rest but it's been 2 days since the last workout, just inc
+    //if the current day is null, that's a rest day
+    //if the current day is null and its not bee
+    //if the current day is a workout, just do this workout no matter what
+    checkRest = () => {
+
+        const ro = {...this.state.routine};
+
+        //first figure out difference between today and last workout
+        let last = new Date();
+        if(ro.lastWorkoutTime)
+            last = new Date(ro.lastWorkoutTime);
+        const today = new Date();
+
+        //don't double lol
+        if(last.getDate() === today.getDate() && last.getMonth() === today.getMonth()){
+            console.log('same day')
+            return true;
+        }
+
+        //force an advance through rest days if necessary
+        //now advance last until we get to today
+        while(last.getDate() !== today.getDate() || last.getMonth() !== today.getMonth()){
+            //console.log(last);
+            if(ro.days[ro.currentDay] === null) {
+                ro.currentDay++;
+            }
+            last.setDate(last.getDate() + 1);
+        }
+        //also save ro cuz days changed
+        this.setState({routine: ro});
+
+        //if after advancing, it's still a rest, return true
+        return ro.days[ro.currentDay] === null;
+
+    }
+
     generateRoutine = async (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
         routine.currentDay = 0;
         //just setting this to dumb value for now
-        routine.lastWorkoutDate = -1;
+        //routine.lastWorkoutDate = -1;
 
         //need to iterate because of press vs press.ez
         //efforts.forEach(ex => {
@@ -620,6 +662,7 @@ class ProgressProvider extends React.Component {
 
                 generateRoutine: this.generateRoutine,
                 checkRoutine: this.checkRoutine,
+                checkRest: this.checkRest,
                 setRoutine: this.setRoutine,
                 initializeWorkout: this.initializeWorkout,
                 updateSet: this.updateSet,
