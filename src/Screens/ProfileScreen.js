@@ -1,9 +1,17 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { AsyncStorage, FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 
 const ProfileScreen = props => {
+    //fuck it, we'll just do it straight from this without using the context
+    const [progress, setProgress] = useState([]);
+    useEffect(() => {
+        if(!progress)
+            AsyncStorage.getItem('@progress').then(val =>
+                setProgress(JSON.parse(val))
+            )
+    });
     const data = ['pee pee', 'poo poo', 'oooooh'];
 
     return (
@@ -12,7 +20,7 @@ const ProfileScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>} />
+                    <Text style={{color:'white'}}>{JSON.stringify(progress)}</Text>
                 </View>
                 <NavBar current={/*better way to handle this?*/'profile'} navigation={props.navigation}/>
             </SafeAreaView>

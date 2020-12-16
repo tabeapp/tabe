@@ -57,10 +57,6 @@ class ProgressProvider extends React.Component {
     state = {
         loaded: false,
         routine: null,
-        //workout: {
-            //title: '',
-            //exercises: []
-        //},
         workout: null,
         report: null,
         done: false
@@ -504,8 +500,12 @@ class ProgressProvider extends React.Component {
         else
             userStats = JSON.parse(userStats);
 
+        //this is pretty cool, and will enable progress tracking
+        const workoutMaxes = {};
+
         if(report.exercises){
             report.exercises.forEach(ex => {
+                //or do we want to track accessory PRs???
                 if(!(ex.name in userStats))
                     return;
 
@@ -534,12 +534,21 @@ class ProgressProvider extends React.Component {
                     userStats[ex.name] = fiveRM;
 
                 //would be a good idea to save 5rm to some list, use later for graph
-
-            })
+                workoutMaxes[ex.name] = fiveRM;
+            });
         }
 
-        console.log(userStats);
+        let statProgress = JSON.parse(await AsyncStorage.getItem('@progress'));
+        if(statProgress === null)
+            statProgress = [];
 
+        statProgress.push({
+            time: report.time,
+            stats: workoutMaxes
+        });
+        AsyncStorage.setItem('@progress', JSON.stringify(statProgress));
+
+        console.log(statProgress[statProgress.length-1]);
         AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
 
 
