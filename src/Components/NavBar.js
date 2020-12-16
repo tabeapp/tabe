@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Alert, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressContext from '../Contexts/ProgressContext';
 
@@ -50,6 +50,26 @@ const NavBar = props => {
                 //no it's possible it's already loaded
                 initializeWorkout();
                 props.navigation.navigate('workout');
+            }
+            else{
+                console.log('no workout for you, take a breather')
+                Alert.alert(
+                    "AlertTitle",
+                    "My Alert Msg",
+                    [
+                        {
+                            text: "Cancel",//don't do the workout
+                            onPress: () => {},
+                            style: "cancel"
+                        },
+                        {
+                            text: "Override",
+                            onPress: () => {/*context.overrideRest*/},
+                        }
+                    ],
+                    {cancelable: false}
+                )
+
             }
         }else{
             props.navigation.navigate('chooseroutine');
