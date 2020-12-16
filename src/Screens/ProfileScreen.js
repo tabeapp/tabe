@@ -8,17 +8,33 @@ const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [progress, setProgress] = useState([]);
     useEffect(() => {
-        //console.log('need to reload progress ' + JSON.stringify(progress));
-        //if(!progress){
-            //console.log('reloading progress ' + JSON.stringify(progress));
-            AsyncStorage.getItem('@progress').then(val =>{
-                console.log('val ' + val);
+        //console.log('reloading progress ' + JSON.stringify(progress));
+        AsyncStorage.getItem('@progress').then(val =>{
+            console.log('val ' + val);
 
-                setProgress(JSON.parse(val));
-            })
-        //}
+            setProgress(JSON.parse(val));
+        })
     });
-    const data = ['pee pee', 'poo poo', 'oooooh'];
+
+    let timeStart = 0, timeEnd = 1, weightStart = 0, weightEnd = 1;
+    if(progress[0]){
+        timeStart = progress.reduce((min, p) => p.time < min ? p.time : min, progress[0].time);
+        timeEnd = progress.reduce((max, p) => p.time > max ? p.time : max, progress[0].time);
+
+        //this ones too copmlex to reduce
+        progress.forEach(wo => {
+            Object.values(wo.stats).forEach(weight => {
+                if(weight > weightEnd)
+                    weightEnd = weight
+            })
+        });
+
+
+    }
+
+    console.log(timeEnd-timeStart);
+    console.log(weightEnd-weightStart);
+
 
     return (
         <>
@@ -26,7 +42,16 @@ const ProfileScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <Text style={{color:'white'}}>{JSON.stringify(progress)}</Text>
+                    {
+                        progress[0]&&
+                        progress.map(wo => {
+                            return Object.entries(wo.stats).map(([k,v]) => {
+                                const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
+                                const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
+                                return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: 'red', height: 5, width:5}} key={wo.time+k}/>
+                            })
+                        })
+                    }
                 </View>
                 <NavBar current={/*better way to handle this?*/'profile'} navigation={props.navigation}/>
             </SafeAreaView>
@@ -56,11 +81,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         backgroundColor: 'black',
-        alignItems: 'center',
+        //alignItems: 'center',
         borderStyle: 'solid',
-        borderColor: 'black',
+        borderColor: 'red',
         borderWidth: 1,
-        justifyContent: 'center',
+        //justifyContent: 'center',
     },
 });
 
