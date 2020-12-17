@@ -9,9 +9,9 @@ const Box = () => {
             onPanResponderMove: Animated.event([
                 null,
                 { dx: pan.x, dy: pan.y }
-            ]),
+            ], {useNativeDriver: false}),
             onPanResponderRelease: () => {
-                Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
+                Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false}).start();
             }
         })
     ).current;
