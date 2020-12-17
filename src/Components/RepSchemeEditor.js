@@ -22,7 +22,7 @@ const RepSchemeEditor = props => {
         <>
             <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
             <Words>(workouts using this scheme will cycle through the following sets)</Words>
-            <View style={{justifyContent: 'center', height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
+            <View style={{justifyContent: 'center', height: 400, margin: 5, width: 400, backgroundColor: '#333'}}>
                 {
                     props.sets.map((week, weekIndex) =>
                         <View style={{alignItems: 'center', flexDirection: 'row'}}>
@@ -51,7 +51,12 @@ const RepSchemeEditor = props => {
                                                             style={{width: 50, height: 50}}
                                                             selectedValue={v.reps}
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                                                            onValueChange={(value) => {
+                                                            onValueChange={value => {
+                                                                props.edit(prev => {
+                                                                    const next = [...prev];
+                                                                    next[weekIndex][setIndex].reps = value;
+                                                                    return next;
+                                                                })
                                                             }}
                                                         >
                                                             {
@@ -66,7 +71,12 @@ const RepSchemeEditor = props => {
                                                             style={{width: 50, height: 50}}
                                                             selectedValue={v['%']}
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                                                            onValueChange={(value) => {
+                                                            onValueChange={value => {
+                                                                props.edit(prev => {
+                                                                    const next = [...prev];
+                                                                    next[weekIndex][setIndex]['%'] = value;
+                                                                    return next;
+                                                                })
                                                             }}
                                                         >
                                                             {
@@ -115,8 +125,8 @@ const RepSchemeEditor = props => {
                     props.edit(prev => {
                         if(prev.length === 0)
                             return [...prev, []]
-                        else
-                            return [...prev, [...prev[prev.length-1]]]
+                        else//need to do an extra deep copy
+                            return [...prev, JSON.parse(JSON.stringify(prev[prev.length-1]))]
                     })
                 }}>
                     <Text style={{fontSize: 30}}>Add Week(?)</Text>
