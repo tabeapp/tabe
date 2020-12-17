@@ -29,7 +29,7 @@ const RoutineScreen = props => {
 
     //this takes fucking forever
     useEffect(() => {
-        setDays(Array.from(new Array(rTime), () => null));
+        setDays(Array.from(new Array(rTime), () => 'R'));
     }, [rTime]);
 
     return (
@@ -164,8 +164,9 @@ const RoutineScreen = props => {
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
                     <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
                         setDays(old => {
-                            old[day] = val;
-                            return old
+                            const n = [...old];
+                            n[day] = val;
+                            return n;
                         })
                     }/>
 

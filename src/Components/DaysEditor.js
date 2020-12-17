@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 const DaysEditor = props => {
     const {editDays} = props;
 
-    const temp = [...props.workouts, 'R'];
+    const temp = ['R', ...props.workouts]
 
     return (<>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>
@@ -17,7 +17,7 @@ const DaysEditor = props => {
                     </View>
                 )
             }
-            {/*so this is like a schedule planner thing*/
+            {
                 //you have no idea how complex this is about to get
                 //Array.from(new Array(props.time), () => null).map((d,index) =>
                 props.days.map((d, index) => {
