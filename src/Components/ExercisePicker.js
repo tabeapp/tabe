@@ -5,8 +5,10 @@ import ProgressContext from "../Contexts/ProgressContext";
 
 //make it possible to cancel
 const ExercisePicker = props => {
+    //just remember to fix this in CustomExerciseCard, just pass onSelect = {addExercise}
     let {addExercise} = useContext(ProgressContext);
     //props.visible
+    const {handleSelection} = props;
 
     const [category, setCategory] = useState('');
 
@@ -23,7 +25,8 @@ const ExercisePicker = props => {
                 onPress={() => {
                     setCategory('');
                     props.close();
-                    addExercise(ex);
+                    //addExercise(ex);
+                    handleSelection(ex);
                 }}
                 key={ex} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
 

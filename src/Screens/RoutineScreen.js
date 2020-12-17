@@ -4,6 +4,8 @@ import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
 import NumericSelector from "../Components/NumericSelector";
+import ExercisePicker from "../Components/ExercisePicker";
+import WorkoutEditor from "../Components/WorkoutEditor";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -20,6 +22,7 @@ const RoutineScreen = props => {
     const [rTime, setRTime] = useState(7);
     const [info, setInfo] = useState({});
     const [workouts, setWorkouts] = useState({});
+
 
     return (
         <>
@@ -41,10 +44,29 @@ const RoutineScreen = props => {
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
                         {
                             Object.entries(workouts).map(([k,v], index) =>
-                                <View key={k} style={{height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
-                                    <Text style={{color:'white'}}>{k}</Text>
+                                <WorkoutEditor
+                                    key={k} exercises={v} name={k}
+                                    addExercise={ex => {
+                                        //we know which workout to add it to cuz of k
+                                        //ugh this is so annoying why cant we just do
+                                        //workouts[k].push(ex)
+                                        setWorkouts({...workouts, [k]: [...workouts[k], ex]})
 
-                                </View>
+                                        //also need to add it to exerdcises so we can edit it later
+                                        if(!(ex in info)){
+                                            setInfo({...info, [ex]:
+                                                    {
+                                                        current: 135,//??? should I have a constans file with this info
+                                                        setInfo: {
+                                                            setType: 'normal',
+                                                            sets: [5,5,5,5,5]
+
+                                                        }
+                                                    }});
+                                        }
+
+                                    }}
+                                />
                             )
                         }
                         <View style={{justifyContent: 'center', height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>

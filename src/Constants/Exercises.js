@@ -1,3 +1,4 @@
+//i mean this is one way to do it
 export const EXERCISES = {
     Arms: ['Press', 'Tricep Pushdown', 'Overhead Tricep Extension', 'BB Curl', 'Incline Curl', 'Skull Crushers','Wrist Curls', 'Concentration Curl', 'DB Curl', 'Hammer Curl'],
     Shoulders: ['DB Press', 'Clean and Press', 'Full Frontal Raise', 'Lateral Raise', 'Upright Row', 'Arnold Press', 'Behind the Neck Press', 'Rear Delt Flyes'],
