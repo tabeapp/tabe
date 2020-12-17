@@ -8,12 +8,41 @@ const Box = () => {
             onMoveShouldSetPanResponder: () => true,
             onPanResponderMove: Animated.event([
                 null,
-                { dx: pan.x, dy: pan.y}
-            ], {useNativeDriver: true}),
+                { dx: pan.x, dy: pan.y }
+            ]),
             onPanResponderRelease: () => {
-                Animated.spring(pan,
-                    { toValue: { x: 0, y: 0}, useNativeDriver: true },
-                    ).start();
+                Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
+            }
+        })
+    ).current;
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.titleText}>Drag & Release this box!</Text>
+            <Animated.View
+                style={{
+                    transform: [{ translateX: pan.x }, { translateY: pan.y }]
+                }}
+                {...panResponder.panHandlers}
+            >
+                <View style={{backgroundColor: 'red', width: 30, height: 30}}/>
+            </Animated.View>
+        </View>
+    );
+};
+
+const DraggableDay = props => {
+    const pan = useRef(new Animated.ValueXY()).current;
+    const panResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: () => {},
+            onPanResponderMove: Animated.event([
+                null,
+                {dx: pan.x, dy: pan.y}
+            ]),
+            onPanResponderRelease: () => {
+                Animated.spring(pan, {toValue: {x:0, y:0}
+                }).start()
             }
         })
     ).current;
@@ -21,13 +50,13 @@ const Box = () => {
     return (
         <Animated.View
             style={{
-                transform: [{ translateX: pan.x }, { translateY: pan.y }]
+                transform: [{translateX: pan.x}, {translateY: pan.y}]
             }}
             {...panResponder.panHandlers}
         >
-            <View style={{backgroundColor: 'red', width: 30, height: 30}}/>
+
         </Animated.View>
-    );
+    )
 }
 
 const DaysEditor = props => {
