@@ -12,13 +12,14 @@ import NumericSelector from "../Components/NumericSelector";
 //i guess you could have the option to build a routine here too, but for now it's just for editing the current routine
 //this can't be default screen, otherwise routine doesnt' have time to load
 const RoutineScreen = props => {
-    const data = ['pee pee', 'poo poo', 'oooooh'];
-    const { routine } = useContext(ProgressContext);
+    //const { routine } = useContext(ProgressContext);
 
     //nearly everything is gonna be editable
-    const [rName, setRName] = useState(routine.title);
-    const [rTime, setRTime] = useState(routine.time);
-    const [info, setInfo] = useState(routine.info);
+    //fuck this, I'm gonna start from scratch and use this to make a new routine
+    const [rName, setRName] = useState('Routine Name');
+    const [rTime, setRTime] = useState(7);
+    const [info, setInfo] = useState({});
+    const [workouts, setWorkouts] = useState({});
 
     return (
         <>
@@ -27,14 +28,36 @@ const RoutineScreen = props => {
                 <View style={styles.topBar} />
                 <ScrollView style={styles.box}>
                     <TextInput
-                        style={{color:'white', fontSize: 40}}
+                        style={{color:'white', textAlign: 'center', fontSize: 40}}
                         value={rName}
                         onChangeText={setRName}
                     />
-                    <View style={{flexDirection: 'row'}}>
-                        <Text style={{color:'white'}}>Cycle length in days: </Text>
+                    <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
+                        <Text style={{color:'white', fontSize: 20}}>Cycle length in days: </Text>
                         <NumericSelector onChange={setRTime} numInfo={{def: rTime, min: 7, max: 28, increment: 7}}/>
                     </View>
+
+                    <Text style={{color:'white', fontSize: 40}}>Workouts</Text>
+                    <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
+                        {
+                            Object.entries(workouts).map(([k,v], index) =>
+                                <View key={k} style={{height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
+                                    <Text style={{color:'white'}}>{k}</Text>
+
+                                </View>
+                            )
+                        }
+                        <View style={{justifyContent: 'center', height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
+                            <TouchableOpacity style={styles.configButton} onPress={() => {
+                                //append a new obj
+                                //works, but ideally I'd like A B C instead of 1 2 3
+                                setWorkouts({...workouts, [Object.keys(workouts).length+1]: []});
+                            }}>
+                                <Text style={{fontSize: 30}}>Add Workout</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </ScrollView>
+
                     <Text style={{color:'white', fontSize: 40}}>Exercises</Text>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
                         //definitely the trickiest of all
@@ -106,7 +129,6 @@ const RoutineScreen = props => {
                         })
                     }</ScrollView>
 
-                    <Text style={{color: 'white'}}>{JSON.stringify(routine)}</Text>
 
                 </ScrollView>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
@@ -122,6 +144,13 @@ const styles = StyleSheet.create({
 
     },
     container: { flex: 1, backgroundColor: PRIMARY },
+    configButton: {
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#333',
+    },
+
     topBar: {
         height: 40,
         width: '100%',
