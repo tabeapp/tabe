@@ -1,15 +1,16 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { StyleSheet, Animated, PanResponder, ScrollView, Text, View } from "react-native";
 
 const DraggableDay = props => {
     const [visible, setVisible] = useState(true);
     const pan = useRef(new Animated.ValueXY()).current;
-    console.log('dz' + JSON.stringify(props.dropzones));
-    const dzs = useRef(props.dropzones);
+    let dzs = useRef(props.dropzones);
+    //console.log('dz' + JSON.stringify(props.dropzones));
 
     const isDropZone = gesture => {
         let index = -1;
-        console.log('idz' + JSON.stringify(props.dropzones));
+        //console.log('idz' + JSON.stringify(dzs));
+        console.log('idz' + gesture.moveY + ' ' + gesture.moveX + ' ' + JSON.stringify(dzs));
         Object.entries(dzs).forEach(([k,dz]) => {
             if(gesture.moveY > dz.y && gesture.moveY < dz.y+dz.height){
                 if(gesture.moveX > dz.x && gesture.moveX < dz.x+dz.width)
@@ -28,7 +29,7 @@ const DraggableDay = props => {
             ], {useNativeDriver: false}),
             onPanResponderRelease: (e, gesture) => {
                 //which one did we hit?
-                const index = isDropZone(gesture);
+                const index = isDropZone(gesture)
                 if(index === -1)
                     Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false}).start();
                 else
@@ -53,7 +54,7 @@ const DraggableDay = props => {
 };
 
 const DaysEditor = props => {
-    const [dropzones, setDropzones] = useState([]);
+    const [dropzones, setDropzones] = useState({});
 
     return (<>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>
@@ -74,6 +75,7 @@ const DaysEditor = props => {
                         onLayout={e => {
                             //console.log(e.nativeEvent.layout);
                             setDropzones({...dropzones, [index]: e.nativeEvent.layout});
+                            console.log('updated' + JSON.stringify(dropzones));
                             //setDropzones(dropzones.map((_, i) => {
                                 //if(i === index)
                                     //return e.nativeEvent.layout;
