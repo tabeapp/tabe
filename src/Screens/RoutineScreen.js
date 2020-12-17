@@ -53,8 +53,17 @@ const RoutineScreen = props => {
                                 <Text>Current Working Weight: </Text>
                                 <NumericSelector onChange={() => {}} numInfo={{def:v.current, min: 0, max: 995, increment: 5}}/>
                                 <Text>Sets:</Text>
+
+                                <Text>Custom prgression(like5/3/1):</Text>
+                                <Switch
+                                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                                    thumbColor={v.setInfo.type==='custom' ? "#f5dd4b" : "#f4f3f4"}
+                                    ios_backgroundColor="#3e3e3e"
+                                    onValueChange={() => {/*all hell breaks loose*/}}
+                                    value={v.setInfo.type==='custom'}
+                                />
                                 {
-                                    //this should actually be very similar to custom workout scree
+                                    //this should actually be very similar to custom workout screen
                                     v.setInfo.type === 'normal' &&
                                     v.setInfo.sets.map(v =>
                                         <View style={{ ...styles.circle }}>
@@ -62,7 +71,23 @@ const RoutineScreen = props => {
                                         </View>
                                     )
                                 }
+                                {
+                                    //oh god wtf should we do here for 5/3/1
+                                    v.setInfo.type === 'custom' &&
+                                    <View></View>
+                                }
                                 <Text>Progression:</Text>
+                                {
+                                    v.progress &&
+                                    <>
+                                        <NumericSelector onChange={() => {}} numInfo={{def:v.progress.amount, min: 0, max: 25, increment: 2.5}}/>
+                                        <Text>every</Text>
+                                        <NumericSelector onChange={() => {}} numInfo={{def:v.progress.rate, min: 1, max: 10, increment: 1}}/>
+                                        <Text>times the workout is done</Text>
+                                    </>
+
+                                }
+
 
                                 <Text>AMRAP Last Set:</Text>
                                 <Switch
