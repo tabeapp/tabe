@@ -9,7 +9,8 @@ for(let i = 0; i <= 50; i++)
     reps.push(i)
 
 const ExerciseEditor = props => {
-    const {name, info, deleteExercise, editExercise, editSets} = props;
+    //ugh this sucks
+    const {name, info, deleteExercise, editExercise, editSets, updateType} = props;
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
@@ -32,6 +33,7 @@ const ExerciseEditor = props => {
             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
             onValueChange={value => {
                 editExercise(value, 'setInfo', 'type');
+                updateType(value)
 
             }}
         >
@@ -125,7 +127,7 @@ const ExerciseEditor = props => {
 
 
         {
-            (info.setInfo.type === 'Custom' || info.setInfo.type === 'Normal' )&&
+            info.setInfo.type === 'Normal' &&
             <View>
                 <Text>AMRAP Last Set:</Text>
                 <Switch

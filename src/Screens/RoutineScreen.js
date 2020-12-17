@@ -9,6 +9,8 @@ import WorkoutEditor from "../Components/WorkoutEditor";
 import { DEFAULT_EX_INFO } from "../Constants/DefaultExInfo";
 import DaysEditor from "../Components/DaysEditor";
 import ExerciseEditor from "../Components/ExerciseEditor";
+import Words from "../Components/Words";
+import RepSchemeEditor from "../Components/RepSchemeEditor";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -27,6 +29,9 @@ const RoutineScreen = props => {
     const [workouts, setWorkouts] = useState({});
 
     const [days, setDays] = useState([]);
+
+    const [customScheme, setCustomScheme] = useState(false);
+    const [customSets, setCustomSets] = useState([]);
 
     //this takes fucking forever
     useEffect(() => {
@@ -98,6 +103,20 @@ const RoutineScreen = props => {
                             <ExerciseEditor
                                 key={k}
                                 name={k} info={v}
+                                updateType={value => {
+                                    //the only thign we're looking for is custom
+                                    if(value === 'Custom')
+                                        setCustomScheme(true);
+                                    else{
+                                        //scan to see if any exercise is custom
+                                        setCustomScheme(Object.values(info).some(i =>
+                                            i.setInfo.type === 'Custom'
+                                        ));
+
+                                    }
+
+
+                                }}
                                 editSets={add => {
                                     setInfo(prev => {
                                         const next = { ...prev[k] };
@@ -147,6 +166,11 @@ const RoutineScreen = props => {
                                 }}/>
                         )
                     }</ScrollView>
+
+                    {
+                        customScheme &&
+                            <RepSchemeEditor sets={customSets} edit={setCustomSets}/>
+                    }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
                     <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
