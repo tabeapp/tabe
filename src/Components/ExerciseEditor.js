@@ -82,6 +82,38 @@ const ExerciseEditor = props => {
             info.setInfo.type === 'Custom' &&
             <View></View>
         }
+        {
+            info.setInfo.type === 'Sum' &&
+            <View style={styles.circle}>
+                <Picker
+                    style={{width: 50, height: 50}}
+                    selectedValue={info.setInfo.sum}
+                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                    onValueChange={(value) => {
+                        editExercise(value, 'setInfo', 'sum');
+                    }}
+                >
+                    {
+                        reps.map(item =>
+                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                    }
+                </Picker>
+            </View>
+        }
+        {
+            info.setInfo.type === 'Timed' &&
+            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <NumericSelector onChange={(val) => {
+                    editExercise(val, 'setInfo', 'minutes');
+
+                }} numInfo={{def:info.setInfo.minutes, min: 0, max: 59, increment: 1}}/>
+                <Words>:</Words>
+                <NumericSelector onChange={(val) => {
+                    editExercise(val, 'setInfo', 'seconds');
+
+                }} numInfo={{def:info.setInfo.seconds, min: 0, max: 55, increment: 5}}/>
+            </View>
+        }
         <Text>Progression:</Text>
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Words>Add</Words>
@@ -92,14 +124,19 @@ const ExerciseEditor = props => {
         </View>
 
 
-        <Text>AMRAP Last Set:</Text>
-        <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={info.amrap ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={() => {}}
-            value={info.amrap}
-        />
+        {
+            (info.setInfo.type === 'Custom' || info.setInfo.type === 'Normal' )&&
+            <View>
+                <Text>AMRAP Last Set:</Text>
+                <Switch
+                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                    thumbColor={info.amrap ? "#f5dd4b" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() => {}}
+                    value={info.amrap}
+                />
+            </View>
+        }
 
 
 

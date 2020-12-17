@@ -101,8 +101,10 @@ const RoutineScreen = props => {
                                 editSets={add => {
                                     setInfo(prev => {
                                         const next = { ...prev[k] };
-                                        if(add)
-                                            next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length - 1]);
+                                        if(add){
+                                            if(next.setInfo.sets.length <= 12)
+                                                next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length - 1]);
+                                        }
                                         else
                                             next.setInfo.sets.splice(next.setInfo.sets.length-1);
 
