@@ -1,5 +1,5 @@
 import { Switch, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, {useState, useContext} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
@@ -25,7 +25,12 @@ const RoutineScreen = props => {
     const [info, setInfo] = useState({});
     const [workouts, setWorkouts] = useState({});
 
+    const [days, setDays] = useState([]);
 
+    //this takes fucking forever
+    useEffect(() => {
+        setDays(Array.from(new Array(rTime), () => null));
+    }, [rTime]);
 
     return (
         <>
@@ -157,7 +162,12 @@ const RoutineScreen = props => {
                     }</ScrollView>
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
-                    <DaysEditor/>
+                    <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
+                        setDays(old => {
+                            old[day] = val;
+                            return old
+                        })
+                    }/>
 
                 </View>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
