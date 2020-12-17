@@ -1,8 +1,22 @@
-import React, {useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import { StyleSheet, Animated, PanResponder, ScrollView, Text, View } from "react-native";
 
 const DraggableDay = props => {
+    const [visible, setVisible] = useState(true);
     const pan = useRef(new Animated.ValueXY()).current;
+
+    const isDropZone = gesture => {
+        let index = -1;
+        console.log(props.dropzones);
+        Object.entries(props.dropzones).forEach(([k,dz]) => {
+            if(gesture.moveY > dz.y && gesture.moveY < dz.y+dz.height){
+                if(gesture.moveX > dz.x && gesture.moveX < dz.x+dz.width)
+                    index = k;
+            }
+        });
+        return index;
+    }
+
     const panResponder = useRef(
         PanResponder.create({
             onMoveShouldSetPanResponder: () => true,
@@ -10,13 +24,19 @@ const DraggableDay = props => {
                 null,
                 { dx: pan.x, dy: pan.y }
             ], {useNativeDriver: false}),
-            onPanResponderRelease: () => {
-                Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false}).start();
+            onPanResponderRelease: (e, gesture) => {
+                //which one did we hit?
+                const index = isDropZone(gesture);
+                if(index === -1)
+                    Animated.spring(pan, { toValue: { x: 0, y: 0 }, useNativeDriver: false}).start();
+                else
+                    setVisible(false);
             }
         })
     ).current;
 
     return (
+        visible &&
         <Animated.View
             style={{
                 transform: [{ translateX: pan.x }, { translateY: pan.y }],
@@ -31,6 +51,8 @@ const DraggableDay = props => {
 };
 
 const DaysEditor = props => {
+    const [dropzones, setDropzones] = useState([]);
+
     return (<>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>
             {
@@ -43,9 +65,22 @@ const DaysEditor = props => {
             }
             {/*so this is like a schedule planner thing*/
                 //you have no idea how complex this is about to get
-                Array.from(new Array(14), () => null).map(d =>
+                Array.from(new Array(14), () => null).map((d,index) =>
                     //good enough lol
-                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '12.5%', height: 30, backgroundColor: '#333', margin: 3 }} >
+                    <View
+                        key={index}
+                        onLayout={e => {
+                            //console.log(e.nativeEvent.layout);
+                            setDropzones({...dropzones, [index]: e.nativeEvent.layout});
+                            //setDropzones(dropzones.map((_, i) => {
+                                //if(i === index)
+                                    //return e.nativeEvent.layout;
+                                //else
+                                    //return _;
+                            //}));
+                            //console.log(dropzones);
+                        }}
+                        style={{ justifyContent: 'center', alignItems: 'center', width: '12.5%', height: 40, backgroundColor: '#333', margin: 3 }} >
                         {
                             d===null &&
                             <Text style={{color: '#811212'}}>R</Text>
@@ -61,7 +96,7 @@ const DaysEditor = props => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>{
             //Object.keys(workouts).map(k =>
             ['A', 'B', 'C', 'D'].map(k =>
-                <DraggableDay value={k}/>
+                <DraggableDay dropzones={dropzones} key={k} value={k}/>
             )
 
         }</View>
