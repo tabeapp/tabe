@@ -8,6 +8,7 @@ import ExercisePicker from "../Components/ExercisePicker";
 import WorkoutEditor from "../Components/WorkoutEditor";
 import { DEFAULT_EX_INFO } from "../Constants/DefaultExInfo";
 import DaysEditor from "../Components/DaysEditor";
+import ExerciseEditor from "../Components/ExerciseEditor";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -37,7 +38,7 @@ const RoutineScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
-                <View style={styles.box}>
+                <ScrollView style={styles.box}>
                     <TextInput
                         style={{color:'white', textAlign: 'center', fontSize: 40}}
                         value={rName}
@@ -93,72 +94,43 @@ const RoutineScreen = props => {
                     <Text style={{color:'white', fontSize: 40}}>Exercises</Text>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
                         //definitely the trickiest of all
-                        Object.entries(info).map(([k,v]) => {
+                        Object.entries(info).map(([k,v]) =>
+                            <ExerciseEditor
+                                key={k}
+                                name={k} info={v}
+                                deleteExercise={() => {
 
-                            //i guess the width is 400?
-                            //there's gotta be a more programmatic way to do this
-                            return <View key={k} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                                    <Text style={{color:'white'}}>{k}</Text>
-                                    <TouchableOpacity style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>
-                                        <Text style={{color:'red'}}>X</Text>
-                                    </TouchableOpacity>
-                                </View>
+                                    setInfo(prev => {
+                                        const next = {...prev};
+                                        delete next[k];
+                                        return next;
 
-                                <Text>Current Working Weight: </Text>
-                                <NumericSelector onChange={() => {}} numInfo={{def:v.current, min: 0, max: 995, increment: 5}}/>
-                                <Text>Sets:</Text>
+                                    });
+                                    //clear from all workouts as well
+                                    setWorkouts(prev => {
+                                        const next = {...prev};
+                                        Object.keys(next).forEach(key => {
+                                            next[key] = next[key].filter(e => e !== k)
+                                        })
+                                        return next;
 
-                                <Text>Custom prgression(like5/3/1):</Text>
-                                <Switch
-                                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                                    thumbColor={v.setInfo.type==='custom' ? "#f5dd4b" : "#f4f3f4"}
-                                    ios_backgroundColor="#3e3e3e"
-                                    onValueChange={() => {/*all hell breaks loose*/}}
-                                    value={v.setInfo.type==='custom'}
-                                />
-                                {
-                                    //this should actually be very similar to custom workout screen
-                                    v.setInfo.type === 'normal' &&
-                                    v.setInfo.sets.map((v, index) =>
-                                        <View key={index} style={{ ...styles.circle }}>
-                                            <Text style={{ color: 'white' }}>{v}</Text>
-                                        </View>
-                                    )
-                                }
-                                {
-                                    //oh god wtf should we do here for 5/3/1
-                                    v.setInfo.type === 'custom' &&
-                                    <View></View>
-                                }
-                                <Text>Progression:</Text>
-                                {
-                                    v.progress &&
-                                    <>
-                                        <NumericSelector onChange={() => {}} numInfo={{def:v.progress.amount, min: 0, max: 25, increment: 2.5}}/>
-                                        <Text>every</Text>
-                                        <NumericSelector onChange={() => {}} numInfo={{def:v.progress.rate, min: 1, max: 10, increment: 1}}/>
-                                        <Text>times the workout is done</Text>
-                                    </>
+                                    });
 
-                                }
+                                }}
+                                editExercise={(value, field, field2) => {
+                                    setInfo(prev => {
+                                        //i really hate editing arrays in react
+                                        const next = {...prev[k]};
+                                        //yeah this is stupid but whatever
+                                        if(field2)
+                                            next[field][field2] = value;
+                                        else
+                                            next[field] = value;
+                                        return {...prev, [k]:next};
+                                    })
 
-
-                                <Text>AMRAP Last Set:</Text>
-                                <Switch
-                                    trackColor={{ false: "#767577", true: "#81b0ff" }}
-                                    thumbColor={v.amrap ? "#f5dd4b" : "#f4f3f4"}
-                                    ios_backgroundColor="#3e3e3e"
-                                    onValueChange={() => {}}
-                                    value={v.amrap}
-                                />
-
-
-
-                            </View>
-                            //return <Text style={{color:'white'}}>{k + ' ' + JSON.stringify(v)}</Text>
-
-                        })
+                                }}/>
+                        )
                     }</ScrollView>
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
@@ -170,7 +142,7 @@ const RoutineScreen = props => {
                         })
                     }/>
 
-                </View>
+                </ScrollView>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
             </SafeAreaView>
         </>
