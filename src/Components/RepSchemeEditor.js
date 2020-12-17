@@ -30,8 +30,16 @@ const RepSchemeEditor = props => {
                             <View style={{flex: 1, height: 60, backgroundColor: 'transparent', borderRadius: 20}}>
                                 {
                                     <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                                        <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
-                                                          onPress={() => {}}>
+                                        <TouchableOpacity
+                                            style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                                            onPress={() => {
+                                                props.edit(prev => {
+                                                    const next = [...prev];
+                                                    next[weekIndex].splice(next[weekIndex].length-1)
+                                                    return next;
+                                                })
+
+                                            }}>
                                             <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Text>
                                         </TouchableOpacity>
                                         {
@@ -79,8 +87,8 @@ const RepSchemeEditor = props => {
                                                     //weekIndex available
                                                     if(next[weekIndex].length === 0)
                                                         next[weekIndex] = [{reps:5, '%': 100}];
-                                                    else
-                                                        next[weekIndex].push([...next[weekIndex][next[weekIndex].length-1]]);
+                                                    else//im just worried this doesn't actualy copy the object
+                                                        next[weekIndex].push({...next[weekIndex][next[weekIndex].length-1]});
 
                                                     return next;
 
@@ -104,7 +112,12 @@ const RepSchemeEditor = props => {
                     //append a new obj
                     //works, but ideally I'd like A B C instead of 1 2 3
                     //setWorkouts({...workouts, [Object.keys(workouts).length+1]: []});
-                    props.edit(prev => [...prev, []])
+                    props.edit(prev => {
+                        if(prev.length === 0)
+                            return [...prev, []]
+                        else
+                            return [...prev, [...prev[prev.length-1]]]
+                    })
                 }}>
                     <Text style={{fontSize: 30}}>Add Week(?)</Text>
                 </TouchableOpacity>
