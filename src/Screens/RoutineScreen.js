@@ -32,7 +32,7 @@ const RoutineScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
-                <ScrollView style={styles.box}>
+                <View style={styles.box}>
                     <TextInput
                         style={{color:'white', textAlign: 'center', fontSize: 40}}
                         value={rName}
@@ -159,7 +159,7 @@ const RoutineScreen = props => {
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
                     <DaysEditor/>
 
-                </ScrollView>
+                </View>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
             </SafeAreaView>
         </>

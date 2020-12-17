@@ -4,11 +4,13 @@ import { StyleSheet, Animated, PanResponder, ScrollView, Text, View } from "reac
 const DraggableDay = props => {
     const [visible, setVisible] = useState(true);
     const pan = useRef(new Animated.ValueXY()).current;
+    console.log('dz' + JSON.stringify(props.dropzones));
+    const dzs = useRef(props.dropzones);
 
     const isDropZone = gesture => {
         let index = -1;
-        console.log(props.dropzones);
-        Object.entries(props.dropzones).forEach(([k,dz]) => {
+        console.log('idz' + JSON.stringify(props.dropzones));
+        Object.entries(dzs).forEach(([k,dz]) => {
             if(gesture.moveY > dz.y && gesture.moveY < dz.y+dz.height){
                 if(gesture.moveX > dz.x && gesture.moveX < dz.x+dz.width)
                     index = k;
