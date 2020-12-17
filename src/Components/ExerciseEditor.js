@@ -9,7 +9,7 @@ for(let i = 0; i <= 50; i++)
     reps.push(i)
 
 const ExerciseEditor = props => {
-    const {name, info, deleteExercise, editExercise} = props;
+    const {name, info, deleteExercise, editExercise, editSets} = props;
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
@@ -44,29 +44,38 @@ const ExerciseEditor = props => {
         {
             //this should actually be very similar to custom workout screen
             info.setInfo.type === 'Normal' &&
-            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>{
-                //<Text style={{ color: 'white' }}>{v}</Text>
-                info.setInfo.sets.map((v, index) =>
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                                  onPress={() => editSets(false)}>
+                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Text>
+                </TouchableOpacity>
+                {
+                    info.setInfo.sets.map((v, index) =>
 
-                    <View key={index} style={styles.circle}>
-                        <Picker
-                            style={{width: 50, height: 50}}
-                            selectedValue={v}
-                            itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                            onValueChange={(value) => {
-                                //how the fuck
-                                editExercise(value, 'setInfo', 'sets', index);
-                                //setProg(value);
-                            }}
-                        >
-                            {
-                                reps.map(item =>
-                                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
-                            }
-                        </Picker>
-                    </View>
-                )
-            }</View>
+                        <View key={index} style={styles.circle}>
+                            <Picker
+                                style={{width: 50, height: 50}}
+                                selectedValue={v}
+                                itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                                onValueChange={(value) => {
+                                    //how the fuck
+                                    editExercise(value, 'setInfo', 'sets', index);
+                                    //setProg(value);
+                                }}
+                            >
+                                {
+                                    reps.map(item =>
+                                        <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                                }
+                            </Picker>
+                        </View>
+                    )
+                }
+                <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
+                                  onPress={() => editSets(true)}>
+                    <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                </TouchableOpacity>
+            </View>
         }
         {
             //oh god wtf should we do here for 5/3/1
@@ -74,16 +83,13 @@ const ExerciseEditor = props => {
             <View></View>
         }
         <Text>Progression:</Text>
-        {
-            info.progress &&
-            <>
-                <NumericSelector onChange={() => {}} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
-                <Text>every</Text>
-                <NumericSelector onChange={() => {}} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
-                <Text>times the workout is done</Text>
-            </>
-
-        }
+        <View style={{alignItems: 'center', flexDirection: 'row'}}>
+            <Words>Add</Words>
+            <NumericSelector onChange={() => {}} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
+            <Words>lb every</Words>
+            <NumericSelector onChange={() => {}} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
+            <Words>times the workout is done</Words>
+        </View>
 
 
         <Text>AMRAP Last Set:</Text>

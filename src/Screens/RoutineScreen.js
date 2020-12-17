@@ -98,6 +98,24 @@ const RoutineScreen = props => {
                             <ExerciseEditor
                                 key={k}
                                 name={k} info={v}
+                                editSets={add => {
+                                    if(add){
+                                        setInfo(prev => {
+                                            const next = { ...prev[k] };
+                                            next.setInfo.sets.push({...next.setInfo.sets[next.setInfo.sets.length - 1]});
+                                            return next;
+                                        });
+                                    }
+                                    else{
+                                        setInfo(prev => {
+                                            const next = {...prev[k]};
+                                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
+                                            console.log(next);
+                                            return next;
+                                        });
+                                    }
+
+                                }}
                                 deleteExercise={() => {
 
                                     setInfo(prev => {
