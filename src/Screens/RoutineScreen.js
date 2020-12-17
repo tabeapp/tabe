@@ -6,6 +6,7 @@ import ProgressContext from "../Contexts/ProgressContext";
 import NumericSelector from "../Components/NumericSelector";
 import ExercisePicker from "../Components/ExercisePicker";
 import WorkoutEditor from "../Components/WorkoutEditor";
+import { DEFAULT_EX_INFO } from "../Constants/DefaultExInfo";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -54,15 +55,9 @@ const RoutineScreen = props => {
 
                                         //also need to add it to exerdcises so we can edit it later
                                         if(!(ex in info)){
-                                            setInfo({...info, [ex]:
-                                                    {
-                                                        current: 135,//??? should I have a constans file with this info
-                                                        setInfo: {
-                                                            setType: 'normal',
-                                                            sets: [5,5,5,5,5]
-
-                                                        }
-                                                    }});
+                                            setInfo({
+                                                ...info, [ex]: DEFAULT_EX_INFO(ex)
+                                            })
                                         }
 
                                     }}
@@ -110,8 +105,8 @@ const RoutineScreen = props => {
                                 {
                                     //this should actually be very similar to custom workout screen
                                     v.setInfo.type === 'normal' &&
-                                    v.setInfo.sets.map(v =>
-                                        <View style={{ ...styles.circle }}>
+                                    v.setInfo.sets.map((v, index) =>
+                                        <View key={index} style={{ ...styles.circle }}>
                                             <Text style={{ color: 'white' }}>{v}</Text>
                                         </View>
                                     )
