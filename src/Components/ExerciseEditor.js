@@ -4,6 +4,10 @@ import NumericSelector from "./NumericSelector";
 import Words from "./Words";
 import { Picker } from "@react-native-picker/picker";
 
+const reps = [];
+for(let i = 0; i <= 50; i++)
+    reps.push(i)
+
 const ExerciseEditor = props => {
     const {name, info, deleteExercise, editExercise} = props;
 
@@ -37,15 +41,32 @@ const ExerciseEditor = props => {
             }
         </Picker>
 
-        <Text>Custom prgression(like5/3/1):</Text>
         {
             //this should actually be very similar to custom workout screen
             info.setInfo.type === 'Normal' &&
-            info.setInfo.sets.map((v, index) =>
-                <View key={index} style={{ ...styles.circle }}>
-                    <Text style={{ color: 'white' }}>{v}</Text>
-                </View>
-            )
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>{
+                //<Text style={{ color: 'white' }}>{v}</Text>
+                info.setInfo.sets.map((v, index) =>
+
+                    <View key={index} style={styles.circle}>
+                        <Picker
+                            style={{width: 50, height: 50}}
+                            selectedValue={v}
+                            itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                            onValueChange={(value) => {
+                                //how the fuck
+                                editExercise(value, 'setInfo', 'sets', index);
+                                //setProg(value);
+                            }}
+                        >
+                            {
+                                reps.map(item =>
+                                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                            }
+                        </Picker>
+                    </View>
+                )
+            }</View>
         }
         {
             //oh god wtf should we do here for 5/3/1

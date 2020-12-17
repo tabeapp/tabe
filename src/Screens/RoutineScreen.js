@@ -117,12 +117,14 @@ const RoutineScreen = props => {
                                     });
 
                                 }}
-                                editExercise={(value, field, field2) => {
+                                editExercise={(value, field, field2, field3) => {
                                     setInfo(prev => {
                                         //i really hate editing arrays in react
                                         const next = {...prev[k]};
-                                        //yeah this is stupid but whatever
-                                        if(field2)
+                                        //yeah this is increidbly stupid but whatever
+                                        if(field3 !== undefined)
+                                            next[field][field2][field3] = value;
+                                        else if(field2 !== undefined)
                                             next[field][field2] = value;
                                         else
                                             next[field] = value;

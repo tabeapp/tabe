@@ -89,7 +89,7 @@ export const DEFAULT_EX_INFO = ex => ({
         rate: 1
     },
     setInfo: {
-        type: 'normal',
+        type: 'Normal',
         sets: [5,5,5,5,5]
     },
 });
