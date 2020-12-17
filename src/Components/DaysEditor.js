@@ -1,5 +1,34 @@
-import React from 'react';
-import { Animated, PanResponder, ScrollView, Text, View } from "react-native";
+import React, {useRef} from 'react';
+import { StyleSheet, Animated, PanResponder, ScrollView, Text, View } from "react-native";
+
+const Box = () => {
+    const pan = useRef(new Animated.ValueXY()).current;
+    const panResponder = useRef(
+        PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+            onPanResponderMove: Animated.event([
+                null,
+                { dx: pan.x, dy: pan.y}
+            ], {useNativeDriver: true}),
+            onPanResponderRelease: () => {
+                Animated.spring(pan,
+                    { toValue: { x: 0, y: 0}, useNativeDriver: true },
+                    ).start();
+            }
+        })
+    ).current;
+
+    return (
+        <Animated.View
+            style={{
+                transform: [{ translateX: pan.x }, { translateY: pan.y }]
+            }}
+            {...panResponder.panHandlers}
+        >
+            <View style={{backgroundColor: 'red', width: 30, height: 30}}/>
+        </Animated.View>
+    );
+}
 
 const DaysEditor = props => {
     return (<>
@@ -14,7 +43,7 @@ const DaysEditor = props => {
         <View style={{ flexDirection: 'row' }}>{
             //Object.keys(workouts).map(k =>
             ['A', 'B', 'C', 'D'].map(k =>
-                <Text key={k} style={{ textAlign: 'center', flex: 1, color: 'white' }}>{k}</Text>
+                <Box/>
             )
 
         }</View>
@@ -22,4 +51,12 @@ const DaysEditor = props => {
 
 };
 
+const styles = StyleSheet.create({
+    box: {
+        height: 150,
+        width: 150,
+        backgroundColor: "blue",
+        borderRadius: 5
+    }
+});
 export default DaysEditor;
