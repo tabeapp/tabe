@@ -7,6 +7,7 @@ import NumericSelector from "../Components/NumericSelector";
 import ExercisePicker from "../Components/ExercisePicker";
 import WorkoutEditor from "../Components/WorkoutEditor";
 import { DEFAULT_EX_INFO } from "../Constants/DefaultExInfo";
+import DaysEditor from "../Components/DaysEditor";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -23,6 +24,7 @@ const RoutineScreen = props => {
     const [rTime, setRTime] = useState(7);
     const [info, setInfo] = useState({});
     const [workouts, setWorkouts] = useState({});
+
 
 
     return (
@@ -54,6 +56,14 @@ const RoutineScreen = props => {
                                         setWorkouts({...workouts, [k]: [...workouts[k], ex]})
 
                                         //also need to add it to exerdcises so we can edit it later
+
+                                        //problem: what about adding lighter versions of exercises like in ppl?
+                                        //solution: alert the user and let them choose
+                                        if(ex in info){
+                                            //if no, just cancel addition and use the info already there
+                                            //if yes, just add 'Bench Press.b'
+
+                                        }
                                         if(!(ex in info)){
                                             setInfo({
                                                 ...info, [ex]: DEFAULT_EX_INFO(ex)
@@ -146,6 +156,8 @@ const RoutineScreen = props => {
                         })
                     }</ScrollView>
 
+                    <Text style={{color:'white', fontSize: 40}}>Days</Text>
+                    <DaysEditor/>
 
                 </ScrollView>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
