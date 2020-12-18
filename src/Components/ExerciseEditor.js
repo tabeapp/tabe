@@ -10,7 +10,7 @@ for(let i = 0; i <= 50; i++)
 
 const ExerciseEditor = props => {
     //ugh this sucks
-    const {name, info, deleteExercise, editExercise, editSets, updateType} = props;
+    const {name, info, deleteExercise, editExercise, updateType} = props;
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
@@ -47,9 +47,19 @@ const ExerciseEditor = props => {
             //this should actually be very similar to custom workout screen
             info.setInfo.type === 'Normal' &&
             <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
-                                  onPress={() => editSets(false)}>
-                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Text>
+                <TouchableOpacity
+                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                    onPress={() => {
+                        //editSets(false)
+                        //k is replaced by props.name
+                        props.editInfo(prev => {
+                            const next = {...prev[props.name]};
+                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
+                            return {...prev, [props.name]: next};
+                        });
+
+                    }} >
+                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
                 </TouchableOpacity>
                 {
                     info.setInfo.sets.map((v, index) =>
@@ -74,8 +84,17 @@ const ExerciseEditor = props => {
                         </View>
                     )
                 }
-                <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
-                                  onPress={() => editSets(true)}>
+                <TouchableOpacity
+                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
+                    onPress={() => {
+                        //editSets(true)
+                        props.editInfo(prev => {
+                            const next = {...prev[props.name]};
+                            if(next.setInfo.sets.length <= 12)
+                                next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length-1])
+                            return {...prev, [props.name]: next};
+                        })
+                    }}>
                     <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
                 </TouchableOpacity>
             </View>

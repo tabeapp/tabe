@@ -135,10 +135,12 @@ const RoutineScreen = props => {
                     <Text style={{color:'white', fontSize: 40}}>Exercises</Text>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
                         //definitely the trickiest of all
+                        //editing exercises involves much of the state, so I've just added them
                         Object.entries(info).map(([k,v]) =>
                             <ExerciseEditor
                                 key={k}
                                 name={k} info={v}
+                                editInfo={setInfo}
                                 updateType={value => {
                                     //the only thign we're looking for is custom
                                     if(value === 'Custom')
@@ -152,19 +154,6 @@ const RoutineScreen = props => {
                                     }
 
 
-                                }}
-                                editSets={add => {
-                                    setInfo(prev => {
-                                        const next = { ...prev[k] };
-                                        if(add){
-                                            if(next.setInfo.sets.length <= 12)
-                                                next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length - 1]);
-                                        }
-                                        else
-                                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
-
-                                        return {...prev, [k]: next};
-                                    })
                                 }}
                                 deleteExercise={() => {
 
