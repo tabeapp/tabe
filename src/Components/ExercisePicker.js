@@ -15,9 +15,9 @@ const ExercisePicker = props => {
     let list;
     if(category === ''){
         list = Object.keys(EXERCISES).map(cat =>
-            <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
-                <Text>{cat}</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
+                    <Text>{cat}</Text>
+                </TouchableOpacity>
         )
     } else {
         list = EXERCISES[category].map(ex =>
@@ -37,9 +37,9 @@ const ExercisePicker = props => {
 
     return (
         <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <TouchableOpacity onPress={props.close} style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}>
                 {list}
-            </View>
+            </TouchableOpacity>
         </Modal>
     );
 }
