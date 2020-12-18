@@ -72,8 +72,13 @@ const ExerciseEditor = props => {
                                 onValueChange={(value) => {
                                     //how the fuck
                                     //would defeinitely be a good idea to set all following sets to current rep
-                                    editExercise(value, 'setInfo', 'sets', index);
-                                    //setProg(value);
+                                    props.editInfo(prev => {
+                                        const next = {...prev[props.name]};
+                                        next.setInfo.sets[index] = value;
+                                        for(let i = index; i < next.setInfo.sets.length; i++)
+                                            next.setInfo.sets[i] = value;
+                                        return {...prev, [props.name]: next};
+                                    });
                                 }}
                             >
                                 {
