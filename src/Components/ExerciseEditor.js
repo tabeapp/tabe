@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from "react-native";
-import NumericSelector from "./NumericSelector";
-import Words from "./Words";
-import { Picker } from "@react-native-picker/picker";
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import NumericSelector from './NumericSelector';
+import Words from './Words';
+import { Picker } from '@react-native-picker/picker';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -37,9 +37,6 @@ const ExerciseEditor = props => {
                     next.setInfo.type = value;
                     return {...prev, [props.name]: next};
                 });
-
-                //updateType(value)
-
             }}
         >
             {
@@ -55,7 +52,6 @@ const ExerciseEditor = props => {
                 <TouchableOpacity
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
-                        //editSets(false)
                         //k is replaced by props.name
                         props.editInfo(prev => {
                             const next = {...prev[props.name]};
@@ -97,7 +93,6 @@ const ExerciseEditor = props => {
                 <TouchableOpacity
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={() => {
-                        //editSets(true)
                         props.editInfo(prev => {
                             const next = {...prev[props.name]};
                             if(next.setInfo.sets.length <= 12)
@@ -110,7 +105,6 @@ const ExerciseEditor = props => {
             </View>
         }
         {
-            //oh god wtf should we do here for 5/3/1
             info.setInfo.type === 'Custom' &&
             <View></View>
         }
@@ -166,7 +160,6 @@ const ExerciseEditor = props => {
             <Words>times the workout is done</Words>
         </View>
 
-
         {
             info.setInfo.type === 'Normal' &&//this doesn't do shit
             <View>
@@ -180,12 +173,7 @@ const ExerciseEditor = props => {
                 />
             </View>
         }
-
-
-
     </View>
-    //return <Text style={{color:'white'}}>{k + ' ' + JSON.stringify(v)}</Text>
-
 };
 
 const styles = StyleSheet.create({

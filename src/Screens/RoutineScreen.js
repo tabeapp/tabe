@@ -1,16 +1,13 @@
-import { Alert, Switch, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, {useEffect, useState, useContext} from "react";
+import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
-import ProgressContext from "../Contexts/ProgressContext";
-import NumericSelector from "../Components/NumericSelector";
-import ExercisePicker from "../Components/ExercisePicker";
-import WorkoutEditor from "../Components/WorkoutEditor";
-import { DEFAULT_EX_INFO } from "../Constants/DefaultExInfo";
-import DaysEditor from "../Components/DaysEditor";
-import ExerciseEditor from "../Components/ExerciseEditor";
-import Words from "../Components/Words";
-import RepSchemeEditor from "../Components/RepSchemeEditor";
+import NumericSelector from '../Components/NumericSelector';
+import WorkoutEditor from '../Components/WorkoutEditor';
+import { DEFAULT_EX_INFO } from '../Constants/DefaultExInfo';
+import DaysEditor from '../Components/DaysEditor';
+import ExerciseEditor from '../Components/ExerciseEditor';
+import RepSchemeEditor from '../Components/RepSchemeEditor';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -150,20 +147,11 @@ const RoutineScreen = props => {
                                 name={k} info={v}
                                 editInfo={setInfo}
                                 deleteExercise={() => {
-
+                                    //this is fine
                                     setInfo(prev => {
                                         const next = {...prev};
                                         delete next[k];
                                         return next;
-
-                                    }, () => {
-                                        //need to potentially close custom...or do we?
-                                        //still this doesn't seem to work
-                                        //should i use useeffect for this?
-                                        setCustomScheme(Object.values(info).some(i =>
-                                            i.setInfo.type === 'Custom'
-                                        ));
-
                                     });
                                     //clear from all workouts as well
                                     setWorkouts(prev => {
@@ -173,8 +161,6 @@ const RoutineScreen = props => {
                                         })
                                         return next;
                                     });
-
-
                                 }}/>
                         )
                     }</ScrollView>
@@ -199,8 +185,6 @@ const RoutineScreen = props => {
         </>
     );
 };
-//useful later
-//<ScrollView pagingEnabled style={styles.box} horizontal={true}/>
 
 const styles = StyleSheet.create({
     navBar: {
