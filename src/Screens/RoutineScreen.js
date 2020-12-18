@@ -1,4 +1,4 @@
-import { Switch, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Switch, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import React, {useEffect, useState, useContext} from "react";
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
@@ -61,10 +61,12 @@ const RoutineScreen = props => {
                                 <WorkoutEditor
                                     key={k} exercises={v} name={k}
                                     addExercise={ex => {
+                                        //because this edits both workouts and info, im' keeping it in routinescreen
                                         //we know which workout to add it to cuz of k
                                         //ugh this is so annoying why cant we just do
                                         //workouts[k].push(ex)
-                                        setWorkouts({...workouts, [k]: [...workouts[k], ex]})
+
+                                        //should this part be done before
 
                                         //also need to add it to exerdcises so we can edit it later
 
@@ -73,12 +75,46 @@ const RoutineScreen = props => {
                                         if(ex in info){
                                             //if no, just cancel addition and use the info already there
                                             //if yes, just add 'Bench Press.b'
+                                            Alert.alert(
+                                                "Duplicate Exercise",
+                                                //maybe rephrase this
+                                                "This exercise already is in the routine, do you want to link to that one or make an alternative version?",
+                                                [
+                                                    {
+                                                        text: "Link",//just use the other one, don't need to add a new one to exercises
+                                                        onPress: () => setWorkouts({...workouts, [k]: [...workouts[k], ex]}),
+                                                        style: "cancel"
+                                                    },
+                                                    {
+                                                        text: "Alternate",
+                                                        onPress: () => {
+                                                            //need to find a name
+                                                            //start with [exercise].b, then [exercise].c, ...
+                                                            let suffix = '.b';
+                                                            //yes this is weird but it works
+                                                            while((ex + suffix) in info)
+                                                                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
 
+                                                            const altName = ex + suffix;
+
+
+                                                            setWorkouts({...workouts, [k]: [...workouts[k], altName]});
+                                                            setInfo({
+                                                                ...info, [altName]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
+                                                            });
+                                                            //initializeWorkout();
+                                                            //props.navigation.navigate('workout');
+                                                        },
+                                                    }
+                                                ],
+                                                {cancelable: false}
+                                            )
                                         }
-                                        if(!(ex in info)){
+                                        else{
+                                            setWorkouts({...workouts, [k]: [...workouts[k], ex]});
                                             setInfo({
                                                 ...info, [ex]: DEFAULT_EX_INFO(ex)
-                                            })
+                                            });
                                         }
 
                                     }}
@@ -169,7 +205,7 @@ const RoutineScreen = props => {
 
                     {
                         customScheme &&
-                            <RepSchemeEditor sets={customSets} edit={setCustomSets}/>
+                        <RepSchemeEditor sets={customSets} edit={setCustomSets}/>
                     }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
