@@ -173,6 +173,14 @@ const RoutineScreen = props => {
                                         delete next[k];
                                         return next;
 
+                                    }, () => {
+                                        //need to potentially close custom...or do we?
+                                        //still this doesn't seem to work
+                                        //should i use useeffect for this?
+                                        setCustomScheme(Object.values(info).some(i =>
+                                            i.setInfo.type === 'Custom'
+                                        ));
+
                                     });
                                     //clear from all workouts as well
                                     setWorkouts(prev => {
@@ -181,8 +189,8 @@ const RoutineScreen = props => {
                                             next[key] = next[key].filter(e => e !== k)
                                         })
                                         return next;
-
                                     });
+
 
                                 }}
                                 editExercise={(value, field, field2, field3) => {

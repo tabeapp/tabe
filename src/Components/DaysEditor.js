@@ -12,7 +12,7 @@ const DaysEditor = props => {
             {
                 //just to mark days of week
                 ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(dow =>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '12.5%', height: 20, margin: 3 }} >
+                    <View key={dow} style={{ justifyContent: 'center', alignItems: 'center', width: '12.5%', height: 20, margin: 3 }} >
                         <Text style={{color: 'white'}}>{dow}</Text>
                     </View>
                 )

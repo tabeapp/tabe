@@ -61,6 +61,7 @@ const ExerciseEditor = props => {
                                 itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                                 onValueChange={(value) => {
                                     //how the fuck
+                                    //would defeinitely be a good idea to set all following sets to current rep
                                     editExercise(value, 'setInfo', 'sets', index);
                                     //setProg(value);
                                 }}
@@ -127,7 +128,7 @@ const ExerciseEditor = props => {
 
 
         {
-            info.setInfo.type === 'Normal' &&
+            info.setInfo.type === 'Normal' &&//this doesn't do shit
             <View>
                 <Text>AMRAP Last Set:</Text>
                 <Switch
