@@ -10,7 +10,7 @@ for(let i = 0; i <= 50; i++)
 
 const ExerciseEditor = props => {
     //ugh this sucks
-    const {name, info, deleteExercise, editExercise, updateType} = props;
+    const {name, info, deleteExercise} = props;
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
@@ -32,8 +32,13 @@ const ExerciseEditor = props => {
             selectedValue={info.setInfo.type}
             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
             onValueChange={value => {
-                editExercise(value, 'setInfo', 'type');
-                updateType(value)
+                props.editInfo(prev => {
+                    const next = {...prev[props.name]};
+                    next.setInfo.type = value;
+                    return {...prev, [props.name]: next};
+                });
+
+                //updateType(value)
 
             }}
         >
@@ -117,7 +122,11 @@ const ExerciseEditor = props => {
                     selectedValue={info.setInfo.sum}
                     itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                     onValueChange={(value) => {
-                        editExercise(value, 'setInfo', 'sum');
+                        props.editInfo(prev => {
+                            const next = {...prev[props.name]};
+                            next.setInfo.sum = value;
+                            return {...prev, [props.name]: next};
+                        });
                     }}
                 >
                     {
@@ -130,13 +139,20 @@ const ExerciseEditor = props => {
         {
             info.setInfo.type === 'Timed' &&
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <NumericSelector onChange={(val) => {
-                    editExercise(val, 'setInfo', 'minutes');
-
+                <NumericSelector onChange={(value) => {
+                    props.editInfo(prev => {
+                        const next = {...prev[props.name]};
+                        next.setInfo.minutes = value;
+                        return {...prev, [props.name]: next};
+                    });
                 }} numInfo={{def:info.setInfo.minutes, min: 0, max: 59, increment: 1}}/>
                 <Words>:</Words>
-                <NumericSelector onChange={(val) => {
-                    editExercise(val, 'setInfo', 'seconds');
+                <NumericSelector onChange={(value) => {
+                    props.editInfo(prev => {
+                        const next = {...prev[props.name]};
+                        next.setInfo.seconds = value;
+                        return {...prev, [props.name]: next};
+                    });
 
                 }} numInfo={{def:info.setInfo.seconds, min: 0, max: 55, increment: 5}}/>
             </View>

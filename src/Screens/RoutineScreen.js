@@ -33,6 +33,14 @@ const RoutineScreen = props => {
     const [customScheme, setCustomScheme] = useState(false);
     const [customSets, setCustomSets] = useState([]);
 
+    //this is how use effect works, right?
+    //depend on changes in info
+    useEffect(() => {
+        setCustomScheme(Object.values(info).some(i =>
+            i.setInfo.type === 'Custom'
+        ))
+    }, [info]);
+
     //this takes fucking forever
     useEffect(() => {
         setDays(Array.from(new Array(rTime), () => 'R'));
@@ -141,20 +149,6 @@ const RoutineScreen = props => {
                                 key={k}
                                 name={k} info={v}
                                 editInfo={setInfo}
-                                updateType={value => {
-                                    //the only thign we're looking for is custom
-                                    if(value === 'Custom')
-                                        setCustomScheme(true);
-                                    else{
-                                        //scan to see if any exercise is custom
-                                        setCustomScheme(Object.values(info).some(i =>
-                                            i.setInfo.type === 'Custom'
-                                        ));
-
-                                    }
-
-
-                                }}
                                 deleteExercise={() => {
 
                                     setInfo(prev => {
@@ -180,21 +174,6 @@ const RoutineScreen = props => {
                                         return next;
                                     });
 
-
-                                }}
-                                editExercise={(value, field, field2, field3) => {
-                                    setInfo(prev => {
-                                        //i really hate editing arrays in react
-                                        const next = {...prev[k]};
-                                        //yeah this is increidbly stupid but whatever
-                                        if(field3 !== undefined)
-                                            next[field][field2][field3] = value;
-                                        else if(field2 !== undefined)
-                                            next[field][field2] = value;
-                                        else
-                                            next[field] = value;
-                                        return {...prev, [k]:next};
-                                    })
 
                                 }}/>
                         )
