@@ -6,7 +6,7 @@ import Words from "./Words";
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
 //should we pass in selected ones?
-const SupersetEditor = props => {
+const SupersetSelector = props => {
     const [modal, setModal] = useState(false);
 
     return (
@@ -33,7 +33,7 @@ const WorkoutEditor = props => {
                         return <View style={{height: 30, flexDirection: 'row'}}>{
                             ex.map((e, index2) => {
                                 if(e === '')
-                                    return <SupersetEditor onSelect={val => props.editSuperset(val, index, index2)} />
+                                    return <SupersetSelector onSelect={val => props.editSuperset(val, index, index2)} />
                                 return <Words style={{borderWidth:1, borderColor: 'black', backgroundColor: 'gray', flex: 1}}>{e}</Words>
                             })
                         }</View>

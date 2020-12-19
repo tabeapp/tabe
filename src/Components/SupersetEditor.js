@@ -3,19 +3,22 @@ import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
-import SupersetEditor from "./SupersetEditor";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
     reps.push(i)
 
-const ExerciseEditor = props => {
+//yeah this is a copy of exercvise editor
+//so we still have access to props.editInfo
+const SupersetEditor = props => {
     //ugh this sucks
     const {name, info, deleteExercise} = props;
 
     //
-    if(name.includes('/'))
-        return <SupersetEditor {...props}/>
+    //if(name.includes('/'))
+        //return <SupersetEditor {...props}/>
+
+    const subExercises = name.split('/');
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
@@ -28,7 +31,14 @@ const ExerciseEditor = props => {
         </View>
 
         <Text>Current Working Weight: </Text>
-        <NumericSelector onChange={() => {}} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
+        {
+            //yeah this is good,
+            //im tired tongith but just follow this format and you should be good
+            subExercises.map((n, index) =>
+
+                <NumericSelector onChange={() => {}} numInfo={{def:info.current[index], min: 0, max: 995, increment: 5}}/>
+            )
+        }
 
         <Text>Sets:</Text>
         <Words>Set Type:</Words>
@@ -45,7 +55,8 @@ const ExerciseEditor = props => {
             }}
         >
             {
-                ['Normal', 'Custom', 'Sum', 'Timed'].map(item =>
+                //fuck you only normal and timed
+                ['Normal', 'Timed'].map(item =>
                     <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
             }
         </Picker>
@@ -110,32 +121,6 @@ const ExerciseEditor = props => {
             </View>
         }
         {
-            info.setInfo.type === 'Custom' &&
-            <View></View>
-        }
-        {
-            info.setInfo.type === 'Sum' &&
-            <View style={styles.circle}>
-                <Picker
-                    style={{width: 50, height: 50}}
-                    selectedValue={info.setInfo.sum}
-                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                    onValueChange={(value) => {
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            next.setInfo.sum = value;
-                            return {...prev, [props.name]: next};
-                        });
-                    }}
-                >
-                    {
-                        reps.map(item =>
-                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
-                    }
-                </Picker>
-            </View>
-        }
-        {
             info.setInfo.type === 'Timed' &&
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                 <NumericSelector onChange={(value) => {
@@ -195,4 +180,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ExerciseEditor;
+export default SupersetEditor;

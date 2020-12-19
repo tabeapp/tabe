@@ -180,10 +180,16 @@ const RoutineScreen = props => {
                                         return next;
                                     });
                                     //clear from all workouts as well
+                                    //this is more complex if it's a super set
+                                    //I thi
+                                    let removal = k;
+                                    if(k.includes('/'))
+                                        removal = k.split('/');//that might do it, who knows
+
                                     setWorkouts(prev => {
                                         const next = {...prev};
                                         Object.keys(next).forEach(key => {
-                                            next[key] = next[key].filter(e => e !== k)
+                                            next[key] = next[key].filter(e => e !== removal)
                                         })
                                         return next;
                                     });

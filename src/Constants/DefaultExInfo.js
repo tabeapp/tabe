@@ -97,18 +97,37 @@ export const DEFAULT_EX_INFO = ex => ({
 //how the fuck, idk?
 //should we add a superset: true property?
 //I guess that would help rendering
+//ugh i guess we need to make as many current as there are exercises
+export const DEFAULT_SUPERSET_INFO = (name) => {
+    const n = name.split('/').length;
+    return {
+        current: new Array(n).fill(0),
+        progress: {
+            amount: new Array(n).fill(0),
+            rate: 1,
+        },
+        setInfo: {
+            type: 'Normal',
+            sets: new Array(n).fill([5, 5, 5, 5, 5])
+        }
+    }
+
+
+};
+//would probably be something more like
+
+//might even need to have it's own component
+/*
 export const DEFAULT_SUPERSET_INFO = () => ({
-    current: 0,
-    barbell: false,
-    amrap: false,
+    current: [0,0],
     progress:{
-        amount: 0,
+        amount: [5,5],
         rate: 1,
     },
     setInfo: {
         type: 'Normal',
-        sets: [5,5,5,5,5]
+        sets: [[5,5,5,5,5],[5,5,5,5,5]]
     }
-
-
 });
+*/
+
