@@ -5,14 +5,17 @@ import Words from "./Words";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
+//should we pass in selected ones?
 const SupersetEditor = props => {
     const [modal, setModal] = useState(false);
 
     return (
-        <View style={{backgroundColor: '#333'}}>
-            <Words>test</Words>
-            <ExercisePicker visible={modal} handleSelection={props.editSuperset} close={() => setModal(false)}/>
-        </View>
+        <TouchableOpacity
+            style={{backgroundColor: 'gray', borderWidth: 1, borderColor: 'black', flex: 1, justifyContent: 'center', alignItems: 'center'}}
+            onPress={() => setModal(true)}>
+            <Words>Add Exercise</Words>
+            <ExercisePicker visible={modal} handleSelection={props.onSelect} close={() => setModal(false)}/>
+        </TouchableOpacity>
     )
 }
 
@@ -24,9 +27,17 @@ const WorkoutEditor = props => {
         <View style={{height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
             <Text style={{color:'white'}}>Workout {props.name}</Text>
             {
-                props.exercises.map(ex =>{
-                    if(Array.isArray(ex))
-                        return <SupersetEditor/>;
+                props.exercises.map((ex, index) =>{
+                    //we actually need as many superset editors as there are exerices
+                    if(Array.isArray(ex)){
+                        return <View style={{height: 30, flexDirection: 'row'}}>{
+                            ex.map((e, index2) => {
+                                if(e === '')
+                                    return <SupersetEditor onSelect={val => props.editSuperset(val, index, index2)} />
+                                return <Words style={{borderWidth:1, borderColor: 'black', backgroundColor: 'gray', flex: 1}}>{e}</Words>
+                            })
+                        }</View>
+                    }
 
                     return <Text key={ex} style={{color:'white', fontSize: 30}}>{ex}</Text>;
                 })
@@ -58,6 +69,7 @@ const WorkoutEditor = props => {
 
         </View>);
 };
+
 const styles = StyleSheet.create({
     configButton: {
         borderRadius: 25,

@@ -93,3 +93,22 @@ export const DEFAULT_EX_INFO = ex => ({
         sets: [5,5,5,5,5]
     },
 });
+
+//how the fuck, idk?
+//should we add a superset: true property?
+//I guess that would help rendering
+export const DEFAULT_SUPERSET_INFO = () => ({
+    current: 0,
+    barbell: false,
+    amrap: false,
+    progress:{
+        amount: 0,
+        rate: 1,
+    },
+    setInfo: {
+        type: 'Normal',
+        sets: [5,5,5,5,5]
+    }
+
+
+});

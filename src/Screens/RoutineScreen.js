@@ -4,7 +4,7 @@ import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import NumericSelector from '../Components/NumericSelector';
 import WorkoutEditor from '../Components/WorkoutEditor';
-import { DEFAULT_EX_INFO } from '../Constants/DefaultExInfo';
+import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from "../Constants/DefaultExInfo";
 import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
@@ -66,13 +66,28 @@ const RoutineScreen = props => {
                                 <WorkoutEditor
                                     key={k} exercises={v} name={k}
                                     editWorkouts={setWorkouts}
-                                    addSuperset={() => {
+                                    editSuperset={(val, exerciseIndex, supersetIndex) => {
+                                        //exerciseindex is the superset order in the workout
+                                        //superset index is the exercise order in the super set
+
                                         //SUPASET TS TS TS TS
                                         //how the fuck am i gonna do this
                                         //setWorkouts({...workouts, [k]: [...workouts[k], [null, null]]});
                                         //setInfo({
                                             //...info, [ex]: DEFAULT_EX_INFO(ex)
                                         //});
+
+                                        setWorkouts(prev => {
+                                            const next = {...prev};
+                                            const superset = next[k][exerciseIndex];
+                                            superset[supersetIndex] = val;
+
+                                            //check if we can add to exercise list
+                                            //wtf kinda of default info should we add?
+                                            if(superset.every(x => x !== ''))
+                                                setInfo({...info, [superset.join('/')]: DEFAULT_SUPERSET_INFO()})
+                                            return next;
+                                        });
 
                                     }}
 
