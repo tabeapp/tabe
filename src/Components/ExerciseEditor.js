@@ -40,6 +40,12 @@ const ExerciseEditor = props => {
                 props.editInfo(prev => {
                     const next = {...prev[props.name]};
                     next.setInfo.type = value;
+
+                    if(value === 'Timed')
+                        next.setInfo.sets = next.setInfo.sets.map(_ => ({minutes: 1, seconds: 0}));
+                    else if(value === 'Normal')
+                        next.setInfo.sets = next.setInfo.sets.map(_ => 5);
+
                     return {...prev, [props.name]: next};
                 });
             }}
@@ -100,7 +106,13 @@ const ExerciseEditor = props => {
                     onPress={() => {
                         props.editInfo(prev => {
                             const next = {...prev[props.name]};
-                            if(next.setInfo.sets.length <= 12)
+                            if(next.setInfo.sets.length === 0) {
+                                if (next.setInfo.type === 'Normal')
+                                    next.setInfo.sets.push(5);
+                                else if (next.setInfo.type === 'Timed')
+                                    next.setInfo.sets.push({ minutes: 1, seconds: 0 });
+                            }
+                            else if(next.setInfo.sets.length <= 12)
                                 next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length-1])
                             return {...prev, [props.name]: next};
                         })
@@ -138,22 +150,60 @@ const ExerciseEditor = props => {
         {
             info.setInfo.type === 'Timed' &&
             <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                <NumericSelector onChange={(value) => {
-                    props.editInfo(prev => {
-                        const next = {...prev[props.name]};
-                        next.setInfo.minutes = value;
-                        return {...prev, [props.name]: next};
-                    });
-                }} numInfo={{def:info.setInfo.minutes, min: 0, max: 59, increment: 1}}/>
-                <Words>:</Words>
-                <NumericSelector onChange={(value) => {
-                    props.editInfo(prev => {
-                        const next = {...prev[props.name]};
-                        next.setInfo.seconds = value;
-                        return {...prev, [props.name]: next};
-                    });
+                <TouchableOpacity
+                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                    onPress={() => {
+                        //k is replaced by props.name
+                        props.editInfo(prev => {
+                            const next = {...prev[props.name]};
+                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
+                            return {...prev, [props.name]: next};
+                        });
 
-                }} numInfo={{def:info.setInfo.seconds, min: 0, max: 55, increment: 5}}/>
+                    }} >
+                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
+                </TouchableOpacity>
+                {
+                    info.setInfo.sets.map((v, index) =>
+                        <View>
+                            <NumericSelector onChange={(value) => {
+                                props.editInfo(prev => {
+                                    const next = {...prev[props.name]};
+                                    next.setInfo.sets[index].minutes = value;
+                                    return {...prev, [props.name]: next};
+                                });
+                            }} numInfo={{def:info.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1}}/>
+                            <Words>:</Words>
+                            <NumericSelector onChange={(value) => {
+                                props.editInfo(prev => {
+                                    const next = {...prev[props.name]};
+                                    next.setInfo.sets[index].seconds = value;
+                                    return {...prev, [props.name]: next};
+                                });
+
+                            }} numInfo={{def:info.setInfo.sets[index].seconds, min: 0, max: 55, increment: 5}}/>
+                        </View>
+                    )
+                }
+                <TouchableOpacity
+                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
+                    onPress={() => {
+                        props.editInfo(prev => {
+                            const next = {...prev[props.name]};
+                            if(next.setInfo.sets.length === 0) {
+                                if (next.setInfo.type === 'Normal')
+                                    next.setInfo.sets.push(5);
+                                else if (next.setInfo.type === 'Timed')
+                                    next.setInfo.sets.push({ minutes: 1, seconds: 0 });
+                            }
+                            else if(next.setInfo.sets.length <= 12)
+                                next.setInfo.sets.push({...next.setInfo.sets[next.setInfo.sets.length-1]})
+                            return {...prev, [props.name]: next};
+                        })
+                    }}>
+                    <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                </TouchableOpacity>
+
             </View>
         }
         <Text>Progression:</Text>

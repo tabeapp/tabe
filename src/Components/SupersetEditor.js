@@ -69,6 +69,7 @@ const SupersetEditor = props => {
 
                                         //since by default we didnt' have timed sets, it was ok to acess setInfo.minutes and get 0 back
                                         //now we need to convert the sets from timed to normal whenever we set this shit
+                                        //dont forget to add this shit to exercise editor
                                         if(value === 'Timed'){
                                             //but now we need to initalize it it if it's not there
                                             //better yet, just use sets but store {minute: 0, seconds: 0} objects in it
@@ -190,6 +191,7 @@ const SupersetEditor = props => {
                                 //ive added timeSets in this, seems like we need to add it somehwere else
                                 subInfo.setInfo.type === 'Timed' &&
                                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>{
+                                    //dont forget to add this shit to exercise editor
                                     subInfo.setInfo.sets.map((v, index) =>
                                         <View>
                                             <NumericSelector onChange={(value) => {
