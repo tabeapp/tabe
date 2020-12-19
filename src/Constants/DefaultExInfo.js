@@ -99,19 +99,7 @@ export const DEFAULT_EX_INFO = ex => ({
 //I guess that would help rendering
 //ugh i guess we need to make as many current as there are exercises
 export const DEFAULT_SUPERSET_INFO = (name) => {
-    const n = name.split('/').length;
-    return {
-        current: new Array(n).fill(0),
-        progress: {
-            amount: new Array(n).fill(0),
-            rate: 1,
-        },
-        setInfo: {
-            type: 'Normal',
-            sets: new Array(n).fill([5, 5, 5, 5, 5])
-        }
-    }
-
+    return name.map(n => DEFAULT_EX_INFO(n));
 
 };
 //would probably be something more like

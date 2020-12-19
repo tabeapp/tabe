@@ -33,9 +33,13 @@ const RoutineScreen = props => {
     //this is how use effect works, right?
     //depend on changes in info
     useEffect(() => {
-        setCustomScheme(Object.values(info).some(i =>
-            i.setInfo.type === 'Custom'
-        ))
+        setCustomScheme(Object.values(info).some(i =>{
+            //always jujmping through hoops for supersets
+            //maybe regular workouts should just be arrays of size 1?
+            if(Array.isArray(i))
+                return i.some(j => j.setInfo.type === 'Custom');
+            return i.setInfo.type === 'Custom';
+        }))
     }, [info]);
 
     //this takes fucking forever
@@ -85,7 +89,7 @@ const RoutineScreen = props => {
                                             //check if we can add to exercise list
                                             //wtf kinda of default info should we add?
                                             if(superset.every(x => x !== ''))
-                                                setInfo({...info, [superset.join('/')]: DEFAULT_SUPERSET_INFO()})
+                                                setInfo({...info, [superset.join('/')]: DEFAULT_SUPERSET_INFO(superset)})
                                             return next;
                                         });
 
