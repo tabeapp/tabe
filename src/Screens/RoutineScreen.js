@@ -65,6 +65,17 @@ const RoutineScreen = props => {
                             Object.entries(workouts).map(([k,v], index) =>
                                 <WorkoutEditor
                                     key={k} exercises={v} name={k}
+                                    editWorkouts={setWorkouts}
+                                    addSuperset={() => {
+                                        //SUPASET TS TS TS TS
+                                        //how the fuck am i gonna do this
+                                        //setWorkouts({...workouts, [k]: [...workouts[k], [null, null]]});
+                                        //setInfo({
+                                            //...info, [ex]: DEFAULT_EX_INFO(ex)
+                                        //});
+
+                                    }}
+
                                     addExercise={ex => {
                                         //because this edits both workouts and info, im' keeping it in routinescreen
                                         //we know which workout to add it to cuz of k
