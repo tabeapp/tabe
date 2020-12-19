@@ -197,7 +197,8 @@ const RoutineScreen = props => {
                                     });
                                 }}/>
                         )
-                    }</ScrollView>
+                    }
+                    </ScrollView>
 
                     {
                         customScheme &&

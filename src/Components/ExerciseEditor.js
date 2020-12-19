@@ -229,7 +229,7 @@ const ExerciseEditor = props => {
             </View>
         }
     </View>
-};
+}
 
 const styles = StyleSheet.create({
     circle: {
