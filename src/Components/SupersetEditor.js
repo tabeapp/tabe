@@ -63,8 +63,24 @@ const SupersetEditor = props => {
                                 itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
                                 onValueChange={value => {
                                     props.editInfo(prev => {
+                                        //yeah this is very important
                                         const next = [ ...prev[props.name] ];
                                         next[ssi].setInfo.type = value;
+
+                                        //since by default we didnt' have timed sets, it was ok to acess setInfo.minutes and get 0 back
+                                        //now we need to convert the sets from timed to normal whenever we set this shit
+                                        if(value === 'Timed'){
+                                            //but now we need to initalize it it if it's not there
+                                            //better yet, just use sets but store {minute: 0, seconds: 0} objects in it
+                                            if(!next[ssi].setInfo.sets.seconds)
+                                                next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => ({minutes: 1, seconds: 0}));
+                                        }
+                                        else if(value === 'Normal'){
+                                            if(!next[ssi].setInfo.sets.seconds)
+                                                next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => 5);
+                                        }
+
+
                                         return { ...prev, [props.name]: next };
                                     });
                                 }}
@@ -170,25 +186,31 @@ const SupersetEditor = props => {
                                 </View>
                             }
                             {
+                                //maybe we can combine this with normal?
+                                //ive added timeSets in this, seems like we need to add it somehwere else
                                 subInfo.setInfo.type === 'Timed' &&
-                                <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-                                    <NumericSelector onChange={(value) => {
-                                        props.editInfo(prev => {
-                                            const next = [ ...prev[props.name] ];
-                                            next[ssi].setInfo.minutes = value;
-                                            return { ...prev, [props.name]: next };
-                                        });
-                                    }} numInfo={{ def: subInfo.setInfo.minutes, min: 0, max: 59, increment: 1 }} />
-                                    <Words>:</Words>
-                                    <NumericSelector onChange={(value) => {
-                                        props.editInfo(prev => {
-                                            const next = [ ...prev[props.name] ];
-                                            next[ssi].setInfo.seconds = value;
-                                            return { ...prev, [props.name]: next };
-                                        });
+                                <View style={{ alignItems: 'center', flexDirection: 'row' }}>{
+                                    subInfo.setInfo.sets.map((v, index) =>
+                                        <View>
+                                            <NumericSelector onChange={(value) => {
+                                                props.editInfo(prev => {
+                                                    const next = [...prev[props.name]];
+                                                    next[ssi].setInfo.sets[index].minutes = value;
+                                                    return { ...prev, [props.name]: next };
+                                                });
+                                            }} numInfo={{ def: subInfo.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1 }} />
+                                            <Words>:</Words>
+                                            <NumericSelector onChange={(value) => {
+                                                props.editInfo(prev => {
+                                                    const next = [...prev[props.name]];
+                                                    next[ssi].setInfo.sets[index].seconds = value;
+                                                    return { ...prev, [props.name]: next };
+                                                });
 
-                                    }} numInfo={{ def: subInfo.setInfo.seconds, min: 0, max: 55, increment: 5 }} />
-                                </View>
+                                            }} numInfo={{ def: subInfo.setInfo.sets[index].seconds, min: 0, max: 55, increment: 5 }} />
+                                        </View>
+                                    )
+                                }</View>
                             }
                         </View>
                     })
@@ -210,7 +232,16 @@ const SupersetEditor = props => {
                         props.editInfo(prev => {
                             const next = [ ...prev[props.name] ];
                             next.forEach(sub => {
-                                if (sub.setInfo.sets.length <= 12)
+                                if(sub.setInfo.sets.length === 0){
+                                    //wow this is dumb
+                                    if(sub.setInfo.type === 'Normal')
+                                        sub.setInfo.sets.push(5);
+                                    else if(sub.setInfo.type === 'Timed')
+                                        sub.setInfo.sets.push({minutes: 1, seconds: 0});
+
+                                }
+
+                                else if (sub.setInfo.sets.length <= 12)
                                     sub.setInfo.sets.push(sub.setInfo.sets[sub.setInfo.sets.length - 1])
                             })
                             return { ...prev, [props.name]: next };
