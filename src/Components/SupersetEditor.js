@@ -99,7 +99,35 @@ const SupersetEditor = props => {
             </View>
 
             <View>
+                <TouchableOpacity
+                    style={{
+                        margin: 5,
+                        height: 30,
+                        width: 30,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        borderRadius: 15,
+                        borderWidth: 3,
+                        borderColor: 'red'
+                    }}
+                    onPress={() => {
+                        //k is replaced by props.name
+                        props.editInfo(prev => {
+                            const next = [ ...prev[props.name] ];
+                            //needs to be for all of next
+                            next.forEach(sub =>
+                                sub.setInfo.sets.splice(sub.setInfo.sets.length-1)
+                            );
+                            //next[ssi].setInfo.sets.splice(next[ssi].setInfo.sets.length - 1);
+                            return { ...prev, [props.name]: next };
+                        });
+
+                    }}>
+                    <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 15 }}>-</Text>
+                </TouchableOpacity>
                 {
+                    //the only trick here is that the sets have to be the same
                     //you're really gonna need that index
                     //ssi is subset index
                     info.map((subInfo, ssi) => {
@@ -109,29 +137,6 @@ const SupersetEditor = props => {
                                 //this should actually be very similar to custom workout screen
                                 subInfo.setInfo.type === 'Normal' &&
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                    <TouchableOpacity
-                                        style={{
-                                            margin: 5,
-                                            height: 30,
-                                            width: 30,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            alignSelf: 'center',
-                                            borderRadius: 15,
-                                            borderWidth: 3,
-                                            borderColor: 'red'
-                                        }}
-                                        onPress={() => {
-                                            //k is replaced by props.name
-                                            props.editInfo(prev => {
-                                                const next = [ ...prev[props.name] ];
-                                                next[ssi].setInfo.sets.splice(next[ssi].setInfo.sets.length - 1);
-                                                return { ...prev, [props.name]: next };
-                                            });
-
-                                        }}>
-                                        <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 15 }}>-</Text>
-                                    </TouchableOpacity>
                                     {
                                         subInfo.setInfo.sets.map((v, index) =>
 
@@ -162,28 +167,6 @@ const SupersetEditor = props => {
                                             </View>
                                         )
                                     }
-                                    <TouchableOpacity
-                                        style={{
-                                            margin: 5,
-                                            height: 30,
-                                            width: 30,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            alignSelf: 'center',
-                                            borderRadius: 15,
-                                            borderWidth: 3,
-                                            borderColor: 'green'
-                                        }}
-                                        onPress={() => {
-                                            props.editInfo(prev => {
-                                                const next = [ ...prev[props.name] ];
-                                                if (next[ssi].setInfo.sets.length <= 12)
-                                                    next[ssi].setInfo.sets.push(next[ssi].setInfo.sets[next[ssi].setInfo.sets.length - 1])
-                                                return { ...prev, [props.name]: next };
-                                            })
-                                        }}>
-                                        <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
-                                    </TouchableOpacity>
                                 </View>
                             }
                             {
@@ -210,6 +193,31 @@ const SupersetEditor = props => {
                         </View>
                     })
                 }
+
+                <TouchableOpacity
+                    style={{
+                        margin: 5,
+                        height: 30,
+                        width: 30,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        borderRadius: 15,
+                        borderWidth: 3,
+                        borderColor: 'green'
+                    }}
+                    onPress={() => {
+                        props.editInfo(prev => {
+                            const next = [ ...prev[props.name] ];
+                            next.forEach(sub => {
+                                if (sub.setInfo.sets.length <= 12)
+                                    sub.setInfo.sets.push(sub.setInfo.sets[sub.setInfo.sets.length - 1])
+                            })
+                            return { ...prev, [props.name]: next };
+                        })
+                    }}>
+                    <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                </TouchableOpacity>
             </View>
 
 
