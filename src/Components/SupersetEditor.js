@@ -36,8 +36,9 @@ const SupersetEditor = props => {
                 {
                     //this part also doesn't do shit, btw, all the callbacks are () => {}
                     //info will be an array of info objects in the case of superset
-                    info.map(subInfo => {
-                        return <View>
+                    info.map((subInfo, ssi) => {
+                        return <View style={{flex: 1}}>
+                            <Words>{subExercises[ssi]}</Words>
                             <Text>Current Working Weight: </Text>
                             <NumericSelector onChange={() => {}} numInfo={{def:subInfo.current, min: 0, max: 995, increment: 5}}/>
 
@@ -46,10 +47,38 @@ const SupersetEditor = props => {
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Words>Add</Words>
                                 <NumericSelector onChange={() => {}} numInfo={{def:subInfo.progress.amount, min: 0, max: 25, increment: 2.5}}/>
-                                <Words>lb every</Words>
-                                <NumericSelector onChange={() => {}} numInfo={{def:subInfo.progress.rate, min: 1, max: 10, increment: 1}}/>
-                                <Words>times the workout is done</Words>
+                                <Words>lb</Words>
                             </View>
+                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                                <Words>every</Words>
+                                <NumericSelector onChange={() => {}} numInfo={{def:subInfo.progress.rate, min: 1, max: 10, increment: 1}}/>
+                                <Words>time</Words>
+                            </View>
+
+                            <Text>Sets:</Text>
+                            <Words>Set Type:</Words>
+                            <Picker
+                                style={{ width: 100, height: 50 }}
+                                selectedValue={subInfo.setInfo.type}
+                                itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
+                                onValueChange={value => {
+                                    props.editInfo(prev => {
+                                        const next = [ ...prev[props.name] ];
+                                        next[ssi].setInfo.type = value;
+                                        return { ...prev, [props.name]: next };
+                                    });
+                                }}
+                            >
+                                {
+                                    //fuck you only normal and timed
+                                    ['Normal', 'Timed'].map(item =>
+                                        <Picker.Item
+                                            key={item} color={'white'} label={'' + item} value={item}
+                                            style={{}} />)
+                                }
+                            </Picker>
+
+
                             {
                                 subInfo.setInfo.type === 'Normal' &&//this doesn't do shit
                                 <View>
@@ -75,28 +104,6 @@ const SupersetEditor = props => {
                     //ssi is subset index
                     info.map((subInfo, ssi) => {
                         return <View>
-                            <Text>Sets:</Text>
-                            <Words>Set Type:</Words>
-                            <Picker
-                                style={{ width: 100, height: 50 }}
-                                selectedValue={subInfo.setInfo.type}
-                                itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
-                                onValueChange={value => {
-                                    props.editInfo(prev => {
-                                        const next = [ ...prev[props.name] ];
-                                        next[ssi].setInfo.type = value;
-                                        return { ...prev, [props.name]: next };
-                                    });
-                                }}
-                            >
-                                {
-                                    //fuck you only normal and timed
-                                    ['Normal', 'Timed'].map(item =>
-                                        <Picker.Item
-                                            key={item} color={'white'} label={'' + item} value={item}
-                                            style={{}} />)
-                                }
-                            </Picker>
 
                             {
                                 //this should actually be very similar to custom workout screen
