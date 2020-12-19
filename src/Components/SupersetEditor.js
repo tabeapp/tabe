@@ -72,11 +72,11 @@ const SupersetEditor = props => {
                                         if(value === 'Timed'){
                                             //but now we need to initalize it it if it's not there
                                             //better yet, just use sets but store {minute: 0, seconds: 0} objects in it
-                                            if(!next[ssi].setInfo.sets.seconds)
+                                            //if(!next[ssi].setInfo.sets.seconds)
                                                 next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => ({minutes: 1, seconds: 0}));
                                         }
                                         else if(value === 'Normal'){
-                                            if(!next[ssi].setInfo.sets.seconds)
+                                            //if(!next[ssi].setInfo.sets.seconds)
                                                 next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => 5);
                                         }
 
