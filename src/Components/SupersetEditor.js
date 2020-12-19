@@ -22,6 +22,7 @@ const SupersetEditor = props => {
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
+    console.log(JSON.stringify(info));
     return(
         <View key={name} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -33,6 +34,7 @@ const SupersetEditor = props => {
 
             <View style={{flexDirection: 'row'}}>
                 {
+                    //this part also doesn't do shit, btw, all the callbacks are () => {}
                     //info will be an array of info objects in the case of superset
                     info.map(subInfo => {
                         return <View>
@@ -70,7 +72,8 @@ const SupersetEditor = props => {
             <View>
                 {
                     //you're really gonna need that index
-                    info.map((subInfo, index) => {
+                    //ssi is subset index
+                    info.map((subInfo, ssi) => {
                         return <View>
                             <Text>Sets:</Text>
                             <Words>Set Type:</Words>
@@ -80,8 +83,8 @@ const SupersetEditor = props => {
                                 itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
                                 onValueChange={value => {
                                     props.editInfo(prev => {
-                                        const next = { ...prev[props.name] };
-                                        next.setInfo.type = value;
+                                        const next = [ ...prev[props.name] ];
+                                        next[ssi].setInfo.type = value;
                                         return { ...prev, [props.name]: next };
                                     });
                                 }}
@@ -114,8 +117,8 @@ const SupersetEditor = props => {
                                         onPress={() => {
                                             //k is replaced by props.name
                                             props.editInfo(prev => {
-                                                const next = { ...prev[props.name] };
-                                                next.setInfo.sets.splice(next.setInfo.sets.length - 1);
+                                                const next = [ ...prev[props.name] ];
+                                                next[ssi].setInfo.sets.splice(next[ssi].setInfo.sets.length - 1);
                                                 return { ...prev, [props.name]: next };
                                             });
 
@@ -134,10 +137,10 @@ const SupersetEditor = props => {
                                                         //how the fuck
                                                         //would defeinitely be a good idea to set all following sets to current rep
                                                         props.editInfo(prev => {
-                                                            const next = { ...prev[props.name] };
-                                                            next.setInfo.sets[index] = value;
-                                                            for (let i = index; i < next.setInfo.sets.length; i++)
-                                                                next.setInfo.sets[i] = value;
+                                                            const next = [ ...prev[props.name] ];
+                                                            next[ssi].setInfo.sets[index] = value;
+                                                            for (let i = index; i < next[ssi].setInfo.sets.length; i++)
+                                                                next[ssi].setInfo.sets[i] = value;
                                                             return { ...prev, [props.name]: next };
                                                         });
                                                     }}
@@ -166,9 +169,9 @@ const SupersetEditor = props => {
                                         }}
                                         onPress={() => {
                                             props.editInfo(prev => {
-                                                const next = { ...prev[props.name] };
-                                                if (next.setInfo.sets.length <= 12)
-                                                    next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length - 1])
+                                                const next = [ ...prev[props.name] ];
+                                                if (next[ssi].setInfo.sets.length <= 12)
+                                                    next[ssi].setInfo.sets.push(next[ssi].setInfo.sets[next[ssi].setInfo.sets.length - 1])
                                                 return { ...prev, [props.name]: next };
                                             })
                                         }}>
@@ -181,16 +184,16 @@ const SupersetEditor = props => {
                                 <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                                     <NumericSelector onChange={(value) => {
                                         props.editInfo(prev => {
-                                            const next = { ...prev[props.name] };
-                                            next.setInfo.minutes = value;
+                                            const next = [ ...prev[props.name] ];
+                                            next[ssi].setInfo.minutes = value;
                                             return { ...prev, [props.name]: next };
                                         });
                                     }} numInfo={{ def: subInfo.setInfo.minutes, min: 0, max: 59, increment: 1 }} />
                                     <Words>:</Words>
                                     <NumericSelector onChange={(value) => {
                                         props.editInfo(prev => {
-                                            const next = { ...prev[props.name] };
-                                            next.setInfo.seconds = value;
+                                            const next = [ ...prev[props.name] ];
+                                            next[ssi].setInfo.seconds = value;
                                             return { ...prev, [props.name]: next };
                                         });
 

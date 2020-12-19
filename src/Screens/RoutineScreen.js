@@ -75,11 +75,6 @@ const RoutineScreen = props => {
                                         //superset index is the exercise order in the super set
 
                                         //SUPASET TS TS TS TS
-                                        //how the fuck am i gonna do this
-                                        //setWorkouts({...workouts, [k]: [...workouts[k], [null, null]]});
-                                        //setInfo({
-                                            //...info, [ex]: DEFAULT_EX_INFO(ex)
-                                        //});
 
                                         setWorkouts(prev => {
                                             const next = {...prev};
