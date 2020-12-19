@@ -193,7 +193,10 @@ const RoutineScreen = props => {
                                     setWorkouts(prev => {
                                         const next = {...prev};
                                         Object.keys(next).forEach(key => {
-                                            next[key] = next[key].filter(e => e !== removal)
+                                            next[key] = next[key].filter(e => {
+                                                console.log('key ' + e + ' removal ' + removal)
+                                                return  JSON.stringify(e) !== JSON.stringify(removal);
+                                            });
                                         })
                                         return next;
                                     });
