@@ -241,7 +241,7 @@ class ProgressProvider extends React.Component {
         //if(!day)
             //return [];
 
-        while(!day){
+        while(day === 'R'){
             console.log(day);
 
             ro.currentDay++;
@@ -263,14 +263,15 @@ class ProgressProvider extends React.Component {
 
             //the complex part
             let sets = [];
-            if(setInfo.type === 'normal'){
+            console.log(setInfo);
+            if(setInfo.type === 'Normal'){
                 sets = setInfo.sets.map(reps => ({
                     reps: reps,
                     progress: null,
                     weight: exInfo.current
                 }))
             }
-            else if(setInfo.type === 'custom') {
+            else if(setInfo.type === 'Custom') {
                 //this is [{reps:5, %: .75}...]
                 let custom = ro.customSet
                     [setInfo.name]
@@ -282,6 +283,7 @@ class ProgressProvider extends React.Component {
                     weight: Math.ceil(set['%'] * exInfo.current/5)*5
                 }));
             }
+            //wait till I tell you about sum and timed
 
             //amrap for last set
             if(exInfo.amrap){
@@ -296,6 +298,8 @@ class ProgressProvider extends React.Component {
         }
 
         //set first set to current set
+        //there's a prob here, somethings' undefined
+        console.log(JSON.stringify(compiledExercises));
         compiledExercises[0].sets[0].progress = 'c';
 
         const workout = {
