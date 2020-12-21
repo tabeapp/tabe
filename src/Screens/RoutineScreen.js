@@ -1,5 +1,5 @@
 import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import NumericSelector from '../Components/NumericSelector';
@@ -8,6 +8,7 @@ import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from "../Constants/DefaultExIn
 import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
+import ProgressContext from "../Contexts/ProgressContext";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -30,6 +31,8 @@ const RoutineScreen = props => {
     const [customScheme, setCustomScheme] = useState(false);
     const [customSets, setCustomSets] = useState([]);
 
+    const {setRoutine} = useContext(ProgressContext);
+
     //this is how use effect works, right?
     //depend on changes in info
     useEffect(() => {
@@ -51,7 +54,35 @@ const RoutineScreen = props => {
         <>
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar} />
+                <View style={styles.top} >
+                    <TouchableOpacity style={styles.topButton}>
+                        <Text style={{color: 'white', fontSize: 20}}>
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{fontSize: 20}}>Routine Editor</Text>
+                    <TouchableOpacity onPress={() => {
+                        //at last we save it
+                        // do we need to object copy?
+                        //not who knows
+                        setRoutine({
+                            title: rName,
+                            time: rTime,
+                            info: {...info},
+                            workouts: {...workouts},
+                            days: [...days],
+                            customSets: [...customSets]
+                        })
+                        /*Alert.alert(
+                            "Info summary",
+                            JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
+                        );*/
+
+                    }} style={styles.topButton}>
+                        <Text style={{color: 'white', fontSize: 20}}>
+                            Next
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <ScrollView style={styles.box}>
                     <TextInput
                         style={{color:'white', textAlign: 'center', fontSize: 40}}
@@ -233,19 +264,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
     },
 
-    topBar: {
-        height: 40,
-        width: '100%',
-        backgroundColor: PRIMARY,
-        alignItems: 'center',
-        borderStyle: 'solid',
-        borderRightWidth: 0,
-        borderLeftWidth: 0,
-        borderTopWidth: 0,
-        borderColor: 'black',
-        borderWidth: 1,
-        justifyContent: 'center',
-    },
+    topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
+    top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: PRIMARY, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
     scroller: {
         flex: 1,
         width: '100%',
