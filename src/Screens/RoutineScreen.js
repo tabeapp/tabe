@@ -200,7 +200,8 @@ const RoutineScreen = props => {
                             <TouchableOpacity style={styles.configButton} onPress={() => {
                                 //append a new obj
                                 //works, but ideally I'd like A B C instead of 1 2 3
-                                setWorkouts({...workouts, [Object.keys(workouts).length+1]: []});
+                                //too complex?
+                                setWorkouts({...workouts, [String.fromCharCode('A'.charCodeAt(0)+Object.keys(workouts).length)]: []});
                             }}>
                                 <Text style={{fontSize: 30}}>Add Workout</Text>
                             </TouchableOpacity>

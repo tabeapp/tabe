@@ -24,7 +24,7 @@ const App = () => {
         <ProgressProvider>
 
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false,
+                <Stack.Navigator initialRouteName="home" screenOptions={{headerShown:false,
                     cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
                 }}>
                     <Stack.Screen name="home" component={HomeScreen}/>
