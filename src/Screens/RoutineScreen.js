@@ -21,6 +21,7 @@ const RoutineScreen = props => {
 
     //nearly everything is gonna be editable
     //fuck this, I'm gonna start from scratch and use this to make a new routine
+    //how the fuck do we load current routine
     const [rName, setRName] = useState('Routine Name');
     const [rTime, setRTime] = useState(7);
     const [info, setInfo] = useState({});
@@ -30,6 +31,9 @@ const RoutineScreen = props => {
 
     const [customScheme, setCustomScheme] = useState(false);
     const [customSets, setCustomSets] = useState([]);
+
+    const [currentDay, setCurrentDay] = useState(0);
+    const [nextWorkoutTime, setNextWorkoutTime] = useState(0);
 
     const {setRoutine} = useContext(ProgressContext);
 
@@ -64,14 +68,24 @@ const RoutineScreen = props => {
                         //at last we save it
                         // do we need to object copy?
                         //not who knows
+
+
+                        //nah we're missing some things
                         setRoutine({
                             title: rName,
                             time: rTime,
                             info: {...info},
                             workouts: {...workouts},
                             days: [...days],
-                            customSets: [...customSets]
+                            customSets: [...customSets],
+                            //current day
+                            currentDay: currentDay || 0,//this shouldn't chnage if we're copying a routine
+                            nextWorkoutTime: nextWorkoutTime || new Date().getTime()
+                            //next workout time
                         })
+                        //ideally we would then navigate to a list of editable routines
+                        //but for now we just go home
+                        props.navigation.navigate('home');
                         /*Alert.alert(
                             "Info summary",
                             JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
