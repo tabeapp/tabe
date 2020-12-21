@@ -274,7 +274,7 @@ class ProgressProvider extends React.Component {
             else if(setInfo.type === 'Custom') {
                 //this is [{reps:5, %: .75}...]
                 let custom = ro.customSet
-                    [setInfo.name]
+                    //[setInfo.name]
                     [setInfo.selector];
 
                 sets = custom.map(set => ({
