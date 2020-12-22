@@ -60,7 +60,8 @@ const WEIGHTS = {
     'Pull up': 0,
     'Leg Raises': 0,
     'Sit Ups': 0,
-    'Cable Crunch': 70
+    'Cable Crunch': 70,
+    'Dips': 0
 };
 
 const BARBELL = [

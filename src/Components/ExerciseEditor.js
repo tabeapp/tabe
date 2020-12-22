@@ -66,9 +66,9 @@ const ExerciseEditor = props => {
         {
             //this should actually be very similar to custom workout screen
             info.setInfo.type === 'Normal' &&
-            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <TouchableOpacity
-                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                    style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
                         //k is replaced by props.name
                         props.editInfo(prev => {
@@ -80,36 +80,40 @@ const ExerciseEditor = props => {
                     }} >
                     <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
                 </TouchableOpacity>
-                {
-                    info.setInfo.sets.map((v, index) =>
 
-                        <View key={index} style={styles.circle}>
-                            <Picker
-                                style={{width: 50, height: 50}}
-                                selectedValue={v}
-                                itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                                onValueChange={(value) => {
-                                    //how the fuck
-                                    //would defeinitely be a good idea to set all following sets to current rep
-                                    props.editInfo(prev => {
-                                        const next = {...prev[props.name]};
-                                        next.setInfo.sets[index] = value;
-                                        for(let i = index; i < next.setInfo.sets.length; i++)
-                                            next.setInfo.sets[i] = value;
-                                        return {...prev, [props.name]: next};
-                                    });
-                                }}
-                            >
-                                {
-                                    reps.map(item =>
-                                        <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
-                                }
-                            </Picker>
-                        </View>
-                    )
-                }
+                <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-around'}}>
+                    {
+                        info.setInfo.sets.map((v, index) =>
+
+                            <View key={index} style={styles.circle}>
+                                <Picker
+                                    style={{width: 50, height: 50}}
+                                    selectedValue={v}
+                                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                                    onValueChange={(value) => {
+                                        //how the fuck
+                                        //would defeinitely be a good idea to set all following sets to current rep
+                                        props.editInfo(prev => {
+                                            const next = {...prev[props.name]};
+                                            next.setInfo.sets[index] = value;
+                                            for(let i = index; i < next.setInfo.sets.length; i++)
+                                                next.setInfo.sets[i] = value;
+                                            return {...prev, [props.name]: next};
+                                        });
+                                    }}
+                                >
+                                    {
+                                        reps.map(item =>
+                                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                                    }
+                                </Picker>
+                            </View>
+                        )
+                    }
+                </View>
+
                 <TouchableOpacity
-                    style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
+                    style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={() => {
                         props.editInfo(prev => {
                             const next = {...prev[props.name]};

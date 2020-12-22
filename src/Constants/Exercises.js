@@ -5,7 +5,7 @@ export const EXERCISES = {
     Chest: ['Bench', 'Incline Bench', 'DB Flyes'],
     Legs: ['Squat', 'Deadlift', 'Romanian Deadlift', 'Good Morning', 'Lunges', 'Front Squats', 'Leg Press', 'Leg Extension', 'Leg Curl', 'Calf Raise'],
     Back: ['Deadlift', 'Row', 'DB Row', 'Lat Pulldown', 'Cable Row', 'Face Pull'],
-    Bodyweight: ['Chin-up', 'Pull up'],
+    Bodyweight: ['Chin-up', 'Pull up', 'Dips'],
     Core: ['Leg Raises', 'Sit Ups', 'Cable Crunch']
 };
 
