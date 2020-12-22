@@ -105,7 +105,7 @@ const RoutineScreen = props => {
                     />
                     <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
                         <Text style={{color:'white', fontSize: 20}}>Cycle length in days: </Text>
-                        <NumericSelector onChange={setRTime} numInfo={{def: rTime, min: 7, max: 28, increment: 7}}/>
+                        <NumericSelector onChange={setRTime} numInfo={{def: rTime, min: 7, max: 56, increment: 7}}/>
                     </View>
 
                     <Text style={{color:'white', fontSize: 40}}>Workouts</Text>

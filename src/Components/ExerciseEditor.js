@@ -28,7 +28,14 @@ const ExerciseEditor = props => {
         </View>
 
         <Text>Current Working Weight: </Text>
-        <NumericSelector onChange={() => {}} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
+        <NumericSelector onChange={value => {
+            props.editInfo(prev => {
+                //there's gotta be some way to generalize this
+                const next = {...prev[props.name]};
+                next.current = value;
+                return {...prev, [props.name]: next}
+            });
+        }} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
 
         <Text>Sets:</Text>
         <Words>Set Type:</Words>
@@ -209,9 +216,21 @@ const ExerciseEditor = props => {
         <Text>Progression:</Text>
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Words>Add</Words>
-            <NumericSelector onChange={() => {}} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
+            <NumericSelector onChange={value => {
+                props.editInfo(prev => {
+                    const next = { ...prev[props.name] };
+                    next.progress.amount = value;
+                    return { ...prev, [props.name]: next };
+                });
+            }} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
             <Words>lb every</Words>
-            <NumericSelector onChange={() => {}} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
+            <NumericSelector onChange={value => {
+                props.editInfo(prev => {
+                    const next = { ...prev[props.name] };
+                    next.progress.rate = value;
+                    return { ...prev, [props.name]: next };
+                });
+            }} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
             <Words>times the workout is done</Words>
         </View>
 

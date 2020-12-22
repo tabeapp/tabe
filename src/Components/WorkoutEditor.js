@@ -24,7 +24,7 @@ const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
 
     return (
-        <View style={{height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
+        <View style={{margin: 5, width: 400, backgroundColor: '#333'}}>
             <Text style={{color:'white'}}>Workout {props.name}</Text>
             {
                 props.exercises.map((ex, index) =>{
