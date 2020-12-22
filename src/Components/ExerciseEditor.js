@@ -242,7 +242,13 @@ const ExerciseEditor = props => {
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
                     thumbColor={info.amrap ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
-                    onValueChange={() => {}}
+                    onValueChange={val => {
+                        props.editInfo(prev => {
+                            const next = { ...prev[props.name] };
+                            next.amrap = val;
+                            return { ...prev, [props.name]: next };
+                        });
+                    }}
                     value={info.amrap}
                 />
             </View>
