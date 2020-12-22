@@ -260,6 +260,7 @@ const RoutineScreen = props => {
                         })
                     }/>
 
+                    <View style={{height: 25/*for the red button*/}}/>
                 </ScrollView>
                 <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
             </SafeAreaView>
@@ -286,8 +287,6 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'black',
         borderStyle: 'solid',
-        borderColor: 'black',
-        borderWidth: 1,
     },
     box: {
         flex: 1,

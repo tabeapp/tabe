@@ -19,7 +19,7 @@ const ExerciseEditor = props => {
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
-    return <View key={name} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
+    return <View key={name} style={{margin: 3, width: 406, backgroundColor: '#333'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color:'white'}}>{name}</Text>
             <TouchableOpacity onPress={deleteExercise} style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>

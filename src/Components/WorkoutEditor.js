@@ -23,8 +23,9 @@ const SupersetSelector = props => {
 const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
 
+    //wtf is this 415 number supposed to be?
     return (
-        <View style={{margin: 5, width: 400, backgroundColor: '#333'}}>
+        <View style={{margin: 3, width: 406, backgroundColor: '#333'}}>
             <Text style={{color:'white'}}>Workout {props.name}</Text>
             {
                 props.exercises.map((ex, index) =>{
