@@ -37,6 +37,32 @@ const RoutineScreen = props => {
 
     const {setRoutine} = useContext(ProgressContext);
 
+    const deleteAnExercise = (k) => {
+        //this is fine
+        setInfo(prev => {
+            const next = {...prev};
+            delete next[k];
+            return next;
+        });
+        //clear from all workouts as well
+        //this is more complex if it's a super set
+        //I thi
+        let removal = k;
+        if(k.includes('/'))
+            removal = k.split('/');//that might do it, who knows
+
+        setWorkouts(prev => {
+            const next = {...prev};
+            Object.keys(next).forEach(key => {
+                next[key] = next[key].filter(e => {
+                    console.log('key ' + e + ' removal ' + removal)
+                    return  JSON.stringify(e) !== JSON.stringify(removal);
+                });
+            })
+            return next;
+        });
+    };
+
     //this is how use effect works, right?
     //depend on changes in info
     useEffect(() => {
@@ -135,6 +161,7 @@ const RoutineScreen = props => {
 
                                     }}
 
+                                    deleteExercise={deleteAnExercise}
                                     addExercise={ex => {
                                         //because this edits both workouts and info, im' keeping it in routinescreen
                                         //we know which workout to add it to cuz of k
@@ -196,7 +223,7 @@ const RoutineScreen = props => {
                                 />
                             )
                         }
-                        <View style={{justifyContent: 'center', height: 200, margin: 5, width: 400, backgroundColor: '#333'}}>
+                        <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
                             <TouchableOpacity style={styles.configButton} onPress={() => {
                                 //append a new obj
                                 //works, but ideally I'd like A B C instead of 1 2 3
@@ -217,31 +244,8 @@ const RoutineScreen = props => {
                                 key={k}
                                 name={k} info={v}
                                 editInfo={setInfo}
-                                deleteExercise={() => {
-                                    //this is fine
-                                    setInfo(prev => {
-                                        const next = {...prev};
-                                        delete next[k];
-                                        return next;
-                                    });
-                                    //clear from all workouts as well
-                                    //this is more complex if it's a super set
-                                    //I thi
-                                    let removal = k;
-                                    if(k.includes('/'))
-                                        removal = k.split('/');//that might do it, who knows
-
-                                    setWorkouts(prev => {
-                                        const next = {...prev};
-                                        Object.keys(next).forEach(key => {
-                                            next[key] = next[key].filter(e => {
-                                                console.log('key ' + e + ' removal ' + removal)
-                                                return  JSON.stringify(e) !== JSON.stringify(removal);
-                                            });
-                                        })
-                                        return next;
-                                    });
-                                }}/>
+                                deleteExercise={() => deleteAnExercise(k)}
+                            />
                         )
                     }
                     </ScrollView>
