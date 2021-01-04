@@ -227,8 +227,11 @@ const RoutineScreen = props => {
                             <TouchableOpacity style={styles.configButton} onPress={() => {
                                 //append a new obj
                                 //works, but ideally I'd like A B C instead of 1 2 3
+                                //this doesn't work if you add A B C then delete B
                                 //too complex?
-                                setWorkouts({...workouts, [String.fromCharCode('A'.charCodeAt(0)+Object.keys(workouts).length)]: []});
+                                //this actually works now
+                                const code = Object.keys(workouts).sort().reverse()[0];
+                                setWorkouts({...workouts, [String.fromCharCode(code.charCodeAt(0)+1)]: []});
                             }}>
                                 <Text style={{fontSize: 30}}>Add Workout</Text>
                             </TouchableOpacity>

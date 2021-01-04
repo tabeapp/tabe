@@ -29,19 +29,31 @@ const WorkoutEditor = props => {
             <View style={{backgroundColor: '#222', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text style={{color:'white'}}>Workout {props.name}</Text>
 
-                <TouchableOpacity onPress={() => {
-                    //delete the workout
-                    props.editWorkouts(prev => {
-                        const next = {...prev};
-                        delete next[props.name];
-                        //should we delete all exercises that don't exist in other workotus?
-                        //debate
-                        return next;
-                    });
+                <View style={{flexDirection:'row'}}>
 
-                }}>
-                    <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        //so take all the exercises of the workout and copy them to a new workout
+                        //they're gonna be separate though, so like squat.b and such
+
+
+                    }}>
+                        <Text><Ionicons color={'gray'} size={30} name={'copy-outline'}/></Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => {
+                        //delete the workout
+                        props.editWorkouts(prev => {
+                            const next = {...prev};
+                            delete next[props.name];
+                            //should we delete all exercises that don't exist in other workotus?
+                            //debate
+                            return next;
+                        });
+
+                    }}>
+                        <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             {
                 props.exercises.map((ex, index) =>{
