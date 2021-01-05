@@ -16,7 +16,7 @@ import ProgressContext from "../Contexts/ProgressContext";
 
 //i guess you could have the option to build a routine here too, but for now it's just for editing the current routine
 //this can't be default screen, otherwise routine doesnt' have time to load
-const RoutineScreen = props => {
+const RoutineEditScreen = props => {
     //const { routine } = useContext(ProgressContext);
 
     //nearly everything is gonna be editable
@@ -399,4 +399,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default RoutineScreen;
+export default RoutineEditScreen;

@@ -8,7 +8,7 @@ import ProgressProvider from './src/Contexts/ProgressProvider';
 import CustomWorkoutScreen from './src/Screens/CustomWorkoutScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import ExploreScreen from "./src/Screens/ExploreScreen";
-import RoutineScreen from "./src/Screens/RoutineScreen";
+import RoutineEditScreen from "./src/Screens/RoutineEditScreen";
 import ProfileScreen from "./src/Screens/ProfileScreen";
 import WorkoutScreen from "./src/Screens/WorkoutScreen";
 import ChooseRoutineScreen from "./src/Screens/ChooseRoutineScreen";
@@ -35,7 +35,7 @@ const App = () => {
                     <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                     <Stack.Screen name="report" component={ReportScreen}/>
                     <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                    <Stack.Screen name="routine" component={RoutineScreen}/>
+                    <Stack.Screen name="routine" component={RoutineEditScreen}/>
                     <Stack.Screen name="profile" component={ProfileScreen}/>
                 </Stack.Navigator>
             </NavigationContainer>
