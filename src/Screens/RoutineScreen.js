@@ -9,6 +9,7 @@ import Words from "../Components/Words";
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
     const [routines, setRoutines] = useState([]);
+    const [current, setCurrent] = useState('');
 
     //the routines will be saved under @routines
     //there may be multiple
@@ -16,9 +17,12 @@ const RoutineScreen = props => {
     useEffect(() => {
         AsyncStorage.getItem('@routines').then(obj => {
             if(obj === null)
-                setRoutines(['deez', 'nuts']);
-            else
-                setRoutines(JSON.parse(obj));
+                setRoutines([]);
+            else{
+                const r = JSON.parse(obj);
+                setRoutines(r.routines);
+                setCurrent(r.current);
+            }
         });
 
     }, []);
@@ -34,20 +38,38 @@ const RoutineScreen = props => {
                     <Words>Routines</Words>
                     <View style={{width: '100%', alignItems: 'center'}}>
                         {
-                            routines.map(item =>
+                            Object.entries(routines).map(([k,v]) =>
                                 <TouchableOpacity
-                                    key={item}
+                                    key={k}
                                     onPress={() => {/*send it off to routine editor*/}}
                                     style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                                 >
                                     <Text style={{fontSize: 20, color: 'white'}}>{
-                                        item
+                                        v.title
                                     }</Text>
                                 </TouchableOpacity>
                             )
                         }
                     </View>
-                    <TouchableOpacity  onPress={() => {}}>
+                    <TouchableOpacity  onPress={() => {
+                        //send a blank routine to routineeditor
+                        //specifically
+                        const emptyRoutine = {
+                            name: 'New Routine',
+                            time: 7,
+                            info: {},
+                            workouts: {},
+                            days: [],
+                            customScheme: false,
+                            customSets: [],
+                            currentDay: 0,//do we really need these last 2?
+                            nextWorkoutTime: 0
+                        }
+
+                        props.navigation.navigate('routineedit', {
+                            routine: emptyRoutine
+                        })
+                    }}>
                         <Words style={{fontSize: 40}}>+</Words>
                     </TouchableOpacity>
 

@@ -9,6 +9,7 @@ import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
 import ProgressContext from "../Contexts/ProgressContext";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -19,21 +20,23 @@ import ProgressContext from "../Contexts/ProgressContext";
 const RoutineEditScreen = props => {
     //const { routine } = useContext(ProgressContext);
 
+    const {routine} = props.route.params;
+
     //nearly everything is gonna be editable
     //fuck this, I'm gonna start from scratch and use this to make a new routine
     //how the fuck do we load current routine
-    const [rName, setRName] = useState('Routine Name');
-    const [rTime, setRTime] = useState(7);
-    const [info, setInfo] = useState({});
-    const [workouts, setWorkouts] = useState({});
+    const [rName, setRName] = useState(routine.name);
+    const [rTime, setRTime] = useState(routine.time);
 
-    const [days, setDays] = useState([]);
+    const [info, setInfo] = useState(routine.info);
+    const [workouts, setWorkouts] = useState(routine.workouts);
+    const [days, setDays] = useState(routine.days);
 
-    const [customScheme, setCustomScheme] = useState(false);
-    const [customSets, setCustomSets] = useState([]);
+    const [customScheme, setCustomScheme] = useState(routine.customScheme);
+    const [customSets, setCustomSets] = useState(routine.customSets);
 
-    const [currentDay, setCurrentDay] = useState(0);
-    const [nextWorkoutTime, setNextWorkoutTime] = useState(0);
+    const [currentDay, setCurrentDay] = useState(routine.currentDay);
+    const [nextWorkoutTime, setNextWorkoutTime] = useState(routine.nextWorkoutTime);
 
     const {setRoutine} = useContext(ProgressContext);
     const addExercise = (k,ex) => {
@@ -234,7 +237,7 @@ const RoutineEditScreen = props => {
 
 
                         //nah we're missing some things
-                        setRoutine({
+                        const newRoutine = {
                             title: rName,
                             time: rTime,
                             info: {...info},
@@ -245,7 +248,38 @@ const RoutineEditScreen = props => {
                             currentDay: currentDay || 0,//this shouldn't chnage if we're copying a routine
                             nextWorkoutTime: nextWorkoutTime || new Date().getTime()
                             //next workout time
+                        };
+
+                        //don't set it to active unless there's no active routine
+                        //so routines in async storage should look like
+                        /*
+                            current: starting strength,
+                            rouintes: {
+                                'deez nuts': {...},
+                                'starting strength': {...}
+                            }
+                         */
+                        AsyncStorage.getItem('@routines').then(obj => {
+                            if(obj === null){
+                                newRoutine.current = true;
+                                AsyncStorage.setItem('@routines', JSON.stringify({
+                                    current: rName,
+                                    routines: {
+                                        [rName]:newRoutine
+                                    }
+                                }))
+
+                            }
+                            else{
+                                let routines = JSON.parse(obj);
+                                if(routines.current === rName)
+                                    newRoutine.current = true;
+
+                                routines.routines[rName] = newRoutine;
+                                AsyncStorage.setItem('@routines', JSON.stringify(routines));
+                            }
                         })
+
                         //ideally we would then navigate to a list of editable routines
                         //but for now we just go home
                         props.navigation.navigate('home');
