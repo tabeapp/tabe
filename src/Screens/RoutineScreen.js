@@ -43,10 +43,20 @@ const RoutineScreen = props => {
             const r = JSON.parse(obj);
             delete r.routines[k];
             AsyncStorage.setItem('@routines', JSON.stringify(r));
-
-
-
         })
+    }
+
+    //again we have to fucking update the @rouintes
+    const handleSetCurrent = k => {
+        setCurrent(k);
+        AsyncStorage.getItem('@routines').then(obj => {
+            if(obj === null)
+                return;
+            const r = JSON.parse(obj);
+            r.current = k;
+            AsyncStorage.setItem('@routines', JSON.stringify(r));
+        })
+
     }
 
     return (
@@ -72,12 +82,26 @@ const RoutineScreen = props => {
                                     <Text style={{fontSize: 20, color: 'white'}}>{
                                         v.title
                                     }</Text>
-                                    <TouchableOpacity onPress={() => {
-
+                                    <TouchableOpacity style={{width: 50 }} onPress={() => {
                                         deleteRoutine(k);
-
                                     }}>
-                                        <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
+                                        <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
+                                    </TouchableOpacity>
+
+                                    <TouchableOpacity style={{width: 50 }} onPress={() => {
+                                        handleSetCurrent(k)
+                                    }}>
+                                        <Words>
+                                            Current:
+                                            {
+                                                k === current &&
+                                                <Ionicons color={'green'} size={30} name={'checkbox'}/>
+                                            }
+                                            {
+                                                k !== current &&
+                                                <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
+                                            }
+                                        </Words>
                                     </TouchableOpacity>
                                 </TouchableOpacity>
                             )
@@ -87,7 +111,7 @@ const RoutineScreen = props => {
                         //send a blank routine to routineeditor
                         //specifically
                         const emptyRoutine = {
-                            name: 'New Routine',
+                            title: 'New Routine',
                             time: 7,
                             info: {},
                             workouts: {},

@@ -20,7 +20,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const RoutineEditScreen = props => {
     //const { routine } = useContext(ProgressContext);
 
-    const {routine} = props.route.params;
+    let {routine} = props.route.params;
+
+    //I think this is why starting strength is cached?
+    useEffect(() => {
+        setRName(routine.title);
+        setRTime(routine.time);
+        setInfo(routine.info);
+        setWorkouts(routine.workouts);
+        setDays(routine.days);
+        setCustomScheme(routine.customScheme);
+        setCustomSets(routine.customSets);
+        setCurrentDay(routine.currentDay);
+        setNextWorkoutTime(routine.nextWorkoutTime);
+
+    }, [props.route.params.routine] );
 
     //nearly everything is gonna be editable
     //fuck this, I'm gonna start from scratch and use this to make a new routine
@@ -282,7 +296,7 @@ const RoutineEditScreen = props => {
 
                         //ideally we would then navigate to a list of editable routines
                         //but for now we just go home
-                        props.navigation.navigate('home');
+                        props.navigation.navigate('routine');
                         /*Alert.alert(
                             "Info summary",
                             JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
@@ -290,7 +304,7 @@ const RoutineEditScreen = props => {
 
                     }} style={styles.topButton}>
                         <Text style={{color: 'white', fontSize: 20}}>
-                            Next
+                            Save
                         </Text>
                     </TouchableOpacity>
                 </View>
