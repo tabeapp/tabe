@@ -3,20 +3,25 @@ import React, {useEffect, useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Words from "../Components/Words";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
-    //what's the best way to load
-    let {getPosts} = useContext(ProgressContext);
-    const [posts, setPosts] = useState([]);
-    //const data = await getPosts();
+    const [routines, setRoutines] = useState([]);
 
-    //only will run once, right? right?
-    //how the fuck am i supposed to do this
-    //ok this is fucked, truning it off for no
-    //useEffect( () => {
-        //getPosts().then(v => setPosts(v))
-    //})
+    //the routines will be saved under @routines
+    //there may be multiple
+    //the current routine will be @currentroutine
+    useEffect(() => {
+        AsyncStorage.getItem('@routines').then(obj => {
+            if(obj === null)
+                setRoutines(['deez', 'nuts']);
+            else
+                setRoutines(JSON.parse(obj));
+        });
+
+    }, []);
 
     return (
         <>
@@ -24,29 +29,30 @@ const RoutineScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
-                        item.exercises &&
-                        <TouchableOpacity
-                            onPress={() => props.navigation.navigate('post', {workout: item})}
-                            style={{backgroundColor: '#333', margin: 3}}>
-                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                                <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                                <Text style={{color:'white'}}>Zyzz</Text>
-                            </View>
+                    <Words>Current</Words>
 
-                            <Text style={{fontSize: 40, color: 'white'}}>
-                                {item.title}
-                            </Text>
-                            <Text style={{color:'white'}}>
-                                {item.description}
-                            </Text>
-                            <Text style={{color:'white'}}>{item.exercises[0]&&item.exercises[0].name}</Text>
-                            <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Text>
-                        </TouchableOpacity>
-                    }
-                    />
+                    <Words>Routines</Words>
+                    <View style={{width: '100%', alignItems: 'center'}}>
+                        {
+                            routines.map(item =>
+                                <TouchableOpacity
+                                    key={item}
+                                    onPress={() => {/*send it off to routine editor*/}}
+                                    style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
+                                >
+                                    <Text style={{fontSize: 20, color: 'white'}}>{
+                                        item
+                                    }</Text>
+                                </TouchableOpacity>
+                            )
+                        }
+                    </View>
+                    <TouchableOpacity  onPress={() => {}}>
+                        <Words style={{fontSize: 40}}>+</Words>
+                    </TouchableOpacity>
+
                 </View>
-                <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
+                <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
             </SafeAreaView>
         </>
     );
@@ -78,7 +84,6 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: 'black',
         borderWidth: 1,
-        justifyContent: 'center',
     },
 });
 export default RoutineScreen;
