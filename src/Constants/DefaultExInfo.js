@@ -80,20 +80,25 @@ const BARBELL = [
     'Row',
 ];
 
-export const DEFAULT_EX_INFO = ex => ({
-    current: WEIGHTS[ex],
-    barbell: BARBELL.includes(ex),
-    amrap: false,
-    //bit aggressive, but whatever, you can change it
-    progress:{
-        amount: 5,
-        rate: 1
-    },
-    setInfo: {
-        type: 'Normal',
-        sets: [5,5,5,5,5]
-    },
-});
+export const DEFAULT_EX_INFO = ex => {
+    //just in case someting like squat.b gets through
+    ex = ex.split('.')[0];
+
+    return {
+        current: WEIGHTS[ex],
+        barbell: BARBELL.includes(ex),
+        amrap: false,
+        //bit aggressive, but whatever, you can change it
+        progress:{
+            amount: 5,
+            rate: 1
+        },
+        setInfo: {
+            type: 'Normal',
+            sets: [5,5,5,5,5]
+        },
+    }
+}
 
 //how the fuck, idk?
 //should we add a superset: true property?

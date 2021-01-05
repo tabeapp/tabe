@@ -36,6 +36,111 @@ const RoutineScreen = props => {
     const [nextWorkoutTime, setNextWorkoutTime] = useState(0);
 
     const {setRoutine} = useContext(ProgressContext);
+    const addExercise = (k,ex) => {
+        //because this edits both workouts and info, im' keeping it in routinescreen
+        //we know which workout to add it to cuz of k
+        //ugh this is so annoying why cant we just do
+        //workouts[k].push(ex)
+
+        //should this part be done before
+
+        //also need to add it to exerdcises so we can edit it later
+
+        //problem: what about adding lighter versions of exercises like in ppl?
+        //solution: alert the user and let them choose
+        if(ex in info){
+            //if no, just cancel addition and use the info already there
+            //if yes, just add 'Bench Press.b'
+            Alert.alert(
+                "Duplicate Exercise",
+                //maybe rephrase this
+                "This exercise already is in the routine, do you want to link to that one or make an alternative version?",
+                [
+                    {
+                        text: "Link",//just use the other one, don't need to add a new one to exercises
+                        onPress: () => setWorkouts({...workouts, [k]: [...workouts[k], ex]}),
+                        style: "cancel"
+                    },
+                    {
+                        text: "Alternate",
+                        onPress: () => {
+                            //need to find a name
+                            //start with [exercise].b, then [exercise].c, ...
+                            let suffix = '.b';
+                            //yes this is weird but it works
+                            while((ex + suffix) in info)
+                                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+
+                            const altName = ex + suffix;
+
+
+                            setWorkouts({...workouts, [k]: [...workouts[k], altName]});
+                            setInfo({
+                                ...info, [altName]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
+                            });
+                            //initializeWorkout();
+                            //props.navigation.navigate('workout');
+                        },
+                    }
+                ],
+                {cancelable: false}
+            )
+        }
+        else{
+            setWorkouts({...workouts, [k]: [...workouts[k], ex]});
+            setInfo({
+                ...info, [ex]: DEFAULT_EX_INFO(ex)
+            });
+        }
+
+    }
+
+    //k is the C in workout C or so
+    const duplicateWorkout = k => {
+        if(!(k in workouts))
+            return;
+
+        const newWorkout = workouts[k].map(ex => {
+
+            //fucking supersets
+            //how the fuck would you do this?
+            //bench/curl => bench.b/curl.b
+            if(Array.isArray(ex)){
+                ex.map(subex => {
+                    let suffix = '.b';
+                    //yes this is weird but it works
+                    while((subex + suffix) in info)
+                        suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+
+                    return subex + suffix;
+                });
+            }
+
+            //need to find alt name
+            let suffix = '.b';
+            //yes this is weird but it works
+            while((ex + suffix) in info)
+                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+
+            return ex + suffix;
+        });
+
+        setInfo(prev => {
+            const next = {...prev};
+            newWorkout.forEach(ex => {
+                console.log('adding ' + ex + ' to the setinfo')
+                if(Array.isArray(ex))
+                    next[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex)
+                else
+                    next[ex] = DEFAULT_EX_INFO(ex)
+            })
+
+            return next;
+        })
+
+        const code = Object.keys(workouts).sort().reverse()[0];
+        setWorkouts({...workouts, [String.fromCharCode(code.charCodeAt(0)+1)]: newWorkout});
+    };
 
     const deleteAnExercise = (k) => {
         //this is fine
@@ -62,6 +167,38 @@ const RoutineScreen = props => {
             return next;
         });
     };
+
+    //that's fucking it, we're gonna keep exercises in sync with workouts this way
+    useEffect(() => {
+        /*Object.values(workouts).forEach(w =>
+            w.forEach(ex => {
+                if(Array.isArray(ex)) {
+                    if (!(ex.join('/') in info))
+                        setInfo({ ...info, [ex.join('/')]: DEFAULT_SUPERSET_INFO(ex) });
+                }
+                else if(!(ex in info)){
+                    setInfo({
+                        ...info, [ex]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
+                    });
+                }
+            })
+        );*/
+
+        //and the inverse
+        Object.keys(info).forEach(info => {
+            if (!Object.values(workouts).some(w =>
+                w.some(ex =>
+                    ex === info || ex === info.split('/')
+                )
+            )) {
+                setInfo(prev => {
+                    const next = {...prev};
+                    delete next[info];
+                    return next;
+                })
+            }
+        })
+    }, [workouts])
 
     //this is how use effect works, right?
     //depend on changes in info
@@ -161,65 +298,9 @@ const RoutineScreen = props => {
 
                                     }}
 
+                                    duplicateWorkout={duplicateWorkout}
                                     deleteExercise={deleteAnExercise}
-                                    addExercise={ex => {
-                                        //because this edits both workouts and info, im' keeping it in routinescreen
-                                        //we know which workout to add it to cuz of k
-                                        //ugh this is so annoying why cant we just do
-                                        //workouts[k].push(ex)
-
-                                        //should this part be done before
-
-                                        //also need to add it to exerdcises so we can edit it later
-
-                                        //problem: what about adding lighter versions of exercises like in ppl?
-                                        //solution: alert the user and let them choose
-                                        if(ex in info){
-                                            //if no, just cancel addition and use the info already there
-                                            //if yes, just add 'Bench Press.b'
-                                            Alert.alert(
-                                                "Duplicate Exercise",
-                                                //maybe rephrase this
-                                                "This exercise already is in the routine, do you want to link to that one or make an alternative version?",
-                                                [
-                                                    {
-                                                        text: "Link",//just use the other one, don't need to add a new one to exercises
-                                                        onPress: () => setWorkouts({...workouts, [k]: [...workouts[k], ex]}),
-                                                        style: "cancel"
-                                                    },
-                                                    {
-                                                        text: "Alternate",
-                                                        onPress: () => {
-                                                            //need to find a name
-                                                            //start with [exercise].b, then [exercise].c, ...
-                                                            let suffix = '.b';
-                                                            //yes this is weird but it works
-                                                            while((ex + suffix) in info)
-                                                                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
-
-                                                            const altName = ex + suffix;
-
-
-                                                            setWorkouts({...workouts, [k]: [...workouts[k], altName]});
-                                                            setInfo({
-                                                                ...info, [altName]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
-                                                            });
-                                                            //initializeWorkout();
-                                                            //props.navigation.navigate('workout');
-                                                        },
-                                                    }
-                                                ],
-                                                {cancelable: false}
-                                            )
-                                        }
-                                        else{
-                                            setWorkouts({...workouts, [k]: [...workouts[k], ex]});
-                                            setInfo({
-                                                ...info, [ex]: DEFAULT_EX_INFO(ex)
-                                            });
-                                        }
-
-                                    }}
+                                    addExercise={addExercise}
                                 />
                             )
                         }
@@ -230,7 +311,7 @@ const RoutineScreen = props => {
                                 //this doesn't work if you add A B C then delete B
                                 //too complex?
                                 //this actually works now
-                                const code = Object.keys(workouts).sort().reverse()[0];
+                                const code = Object.keys(workouts).sort().reverse()[0] || '@';
                                 setWorkouts({...workouts, [String.fromCharCode(code.charCodeAt(0)+1)]: []});
                             }}>
                                 <Text style={{fontSize: 30}}>Add Workout</Text>

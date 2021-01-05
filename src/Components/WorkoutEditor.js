@@ -31,12 +31,7 @@ const WorkoutEditor = props => {
 
                 <View style={{flexDirection:'row'}}>
 
-                    <TouchableOpacity onPress={() => {
-                        //so take all the exercises of the workout and copy them to a new workout
-                        //they're gonna be separate though, so like squat.b and such
-
-
-                    }}>
+                    <TouchableOpacity onPress={() => props.duplicateWorkout(props.name)}>
                         <Text><Ionicons color={'gray'} size={30} name={'copy-outline'}/></Text>
                     </TouchableOpacity>
 
@@ -110,7 +105,7 @@ const WorkoutEditor = props => {
             }} >
                 <Text style={{color: 'white', fontSize: 30}}>Add Superset</Text>
             </TouchableOpacity>
-            <ExercisePicker visible={modal} handleSelection={props.addExercise} close={() => setModal(false)}/>
+            <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(props.name,ex)} close={() => setModal(false)}/>
 
 
         </View>);
