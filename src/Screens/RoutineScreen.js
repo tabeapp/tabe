@@ -5,6 +5,7 @@ import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Words from "../Components/Words";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -27,26 +28,57 @@ const RoutineScreen = props => {
 
     }, []);
 
+
+    //should i have another fucking context for this
+    const deleteRoutine = k => {
+        setRoutines(prev => {
+            const next = {...prev}
+            delete next[k];
+            return next;
+        });
+        //not a fan, but this should be a rare operation
+        AsyncStorage.getItem('@routines').then(obj => {
+            if(obj === null)
+                return;
+            const r = JSON.parse(obj);
+            delete r.routines[k];
+            AsyncStorage.setItem('@routines', JSON.stringify(r));
+
+
+
+        })
+    }
+
     return (
         <>
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <Words>Current</Words>
-
                     <Words>Routines</Words>
                     <View style={{width: '100%', alignItems: 'center'}}>
                         {
                             Object.entries(routines).map(([k,v]) =>
                                 <TouchableOpacity
                                     key={k}
-                                    onPress={() => {/*send it off to routine editor*/}}
+                                    onPress={() => {
+                                        /*send it off to routine editor*/
+                                        props.navigation.navigate('routineedit', {
+                                            routine: v
+                                        })
+                                    }}
                                     style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                                 >
                                     <Text style={{fontSize: 20, color: 'white'}}>{
                                         v.title
                                     }</Text>
+                                    <TouchableOpacity onPress={() => {
+
+                                        deleteRoutine(k);
+
+                                    }}>
+                                        <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
                             )
                         }
