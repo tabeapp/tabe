@@ -16,33 +16,35 @@ import RoutineSetupScreen from "./src/Screens/RoutineSetupSreen";
 import ReportScreen from "./src/Screens/ReportScreen";
 import PostScreen from "./src/Screens/PostScreen";
 import RoutineScreen from "./src/Screens/RoutineScreen";
+import RoutinesProvider from "./src/Contexts/RoutinesProvider";
 
 const Stack = createStackNavigator();
 
 const App = () => {
 
     return (
-        <ProgressProvider>
+        <RoutinesProvider>
+            <ProgressProvider>
 
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false,
-                    cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
-                }}>
-                    <Stack.Screen name="home" component={HomeScreen}/>
-                    <Stack.Screen name="post" component={PostScreen}/>
-                    <Stack.Screen name="explore" component={ExploreScreen}/>
-                    <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                    <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                    <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                    <Stack.Screen name="report" component={ReportScreen}/>
-                    <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                    <Stack.Screen name="routine" component={RoutineScreen}/>
-                    <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
-                    <Stack.Screen name="profile" component={ProfileScreen}/>
-                </Stack.Navigator>
-            </NavigationContainer>
-        </ProgressProvider>
-        //temprorray set home to workout, it's just being annoying
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false,
+                        cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
+                    }}>
+                        <Stack.Screen name="home" component={HomeScreen}/>
+                        <Stack.Screen name="post" component={PostScreen}/>
+                        <Stack.Screen name="explore" component={ExploreScreen}/>
+                        <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                        <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                        <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                        <Stack.Screen name="report" component={ReportScreen}/>
+                        <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                        <Stack.Screen name="routine" component={RoutineScreen}/>
+                        <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
+                        <Stack.Screen name="profile" component={ProfileScreen}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </ProgressProvider>
+        </RoutinesProvider>
     );
 };
 
