@@ -170,12 +170,12 @@ const RoutineEditScreen = props => {
         //maybe this effect should be in routinesprovdier?
         routinesDispatch((prev) => {
             Object.keys(info).forEach(i => {
-                if(!Object.value(workouts).some(w =>
+                if(!Object.values(workouts).some(w =>
                     w.some(ex =>
                         ex === i || ex === i.split('/')
                     )
                 )){
-                    delete prev.editRoutine.[i];
+                    delete prev.editRoutine.info[i];
                 }
             })
             return prev;
@@ -327,7 +327,6 @@ const RoutineEditScreen = props => {
                             <ExerciseEditor
                                 key={k}
                                 name={k} info={v}
-                                editInfo={setInfo}
                                 deleteExercise={() => deleteAnExercise(k)}
                             />
                         )
