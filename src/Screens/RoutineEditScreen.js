@@ -264,6 +264,9 @@ const RoutineEditScreen = props => {
                             //next workout time
                         };
 
+                        //TODO: add this new saveroutine method to the context
+                        props.route.params.saveRoutine(newRoutine);
+
                         //don't set it to active unless there's no active routine
                         //so routines in async storage should look like
                         /*
@@ -273,26 +276,6 @@ const RoutineEditScreen = props => {
                                 'starting strength': {...}
                             }
                          */
-                        AsyncStorage.getItem('@routines').then(obj => {
-                            if(obj === null){
-                                newRoutine.current = true;
-                                AsyncStorage.setItem('@routines', JSON.stringify({
-                                    current: rName,
-                                    routines: {
-                                        [rName]:newRoutine
-                                    }
-                                }))
-
-                            }
-                            else{
-                                let routines = JSON.parse(obj);
-                                if(routines.current === rName)
-                                    newRoutine.current = true;
-
-                                routines.routines[rName] = newRoutine;
-                                AsyncStorage.setItem('@routines', JSON.stringify(routines));
-                            }
-                        })
 
                         //ideally we would then navigate to a list of editable routines
                         //but for now we just go home
