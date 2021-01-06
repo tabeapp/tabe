@@ -19,6 +19,21 @@ import RoutinesContext from "../Contexts/RoutinesContext";
 //i guess you could have the option to build a routine here too, but for now it's just for editing the current routine
 //this can't be default screen, otherwise routine doesnt' have time to load
 const RoutineEditScreen = props => {
+    //this is used more than you'd think
+    const altExName = ex => {
+        let suffix = '-b';
+        //yes this is weird but it works
+        while((ex + suffix) in info)
+            suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
+
+        return ex + suffix;
+    };
+
+    //used just twice lol
+    const newWorkoutCode = () => {
+        let code = Object.keys(workouts).sort().reverse()[0] || '@';
+        return String.fromCharCode(code.charCodeAt(0)+1);
+    };
     //const { routine } = useContext(ProgressContext);
 
     //let {routine} = props.route.params;
@@ -63,12 +78,7 @@ const RoutineEditScreen = props => {
                         onPress: () => {
                             //need to find a name
                             //start with [exercise].b, then [exercise].c, ...
-                            let suffix = '-b';
-                            //yes this is weird but it works
-                            while((ex + suffix) in info)
-                                suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
-
-                            const altName = ex + suffix;
+                            const altName = altExName(ex);
 
 
                             setWorkouts({...workouts, [k]: [...workouts[k], altName]});
@@ -97,46 +107,31 @@ const RoutineEditScreen = props => {
         if(!(k in workouts))
             return;
 
+        //make the copy
         const newWorkout = workouts[k].map(ex => {
-
             //fucking supersets
-            //how the fuck would you do this?
-            //bench/curl => bench.b/curl.b
-            if(Array.isArray(ex)){
-                ex.map(subex => {
-                    let suffix = '-b';
-                    //yes this is weird but it works
-                    while((subex + suffix) in info)
-                        suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
-
-                    return subex + suffix;
-                });
-            }
+            if(Array.isArray(ex))
+                //missed that little thing
+                return ex.map(altExName);
 
             //need to find alt name
-            let suffix = '-b';
-            //yes this is weird but it works
-            while((ex + suffix) in info)
-                suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
-
-            return ex + suffix;
+            return altExName(ex);
         });
 
-        setInfo(prev => {
-            const next = {...prev};
+        routinesDispatch(prev => {
+            //save to workouts
+            prev.editRoutine.workouts[newWorkoutCode()] = newWorkout;
+
+            //save to info
             newWorkout.forEach(ex => {
-                console.log('adding ' + ex + ' to the setinfo')
                 if(Array.isArray(ex))
-                    next[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex)
+                    prev.editRoutine.info[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex);
                 else
-                    next[ex] = DEFAULT_EX_INFO(ex)
+                    prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
             })
 
-            return next;
-        })
-
-        const code = Object.keys(workouts).sort().reverse()[0];
-        setWorkouts({...workouts, [String.fromCharCode(code.charCodeAt(0)+1)]: newWorkout});
+            return prev;
+        });
     };
 
     const deleteAnExercise = (k) => {
@@ -300,9 +295,7 @@ const RoutineEditScreen = props => {
                                 //too complex?
                                 //this actually works now
                                 //trust me bro
-                                let code = Object.keys(workouts).sort().reverse()[0] || '@';
-                                code = String.fromCharCode(code.charCodeAt(0)+1);
-                                rd('workouts.' + code, []);
+                                rd('workouts.' + newWorkoutCode(), []);
                             }}>
                                 <Text style={{fontSize: 30}}>Add Workout</Text>
                             </TouchableOpacity>
