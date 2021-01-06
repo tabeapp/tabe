@@ -33,38 +33,6 @@ const RoutineEditScreen = props => {
     //can i do this?
     const {title, time, info, workouts, days, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
 
-    //I think this is why starting strength is cached?
-    //holy shit this can't be the way
-    /*useEffect(() => {
-        setRName(routine.title);
-        setRTime(routine.time);
-        setInfo(routine.info);
-        setWorkouts(routine.workouts);
-        setDays(routine.days);
-        setCustomScheme(routine.customScheme);
-        setCustomSets(routine.customSets);
-        setCurrentDay(routine.currentDay);
-        setNextWorkoutTime(routine.nextWorkoutTime);
-
-    }, [props.route.params.routine] );*/
-
-    //nearly everything is gonna be editable
-    //fuck this, I'm gonna start from scratch and use this to make a new routine
-    //how the fuck do we load current routine
-    /*const [rName, setRName] = useState(routine.name);
-    const [rTime, setRTime] = useState(routine.time);
-
-    const [info, setInfo] = useState(routine.info);
-    const [workouts, setWorkouts] = useState(routine.workouts);
-    const [days, setDays] = useState(routine.days);
-
-    const [customScheme, setCustomScheme] = useState(routine.customScheme);
-    const [customSets, setCustomSets] = useState(routine.customSets);
-
-    const [currentDay, setCurrentDay] = useState(routine.currentDay);
-    const [nextWorkoutTime, setNextWorkoutTime] = useState(routine.nextWorkoutTime);*/
-
-    //const {setRoutine} = useContext(ProgressContext);
     const addExercise = (k,ex) => {
         //because this edits both workouts and info, im' keeping it in routinescreen
         //we know which workout to add it to cuz of k
@@ -199,21 +167,6 @@ const RoutineEditScreen = props => {
 
     //that's fucking it, we're gonna keep exercises in sync with workouts this way
     useEffect(() => {
-        /*Object.values(workouts).forEach(w =>
-            w.forEach(ex => {
-                if(Array.isArray(ex)) {
-                    if (!(ex.join('/') in info))
-                        setInfo({ ...info, [ex.join('/')]: DEFAULT_SUPERSET_INFO(ex) });
-                }
-                else if(!(ex in info)){
-                    setInfo({
-                        ...info, [ex]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
-                    });
-                }
-            })
-        );*/
-
-        //and the inverse
         //maybe this effect should be in routinesprovdier?
         routinesDispatch((prev) => {
             Object.keys(info).forEach(i => {
@@ -228,19 +181,6 @@ const RoutineEditScreen = props => {
             return prev;
 
         });
-        /*Object.keys(info).forEach(info => {
-            if (!Object.values(workouts).some(w =>
-                w.some(ex =>
-                    ex === info || ex === info.split('/')
-                )
-            )) {
-                setInfo(prev => {
-                    const next = {...prev};
-                    delete next[info];
-                    return next;
-                })
-            }
-        })*/
     }, [workouts])
 
     //this is how use effect works, right?
@@ -254,13 +194,7 @@ const RoutineEditScreen = props => {
                 return i.some(j => j.setInfo.type === 'Custom');
             return i.setInfo.type === 'Custom';
         })
-        //routinesDispatch({path: 'editRoutine.customScheme', value: hasCustom});
         rd('customScheme', hasCustom);
-        //() => {
-        //setCustomScheme(Object.values(info).some(i =>{
-
-
-        //})
     }, [info]);
 
     //this takes fucking forever
@@ -344,7 +278,6 @@ const RoutineEditScreen = props => {
                             Object.entries(workouts).map(([k,v], index) =>
                                 <WorkoutEditor
                                     key={k} exercises={v} name={k}
-                                    editWorkouts={setWorkouts}
                                     editSuperset={(val, exerciseIndex, supersetIndex) => {
                                         //exerciseindex is the superset order in the workout
                                         //superset index is the exercise order in the super set
@@ -403,16 +336,18 @@ const RoutineEditScreen = props => {
 
                     {
                         customScheme &&
-                        <RepSchemeEditor sets={customSets} edit={setCustomSets}/>
+                        <RepSchemeEditor sets={customSets} edit={v => rd('customSets', v)}/>
                     }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
                     <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
-                        setDays(old => {
-                            const n = [...old];
-                            n[day] = val;
-                            return n;
-                        })
+                        //ok now i see how a path array could be nice
+                        routinesDispatch({path: 'editRoutine.days.' + day, value: val})
+                        //setDays(old => {
+                            //const n = [...old];
+                            //n[day] = val;
+                            //return n;
+
                     }/>
 
                     <View style={{height: 25/*for the red button*/}}/>

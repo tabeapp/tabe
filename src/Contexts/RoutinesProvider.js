@@ -48,6 +48,8 @@ const RoutinesProvider = props => {
         //or you can do action = ['editroutine.title', 'startingstrength']
         if(action.path || action.length === 2){
             let path, value;
+            //TODO: oh fuck this also means we cant use '.' in workout names
+            //use - instead
             if(action.path) {
                 path = action.path.split('.');
                 value = action.value;
@@ -61,10 +63,11 @@ const RoutinesProvider = props => {
             for(let i = 0; i < path.length-1; i++){
                 const p = path[i];
                 if(!(p in target)){
-                    if(Number.isInteger(p))
-                        target[p] = [];
-                    else
+                    //words. needs this cuz the splitter will split like 'set', '0'
+                    if(isNaN(p))
                         target[p] = {};
+                    else
+                        target[p] = [];
                 }
                 target = target[p];
             }

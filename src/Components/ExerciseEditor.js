@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from "react";
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
 import SupersetEditor from "./SupersetEditor";
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -12,6 +13,11 @@ for(let i = 0; i <= 50; i++)
 const ExerciseEditor = props => {
     //ugh this sucks
     const {name, info, deleteExercise} = props;
+
+    const {routinesDispatch} = useContext(RoutinesContext);
+    const rd = (path, value) => {
+        routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
+    };
 
     //
     if(name.includes('/'))
@@ -29,12 +35,8 @@ const ExerciseEditor = props => {
 
         <Text>Current Working Weight: </Text>
         <NumericSelector onChange={value => {
-            props.editInfo(prev => {
-                //there's gotta be some way to generalize this
-                const next = {...prev[props.name]};
-                next.current = value;
-                return {...prev, [props.name]: next}
-            });
+            routinesDispatch({path: 'editRoutine.info.' + name + '.current', value: value});
+
         }} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
 
         <Text>Sets:</Text>
@@ -44,17 +46,17 @@ const ExerciseEditor = props => {
             selectedValue={info.setInfo.type}
             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
             onValueChange={value => {
-                props.editInfo(prev => {
-                    const next = {...prev[props.name]};
-                    next.setInfo.type = value;
+                routinesDispatch(prev => {
+                    const x = prev.editRoutine.info[name].setInfo;
+                    x.type = value;
 
                     if(value === 'Timed')
-                        next.setInfo.sets = next.setInfo.sets.map(_ => ({minutes: 1, seconds: 0}));
+                        x.sets = x.sets.map(_ => ({minutes: 1, seconds: 0}));
                     else if(value === 'Normal')
-                        next.setInfo.sets = next.setInfo.sets.map(_ => 5);
+                        x.sets = x.sets.map(_ => 5);
 
-                    return {...prev, [props.name]: next};
-                });
+                    return prev;
+                })
             }}
         >
             {
@@ -71,11 +73,11 @@ const ExerciseEditor = props => {
                     style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
                         //k is replaced by props.name
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
-                            return {...prev, [props.name]: next};
-                        });
+                        routinesDispatch(prev => {
+                            const x = prev.editRoutine.info[name].setInfo.sets;
+                            x.splice(x.length-1);
+                            return prev;
+                        })
 
                     }} >
                     <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
@@ -93,13 +95,13 @@ const ExerciseEditor = props => {
                                     onValueChange={(value) => {
                                         //how the fuck
                                         //would defeinitely be a good idea to set all following sets to current rep
-                                        props.editInfo(prev => {
-                                            const next = {...prev[props.name]};
-                                            next.setInfo.sets[index] = value;
-                                            for(let i = index; i < next.setInfo.sets.length; i++)
-                                                next.setInfo.sets[i] = value;
-                                            return {...prev, [props.name]: next};
-                                        });
+                                        routinesDispatch(prev => {
+                                            let x = prev.editRoutine.info[name].setInfo.sets;
+                                            x[index] = value;
+                                            for(let i = index; i < x.length; i++)
+                                                x[i] = value;
+                                            return prev;
+                                        })
                                     }}
                                 >
                                     {
@@ -115,18 +117,18 @@ const ExerciseEditor = props => {
                 <TouchableOpacity
                     style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={() => {
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            if(next.setInfo.sets.length === 0) {
-                                if (next.setInfo.type === 'Normal')
-                                    next.setInfo.sets.push(5);
-                                else if (next.setInfo.type === 'Timed')
-                                    next.setInfo.sets.push({ minutes: 1, seconds: 0 });
+                        routinesDispatch(prev => {
+                            let x = prev.editRoutine.info[name].setInfo;
+                            if(x.sets.length === 0) {
+                                if (x.type === 'Normal')
+                                    x.sets.push(5);
+                                else if (x.type === 'Timed')
+                                    x.sets.push({ minutes: 1, seconds: 0 });
                             }
-                            else if(next.setInfo.sets.length <= 12)
-                                next.setInfo.sets.push(next.setInfo.sets[next.setInfo.sets.length-1])
-                            return {...prev, [props.name]: next};
-                        })
+                            else if(x.sets.length <= 12)
+                                x.sets.push({...x.sets[x.sets.length-1]})
+                            return prev;
+                        });
                     }}>
                     <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
                 </TouchableOpacity>
@@ -144,11 +146,7 @@ const ExerciseEditor = props => {
                     selectedValue={info.setInfo.sum}
                     itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                     onValueChange={(value) => {
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            next.setInfo.sum = value;
-                            return {...prev, [props.name]: next};
-                        });
+                        routinesDispatch({path: 'editRoutine.info.' + name + '.setInfo.sum', value: value})
                     }}
                 >
                     {
@@ -165,11 +163,11 @@ const ExerciseEditor = props => {
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
                         //k is replaced by props.name
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            next.setInfo.sets.splice(next.setInfo.sets.length-1);
-                            return {...prev, [props.name]: next};
-                        });
+                        routinesDispatch(prev => {
+                            const x = prev.editRoutine.info[name].setInfo.sets;
+                            x.splice(x.length-1);
+                            return prev;
+                        })
 
                     }} >
                     <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
@@ -178,20 +176,11 @@ const ExerciseEditor = props => {
                     info.setInfo.sets.map((v, index) =>
                         <View>
                             <NumericSelector onChange={(value) => {
-                                props.editInfo(prev => {
-                                    const next = {...prev[props.name]};
-                                    next.setInfo.sets[index].minutes = value;
-                                    return {...prev, [props.name]: next};
-                                });
+                                rd('setInfo.sets.' + index + '.minutes', value);
                             }} numInfo={{def:info.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1}}/>
                             <Words>:</Words>
                             <NumericSelector onChange={(value) => {
-                                props.editInfo(prev => {
-                                    const next = {...prev[props.name]};
-                                    next.setInfo.sets[index].seconds = value;
-                                    return {...prev, [props.name]: next};
-                                });
-
+                                rd('setInfo.sets.' + index + '.seconds', value);
                             }} numInfo={{def:info.setInfo.sets[index].seconds, min: 0, max: 55, increment: 5}}/>
                         </View>
                     )
@@ -199,18 +188,18 @@ const ExerciseEditor = props => {
                 <TouchableOpacity
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={() => {
-                        props.editInfo(prev => {
-                            const next = {...prev[props.name]};
-                            if(next.setInfo.sets.length === 0) {
-                                if (next.setInfo.type === 'Normal')
-                                    next.setInfo.sets.push(5);
-                                else if (next.setInfo.type === 'Timed')
-                                    next.setInfo.sets.push({ minutes: 1, seconds: 0 });
+                        routinesDispatch(prev => {
+                            let x = prev.editRoutine.info[name].setInfo;
+                            if(x.sets.length === 0) {
+                                if (x.type === 'Normal')
+                                    x.sets.push(5);
+                                else if (x.type === 'Timed')
+                                    x.sets.push({ minutes: 1, seconds: 0 });
                             }
-                            else if(next.setInfo.sets.length <= 12)
-                                next.setInfo.sets.push({...next.setInfo.sets[next.setInfo.sets.length-1]})
-                            return {...prev, [props.name]: next};
-                        })
+                            else if(x.sets.length <= 12)
+                                x.sets.push({...x.sets[x.sets.length-1]})
+                            return prev;
+                        });
                     }}>
                     <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
                 </TouchableOpacity>
@@ -221,19 +210,11 @@ const ExerciseEditor = props => {
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Words>Add</Words>
             <NumericSelector onChange={value => {
-                props.editInfo(prev => {
-                    const next = { ...prev[props.name] };
-                    next.progress.amount = value;
-                    return { ...prev, [props.name]: next };
-                });
+                rd('progress.amount', value);
             }} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
             <Words>lb every</Words>
             <NumericSelector onChange={value => {
-                props.editInfo(prev => {
-                    const next = { ...prev[props.name] };
-                    next.progress.rate = value;
-                    return { ...prev, [props.name]: next };
-                });
+                rd('progress.rate', value);
             }} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
             <Words>times the workout is done</Words>
         </View>
@@ -247,11 +228,7 @@ const ExerciseEditor = props => {
                     thumbColor={info.amrap ? "#f5dd4b" : "#f4f3f4"}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={val => {
-                        props.editInfo(prev => {
-                            const next = { ...prev[props.name] };
-                            next.amrap = val;
-                            return { ...prev, [props.name]: next };
-                        });
+                        rd('amrap', val);
                     }}
                     value={info.amrap}
                 />

@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ExercisePicker from './ExercisePicker';
 import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -22,6 +23,11 @@ const SupersetSelector = props => {
 
 const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
+    //const routine = useContext(RoutinesContext).routines.editRoutine;
+    const {routinesDispatch} = useContext(RoutinesContext);
+    //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
+    const {name} = props;//this is like a key btw
+
 
     //wtf is this 415 number supposed to be?
     return (
@@ -37,13 +43,17 @@ const WorkoutEditor = props => {
 
                     <TouchableOpacity onPress={() => {
                         //delete the workout
-                        props.editWorkouts(prev => {
+                        routinesDispatch(prev => {
+                            delete prev.editRoutine.workouts[name];
+                            return prev;
+                        })
+                        /*props.editWorkouts(prev => {
                             const next = {...prev};
                             delete next[props.name];
                             //should we delete all exercises that don't exist in other workotus?
                             //debate
                             return next;
-                        });
+                        });*/
 
                     }}>
                         <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
@@ -94,14 +104,10 @@ const WorkoutEditor = props => {
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.configButton} onPress={() => {
-                props.editWorkouts(prev => {
-                    const next = [...prev[props.name]];
-                    //just add array of two empty strings
-                    next.push(['','']);
-                    return {...prev, [props.name]: next};
+                routinesDispatch(prev => {
+                    prev.editRoutine.workouts[name].push(['','']);
+                    return prev;
                 })
-
-
             }} >
                 <Text style={{color: 'white', fontSize: 30}}>Add Superset</Text>
             </TouchableOpacity>
