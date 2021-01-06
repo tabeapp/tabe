@@ -10,6 +10,7 @@ import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
 import ProgressContext from "../Contexts/ProgressContext";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -20,10 +21,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const RoutineEditScreen = props => {
     //const { routine } = useContext(ProgressContext);
 
-    let {routine} = props.route.params;
+    //let {routine} = props.route.params;
+
+    const routine = useContext(RoutinesContext).routines.editRoutine;
+    const {routinesDispatch} = useContext(RoutinesContext);
+    //maybe i can do this shortcut?
+    const rd = (path, value) => {
+        routinesDispatch({path: 'editRoutine.' + path, value});
+    };
+
+    //can i do this?
+    const {title, time, info, workouts, days, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
 
     //I think this is why starting strength is cached?
-    useEffect(() => {
+    //holy shit this can't be the way
+    /*useEffect(() => {
         setRName(routine.title);
         setRTime(routine.time);
         setInfo(routine.info);
@@ -34,12 +46,12 @@ const RoutineEditScreen = props => {
         setCurrentDay(routine.currentDay);
         setNextWorkoutTime(routine.nextWorkoutTime);
 
-    }, [props.route.params.routine] );
+    }, [props.route.params.routine] );*/
 
     //nearly everything is gonna be editable
     //fuck this, I'm gonna start from scratch and use this to make a new routine
     //how the fuck do we load current routine
-    const [rName, setRName] = useState(routine.name);
+    /*const [rName, setRName] = useState(routine.name);
     const [rTime, setRTime] = useState(routine.time);
 
     const [info, setInfo] = useState(routine.info);
@@ -50,9 +62,9 @@ const RoutineEditScreen = props => {
     const [customSets, setCustomSets] = useState(routine.customSets);
 
     const [currentDay, setCurrentDay] = useState(routine.currentDay);
-    const [nextWorkoutTime, setNextWorkoutTime] = useState(routine.nextWorkoutTime);
+    const [nextWorkoutTime, setNextWorkoutTime] = useState(routine.nextWorkoutTime);*/
 
-    const {setRoutine} = useContext(ProgressContext);
+    //const {setRoutine} = useContext(ProgressContext);
     const addExercise = (k,ex) => {
         //because this edits both workouts and info, im' keeping it in routinescreen
         //we know which workout to add it to cuz of k
@@ -202,7 +214,21 @@ const RoutineEditScreen = props => {
         );*/
 
         //and the inverse
-        Object.keys(info).forEach(info => {
+        //maybe this effect should be in routinesprovdier?
+        routinesDispatch((prev) => {
+            Object.keys(info).forEach(i => {
+                if(!Object.value(workouts).some(w =>
+                    w.some(ex =>
+                        ex === i || ex === i.split('/')
+                    )
+                )){
+                    delete prev.editRoutine.[i];
+                }
+            })
+            return prev;
+
+        });
+        /*Object.keys(info).forEach(info => {
             if (!Object.values(workouts).some(w =>
                 w.some(ex =>
                     ex === info || ex === info.split('/')
@@ -214,25 +240,35 @@ const RoutineEditScreen = props => {
                     return next;
                 })
             }
-        })
+        })*/
     }, [workouts])
 
     //this is how use effect works, right?
     //depend on changes in info
+    //should this also be in provider?
     useEffect(() => {
-        setCustomScheme(Object.values(info).some(i =>{
+        const hasCustom = Object.values(info).some(i => {
             //always jujmping through hoops for supersets
             //maybe regular workouts should just be arrays of size 1?
             if(Array.isArray(i))
                 return i.some(j => j.setInfo.type === 'Custom');
             return i.setInfo.type === 'Custom';
-        }))
+        })
+        //routinesDispatch({path: 'editRoutine.customScheme', value: hasCustom});
+        rd('customScheme', hasCustom);
+        //() => {
+        //setCustomScheme(Object.values(info).some(i =>{
+
+
+        //})
     }, [info]);
 
     //this takes fucking forever
     useEffect(() => {
-        setDays(Array.from(new Array(rTime), () => 'R'));
-    }, [rTime]);
+        routinesDispatch({path: 'editRoutine.days', value:
+                Array.from(new Array(time), () => 'R')
+        });
+    }, [time]);
 
     return (
         <>
@@ -252,8 +288,8 @@ const RoutineEditScreen = props => {
 
                         //nah we're missing some things
                         const newRoutine = {
-                            title: rName,
-                            time: rTime,
+                            title: title,
+                            time: time,
                             info: {...info},
                             workouts: {...workouts},
                             days: [...days],
@@ -294,12 +330,12 @@ const RoutineEditScreen = props => {
                 <ScrollView style={styles.box}>
                     <TextInput
                         style={{color:'white', textAlign: 'center', fontSize: 40}}
-                        value={rName}
-                        onChangeText={setRName}
+                        value={title}
+                        onChangeText={v => rd('title', v)}
                     />
                     <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
                         <Text style={{color:'white', fontSize: 20}}>Cycle length in days: </Text>
-                        <NumericSelector onChange={setRTime} numInfo={{def: rTime, min: 7, max: 56, increment: 7}}/>
+                        <NumericSelector onChange={v => rd('time', v)} numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
                     </View>
 
                     <Text style={{color:'white', fontSize: 40}}>Workouts</Text>

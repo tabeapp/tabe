@@ -33,7 +33,9 @@ const RoutinesProvider = props => {
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
     const routinesReducer = (state, action) => {
+        //this is also great cuz it does the {...state} step right here
         const next = {...state};
+        //so just edit the passed in object directly
         if(action.constructor === Function){
             //run action on state
             return action(next);
@@ -43,8 +45,17 @@ const RoutinesProvider = props => {
         //drill into state programmatically
         //action.path //'editroutine.title']
         //action.value///startingstrength
-        if(action.path){
-            const path = action.path.split('.');
+        //or you can do action = ['editroutine.title', 'startingstrength']
+        if(action.path || action.length === 2){
+            let path, value;
+            if(action.path) {
+                path = action.path.split('.');
+                value = action.value;
+            } else {
+                path = action[0].split('.');
+                value = action[1];
+            }
+
             let target = next;
             //stop right before last
             for(let i = 0; i < path.length-1; i++){
@@ -58,7 +69,7 @@ const RoutinesProvider = props => {
                 target = target[p];
             }
             //and finally set it
-            target[path[path.length-1]] = action.value;
+            target[path[path.length-1]] = value;
         }
 
         //i guess we could store some logic here
