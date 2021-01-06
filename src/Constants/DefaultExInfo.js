@@ -81,7 +81,8 @@ const BARBELL = [
 ];
 
 export const DEFAULT_EX_INFO = ex => {
-    //just in case someting like squat.b gets through
+    //TODO you know, it would be a  good idea to test if it's a superset here
+    //just in case someting like squat-b gets through
     ex = ex.split('-')[0];
 
     return {

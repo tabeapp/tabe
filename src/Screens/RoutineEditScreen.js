@@ -1,23 +1,19 @@
 import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import NumericSelector from '../Components/NumericSelector';
 import WorkoutEditor from '../Components/WorkoutEditor';
-import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from "../Constants/DefaultExInfo";
+import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExInfo';
 import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
-import ProgressContext from "../Contexts/ProgressContext";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import RoutinesContext from "../Contexts/RoutinesContext";
+import RoutinesContext from '../Contexts/RoutinesContext';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
 //the only trick is putting it in a nice formattable way
 
-//i guess you could have the option to build a routine here too, but for now it's just for editing the current routine
-//this can't be default screen, otherwise routine doesnt' have time to load
 const RoutineEditScreen = props => {
     //this is used more than you'd think
     const altExName = ex => {
@@ -34,26 +30,16 @@ const RoutineEditScreen = props => {
         let code = Object.keys(workouts).sort().reverse()[0] || '@';
         return String.fromCharCode(code.charCodeAt(0)+1);
     };
-    //const { routine } = useContext(ProgressContext);
-
-    //let {routine} = props.route.params;
 
     const routine = useContext(RoutinesContext).routines.editRoutine;
     const {routinesDispatch} = useContext(RoutinesContext);
     //maybe i can do this shortcut?
-    const rd = (path, value) => {
-        routinesDispatch({path: 'editRoutine.' + path, value});
-    };
+    const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
 
     //can i do this?
     const {title, time, info, workouts, days, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
 
     const addExercise = (k,ex) => {
-        //because this edits both workouts and info, im' keeping it in routinescreen
-        //we know which workout to add it to cuz of k
-        //ugh this is so annoying why cant we just do
-        //workouts[k].push(ex)
-
         //should this part be done before
 
         //also need to add it to exerdcises so we can edit it later
@@ -70,23 +56,25 @@ const RoutineEditScreen = props => {
                 [
                     {
                         text: "Link",//just use the other one, don't need to add a new one to exercises
-                        onPress: () => setWorkouts({...workouts, [k]: [...workouts[k], ex]}),
+                        onPress: () => routinesDispatch(prev => {
+                            prev.editRoutine.workouts[k].push(ex);
+                            return prev;
+                        }),
                         style: "cancel"
                     },
                     {
                         text: "Alternate",
                         onPress: () => {
-                            //need to find a name
-                            //start with [exercise].b, then [exercise].c, ...
                             const altName = altExName(ex);
 
-
-                            setWorkouts({...workouts, [k]: [...workouts[k], altName]});
-                            setInfo({
-                                ...info, [altName]: DEFAULT_EX_INFO(ex)//don't use the alternative name to look up info
+                            routinesDispatch(prev => {
+                                //does this work for supersets?
+                                prev.editRoutine.workouts[k].push(altName);
+                                //definitely not
+                                prev.editRoutine.info[altName] = DEFAULT_EX_INFO(ex);
+                                //we really need info to set itself automatically, wiht useffect
+                                return prev;
                             });
-                            //initializeWorkout();
-                            //props.navigation.navigate('workout');
                         },
                     }
                 ],
@@ -94,12 +82,15 @@ const RoutineEditScreen = props => {
             )
         }
         else{
-            setWorkouts({...workouts, [k]: [...workouts[k], ex]});
-            setInfo({
-                ...info, [ex]: DEFAULT_EX_INFO(ex)
+            routinesDispatch(prev => {
+                //does this work for supersets?
+                prev.editRoutine.workouts[k].push(ex);
+                //definitely not
+                prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
+                //we really need info to set itself automatically, wiht useffect
+                return prev;
             });
         }
-
     }
 
     //k is the C in workout C or so
@@ -282,6 +273,7 @@ const RoutineEditScreen = props => {
 
                                     }}
 
+                                    //maybe i should just have these in workout editor...
                                     duplicateWorkout={duplicateWorkout}
                                     deleteExercise={deleteAnExercise}
                                     addExercise={addExercise}
