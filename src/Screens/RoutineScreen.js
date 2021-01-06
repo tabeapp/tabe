@@ -7,10 +7,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Words from "../Components/Words";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
+import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
-    const [current, setCurrent] = useState('');
+    //const [current, setCurrent] = useState('');
     /*const [routines, setRoutines] = useState([]);
 
     //the routines will be saved under @routines
@@ -28,8 +29,8 @@ const RoutineScreen = props => {
         });
 
     }, []);*/
-    const routines = useContext(RoutinesContext).routines.routines;
-    const setRoutines = useContext(RoutinesContext).routinesDispatch;
+    const {routines,current} = useContext(RoutinesContext).routines;
+    const {routinesDispatch} = useContext(RoutinesContext);
 
 
     //get the context done rn, and just hold on to a list of routines in the state
@@ -66,31 +67,32 @@ const RoutineScreen = props => {
     }
 
     const deleteRoutine = k => {
-        setRoutines(prev => {
-            const next = {...prev}
-            delete next[k];
-            return next;
+        //setRoutines(prev => {
+            //const next = {...prev}
+            //delete next[k];
+            //return next;
+        //});
+        routinesDispatch(prev => {
+            delete prev[k];
+            return prev;
         });
         //not a fan, but this should be a rare operation
-        AsyncStorage.getItem('@routines').then(obj => {
-            if(obj === null)
-                return;
-            const r = JSON.parse(obj);
-            delete r.routines[k];
-            AsyncStorage.setItem('@routines', JSON.stringify(r));
-        })
+        routinesDispatch({type: 'setItem'})//so save the thing
     }
 
     //again we have to fucking update the @rouintes
     const handleSetCurrent = k => {
-        setCurrent(k);
-        AsyncStorage.getItem('@routines').then(obj => {
-            if(obj === null)
-                return;
-            const r = JSON.parse(obj);
-            r.current = k;
-            AsyncStorage.setItem('@routines', JSON.stringify(r));
-        })
+        //setCurrent(k);
+        routinesDispatch({path: 'current', value: k});
+
+        //AsyncStorage.getItem('@routines').then(obj => {
+            //if(obj === null)
+                //return;
+            //const r = JSON.parse(obj);
+            //r.current = k;
+        routinesDispatch({type: 'setItem'})//so save the thing
+            //AsyncStorage.setItem('@routines', JSON.stringify(r));
+        //})
 
     }
 
@@ -107,10 +109,10 @@ const RoutineScreen = props => {
                                 <TouchableOpacity
                                     key={k}
                                     onPress={() => {
+                                        //set it in the context
+                                        routinesDispatch({path: 'editRoutine', value: v});
                                         /*send it off to routine editor*/
-                                        props.navigation.navigate('routineedit', {
-                                            routine: v
-                                        })
+                                        props.navigation.navigate('routineedit');
                                     }}
                                     style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                                 >
@@ -118,7 +120,7 @@ const RoutineScreen = props => {
                                         v.title
                                     }</Text>
                                     <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                        deleteRoutine(k);
+                                        deleteRoutine(k);//
                                     }}>
                                         <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                                     </TouchableOpacity>
@@ -143,24 +145,12 @@ const RoutineScreen = props => {
                         }
                     </View>
                     <TouchableOpacity  onPress={() => {
-                        //send a blank routine to routineeditor
-                        //specifically
-                        const emptyRoutine = {
-                            title: 'New Routine',
-                            time: 7,
-                            info: {},
-                            workouts: {},
-                            days: [],
-                            customScheme: false,
-                            customSets: [],
-                            currentDay: 0,//do we really need these last 2?
-                            nextWorkoutTime: 0
-                        }
+                        routinesDispatch({path: 'editRoutine', value: BLANK_ROUTINE()});
 
-                        props.navigation.navigate('routineedit', {
-                            routine: emptyRoutine,
-                            saveRoutine: saveRoutine
-                        })
+                        props.navigation.navigate('routineedit');
+                            //routine: emptyRoutine, // no this will be set in the context
+                            //saveRoutine: saveRoutine no this will be available in the context
+                        //})
                     }}>
                         <Words style={{fontSize: 40}}>+</Words>
                     </TouchableOpacity>

@@ -41,13 +41,14 @@ const RoutinesProvider = props => {
 
         //otherwise
         //drill into state programmatically
-        //action.path //['editroutine', 'title']
+        //action.path //'editroutine.title']
         //action.value///startingstrength
         if(action.path){
+            const path = action.path.split('.');
             let target = next;
             //stop right before last
-            for(let i = 0; i < action.path.length-1; i++){
-                const p = action.path[i];
+            for(let i = 0; i < path.length-1; i++){
+                const p = path[i];
                 if(!(p in target)){
                     if(Number.isInteger(p))
                         target[p] = [];
@@ -57,12 +58,18 @@ const RoutinesProvider = props => {
                 target = target[p];
             }
             //and finally set it
-            target[action.path[action.path.length-1]] = action.value;
+            target[path[path.length-1]] = action.value;
         }
 
         //i guess we could store some logic here
         if(action.type){
-
+            //this needs to happen a lot
+            if(action.type === 'setItem')
+                //don't save editRoutine... or should we?
+                AsyncStorage.setItem('@routines', JSON.stringify({
+                    current: next.current,
+                    routines: next.routines,
+                }));
         }
 
         return next;
