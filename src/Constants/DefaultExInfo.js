@@ -82,7 +82,7 @@ const BARBELL = [
 
 export const DEFAULT_EX_INFO = ex => {
     //just in case someting like squat.b gets through
-    ex = ex.split('.')[0];
+    ex = ex.split('-')[0];
 
     return {
         current: WEIGHTS[ex],

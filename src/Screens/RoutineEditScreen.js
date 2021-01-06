@@ -63,10 +63,10 @@ const RoutineEditScreen = props => {
                         onPress: () => {
                             //need to find a name
                             //start with [exercise].b, then [exercise].c, ...
-                            let suffix = '.b';
+                            let suffix = '-b';
                             //yes this is weird but it works
                             while((ex + suffix) in info)
-                                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+                                suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
 
                             const altName = ex + suffix;
 
@@ -104,20 +104,20 @@ const RoutineEditScreen = props => {
             //bench/curl => bench.b/curl.b
             if(Array.isArray(ex)){
                 ex.map(subex => {
-                    let suffix = '.b';
+                    let suffix = '-b';
                     //yes this is weird but it works
                     while((subex + suffix) in info)
-                        suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+                        suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
 
                     return subex + suffix;
                 });
             }
 
             //need to find alt name
-            let suffix = '.b';
+            let suffix = '-b';
             //yes this is weird but it works
             while((ex + suffix) in info)
-                suffix = '.' + String.fromCharCode(suffix.charCodeAt(1)+1)
+                suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
 
             return ex + suffix;
         });
@@ -140,28 +140,19 @@ const RoutineEditScreen = props => {
     };
 
     const deleteAnExercise = (k) => {
-        //this is fine
-        setInfo(prev => {
-            const next = {...prev};
-            delete next[k];
-            return next;
-        });
-        //clear from all workouts as well
-        //this is more complex if it's a super set
-        //I thi
-        let removal = k;
-        if(k.includes('/'))
-            removal = k.split('/');//that might do it, who knows
+        routinesDispatch(prev => {
+            delete prev.editRoutine.info[k];
 
-        setWorkouts(prev => {
-            const next = {...prev};
-            Object.keys(next).forEach(key => {
-                next[key] = next[key].filter(e => {
-                    console.log('key ' + e + ' removal ' + removal)
-                    return  JSON.stringify(e) !== JSON.stringify(removal);
-                });
+            let removal = k;
+            if(k.includes('/'))
+                removal = k.split('/');//that might do it, who knows
+
+            //so stringify will make sure we compare array correctly
+            prev.editRoutine.workouts = prev.editRoutine.workouts.map(w => {
+                w.filter(e => JSON.stringify(e) !== JSON.stringify(removal))
             })
-            return next;
+
+            return prev;
         });
     };
 
@@ -284,16 +275,14 @@ const RoutineEditScreen = props => {
 
                                         //SUPASET TS TS TS TS
 
-                                        setWorkouts(prev => {
-                                            const next = {...prev};
-                                            const superset = next[k][exerciseIndex];
-                                            superset[supersetIndex] = val;
+                                        routinesDispatch(prev => {
+                                            let x = prev.editRoutine[k][exerciseIndex];
+                                            x[supersetIndex] = val;
 
-                                            //check if we can add to exercise list
-                                            //wtf kinda of default info should we add?
-                                            if(superset.every(x => x !== ''))
-                                                setInfo({...info, [superset.join('/')]: DEFAULT_SUPERSET_INFO(superset)})
-                                            return next;
+                                            if(x.every(i => i !== ''))
+                                                prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
+
+                                            return prev;
                                         });
 
                                     }}
@@ -308,11 +297,12 @@ const RoutineEditScreen = props => {
                             <TouchableOpacity style={styles.configButton} onPress={() => {
                                 //append a new obj
                                 //works, but ideally I'd like A B C instead of 1 2 3
-                                //this doesn't work if you add A B C then delete B
                                 //too complex?
                                 //this actually works now
-                                const code = Object.keys(workouts).sort().reverse()[0] || '@';
-                                setWorkouts({...workouts, [String.fromCharCode(code.charCodeAt(0)+1)]: []});
+                                //trust me bro
+                                let code = Object.keys(workouts).sort().reverse()[0] || '@';
+                                code = String.fromCharCode(code.charCodeAt(0)+1);
+                                rd('workouts.' + code, []);
                             }}>
                                 <Text style={{fontSize: 30}}>Add Workout</Text>
                             </TouchableOpacity>
@@ -342,11 +332,6 @@ const RoutineEditScreen = props => {
                     <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
                         //ok now i see how a path array could be nice
                         routinesDispatch({path: 'editRoutine.days.' + day, value: val})
-                        //setDays(old => {
-                            //const n = [...old];
-                            //n[day] = val;
-                            //return n;
-
                     }/>
 
                     <View style={{height: 25/*for the red button*/}}/>
@@ -396,7 +381,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 100,
         borderWidth: 1,
-        borderStyle: 'solid'
+        borderStyle: 'solid',
     },
 });
 
