@@ -143,47 +143,14 @@ const RoutineEditScreen = props => {
         });
     };
 
-    //are the useeffects fucking me up?
-/*
-    //that's fucking it, we're gonna keep exercises in sync with workouts this way
-    useEffect(() => {
-        //maybe this effect should be in routinesprovdier?
-        routinesDispatch((prev) => {
-            Object.keys(info).forEach(i => {
-                if(!Object.values(workouts).some(w =>
-                    w.some(ex =>
-                        ex === i || ex === i.split('/')
-                    )
-                )){
-                    delete prev.editRoutine.info[i];
-                }
-            })
-            return prev;
-
-        });
-    }, [workouts])
-
-    //this is how use effect works, right?
-    //depend on changes in info
-    //should this also be in provider?
-    useEffect(() => {
-        const hasCustom = Object.values(info).some(i => {
-            //always jujmping through hoops for supersets
-            //maybe regular workouts should just be arrays of size 1?
-            if(Array.isArray(i))
-                return i.some(j => j.setInfo.type === 'Custom');
-            return i.setInfo.type === 'Custom';
-        })
-        rd('customScheme', hasCustom);
-    }, [info]);
-
     //this takes fucking forever
+    //you're not fucking me up though
+    //why the fuck is this one fine while the others go crazy
     useEffect(() => {
         routinesDispatch({path: 'editRoutine.days', value:
                 Array.from(new Array(time), () => 'R')
         });
     }, [time]);
-     */
 
     return (
         <>

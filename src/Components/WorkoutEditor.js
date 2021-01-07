@@ -44,6 +44,19 @@ const WorkoutEditor = props => {
                     <TouchableOpacity onPress={() => {
                         //delete the workout
                         routinesDispatch(prev => {
+                            //thanks to useffect not playing well with usereducer, this is now managed here
+                            //thanks, dude
+                            //or should I put it in the reducer itself...
+                            Object.keys(prev.editRoutine.info).forEach(i => {
+                                if(!Object.values(prev.editRoutine.workouts).some(w =>
+                                    w.some(ex =>
+                                        ex === i || ex === i.split('/')
+                                    )
+                                )){
+                                    delete prev.editRoutine.info[i];
+                                }
+                            });
+
                             delete prev.editRoutine.workouts[name];
                             return prev;
                         })

@@ -31,6 +31,8 @@ const RoutinesProvider = props => {
         })
     }, []);
 
+
+
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
     const routinesReducer = (state, action) => {
