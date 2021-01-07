@@ -35,9 +35,19 @@ const RoutinesProvider = props => {
     //and action will be whatever i want, huh?
     const routinesReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
+        //console.log('routine reducer called, I guess')
         //need deeper copy
+        console.log(JSON.stringify(state));
         const next = FULL_COPY(state);
-        //console.log(JSON.stringify(next));
+        //const next = {...state};
+        //for fucks sake
+        //const next = {
+            //current: state.current,
+            //routines: {...state.routines},
+            //editRoutine: {...state.editRoutine}
+        //}
+
+
 
         //const next = JSON.parse(JSON.stringify(state));
 

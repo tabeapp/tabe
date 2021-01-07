@@ -8,6 +8,7 @@ import Words from "../Components/Words";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
+import { FULL_COPY } from "../Utils/UtilFunctions";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -85,7 +86,7 @@ const RoutineScreen = props => {
                                     key={k}
                                     onPress={() => {
                                         //set it in the context
-                                        routinesDispatch({path: 'editRoutine', value: v});
+                                        routinesDispatch({path: 'editRoutine', value: FULL_COPY(v)});
                                         /*send it off to routine editor*/
                                         props.navigation.navigate('routineedit');
                                     }}

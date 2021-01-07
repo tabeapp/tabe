@@ -143,6 +143,8 @@ const RoutineEditScreen = props => {
         });
     };
 
+    //are the useeffects fucking me up?
+/*
     //that's fucking it, we're gonna keep exercises in sync with workouts this way
     useEffect(() => {
         //maybe this effect should be in routinesprovdier?
@@ -181,6 +183,7 @@ const RoutineEditScreen = props => {
                 Array.from(new Array(time), () => 'R')
         });
     }, [time]);
+     */
 
     return (
         <>
