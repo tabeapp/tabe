@@ -47,17 +47,22 @@ const ExerciseEditor = props => {
             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
             onValueChange={value => {
                 routinesDispatch(prev => {
-                    //i had this in useffect, but react is too dumb for my genius
-                    const hasCustom = Object.values(prev.editRoutine.info).some(i => {
-                        //always jujmping through hoops for supersets
-                        if(Array.isArray(i))
-                            return i.some(j => j.setInfo.type === 'Custom');
-                        return i.setInfo.type === 'Custom';
-                    });
-                    prev.editRoutine.customScheme = hasCustom;
-
                     const x = prev.editRoutine.info[name].setInfo;
                     x.type = value;
+
+                    //i had this in useffect, but react is too dumb for my genius
+                    if(value === 'Custom')
+                        prev.editRoutine.customScheme = true;
+                    else{
+                        const hasCustom = Object.values(prev.editRoutine.info).some(i => {
+                            //always jujmping through hoops for supersets
+                            if(Array.isArray(i))
+                                return i.some(j => j.setInfo.type === 'Custom');
+                            return i.setInfo.type === 'Custom';
+                        });
+                        prev.editRoutine.customScheme = hasCustom;
+                    }
+
 
                     if(value === 'Timed')
                         x.sets = x.sets.map(_ => ({minutes: 1, seconds: 0}));
