@@ -1,7 +1,8 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RoutinesContext from './RoutinesContext';
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect }  from 'react';
+import { FULL_COPY } from "../Utils/UtilFunctions";
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -34,7 +35,12 @@ const RoutinesProvider = props => {
     //and action will be whatever i want, huh?
     const routinesReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
-        const next = {...state};
+        //need deeper copy
+        const next = FULL_COPY(state);
+        //console.log(JSON.stringify(next));
+
+        //const next = JSON.parse(JSON.stringify(state));
+
         //so just edit the passed in object directly
         if(action.constructor === Function){
             //run action on state
