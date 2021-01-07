@@ -40,31 +40,6 @@ const RoutineScreen = props => {
     //yes this is exactly it
     //or ill say fuck it and have this be its own context
     //optimize this later once you figure out how to have multiple contexts
-    const saveRoutine = newRoutine => {
-
-        AsyncStorage.getItem('@routines').then(obj => {
-            let nextRoutines;
-            if(obj === null){
-                newRoutine.current = true;
-                nextRoutines = {
-                    current: newRoutine.title,
-                    routines: {
-                        [newRoutine.title]:newRoutine
-                    }
-                }
-
-            }
-            else{
-                nextRoutines = JSON.parse(obj);
-                if(nextRoutines.current === newRoutine.title)
-                    newRoutine.current = true;
-
-                nextRoutines.routines[newRoutine.title] = newRoutine;
-            }
-            setRoutines(nextRoutines);
-            AsyncStorage.setItem('@routines', JSON.stringify(nextRoutines));
-        })
-    }
 
     const deleteRoutine = k => {
         //setRoutines(prev => {

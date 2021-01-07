@@ -9,6 +9,7 @@ import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -198,6 +199,7 @@ const RoutineEditScreen = props => {
 
 
                         //nah we're missing some things
+                        //or literally just copy the state, right?
                         const newRoutine = {
                             title: title,
                             time: time,
@@ -211,8 +213,19 @@ const RoutineEditScreen = props => {
                             //next workout time
                         };
 
-                        //TODO: add this new saveroutine method to the context
-                        props.route.params.saveRoutine(newRoutine);
+
+                        routinesDispatch(prev => {
+                            //if there is no current, set this to current
+                            if(!prev.current)
+                                prev.current = newRoutine.title;
+                            //and save the new routine based on title
+                            prev.routines[newRoutine.title] = newRoutine;
+
+                            return prev;
+                        });
+
+                        routinesDispatch({type: 'setItem'});
+
 
                         //don't set it to active unless there's no active routine
                         //so routines in async storage should look like
