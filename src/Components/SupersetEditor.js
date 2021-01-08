@@ -15,9 +15,12 @@ const SupersetEditor = props => {
     const {name, info, deleteExercise} = props;
 
     const {routinesDispatch} = useContext(RoutinesContext);
-    const rd = (path, value) => {
+
+    //an extreme simplification useful for handling stuff like
+    //onChnage={value => routinedispathch("path", value)}
+    const rd = path => value =>
         routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
-    };
+
     const subExercises = name.split('/');
 
     //i guess the width is 400?
@@ -40,18 +43,26 @@ const SupersetEditor = props => {
                         return <View style={{flex: 1}}>
                             <Words>{subExercises[ssi]}</Words>
                             <Text>Current Working Weight: </Text>
-                            <NumericSelector onChange={() => {}} numInfo={{def:subInfo.current, min: 0, max: 995, increment: 5}}/>
+                            <NumericSelector
+                                onChange={rd(ssi+'.current')}
+                                numInfo={{def:subInfo.current, min: 0, max: 995, increment: 5}}
+                            />
 
 
                             <Text>Progression:</Text>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Words>Add</Words>
-                                <NumericSelector onChange={() => {}} numInfo={{def:subInfo.progress.amount, min: 0, max: 25, increment: 2.5}}/>
+                                <NumericSelector
+                                    onChange={rd(ssi+'.progress.amount')}
+                                    numInfo={{def:subInfo.progress.amount, min: 0, max: 25, increment: 2.5}}
+                                />
                                 <Words>lb</Words>
                             </View>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Words>every</Words>
-                                <NumericSelector onChange={() => {}} numInfo={{def:subInfo.progress.rate, min: 1, max: 10, increment: 1}}/>
+                                <NumericSelector
+                                    onChange={rd(ssi+'.progress.rate')}
+                                    numInfo={{def:subInfo.progress.rate, min: 1, max: 10, increment: 1}}/>
                                 <Words>time</Words>
                             </View>
 
@@ -80,7 +91,7 @@ const SupersetEditor = props => {
                                     ['Normal', 'Timed'].map(item =>
                                         <Picker.Item
                                             key={item} color={'white'} label={'' + item} value={item}
-                                            style={{}} />)
+                                        />)
                                 }
                             </Picker>
 
@@ -93,7 +104,8 @@ const SupersetEditor = props => {
                                         trackColor={{ false: "#767577", true: "#81b0ff" }}
                                         thumbColor={subInfo.amrap ? "#f5dd4b" : "#f4f3f4"}
                                         ios_backgroundColor="#3e3e3e"
-                                        onValueChange={() => {}}
+                                        onValueChange={rd(ssi+'.amrap')}
+
                                         value={subInfo.amrap}
                                     />
                                 </View>
@@ -164,7 +176,7 @@ const SupersetEditor = props => {
                                                         reps.map(item =>
                                                             <Picker.Item
                                                                 key={item} color={'white'} label={'' + item}
-                                                                value={item} style={{}}
+                                                                value={item}
                                                             />)
                                                     }
                                                 </Picker>
@@ -181,9 +193,9 @@ const SupersetEditor = props => {
                                     //dont forget to add this shit to exercise editor
                                     subInfo.setInfo.sets.map((v, index) =>
                                         <View>
-                                            <NumericSelector onChange={(value) => {
-                                                rd(ssi + '.setInfo.sets.' + index + '.minutes', value);
-                                            }} numInfo={{ def: subInfo.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1 }} />
+                                            <NumericSelector onChange={
+                                                rd(ssi + '.setInfo.sets.' + index + '.minutes')
+                                            } numInfo={{ def: subInfo.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1 }} />
                                             <Words>:</Words>
                                             <NumericSelector onChange={(value) => {
                                                 rd(ssi + '.setInfo.sets.' + index + '.seconds', value);
