@@ -73,8 +73,14 @@ const ExerciseEditor = props => {
                     x.type = value;
 
                     //i had this in useffect, but react is too dumb for my genius
-                    if(value === 'Custom')
+                    if(value === 'Custom'){
                         prev.editRoutine.customScheme = true;
+                        //need to make one quick
+                        if(Object.keys(prev.editRoutine.customSets).length === 0)
+                            prev.editRoutine.customSets.A = [];
+                        //set to first
+                        x.scheme = Object.keys(prev.editRoutine.customSets)[0]
+                    }
                     else{
                         const hasCustom = Object.values(prev.editRoutine.info).some(i => {
                             //always jujmping through hoops for supersets
@@ -84,6 +90,15 @@ const ExerciseEditor = props => {
                         });
                         prev.editRoutine.customScheme = hasCustom;
                     }
+
+                    //the thing is, we need to add a new thing, similar to the way we had it in
+                    //5/3/1
+                    //so if it's custom, setInfo will be
+                    //{type: 'custom', scheme: '5/3/1', selector: 0}
+                    //but selector won't be available
+                    //but scheme will need to be selectable
+                    //it'll be null until we actually add rep schemes
+                    //so here we need to add one
 
 
                     if(value === 'Timed')
