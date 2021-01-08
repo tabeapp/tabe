@@ -14,10 +14,6 @@ const SupersetEditor = props => {
     //ugh this sucks
     const {name, info, deleteExercise} = props;
 
-    //
-    //if(name.includes('/'))
-        //return <SupersetEditor {...props}/>
-
     const subExercises = name.split('/');
 
     //i guess the width is 400?

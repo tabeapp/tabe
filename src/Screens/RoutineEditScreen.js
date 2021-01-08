@@ -10,6 +10,7 @@ import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { FULL_COPY } from "../Utils/UtilFunctions";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -170,19 +171,9 @@ const RoutineEditScreen = props => {
 
                         //nah we're missing some things
                         //or literally just copy the state, right?
-                        const newRoutine = {
-                            title: title,
-                            time: time,
-                            info: {...info},
-                            workouts: {...workouts},
-                            days: [...days],
-                            customSets: [...customSets],
-                            //current day
-                            currentDay: currentDay || 0,//this shouldn't chnage if we're copying a routine
-                            nextWorkoutTime: nextWorkoutTime || new Date().getTime()
-                            //next workout time
-                        };
-
+                        const newRoutine = FULL_COPY(routine);
+                        newRoutine.currentDay = currentDay || 0;
+                        newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
 
                         routinesDispatch(prev => {
                             //if there is no current, set this to current

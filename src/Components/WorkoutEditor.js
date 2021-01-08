@@ -61,13 +61,6 @@ const WorkoutEditor = props => {
 
                             return prev;
                         })
-                        /*props.editWorkouts(prev => {
-                            const next = {...prev};
-                            delete next[props.name];
-                            //should we delete all exercises that don't exist in other workotus?
-                            //debate
-                            return next;
-                        });*/
 
                     }}>
                         <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
@@ -110,7 +103,6 @@ const WorkoutEditor = props => {
             <TouchableOpacity style={styles.configButton} onPress={() => {
                 //append a new obj
                 //works, but ideally I'd like A B C instead of 1 2 3
-                //setWorkouts({...workouts, [Object.keys(workouts).length+1]: []});
                 //yeah maybe these should be separate components...
                 setModal(true);
             }}>

@@ -121,7 +121,6 @@ const RepSchemeEditor = props => {
                 <TouchableOpacity style={styles.configButton} onPress={() => {
                     //append a new obj
                     //works, but ideally I'd like A B C instead of 1 2 3
-                    //setWorkouts({...workouts, [Object.keys(workouts).length+1]: []});
                     props.edit(prev => {
                         if(prev.length === 0)
                             return [...prev, []]
