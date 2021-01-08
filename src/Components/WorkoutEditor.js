@@ -4,6 +4,7 @@ import ExercisePicker from './ExercisePicker';
 import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
+import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from "../Constants/DefaultExInfo";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -13,8 +14,9 @@ const SupersetSelector = props => {
 
     return (
         <TouchableOpacity
-            style={{backgroundColor: 'gray', borderWidth: 1, borderColor: 'black', flex: 1, justifyContent: 'center', alignItems: 'center'}}
-            onPress={() => setModal(true)}>
+            style={{flex: 1, backgroundColor: 'gray', borderWidth: 1, borderColor: 'black', justifyContent: 'center', alignItems: 'center'}}
+            onPress={() => setModal(true)}
+        >
             <Words>Add Exercise</Words>
             <ExercisePicker visible={modal} handleSelection={props.onSelect} close={() => setModal(false)}/>
         </TouchableOpacity>
@@ -70,20 +72,22 @@ const WorkoutEditor = props => {
             {
                 props.exercises.map((ex, index) =>{
                     //we actually need as many superset editors as there are exerices
-                    return <View key={ex} style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    return <View key={ex} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         {
                             Array.isArray(ex) &&
-                            <View style={{ height: 30, flexDirection: 'row' }}>{
+                            <View style={{ flex: 1, display: 'flex', height: 30, flexDirection: 'row' }}>{
                                 ex.map((e, index2) => {
                                     if (e === '')
                                         return <SupersetSelector
                                             onSelect={val => props.editSuperset(val, index, index2)} />
-                                    return <Words style={{
-                                        borderWidth: 1,
-                                        borderColor: 'black',
-                                        backgroundColor: 'gray',
-                                        flex: 1
-                                    }}>{e}</Words>
+                                    else{
+                                        return <Words style={{
+                                            borderWidth: 1,
+                                            borderColor: 'black',
+                                            backgroundColor: 'gray',
+                                            flex: 1
+                                        }}>{e}</Words>
+                                    }
                                 })
                             }</View>
                         }

@@ -236,7 +236,7 @@ const RoutineEditScreen = props => {
                                         //SUPASET TS TS TS TS
 
                                         routinesDispatch(prev => {
-                                            let x = prev.editRoutine[k][exerciseIndex];
+                                            let x = prev.editRoutine.workouts[k][exerciseIndex];
                                             x[supersetIndex] = val;
 
                                             if(x.every(i => i !== ''))
