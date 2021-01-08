@@ -135,10 +135,10 @@ const RoutineEditScreen = props => {
             if(k.includes('/'))
                 removal = k.split('/');//that might do it, who knows
 
-            //so stringify will make sure we compare array correctly
-            prev.editRoutine.workouts = prev.editRoutine.workouts.map(w => {
-                w.filter(e => JSON.stringify(e) !== JSON.stringify(removal))
-            })
+            Object.keys(prev.editRoutine.workouts).forEach(w => {
+                prev.editRoutine.workouts[w] = prev.editRoutine.workouts[w]
+                    .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
+            });
 
             return prev;
         });
