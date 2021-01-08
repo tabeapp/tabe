@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import {Text, View} from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import RoutinesContext from "../Contexts/RoutinesContext";
+import {Text, View} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import RoutinesContext from '../Contexts/RoutinesContext';
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
@@ -20,7 +20,6 @@ const DaysEditor = props => {
             }
             {
                 //you have no idea how complex this is about to get
-                //Array.from(new Array(props.time), () => null).map((d,index) =>
                 props.days.map((d, index) => {
                     return <View key={index} style={{
                         justifyContent: 'center',

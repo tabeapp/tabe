@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Words from "./Words";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import RoutinesContext from "../Contexts/RoutinesContext";
+import { FULL_COPY } from "../Utils/UtilFunctions";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -14,6 +16,9 @@ for(let i = 0; i <= 100; i+= 5)
 
 
 const RepSchemeEditor = props => {
+    //eventually you'll need to pass down the name of the rep scheme for multiple
+
+    const {routinesDispatch} = useContext(RoutinesContext);
     //i guess only one custom scheme per routine
     //otherwise how fucking complex is your workout?
 
@@ -92,7 +97,15 @@ const RepSchemeEditor = props => {
                                         <TouchableOpacity
                                             style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                                             onPress={() =>
-                                                props.edit(prev => {
+                                                routinesDispatch(prev => {
+                                                    const x = prev.editRoutine.customSets[weekIndex];
+                                                    if(x.length === 0)
+                                                        x.push({reps:5, '%': 100});
+                                                    else
+                                                        x.push({...x[x.length-1]});
+                                                    return prev;
+                                                })
+                                                /*props.edit(prev => {
                                                     const next = [...prev];
                                                     //weekIndex available
                                                     if(next[weekIndex].length === 0)
@@ -103,7 +116,7 @@ const RepSchemeEditor = props => {
                                                     return next;
 
 
-                                                })
+                                                })*/
 
                                             }
                                         >
@@ -119,14 +132,22 @@ const RepSchemeEditor = props => {
 
                 }
                 <TouchableOpacity style={styles.configButton} onPress={() => {
+                    routinesDispatch(prev => {
+                        const x = prev.editRoutine.customSets;
+                        if(x.length === 0)
+                            x.push([]);
+                        else
+                            x.push(FULL_COPY(x[x.length-1]));
+                        return prev;
+                    });
                     //append a new obj
                     //works, but ideally I'd like A B C instead of 1 2 3
-                    props.edit(prev => {
+                    /*props.edit(prev => {
                         if(prev.length === 0)
                             return [...prev, []]
                         else//need to do an extra deep copy
                             return [...prev, JSON.parse(JSON.stringify(prev[prev.length-1]))]
-                    })
+                    })*/
                 }}>
                     <Text style={{fontSize: 30}}>Add Week(?)</Text>
                 </TouchableOpacity>
