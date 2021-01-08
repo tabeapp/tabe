@@ -284,7 +284,7 @@ const RoutineEditScreen = props => {
 
                     {
                         customScheme &&
-                        <RepSchemeEditor sets={customSets} edit={v => rd('customSets', v)}/>
+                        <RepSchemeEditor sets={customSets} />
                     }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>

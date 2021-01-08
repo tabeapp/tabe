@@ -38,12 +38,11 @@ const RepSchemeEditor = props => {
                                         <TouchableOpacity
                                             style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                                             onPress={() => {
-                                                props.edit(prev => {
-                                                    const next = [...prev];
-                                                    next[weekIndex].splice(next[weekIndex].length-1)
-                                                    return next;
+                                                routinesDispatch(prev => {
+                                                    const x = prev.editRoutine.customSets[weekIndex];
+                                                    x.splice(x.length-1);
+                                                    return prev;
                                                 })
-
                                             }}>
                                             <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Text>
                                         </TouchableOpacity>
@@ -57,11 +56,10 @@ const RepSchemeEditor = props => {
                                                             selectedValue={v.reps}
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                                                             onValueChange={value => {
-                                                                props.edit(prev => {
-                                                                    const next = [...prev];
-                                                                    next[weekIndex][setIndex].reps = value;
-                                                                    return next;
-                                                                })
+                                                                routinesDispatch({
+                                                                    path: `editRoutine.customSets.${weekIndex}.${setIndex}.reps`,
+                                                                    value: value
+                                                                });
                                                             }}
                                                         >
                                                             {
@@ -77,11 +75,10 @@ const RepSchemeEditor = props => {
                                                             selectedValue={v['%']}
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                                                             onValueChange={value => {
-                                                                props.edit(prev => {
-                                                                    const next = [...prev];
-                                                                    next[weekIndex][setIndex]['%'] = value;
-                                                                    return next;
-                                                                })
+                                                                routinesDispatch({
+                                                                    path: `editRoutine.customSets.${weekIndex}.${setIndex}.%`,
+                                                                    value: value
+                                                                });
                                                             }}
                                                         >
                                                             {
@@ -105,19 +102,6 @@ const RepSchemeEditor = props => {
                                                         x.push({...x[x.length-1]});
                                                     return prev;
                                                 })
-                                                /*props.edit(prev => {
-                                                    const next = [...prev];
-                                                    //weekIndex available
-                                                    if(next[weekIndex].length === 0)
-                                                        next[weekIndex] = [{reps:5, '%': 100}];
-                                                    else//im just worried this doesn't actualy copy the object
-                                                        next[weekIndex].push({...next[weekIndex][next[weekIndex].length-1]});
-
-                                                    return next;
-
-
-                                                })*/
-
                                             }
                                         >
                                             <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
@@ -141,13 +125,6 @@ const RepSchemeEditor = props => {
                         return prev;
                     });
                     //append a new obj
-                    //works, but ideally I'd like A B C instead of 1 2 3
-                    /*props.edit(prev => {
-                        if(prev.length === 0)
-                            return [...prev, []]
-                        else//need to do an extra deep copy
-                            return [...prev, JSON.parse(JSON.stringify(prev[prev.length-1]))]
-                    })*/
                 }}>
                     <Text style={{fontSize: 30}}>Add Week(?)</Text>
                 </TouchableOpacity>
