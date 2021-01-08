@@ -26,7 +26,7 @@ const WorkoutEditor = props => {
     //const routine = useContext(RoutinesContext).routines.editRoutine;
     const {routinesDispatch} = useContext(RoutinesContext);
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
-    const {name} = props;//this is like a key btw
+    const {name, deleteExercise} = props;//this is like a key btw
 
 
     //wtf is this 415 number supposed to be?
@@ -93,7 +93,7 @@ const WorkoutEditor = props => {
                         }
                         <TouchableOpacity onPress={() => {
                             //this should do the same thing as pressing the X on an exercise
-                            props.deleteExercise(ex);
+                            deleteExercise(ex);
                         }}>
                             <Text><Ionicons color={'gray'} name={'close'} size={30}/></Text>
                         </TouchableOpacity>

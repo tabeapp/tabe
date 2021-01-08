@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import Words from "./Words";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import RoutinesContext from "../Contexts/RoutinesContext";
-import { FULL_COPY } from "../Utils/UtilFunctions";
+import Words from './Words';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import RoutinesContext from '../Contexts/RoutinesContext';
+import { FULL_COPY } from '../Utils/UtilFunctions';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -13,7 +13,6 @@ for(let i = 0; i <= 50; i++)
 const percents = [];
 for(let i = 0; i <= 100; i+= 5)
     percents.push(i)
-
 
 const RepSchemeEditor = props => {
     //eventually you'll need to pass down the name of the rep scheme for multiple
