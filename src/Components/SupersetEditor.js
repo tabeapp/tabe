@@ -1,19 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
     reps.push(i)
 
 //yeah this is a copy of exercvise editor
-//so we still have access to props.editInfo
 const SupersetEditor = props => {
     //ugh this sucks
     const {name, info, deleteExercise} = props;
 
+    const {routinesDispatch} = useContext(RoutinesContext);
+    const rd = (path, value) => {
+        routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
+    };
     const subExercises = name.split('/');
 
     //i guess the width is 400?
@@ -58,28 +62,17 @@ const SupersetEditor = props => {
                                 selectedValue={subInfo.setInfo.type}
                                 itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
                                 onValueChange={value => {
-                                    props.editInfo(prev => {
-                                        //yeah this is very important
-                                        const next = [ ...prev[props.name] ];
-                                        next[ssi].setInfo.type = value;
-
-                                        //since by default we didnt' have timed sets, it was ok to acess setInfo.minutes and get 0 back
-                                        //now we need to convert the sets from timed to normal whenever we set this shit
-                                        //dont forget to add this shit to exercise editor
+                                    routinesDispatch(prev => {
+                                        const x = prev.editRoutine.info[name][ssi].setInfo;
+                                        x.type = value;
                                         if(value === 'Timed'){
-                                            //but now we need to initalize it it if it's not there
-                                            //better yet, just use sets but store {minute: 0, seconds: 0} objects in it
-                                            //if(!next[ssi].setInfo.sets.seconds)
-                                                next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => ({minutes: 1, seconds: 0}));
+                                            x.sets = x.sets.map(_ => ({minutes: 1, seconds: 0}))
                                         }
-                                        else if(value === 'Normal'){
-                                            //if(!next[ssi].setInfo.sets.seconds)
-                                                next[ssi].setInfo.sets = next[ssi].setInfo.sets.map(_ => 5);
-                                        }
+                                        else if(value === 'Normal')
+                                            x.sets = x.sets.map(_ => 5);
 
-
-                                        return { ...prev, [props.name]: next };
-                                    });
+                                        return prev;
+                                    })
                                 }}
                             >
                                 {
@@ -125,15 +118,13 @@ const SupersetEditor = props => {
                         borderColor: 'red'
                     }}
                     onPress={() => {
-                        //k is replaced by props.name
-                        props.editInfo(prev => {
-                            const next = [ ...prev[props.name] ];
-                            //needs to be for all of next
-                            next.forEach(sub =>
+                        routinesDispatch(prev => {
+                            const x = prev.editRoutine.info[name];
+                            x.forEach(sub =>
                                 sub.setInfo.sets.splice(sub.setInfo.sets.length-1)
                             );
-                            //next[ssi].setInfo.sets.splice(next[ssi].setInfo.sets.length - 1);
-                            return { ...prev, [props.name]: next };
+
+                            return prev;
                         });
 
                     }}>
@@ -159,22 +150,22 @@ const SupersetEditor = props => {
                                                     selectedValue={v}
                                                     itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
                                                     onValueChange={(value) => {
+                                                        routinesDispatch(prev => {
+                                                            const x = prev.editRoutine.info[name][ssi].setInfo.sets;
+                                                            for(let i = index; i < x.length; i++)
+                                                                x[i] = value;
+                                                            return prev;
+                                                        })
                                                         //how the fuck
                                                         //would defeinitely be a good idea to set all following sets to current rep
-                                                        props.editInfo(prev => {
-                                                            const next = [ ...prev[props.name] ];
-                                                            next[ssi].setInfo.sets[index] = value;
-                                                            for (let i = index; i < next[ssi].setInfo.sets.length; i++)
-                                                                next[ssi].setInfo.sets[i] = value;
-                                                            return { ...prev, [props.name]: next };
-                                                        });
                                                     }}
                                                 >
                                                     {
                                                         reps.map(item =>
-                                                            <Picker.Item key={item} color={'white'} label={'' + item}
-                                                                         value={item}
-                                                                         style={{}} />)
+                                                            <Picker.Item
+                                                                key={item} color={'white'} label={'' + item}
+                                                                value={item} style={{}}
+                                                            />)
                                                     }
                                                 </Picker>
                                             </View>
@@ -191,19 +182,11 @@ const SupersetEditor = props => {
                                     subInfo.setInfo.sets.map((v, index) =>
                                         <View>
                                             <NumericSelector onChange={(value) => {
-                                                props.editInfo(prev => {
-                                                    const next = [...prev[props.name]];
-                                                    next[ssi].setInfo.sets[index].minutes = value;
-                                                    return { ...prev, [props.name]: next };
-                                                });
+                                                rd(ssi + '.setInfo.sets.' + index + '.minutes', value);
                                             }} numInfo={{ def: subInfo.setInfo.sets[index].minutes, min: 0, max: 59, increment: 1 }} />
                                             <Words>:</Words>
                                             <NumericSelector onChange={(value) => {
-                                                props.editInfo(prev => {
-                                                    const next = [...prev[props.name]];
-                                                    next[ssi].setInfo.sets[index].seconds = value;
-                                                    return { ...prev, [props.name]: next };
-                                                });
+                                                rd(ssi + '.setInfo.sets.' + index + '.seconds', value);
 
                                             }} numInfo={{ def: subInfo.setInfo.sets[index].seconds, min: 0, max: 55, increment: 5 }} />
                                         </View>
@@ -227,24 +210,30 @@ const SupersetEditor = props => {
                         borderColor: 'green'
                     }}
                     onPress={() => {
-                        props.editInfo(prev => {
-                            const next = [ ...prev[props.name] ];
-                            next.forEach(sub => {
-                                if(sub.setInfo.sets.length === 0){
+                        routinesDispatch(prev => {
+                            const x = prev.editRoutine.info[name];
+                            x.forEach(sub => {
+                                const y = sub.setInfo.sets;
+                                if(y.length === 0){
                                     //wow this is dumb
                                     if(sub.setInfo.type === 'Normal')
-                                        sub.setInfo.sets.push(5);
+                                        y.push(5);
                                     else if(sub.setInfo.type === 'Timed')
-                                        sub.setInfo.sets.push({minutes: 1, seconds: 0});
-
+                                        y.push({minutes: 1, seconds: 0});
                                 }
 
-                                else if (sub.setInfo.sets.length <= 12)
-                                    sub.setInfo.sets.push(sub.setInfo.sets[sub.setInfo.sets.length - 1])
+                                else if (y.length <= 12){
+                                    if (sub.setInfo.type === 'Normal')
+                                        y.push(y[y.length - 1]);
+                                    else if (sub.setInfo.type === 'Timed')
+                                        y.push({...y[y.length - 1]});
+                                }
+
                             })
-                            return { ...prev, [props.name]: next };
+                            return prev;
                         })
-                    }}>
+                    }}
+                >
                     <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
                 </TouchableOpacity>
             </View>

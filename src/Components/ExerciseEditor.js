@@ -29,12 +29,13 @@ const ExerciseEditor = props => {
                 else if (x.type === 'Timed')
                     x.sets.push({ minutes: 1, seconds: 0 });
             }
-            else if(x.sets.length <= 12)
+            else if(x.sets.length <= 12){
                 //this doesn't seem to copy 5's
                 if (x.type === 'Normal')
                     x.sets.push(x.sets[x.sets.length-1]);
                 else if (x.type === 'Timed')
                     x.sets.push({...x.sets[x.sets.length-1]})
+            }
             return prev;
         });
     };
