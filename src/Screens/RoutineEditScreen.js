@@ -288,10 +288,7 @@ const RoutineEditScreen = props => {
                     }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>
-                    <DaysEditor workouts={Object.keys(workouts)} days={days} editDays={(day, val) =>
-                        //ok now i see how a path array could be nice
-                        routinesDispatch({path: 'editRoutine.days.' + day, value: val})
-                    }/>
+                    <DaysEditor workouts={Object.keys(workouts)} days={days}/>
 
                     <View style={{height: 25/*for the red button*/}}/>
                 </ScrollView>

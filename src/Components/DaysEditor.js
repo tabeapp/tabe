@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import { StyleSheet, Animated, PanResponder, ScrollView, Text, View, TouchableOpacity } from "react-native";
+import React, {useContext} from 'react';
+import {Text, View} from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 const DaysEditor = props => {
-    const {editDays} = props;
+    const {routinesDispatch} = useContext(RoutinesContext);
 
-    const temp = ['R', ...props.workouts]
+    const temp = ['R', ...props.workouts];
 
     return (<>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>
@@ -33,9 +34,9 @@ const DaysEditor = props => {
                             style={{ width: 50, height: 50 }}
                             selectedValue={d}
                             itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
-                            onValueChange={(value) => {
-                                editDays(index, value);
-                            }}
+                            onValueChange={(value) =>
+                                routinesDispatch({path: 'editRoutine.days.' + index, value: value})
+                            }
                         >
                             {
                                 temp.map(item =>
