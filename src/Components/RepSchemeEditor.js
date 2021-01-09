@@ -5,14 +5,18 @@ import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 
+const NEW_PR = '+5';
+
 const reps = [];
 for(let i = 0; i <= 50; i++)
     reps.push(i)
 
 //yeah maybe I should make another compoenent for htis
 const percents = [];
-for(let i = 0; i <= 100; i+= 5)
+for(let i = 0; i <= 100; i++)
     percents.push(i)
+//
+percents.push(NEW_PR);
 
 const RepSchemeEditor = props => {
     //eventually you'll need to pass down the name of the rep scheme for multiple
@@ -29,7 +33,7 @@ const RepSchemeEditor = props => {
                 <Words>Rep Scheme {name}</Words>
                 {
                     props.sets.map((week, weekIndex) =>
-                        <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <View key={weekIndex} style={{alignItems: 'center', flexDirection: 'row'}}>
                             <Words>{weekIndex+1}:</Words>
                             <View style={{flex: 1, height: 60, backgroundColor: 'transparent', borderRadius: 20}}>
                                 {
@@ -38,7 +42,7 @@ const RepSchemeEditor = props => {
                                             style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                                             onPress={() => {
                                                 routinesDispatch(prev => {
-                                                    const x = prev.editRoutine.customSets[weekIndex];
+                                                    const x = prev.editRoutine.customSets[name][weekIndex];
                                                     x.splice(x.length-1);
                                                     return prev;
                                                 })
@@ -56,7 +60,7 @@ const RepSchemeEditor = props => {
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                                                             onValueChange={value => {
                                                                 routinesDispatch({
-                                                                    path: `editRoutine.customSets.${weekIndex}.${setIndex}.reps`,
+                                                                    path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
                                                                     value: value
                                                                 });
                                                             }}
@@ -68,14 +72,14 @@ const RepSchemeEditor = props => {
                                                         </Picker>
                                                     </View>
                                                     <Words>@</Words>
-                                                    <View key={setIndex} style={styles.circle}>
+                                                    <View key={setIndex+'f'} style={styles.circle}>
                                                         <Picker
                                                             style={{width: 50, height: 50}}
                                                             selectedValue={v['%']}
                                                             itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
                                                             onValueChange={value => {
                                                                 routinesDispatch({
-                                                                    path: `editRoutine.customSets.${weekIndex}.${setIndex}.%`,
+                                                                    path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
                                                                     value: value
                                                                 });
                                                             }}
@@ -94,7 +98,7 @@ const RepSchemeEditor = props => {
                                             style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                                             onPress={() =>
                                                 routinesDispatch(prev => {
-                                                    const x = prev.editRoutine.customSets[weekIndex];
+                                                    const x = prev.editRoutine.customSets[name][weekIndex];
                                                     if(x.length === 0)
                                                         x.push({reps:5, '%': 100});
                                                     else
@@ -116,7 +120,7 @@ const RepSchemeEditor = props => {
                 }
                 <TouchableOpacity style={styles.configButton} onPress={() => {
                     routinesDispatch(prev => {
-                        const x = prev.editRoutine.customSets;
+                        const x = prev.editRoutine.customSets[name];
                         if(x.length === 0)
                             x.push([]);
                         else
@@ -125,7 +129,7 @@ const RepSchemeEditor = props => {
                     });
                     //append a new obj
                 }}>
-                    <Text style={{fontSize: 30}}>Add Week(?)</Text>
+                    <Text style={{fontSize: 30}}>Add Week?Cycle?idk</Text>
                 </TouchableOpacity>
             </View>
         </>
