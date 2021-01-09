@@ -1,12 +1,10 @@
-import React, { useContext, useState } from "react";
-import { TouchableOpacity, Modal, Text, View } from 'react-native';
-import { EXERCISES } from '../Constants/Exercises';
-import ProgressContext from "../Contexts/ProgressContext";
+import React, { useState } from 'react';
+import { TouchableOpacity, Modal, Text} from 'react-native';
+import { CATEGORIES, EX_INFO } from '../Constants/DefaultExInfo';
 
 //make it possible to cancel
 const ExercisePicker = props => {
     //just remember to fix this in CustomExerciseCard, just pass onSelect = {addExercise}
-    let {addExercise} = useContext(ProgressContext);
     //props.visible
     const {handleSelection} = props;
 
@@ -14,25 +12,26 @@ const ExercisePicker = props => {
 
     let list;
     if(category === ''){
-        list = Object.keys(EXERCISES).map(cat =>
-                <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
-                    <Text>{cat}</Text>
-                </TouchableOpacity>
-        )
-    } else {
-        list = EXERCISES[category].map(ex =>
-            <TouchableOpacity
-                onPress={() => {
-                    setCategory('');
-                    props.close();
-                    //addExercise(ex);
-                    handleSelection(ex);
-                }}
-                key={ex} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
-
-                <Text>{ex}</Text>
+        list = CATEGORIES.map(cat =>
+            <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
+                <Text>{cat}</Text>
             </TouchableOpacity>
         )
+    } else {
+        list = Object.entries(EX_INFO).filter(([k,v]) => v.categories.includes(category))
+            .map(([k]) =>
+                <TouchableOpacity
+                    onPress={() => {
+                        setCategory('');
+                        props.close();
+                        //addExercise(ex);
+                        handleSelection(k);
+                    }}
+                    key={k} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
+
+                    <Text>{k}</Text>
+                </TouchableOpacity>
+            )
     }
 
     return (

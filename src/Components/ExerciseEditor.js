@@ -14,7 +14,7 @@ for(let i = 0; i <= 50; i++)
 
 const ExerciseEditor = props => {
     //ugh this sucks
-    const {name, info, deleteExercise} = props;
+    const {name, info} = props;
 
     const {routinesDispatch} = useContext(RoutinesContext);
     const {routines} = useContext(RoutinesContext);

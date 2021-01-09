@@ -22,7 +22,7 @@
 //'Squat': {'weight': 125, 'barbell': true', 'category': 'legs'}
 //the ultimate database
 
-const CATEGORIES = [
+export const CATEGORIES = [
     'Arms',
     'Shoulders',
     'Chest',
@@ -35,7 +35,7 @@ const CATEGORIES = [
 
 
 
-const EX_INFO = {
+export const EX_INFO = {
 
     //these are 5rm from symmetric strength for 198lb male
     'Squat': {weight:125, barbell: true, categories: ['Legs']},
