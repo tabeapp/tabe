@@ -15,6 +15,7 @@ const ExerciseEditor = props => {
     const {name, info, deleteExercise} = props;
 
     const {routinesDispatch} = useContext(RoutinesContext);
+    const {routines} = useContext(RoutinesContext);
     const rd = (path, value) => {
         routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
     };
@@ -179,7 +180,24 @@ const ExerciseEditor = props => {
         }
         {
             info.setInfo.type === 'Custom' &&
-            <View></View>
+            //finally, the selector, somethign unique to custom
+            <View>
+                <Words>Select Custom Scheme:</Words>
+                <Picker
+                    style={{width: 100, height: 50}}
+                    selectedValue={info.setInfo.scheme}
+                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                    onValueChange={value => {
+                        rd('setInfo.scheme', value);
+                    }}
+                >
+                    {
+                        Object.keys(routines.editRoutine.customSets).map(item =>
+                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                    }
+                </Picker>
+
+            </View>
         }
         {
             info.setInfo.type === 'Sum' &&

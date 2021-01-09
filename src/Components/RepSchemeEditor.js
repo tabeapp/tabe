@@ -18,7 +18,7 @@ const RepSchemeEditor = props => {
     //eventually you'll need to pass down the name of the rep scheme for multiple
 
     const {routinesDispatch} = useContext(RoutinesContext);
-    const {name} = props;
+    const {name} = props;//need to use name
     //i guess only one custom scheme per routine
     //otherwise how fucking complex is your workout?
 
