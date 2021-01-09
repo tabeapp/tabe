@@ -14,14 +14,6 @@
     }
 }
 */
-//for every possible workout
-
-//i feel like we should have more info on these guys
-//and the modal should read from here
-//something like
-//'Squat': {'weight': 125, 'barbell': true', 'category': 'legs'}
-//the ultimate database
-
 export const CATEGORIES = [
     'Arms',
     'Shoulders',
@@ -32,78 +24,67 @@ export const CATEGORIES = [
     'Core',
 ];
 
-
-
-
 export const EX_INFO = {
-
     //these are 5rm from symmetric strength for 198lb male
     'Squat': {weight:125, barbell: true, categories: ['Legs']},
+    'Bench': {weight:90, barbell: true, categories: ['Chest', 'Arms']},
+    'Deadlift': {weight:140, barbell: true, categories: ['Legs', 'Back']},
+    'Press': {weight:60, barbell: true, categories: ['Shoulders', 'Arms']},
+    'Power Clean': {weight:80, barbell: true, categories: ['Back', 'Legs']},
+    'Row': {weight:85, barbell: true, categories: ['Back', 'Arms']},
+
+    'Sumo Deadlift': {weight:140, barbell: true, categories: ['Legs', 'Back']},
+    'Incline Bench': {weight:75, barbell: true, categories: ['Chest', 'Arms']},
+    'Dip': {weight:0, barbell: false, categories: ['Arms', 'Bodyweight']},
+    'Push Press': {weight:80, barbell: true, categories: ['Shoulders', 'Arms']},
+    'Snatch Press': {weight:50, barbell: true, categories: ['Shoulders', 'Arms']},
+
     'Front Squats': {weight:100, barbell: true, categories: ['Legs']},
-    'Deadlift': {weight:140, barbell: true, categories: ['Legs']},
-    'Bench': {weight:90, barbell: true, categories: ['Legs']},
-    'Incline Bench': {weight:75, barbell: true, categories: ['Legs']},
-    'Dip': {weight:-20, barbell: false, categories: ['Legs']},
-    'Press': {weight:60, barbell: true, categories: ['Legs']},
-    'Row': {weight:75, barbell: true, categories: ['Legs']},
-    'Power Clean': {weight:80, barbell: true, categories: ['Legs']},
+    'Chin Up': {weight:0, barbell: false, categories: ['Arms', 'Bodyweight']},
+    'Pull up': {weight:0, barbell: false, categories: ['Arms', 'Bodyweight']},
+    'Push up': {weight:0, barbell: false, categories: ['Arms', 'Bodyweight']},
 
     //these are entirely made up
-    'Tricep Pushdown': {weight:30, barbell: false, categories: ['Legs']},
-    'Overhead Tricep Extension': {weight:30, barbell: false, categories: ['Legs']},
-    'BB Curl': {weight:45, barbell: true, categories: ['Legs']},
-    'Incline Curl': {weight:15, barbell: false, categories: ['Legs']},
-    'Skull Crushers': {weight:45, barbell: true, categories: ['Legs']},
-    'Wrist Curls': {weight:10, barbell: false, categories: ['Legs']},
-    'Concentration Curl': {weight:25, barbell: false, categories: ['Legs']},
-    'DB Curl': {weight:20, barbell: false, categories: ['Legs']},
-    'Hammer Curl': {weight:20, barbell: false, categories: ['Legs']},
-    'DB Press': {weight:40, barbell: false, categories: ['Legs']},
-    'Clean and Press': {weight:115, barbell: true, categories: ['Legs']},
-    'Full Frontal Raise': {weight:10, barbell: false, categories: ['Legs']},
-    'Lateral Raise': {weight:10, barbell: false, categories: ['Legs']},
-    'Upright Row': {weight:60, barbell: false, categories: ['Legs']},
-    'Arnold Press': {weight:35, barbell: false, categories: ['Legs']},
-    'Behind the Neck Press': {weight:60, barbell: true, categories: ['Legs']},
-    'Rear Delt Flyes': {weight:25, barbell: false, categories: ['Legs']},
-    'DB Flyes': {weight:25, barbell: false, categories: ['Legs']},
-    'Romanian Deadlift': {weight:95, barbell: true, categories: ['Legs']},
+    'Tricep Pushdown': {weight:30, barbell: false, categories: ['Arms']},
+    'Overhead Extension': {weight:30, barbell: false, categories: ['Arms']},
+    'BB Curl': {weight:45, barbell: true, categories: ['Arms']},
+    'Incline Curl': {weight:15, barbell: false, categories: ['Arms']},
+    'Skull Crushers': {weight:45, barbell: true, categories: ['Arms']},
+    'Wrist Curls': {weight:10, barbell: false, categories: ['Arms']},
+    'Concentration Curl': {weight:25, barbell: false, categories: ['Arms']},
+    'DB Curl': {weight:20, barbell: false, categories: ['Arms']},
+    'Hammer Curl': {weight:20, barbell: false, categories: ['Arms']},
+    'DB Press': {weight:40, barbell: false, categories: ['Shoulders']},
+    'Clean and Press': {weight:115, barbell: true, categories: ['Back', 'Shoulders']},
+    'Full Frontal Raise': {weight:10, barbell: false, categories: ['Shoulders']},
+    'Lateral Raise': {weight:10, barbell: false, categories: ['Shoulders']},
+    'Upright Row': {weight:60, barbell: false, categories: ['Shoulders']},
+    'Arnold Press': {weight:35, barbell: false, categories: ['Shoulders']},
+    'Behind the Neck Press': {weight:60, barbell: true, categories: ['Shoulders']},
+    'Rear Delt Flyes': {weight:25, barbell: false, categories: ['Back']},
+    'DB Flyes': {weight:25, barbell: false, categories: ['Chest']},
+    'Romanian Deadlift': {weight:95, barbell: true, categories: ['Back', 'Legs']},
     'Good Morning': {weight:95, barbell: true, categories: ['Legs']},
     'Lunges': {weight:45, barbell: false, categories: ['Legs']},
     'Leg Press': {weight:135, barbell: false, categories: ['Legs']},
     'Leg Extension': {weight:65, barbell: false, categories: ['Legs']},
     'Leg Curl': {weight:65, barbell: false, categories: ['Legs']},
     'Calf Raise': {weight:95, barbell: true, categories: ['Legs']},
-    'DB Row': {weight:35, barbell: false, categories: ['Legs']},
-    'Lat Pulldown': {weight:70, barbell: false, categories: ['Legs']},
+    'DB Row': {weight:35, barbell: false, categories: ['Arms']},
+    'Lat Pulldown': {weight:70, barbell: false, categories: ['Back']},
     'Cable Row': {weight:70, barbell: false, categories: ['Legs']},
-    'Chin Up': {weight:0, barbell: false, categories: ['Legs']},
-    'Pull up': {weight:0, barbell: false, categories: ['Legs']},
-    'Leg Raises': {weight:0, barbell: false, categories: ['Legs']},
-    'Sit Ups': {weight:0, barbell: false, categories: ['Legs']},
-    'Cable Crunch': {weight:70, barbell: false, categories: ['Legs']},
-    'Back Ext': {weight:0, barbell: false, categories: ['Legs']},
-};
+    'Sit Ups': {weight:0, barbell: false, categories: ['Core']},
+    'Cable Crunch': {weight:70, barbell: false, categories: ['Core']},
+    'Back Ext': {weight:0, barbell: false, categories: ['Back']},
+    'Glute Bridge': {weight:0, barbell: false, categories: ['Legs']},
+    'Hip Thrust': {weight:45, barbell: true, categories: ['Legs']},
 
-const BARBELL = [
-    'Press',
-    'BB Curl',
-    'Skull Crushers',
-    'Clean and Press',
-    'Behind the Neck Press',
-    'Bench',
-    'Squat',
-    'Romanian Deadlift',
-    'Good Morning',
-    'Front Squats',
-    'Calf Raise',
-    'Deadlift',
-    'Row',
-    'Power Clean'
-];
+};
 
 export const DEFAULT_EX_INFO = ex => {
     //TODO you know, it would be a  good idea to test if it's a superset here
+    if(ex.contains('/'))
+        return DEFAULT_SUPERSET_INFO(ex.split('/'))
     //just in case someting like squat-b gets through
     ex = ex.split('-')[0];
 

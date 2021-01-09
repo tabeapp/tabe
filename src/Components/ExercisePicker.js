@@ -24,7 +24,6 @@ const ExercisePicker = props => {
                     onPress={() => {
                         setCategory('');
                         props.close();
-                        //addExercise(ex);
                         handleSelection(k);
                     }}
                     key={k} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
