@@ -43,8 +43,9 @@ const RoutineScreen = props => {
     //optimize this later once you figure out how to have multiple contexts
 
     const deleteRoutine = k => {
+        //should probably have a warning, lol
         routinesDispatch(prev => {
-            delete prev[k];
+            delete prev.routines[k];
             return prev;
         });
         //not a fan, but this should be a rare operation
