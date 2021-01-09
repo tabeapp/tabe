@@ -20,54 +20,69 @@
 //and the modal should read from here
 //something like
 //'Squat': {'weight': 125, 'barbell': true', 'category': 'legs'}
-const WEIGHTS = {
+//the ultimate database
+
+const CATEGORIES = [
+    'Arms',
+    'Shoulders',
+    'Chest',
+    'Legs',
+    'Back',
+    'Bodyweight',
+    'Core',
+];
+
+
+
+
+const EX_INFO = {
+
     //these are 5rm from symmetric strength for 198lb male
-    'Squat': 125,
-    'Front Squats': 100,
-    'Deadlift': 140,
-    'Bench': 90,
-    'Incline Bench': 75,
-    'Dip': -20,
-    'Press': 60,
-    'Row': 75,
-    'Power Clean': 80,
+    'Squat': {weight:125, barbell: true, categories: ['Legs']},
+    'Front Squats': {weight:100, barbell: true, categories: ['Legs']},
+    'Deadlift': {weight:140, barbell: true, categories: ['Legs']},
+    'Bench': {weight:90, barbell: true, categories: ['Legs']},
+    'Incline Bench': {weight:75, barbell: true, categories: ['Legs']},
+    'Dip': {weight:-20, barbell: false, categories: ['Legs']},
+    'Press': {weight:60, barbell: true, categories: ['Legs']},
+    'Row': {weight:75, barbell: true, categories: ['Legs']},
+    'Power Clean': {weight:80, barbell: true, categories: ['Legs']},
 
     //these are entirely made up
-    'Tricep Pushdown': 30,
-    'Overhead Tricep Extension': 30,
-    'BB Curl': 45,
-    'Incline Curl': 15,
-    'Skull Crushers': 45,
-    'Wrist Curls': 10,
-    'Concentration Curl': 25,
-    'DB Curl': 20,
-    'Hammer Curl': 20,
-    'DB Press': 40,
-    'Clean and Press': 115,
-    'Full Frontal Raise': 10,
-    'Lateral Raise': 10,
-    'Upright Row': 60,
-    'Arnold Press': 35,
-    'Behind the Neck Press': 60,
-    'Rear Delt Flyes': 25,
-    'DB Flyes': 25,
-    'Romanian Deadlift': 95,
-    'Good Morning': 95,
-    'Lunges': 45,
-    'Leg Press': 135,
-    'Leg Extension': 65,
-    'Leg Curl': 65,
-    'Calf Raise': 95,
-    'DB Row': 35,
-    'Lat Pulldown': 70,
-    'Cable Row': 70,
-    'Chin Up': 0,
-    'Pull up': 0,
-    'Leg Raises': 0,
-    'Sit Ups': 0,
-    'Cable Crunch': 70,
-    'Dips': 0,
-    'Back Ext': 0
+    'Tricep Pushdown': {weight:30, barbell: false, categories: ['Legs']},
+    'Overhead Tricep Extension': {weight:30, barbell: false, categories: ['Legs']},
+    'BB Curl': {weight:45, barbell: true, categories: ['Legs']},
+    'Incline Curl': {weight:15, barbell: false, categories: ['Legs']},
+    'Skull Crushers': {weight:45, barbell: true, categories: ['Legs']},
+    'Wrist Curls': {weight:10, barbell: false, categories: ['Legs']},
+    'Concentration Curl': {weight:25, barbell: false, categories: ['Legs']},
+    'DB Curl': {weight:20, barbell: false, categories: ['Legs']},
+    'Hammer Curl': {weight:20, barbell: false, categories: ['Legs']},
+    'DB Press': {weight:40, barbell: false, categories: ['Legs']},
+    'Clean and Press': {weight:115, barbell: true, categories: ['Legs']},
+    'Full Frontal Raise': {weight:10, barbell: false, categories: ['Legs']},
+    'Lateral Raise': {weight:10, barbell: false, categories: ['Legs']},
+    'Upright Row': {weight:60, barbell: false, categories: ['Legs']},
+    'Arnold Press': {weight:35, barbell: false, categories: ['Legs']},
+    'Behind the Neck Press': {weight:60, barbell: true, categories: ['Legs']},
+    'Rear Delt Flyes': {weight:25, barbell: false, categories: ['Legs']},
+    'DB Flyes': {weight:25, barbell: false, categories: ['Legs']},
+    'Romanian Deadlift': {weight:95, barbell: true, categories: ['Legs']},
+    'Good Morning': {weight:95, barbell: true, categories: ['Legs']},
+    'Lunges': {weight:45, barbell: false, categories: ['Legs']},
+    'Leg Press': {weight:135, barbell: false, categories: ['Legs']},
+    'Leg Extension': {weight:65, barbell: false, categories: ['Legs']},
+    'Leg Curl': {weight:65, barbell: false, categories: ['Legs']},
+    'Calf Raise': {weight:95, barbell: true, categories: ['Legs']},
+    'DB Row': {weight:35, barbell: false, categories: ['Legs']},
+    'Lat Pulldown': {weight:70, barbell: false, categories: ['Legs']},
+    'Cable Row': {weight:70, barbell: false, categories: ['Legs']},
+    'Chin Up': {weight:0, barbell: false, categories: ['Legs']},
+    'Pull up': {weight:0, barbell: false, categories: ['Legs']},
+    'Leg Raises': {weight:0, barbell: false, categories: ['Legs']},
+    'Sit Ups': {weight:0, barbell: false, categories: ['Legs']},
+    'Cable Crunch': {weight:70, barbell: false, categories: ['Legs']},
+    'Back Ext': {weight:0, barbell: false, categories: ['Legs']},
 };
 
 const BARBELL = [
@@ -92,9 +107,11 @@ export const DEFAULT_EX_INFO = ex => {
     //just in case someting like squat-b gets through
     ex = ex.split('-')[0];
 
+    const info = EX_INFO[ex];
+
     return {
-        current: WEIGHTS[ex],
-        barbell: BARBELL.includes(ex),
+        current: info.weight,
+        barbell: info.barbell,
         amrap: false,
         //bit aggressive, but whatever, you can change it
         progress:{

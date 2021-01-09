@@ -8,7 +8,7 @@ import RoutinesContext from "../Contexts/RoutinesContext";
 
 const FAILURE = 'F';
 
-const reps = ['F'];
+const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
     reps.push(i)
 

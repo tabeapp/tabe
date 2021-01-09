@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 
-const NEW_PR = '+5';
+const NEW_PR = 'PR';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
