@@ -153,9 +153,17 @@ const RoutineEditScreen = props => {
     //this takes fucking forever
     //you're not fucking me up though
     //why the fuck is this one fine while the others go crazy
+    //useeffects still coming back to haunt me
     useEffect(() => {
-        routinesDispatch({path: 'editRoutine.days', value:
-                Array.from(new Array(time), () => 'R')
+        routinesDispatch(prev => {
+            const x = prev.editRoutine.days;
+            if(time <= x.length)
+                x.splice(time);
+            else{
+                for(let i = 0; i < time-x.length;i++)
+                    x.push('R');
+            }
+            return prev
         });
     }, [time]);
 
