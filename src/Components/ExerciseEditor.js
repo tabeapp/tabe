@@ -84,6 +84,8 @@ const ExerciseEditor = props => {
                             prev.editRoutine.customSets.A = [];
                         //set to first
                         x.scheme = Object.keys(prev.editRoutine.customSets)[0];
+                        //can't edit this, this is just for later when we actually use it to generate workouts
+                        x.selector = 0;
                     }
                     else{
                         const hasCustom = Object.values(prev.editRoutine.info).some(i => {

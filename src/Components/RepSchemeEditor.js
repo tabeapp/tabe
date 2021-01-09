@@ -71,7 +71,7 @@ const RepSchemeEditor = props => {
                                                             }
                                                         </Picker>
                                                     </View>
-                                                    <Words>@</Words>
+                                                    <Words key={setIndex+'a'}>@</Words>
                                                     <View key={setIndex+'f'} style={styles.circle}>
                                                         <Picker
                                                             style={{width: 50, height: 50}}
@@ -90,7 +90,7 @@ const RepSchemeEditor = props => {
                                                             }
                                                         </Picker>
                                                     </View>
-                                                    <Words>%</Words>
+                                                    <Words key={setIndex+'b'}>%</Words>
                                                 </>
                                             )
                                         }

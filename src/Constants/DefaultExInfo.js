@@ -78,12 +78,13 @@ export const EX_INFO = {
     'Back Ext': {weight:0, barbell: false, categories: ['Back']},
     'Glute Bridge': {weight:0, barbell: false, categories: ['Legs']},
     'Hip Thrust': {weight:45, barbell: true, categories: ['Legs']},
+    'Hanging Leg Raise': {weight:0, barbell: false, categories: ['Core']},
 
 };
 
 export const DEFAULT_EX_INFO = ex => {
     //TODO you know, it would be a  good idea to test if it's a superset here
-    if(ex.contains('/'))
+    if(ex.includes('/'))
         return DEFAULT_SUPERSET_INFO(ex.split('/'))
     //just in case someting like squat-b gets through
     ex = ex.split('-')[0];
@@ -96,7 +97,7 @@ export const DEFAULT_EX_INFO = ex => {
         amrap: false,
         //bit aggressive, but whatever, you can change it
         progress:{
-            amount: 5,
+            amount: 0,
             rate: 1
         },
         setInfo: {

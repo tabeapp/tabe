@@ -180,6 +180,7 @@ const RoutineEditScreen = props => {
                         const newRoutine = FULL_COPY(routine);
                         newRoutine.currentDay = currentDay || 0;
                         newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
+                        console.log(JSON.stringify(newRoutine));
 
                         routinesDispatch(prev => {
                             //if there is no current, set this to current
