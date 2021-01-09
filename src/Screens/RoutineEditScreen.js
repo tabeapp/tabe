@@ -9,7 +9,6 @@ import DaysEditor from '../Components/DaysEditor';
 import ExerciseEditor from '../Components/ExerciseEditor';
 import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import Words from "../Components/Words";
 
@@ -133,6 +132,7 @@ const RoutineEditScreen = props => {
         });
     };
 
+    //you can move this to workout editor if you want
     const deleteAnExercise = (k) => {
         routinesDispatch(prev => {
             delete prev.editRoutine.info[k];
@@ -282,7 +282,6 @@ const RoutineEditScreen = props => {
                             <ExerciseEditor
                                 key={k}
                                 name={k} info={v}
-                                deleteExercise={() => deleteAnExercise(k)}
                             />
                         )
                     }

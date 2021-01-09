@@ -6,7 +6,9 @@ import { Picker } from '@react-native-picker/picker';
 import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 
-const reps = [];
+const FAILURE = 'F';
+
+const reps = ['F'];
 for(let i = 0; i <= 50; i++)
     reps.push(i)
 
@@ -51,9 +53,6 @@ const ExerciseEditor = props => {
     return <View key={name} style={{margin: 3, width: 406, backgroundColor: '#333'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text style={{color:'white'}}>{name}</Text>
-            <TouchableOpacity onPress={deleteExercise} style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>
-                <Text style={{color:'red'}}>X</Text>
-            </TouchableOpacity>
         </View>
 
         <Text>Current Working Weight: </Text>
