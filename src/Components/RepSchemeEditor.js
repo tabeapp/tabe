@@ -66,8 +66,8 @@ const RepSchemeEditor = props => {
                                                             }}
                                                         >
                                                             {
-                                                                reps.map(item =>
-                                                                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                                                                reps.map((item,i) =>
+                                                                    <Picker.Item key={i} color={'white'} label={''+item} value={item} style={{}}/> )
                                                             }
                                                         </Picker>
                                                     </View>
@@ -85,8 +85,8 @@ const RepSchemeEditor = props => {
                                                             }}
                                                         >
                                                             {
-                                                                percents.map(item =>
-                                                                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                                                                percents.map((item, i) =>
+                                                                    <Picker.Item key={i} color={'white'} label={''+item} value={item} style={{}}/> )
                                                             }
                                                         </Picker>
                                                     </View>
