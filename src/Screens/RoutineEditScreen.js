@@ -11,6 +11,7 @@ import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FULL_COPY } from "../Utils/UtilFunctions";
+import Words from "../Components/Words";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -30,6 +31,11 @@ const RoutineEditScreen = props => {
     //used just twice lol
     const newWorkoutCode = () => {
         let code = Object.keys(workouts).sort().reverse()[0] || '@';
+        return String.fromCharCode(code.charCodeAt(0)+1);
+    };
+
+    const newSchemeCode = () => {
+        let code = Object.keys(customSets).sort().reverse()[0] || '@';
         return String.fromCharCode(code.charCodeAt(0)+1);
     };
 
@@ -284,7 +290,26 @@ const RoutineEditScreen = props => {
 
                     {
                         customScheme &&
-                        <RepSchemeEditor sets={customSets} />
+                        <>
+                            <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
+                            <Words>(workouts using this scheme will cycle through the following sets)</Words>
+                            <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
+                                {
+                                    Object.entries(customSets).map(([k,v], index) =>
+                                        <RepSchemeEditor sets={v} name={k} />
+                                    )
+                                }
+                                <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
+                                    <TouchableOpacity style={styles.configButton} onPress={() => {
+                                        //this actually works
+                                        rd('customSets.' + newSchemeCode(), []);
+                                        console.log(JSON.stringify(customSets))
+                                    }}>
+                                        <Text style={{fontSize: 30}}>Add Custom Scheme</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </ScrollView>
+                        </>
                     }
 
                     <Text style={{color:'white', fontSize: 40}}>Days</Text>

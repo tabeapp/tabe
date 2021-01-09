@@ -72,6 +72,10 @@ const ExerciseEditor = props => {
                     const x = prev.editRoutine.info[name].setInfo;
                     x.type = value;
 
+                    //this is a good start, making it an object with properties, but
+                    //we also need to add a selector to exercsie editor
+                    //and the ability to both add rep schemes
+                    //and handles mulitples rep schemes similar to how we have multiple workotus, in repscheme editor
                     //i had this in useffect, but react is too dumb for my genius
                     if(value === 'Custom'){
                         prev.editRoutine.customScheme = true;
@@ -79,7 +83,7 @@ const ExerciseEditor = props => {
                         if(Object.keys(prev.editRoutine.customSets).length === 0)
                             prev.editRoutine.customSets.A = [];
                         //set to first
-                        x.scheme = Object.keys(prev.editRoutine.customSets)[0]
+                        x.scheme = Object.keys(prev.editRoutine.customSets)[0];
                     }
                     else{
                         const hasCustom = Object.values(prev.editRoutine.info).some(i => {

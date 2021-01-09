@@ -18,15 +18,15 @@ const RepSchemeEditor = props => {
     //eventually you'll need to pass down the name of the rep scheme for multiple
 
     const {routinesDispatch} = useContext(RoutinesContext);
+    const {name} = props;
     //i guess only one custom scheme per routine
     //otherwise how fucking complex is your workout?
 
     //this is kinda going to resemble customexercise card
     return(
         <>
-            <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
-            <Words>(workouts using this scheme will cycle through the following sets)</Words>
             <View style={{justifyContent: 'center', height: 400, margin: 5, width: 400, backgroundColor: '#333'}}>
+                <Words>Rep Scheme {name}</Words>
                 {
                     props.sets.map((week, weekIndex) =>
                         <View style={{alignItems: 'center', flexDirection: 'row'}}>

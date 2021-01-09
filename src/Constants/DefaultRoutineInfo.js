@@ -5,7 +5,7 @@ export const BLANK_ROUTINE = () => ({
     workouts: {},
     days: [],
     customScheme: false,
-    customSets: [],
+    customSets: {},//this fucked me up
     currentDay: 0,//do we really need these last 2?
     nextWorkoutTime: 0
 });
