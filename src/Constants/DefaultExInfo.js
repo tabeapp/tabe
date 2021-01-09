@@ -16,6 +16,10 @@
 */
 //for every possible workout
 
+//i feel like we should have more info on these guys
+//and the modal should read from here
+//something like
+//'Squat': {'weight': 125, 'barbell': true', 'category': 'legs'}
 const WEIGHTS = {
     //these are 5rm from symmetric strength for 198lb male
     'Squat': 125,
@@ -26,6 +30,7 @@ const WEIGHTS = {
     'Dip': -20,
     'Press': 60,
     'Row': 75,
+    'Power Clean': 80,
 
     //these are entirely made up
     'Tricep Pushdown': 30,
@@ -61,7 +66,8 @@ const WEIGHTS = {
     'Leg Raises': 0,
     'Sit Ups': 0,
     'Cable Crunch': 70,
-    'Dips': 0
+    'Dips': 0,
+    'Back Ext': 0
 };
 
 const BARBELL = [
@@ -78,6 +84,7 @@ const BARBELL = [
     'Calf Raise',
     'Deadlift',
     'Row',
+    'Power Clean'
 ];
 
 export const DEFAULT_EX_INFO = ex => {
