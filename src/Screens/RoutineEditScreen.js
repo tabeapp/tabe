@@ -155,17 +155,11 @@ const RoutineEditScreen = props => {
     //why the fuck is this one fine while the others go crazy
     //useeffects still coming back to haunt me
     useEffect(() => {
-        routinesDispatch(prev => {
-            const x = prev.editRoutine.days;
-            if(time <= x.length)
-                x.splice(time);
-            else{
-                for(let i = 0; i < time-x.length;i++)
-                    x.push('R');
-            }
-            return prev
-        });
-    }, [time]);
+        routinesDispatch({
+            path: 'editRoutine.days',
+            value: Array.from(new Array(time), () => 'R')
+        })
+    }, []);
 
     return (
         <>
@@ -235,7 +229,17 @@ const RoutineEditScreen = props => {
                     />
                     <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
                         <Text style={{color:'white', fontSize: 20}}>Cycle length in days: </Text>
-                        <NumericSelector onChange={v => rd('time', v)} numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
+                        <NumericSelector
+                            onChange={v =>
+                                //that's fucking it, useEffect completely suks
+                                routinesDispatch(prev => {
+                                    prev.editRoutine.time = v;
+                                    prev.editRoutine.days = Array.from(new Array(v), () => 'R');
+                                    return prev;
+                                })
+                            }
+
+                            numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
                     </View>
 
                     <Text style={{color:'white', fontSize: 40}}>Workouts</Text>
