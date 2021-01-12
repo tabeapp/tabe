@@ -40,6 +40,7 @@ const RoutineEditScreen = props => {
     };
 
     const routine = useContext(RoutinesContext).routines.editRoutine;
+    console.log(routine);
     const {routinesDispatch} = useContext(RoutinesContext);
     //maybe i can do this shortcut?
     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
@@ -191,7 +192,13 @@ const RoutineEditScreen = props => {
                         const newRoutine = FULL_COPY(routine);
                         newRoutine.currentDay = currentDay || 0;
                         newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
-                        console.log(JSON.stringify(newRoutine));
+                        //routineEx.progress.countdown = routineEx.progress.rate;
+                        //need to start the progression countdown for each exercise
+                        Object.keys(newRoutine.info).forEach(ex => {
+                            const x = newRoutine.info[ex].progress;
+                            if(!x.countdown)
+                                x.countdown = x.rate;
+                        });
 
                         routinesDispatch(prev => {
                             //if there is no current, set this to current
@@ -200,7 +207,8 @@ const RoutineEditScreen = props => {
                             //and save the new routine based on title
                             prev.routines[newRoutine.title] = newRoutine;
 
-                            delete prev.editRoutine;
+                            //why cant i do this?
+                            //delete prev.editRoutine;
                             return prev;
                         });
 

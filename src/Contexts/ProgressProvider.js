@@ -154,9 +154,13 @@ class ProgressProvider extends React.Component {
         return false;
     }
 
+    //COMPLETELY redoing this for new routine format
+    //then again, all we need to do is set efforts
+    //this is for when a routine is generated with 'wizard'
+    //all it does is get weights
     generateRoutine = async (baseRoutine, efforts) => {
         const routine = {...baseRoutine};
-        routine.currentDay = 0;
+        routine.currentDay = 0;//seems unnecssary
         //just setting this to dumb value for now
         //next work out is today, buddy
         //set it to super early in the morning for easy comparison
@@ -172,6 +176,7 @@ class ProgressProvider extends React.Component {
             //progress is copied in right here
             const routineEx = routine.info[ex.name];
             //if(routineEx.progress.rate !== 'session')
+            //this is actually pretty imporatnt, forgot it in routineedit
             routineEx.progress.countdown = routineEx.progress.rate;
 
             //step 1, calculate one rep max
@@ -186,21 +191,16 @@ class ProgressProvider extends React.Component {
             //step 3, 5/3/1 will just take that orm, starting strength will use 5RM
             //the calculation isn't perfect, but who cares tbh
             //the current weight will incrmement anyways, and you can change it if you need
+
             //if normal, all sets have the same reps
-            if(routineEx.setInfo.type === 'normal')
-                routineEx.current = orm/(1+routineEx.setInfo.sets[0]/30);
-            //otherwise, just use the orm, like in 5/3/1
-            else
-                routineEx.current = orm;
-
+            routineEx.current = orm/(1+routineEx.setInfo.sets[0]/30);
             routineEx.current = Math.floor(routineEx.current/5)*5;
+            //otherwise, just use the orm, like in 5/3/1
 
-            const ez = routine.info[ex.name + '.ez'];
+            //i guess we should go throught the entire alphabet
+            const ez = routine.info[ex.name + '-b'];
             if(ez){
-                if(ez.setInfo.type === 'normal')
-                    ez.current = orm/(1+ez.setInfo.sets[0]/30);
-                else
-                    ez.current = orm;
+                ez.current = orm/(1+ez.setInfo.sets[0]/30);
                 ez.current = Math.floor(ez.current/5)*5;
             }
 
