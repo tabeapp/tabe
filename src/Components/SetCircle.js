@@ -36,32 +36,9 @@ const SetCircle = (props) => {
     }
     let [exerciseN, setN] = props.info;
     const handlePress = () => {
-        //locks it esssentially
-        //we could probably do something with current set, but for now just this
-        //parse int cuz sometimes it says 5+
-
-        workoutDispatch(prev => {
-            const exercises = prev.exercises;
-            //check to see if we need to move the current indicator
-
-            const x = exercises[exerciseN].sets[setN];
-            //const move = x.progress === CURRENT;
-            //if only would be this easy, but we also need to move the current
-            x.progress = prog;
-            return prev;
-
-            /*if(move){
-                if (setN + 1 === exercises[exerciseN].sets.length){
-                    if (exerciseN + 1 === exercises.length) {
-                        prev.done = true;
-                    }
-                    else
-                        exercises[exerciseN + 1].sets[0].progress = CURRENT;
-                }
-                else
-                    exercises[exerciseN].sets[setN+1].progress = CURRENT;
-            }
-            return prev;*/
+        workoutDispatch({
+            path: `exercises.${exerciseN}.sets.${setN}.progress`,
+            value: prog
         });
     };
 

@@ -184,6 +184,7 @@ const WorkoutProvider = props => {
 
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
+    //guess it would make sense to save workout to disk every time, maybe
     const workoutReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
         //need deeper copy
