@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
@@ -45,11 +45,12 @@ const SetCircle = (props) => {
             //check to see if we need to move the current indicator
 
             const x = exercises[exerciseN].sets[setN];
-            const move = x.progress === CURRENT;
+            //const move = x.progress === CURRENT;
             //if only would be this easy, but we also need to move the current
             x.progress = prog;
+            return prev;
 
-            if(move){
+            /*if(move){
                 if (setN + 1 === exercises[exerciseN].sets.length){
                     if (exerciseN + 1 === exercises.length) {
                         prev.done = true;
@@ -60,7 +61,7 @@ const SetCircle = (props) => {
                 else
                     exercises[exerciseN].sets[setN+1].progress = CURRENT;
             }
-            return prev;
+            return prev;*/
         });
     };
 

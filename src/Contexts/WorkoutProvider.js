@@ -12,6 +12,7 @@ import RoutinesContext from "./RoutinesContext";
 //so the idea behind this shit is that i'm really tired of passing down modifying functions
 //so we're gonna use useReducer
 
+const CURRENT = 'c';
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -152,6 +153,35 @@ const WorkoutProvider = props => {
         return false;
     };
 
+
+    //i guess like use effect?
+    //this same logic shows up over and over again in the old code
+    //just make sure the next set is marked as 'c', that simple
+    //this seems to work, just make sure adding workouts doesn't mess with this
+    const invariantCheck = next => {
+        if(!next.exercises)
+            return next;
+
+        let found = false;
+
+        for(let e = 0; e < next.exercises.length; e++){
+            const ex = next.exercises[e];
+            for(let s = 0; s < ex.sets.length; s++){
+                const set = ex.sets[s];
+                if(set.progress === CURRENT)
+                    found = true;
+                else if(set.progress === null && !found){
+                    set.progress = CURRENT;
+                    found = true;
+                }
+                else if(set.progress === CURRENT && found)
+                    set.progress = null;
+            }
+        }
+
+        return next;
+    };
+
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
     const workoutReducer = (state, action) => {
@@ -162,7 +192,7 @@ const WorkoutProvider = props => {
         //so just edit the passed in object directly
         if(action.constructor === Function){
             //run action on state
-            return action(next);
+            return invariantCheck(action(next));
         }
 
         //otherwise
@@ -207,7 +237,7 @@ const WorkoutProvider = props => {
                 }));
         }
 
-        return next;
+        return invariantCheck(next);
     };
 
     const [workout, workoutDispatch] = useReducer(workoutReducer, initState);

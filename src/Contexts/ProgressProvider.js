@@ -62,74 +62,6 @@ class ProgressProvider extends React.Component {
         done: false
     }
 
-    componentDidMount() {
-        AppState.addEventListener('change', this.handleAppStateChange);
-        //don't initialize the workout, just load the routine if it's there
-
-        //load the routine, if it exists
-
-        (async () => {
-            try {
-                const val = await AsyncStorage.getItem('@currentRoutine');
-
-                //if there is no current workout, reinitalize
-                if (val !== null){
-                    this.setState({
-                        routine: JSON.parse(val)
-                    });
-
-                    //if it exists, also load the workout
-                    const workout = await AsyncStorage.getItem('@currentWorkout');
-                    console.log(workout);
-                    if(workout !== null){
-                        this.setState({
-                            workout: JSON.parse(workout)
-                        }, this.generateReport)//yeah we need this
-                    }
-
-
-
-                }
-            }catch(e){
-            }
-        })();
-
-        //if(!this.state.loaded)
-        //this.initializeWorkout()
-    }
-
-    //save
-    //it's either this or save on every change
-    componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange);
-    }
-
-    //this saves workout to storage when the app is closed
-    //funny enough, this doesn't actually handle 'reload js'
-    handleAppStateChange = nextAppState => {
-        if(nextAppState === 'inactive' || nextAppState === 'background') {
-            (async () => {
-                try {
-                    await AsyncStorage.setItem('@currentWorkout',
-                        JSON.stringify(this.state.workout)
-                    );
-                } catch (e) { }
-            })();
-        }
-    }
-
-    //this checks if the user is following a routine as of now
-    //if not it returns false
-    //used for navigation, setting up new routine
-    checkRoutine = async () => {
-        return this.state.routine;
-        //const routine = await AsyncStorage.getItem('@currentRoutine');
-
-        //just return false for testing for now
-        //return false;
-        //return routine !== null;
-    }
-
 
     //fuck this, we're just gonna use the "next workout date"
 
@@ -186,14 +118,6 @@ class ProgressProvider extends React.Component {
         }
         await this.setRoutine(routine);
         //this.setRoutine(routine).then();
-    }
-
-    //i think we need to call this in a few other places, routine isn't being saved to local store
-    setRoutine = async routine => {
-        this.setState({routine: routine});
-        //console.log(this.state.routine);
-        //no you don't just save teh routine string, you actually need the object
-        await AsyncStorage.setItem('@currentRoutine', JSON.stringify(routine));
     }
 
 
@@ -505,7 +429,8 @@ class ProgressProvider extends React.Component {
         newRoutine.currentDay++;
 
         //and finally, save the thing
-        this.setRoutine(newRoutine)
+        //routiensDispatch(() => newROutine)
+        //this.setRoutine(newRoutine)
         //this.setState({routine: newRoutine})
     };
 
