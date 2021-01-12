@@ -11,6 +11,7 @@ import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import Words from "../Components/Words";
+import { FONT } from "../Style/Values";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -155,10 +156,11 @@ const RoutineEditScreen = props => {
     //why the fuck is this one fine while the others go crazy
     //useeffects still coming back to haunt me
     useEffect(() => {
-        routinesDispatch({
-            path: 'editRoutine.days',
-            value: Array.from(new Array(time), () => 'R')
-        })
+        routinesDispatch(prev => {
+            if(prev.editRoutine.days.length !== prev.editRoutine.time)
+                prev.editRoutine.days = Array.from(new Array(time), () => 'R')
+            return prev;
+        });
     }, []);
 
     return (
@@ -222,7 +224,7 @@ const RoutineEditScreen = props => {
                 </View>
                 <ScrollView style={styles.box}>
                     <TextInput
-                        style={{color:'white', textAlign: 'center', fontSize: 40}}
+                        style={{fontFamily: FONT, color:'white', textAlign: 'center', fontSize: 40}}
                         value={title}
                         onChangeText={v => rd('title', v)}
                     />

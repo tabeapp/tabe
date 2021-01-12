@@ -6,6 +6,7 @@ import ProgressContext from '../Contexts/ProgressContext';
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
+import { FONT } from "../Style/Values";
 
 const primaryColor = '#66d6f8';
 
@@ -64,12 +65,12 @@ const ReportScreen = props => {
                         <Words>Zyzz</Words>
                     </View>
                     <TextInput
-                        style={{fontSize: 40, color: 'white'}}
+                        style={{fontFamily: FONT, fontSize: 40, color: 'white'}}
                         value={title}
                         onChangeText={setTitle}
                     />
                     <TextInput
-                        style={{color:'white'}}
+                        style={{fontFamily: FONT, color:'white'}}
                         value={description}
                         onChangeText={setDescription}
                     />
