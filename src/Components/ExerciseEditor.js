@@ -61,6 +61,21 @@ const ExerciseEditor = props => {
 
         }} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
 
+        <Words>Rest between sets</Words>
+
+        <View style={{flexDirection:'row'}}>
+            <NumericSelector
+                //you should add default incrememtn value
+                onChange={value => rd('rest.minutes', value)}
+                numInfo={{def:info.rest.minutes, min: 0, max: 10, increment: 1}}
+            />
+            <Words>:</Words>
+            <NumericSelector
+                onChange={value => rd('rest.seconds', value)}
+                numInfo={{def:info.rest.seconds, min: 0, max: 55, increment: 5}}
+            />
+        </View>
+
         <Text>Sets:</Text>
         <Words>Set Type:</Words>
         <Picker

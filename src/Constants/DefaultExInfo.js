@@ -100,6 +100,11 @@ export const DEFAULT_EX_INFO = ex => {
             amount: 0,
             rate: 1
         },
+        rest:{
+            //stupid logic? yes, but whatever
+            minutes: info.barbell?3:1,
+            seconds: 0,
+        },
         setInfo: {
             type: 'Normal',
             sets: [5,5,5,5,5]
@@ -112,7 +117,7 @@ export const DEFAULT_EX_INFO = ex => {
 //I guess that would help rendering
 //ugh i guess we need to make as many current as there are exercises
 export const DEFAULT_SUPERSET_INFO = (name) => {
-    return name.map(n => DEFAULT_EX_INFO(n));
+    return name.map(DEFAULT_EX_INFO);
 
 };
 //would probably be something more like
