@@ -9,13 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const maxSets = 12;
 
 //5x5
-const defaultSets = [
-    { reps: 5 },
-    { reps: 5 },
-    { reps: 5 },
-    { reps: 5 },
-    { reps: 5 },
-];
 
 //later use user data to get weigths
 const defaultWeight = {
@@ -125,9 +118,10 @@ class ProgressProvider extends React.Component {
     addExercise = (name) => {
         this.setState(state => {
             let newState = {...state};
+
             const exercises = newState.workout.exercises;
             exercises.push({
-                name,
+                name: name,
                 sets: defaultSets.map(s => ({
                     ...s,
                     progress: null,
@@ -135,44 +129,12 @@ class ProgressProvider extends React.Component {
                 })),
                 barbell: barbells.includes(name)
             });
+
             if(exercises.length === 1)
                 exercises[0].sets[0].progress = 'c';
+
             return newState;
         });
-    }
-
-    //maybe move to have progress and weight within sets array
-    updateExercise = (exN, add) => {
-        this.setState(state => {
-            let newState = {...state};
-            let exercise = newState.workout.exercises[exN];
-            if(add){
-                if(exercise.sets.length >= maxSets)
-                    return;
-
-                const lastSet = exercise.sets[exercise.sets.length-1];
-
-                let nextProg;
-
-                //if the last one is c, push null
-                //if the last one is a number, push c
-                //if the last one is null, push null
-                if(lastSet.progress === 'c' || lastSet.progress === null)
-                    nextProg = null;
-                //'c' or null
-                else
-                    nextProg = 'c';
-
-                //may need to propogate 'c' all the way to the end
-                exercise.sets.push({...lastSet, progress: nextProg});
-            }
-            else{
-                //remove last set
-                exercise.sets.splice(exercise.sets.length-1);
-            }
-
-            return newState;
-        })
     }
 
     // just put out a good json for posting to the feed
@@ -462,19 +424,11 @@ class ProgressProvider extends React.Component {
                 report: this.state.report,
 
                 generateRoutine: this.generateRoutine,
-                checkRoutine: this.checkRoutine,
-                checkRest: this.checkRest,
-                setRoutine: this.setRoutine,
-                initializeWorkout: this.initializeWorkout,
-                updateSet: this.updateSet,
                 analyzeWorkout: this.analyzeWorkout,
                 generateReport: this.generateReport,
                 saveWorkout: this.saveWorkout,
-                getPosts: this.getPosts,
 
-                initializeCustom: this.initializeCustom,
                 addExercise: this.addExercise,
-                updateExercise: this.updateExercise,
                 title: this.state.title,
                 loaded: this.state.loaded,
                 done: this.state.done,

@@ -8,12 +8,13 @@ import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import ExercisePicker from "../Components/ExercisePicker";
+import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
 
 const primaryColor = '#66d6f8';
 
 const WorkoutScreen = props => {
     let {  generateReport, addExercise} = useContext(ProgressContext);
-    const {workout} = useContext(WorkoutContext);
+    const {workout, workoutDispatch} = useContext(WorkoutContext);
 
     //workout.edit false => normal workout screen
     //workout.edit true => custom wokrout screen
@@ -35,14 +36,14 @@ const WorkoutScreen = props => {
     const sampleSuggestion = [
         'bench', 'curl', 'deadlift',
     ];
+
     const addFromSuggestions = name => {
-        addExercise(name);
+        workoutDispatch(prev => {
+            prev.exercises.push(DEFAULT_EX_WORKOUT(name));
+            return prev;
+        });
+
         sampleSuggestion.splice(sampleSuggestion.indexOf(name), 1);
-
-    };
-
-    const openExerciseSelect = () => {
-        setModal(true);
     };
 
     return (
@@ -50,9 +51,17 @@ const WorkoutScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <TouchableOpacity style={styles.topButton}>
+                    <TouchableOpacity
+                        onPress={() =>
+                            workoutDispatch(prev => {
+                                prev.edit = !prev.edit;
+                                return prev;
+                            })
+                        }
+                        style={styles.topButton}
+                    >
                         <Words style={{fontSize: 20}}>
-                            Discard
+                            Edit
                         </Words>
                     </TouchableOpacity>
                     <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
@@ -81,14 +90,19 @@ const WorkoutScreen = props => {
                                     </TouchableOpacity>);
                                 })
                             }</View>
-                            <TouchableOpacity style={styles.configButton} onPress={openExerciseSelect}>
+                            <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
                                 <Words style={styles.plus}>+</Words>
                             </TouchableOpacity>
 
                         </>
                 }
 
-                <ExercisePicker visible={modal} close={() => setModal(false)}/>
+                <ExercisePicker handleSelection={name =>
+                    workoutDispatch(prev => {
+                        prev.exercises.push(DEFAULT_EX_WORKOUT(name));
+                        return prev;
+                    })
+                } visible={modal} close={() => setModal(false)}/>
 
             </SafeAreaView>
         </>

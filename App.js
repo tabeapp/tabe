@@ -5,7 +5,6 @@ import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/st
 //get custom icons eventually
 
 import ProgressProvider from './src/Contexts/ProgressProvider';
-import CustomWorkoutScreen from './src/Screens/CustomWorkoutScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import ExploreScreen from "./src/Screens/ExploreScreen";
 import RoutineEditScreen from "./src/Screens/RoutineEditScreen";
@@ -30,7 +29,7 @@ const App = () => {
                 <ProgressProvider>
 
                     <NavigationContainer>
-                        <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false,
+                        <Stack.Navigator initialRouteName="home" screenOptions={{headerShown:false,
                             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation
                         }}>
                             <Stack.Screen name="home" component={HomeScreen}/>
@@ -40,7 +39,6 @@ const App = () => {
                             <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="report" component={ReportScreen}/>
-                            <Stack.Screen name="customworkout" component={CustomWorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="routine" component={RoutineScreen}/>
                             <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
                             <Stack.Screen name="profile" component={ProfileScreen}/>

@@ -82,6 +82,27 @@ export const EX_INFO = {
 
 };
 
+const FIVE_BY_FIVE = [5, 5, 5, 5, 5];
+
+//for adding on the fly, not to a routine or anything
+export const DEFAULT_EX_WORKOUT = ex => {
+    const info = EX_INFO[ex];
+
+    return {
+        name: ex,
+        barbell: info.barbell,
+        rest: {
+            minutes: info.barbell?3:1,
+            seconds: 0,
+        },
+        sets: FIVE_BY_FIVE.map(s => ({
+            reps: s,
+            progress: null,
+            weight: info.weight
+        }))
+    };
+};
+
 export const DEFAULT_EX_INFO = ex => {
     //TODO you know, it would be a  good idea to test if it's a superset here
     if(ex.includes('/'))
