@@ -2,18 +2,11 @@ import React, {useState, useContext} from 'react';
 import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import ProgressContext from '../Contexts/ProgressContext';
+import Words from "./Words";
 
 //const reps = [];
 //for(let i = 0; i < 20; i++)
     //reps.push(i)
-
-//fine, I'll do it msyelf
-//add haptic feedback later
-const RepPicker = (props) => {
-    return (<ScrollView>
-        <Text>{props.value}</Text>
-    </ScrollView>);
-};
 
 const SetCircle = (props) => {
     const {updateSet} = useContext(ProgressContext);
@@ -33,9 +26,9 @@ const SetCircle = (props) => {
             text = props.setInfo.progress;
         return (
             <View style={{ ...styles.circle, ...props.style }} >
-                <Text style={{ color: 'white' }}>{
+                <Words>{
                     text
-                }</Text>
+                }</Words>
             </View>
         );
     }
@@ -68,7 +61,7 @@ const SetCircle = (props) => {
             onPress={handlePress}
             style={{ ...styles.circle, ...props.style }}
         >
-            <Text style={{color:'white'}}>^</Text>
+            <Words>^</Words>
             <Picker
                 style={{width: 50, height: 50}}
                 selectedValue={prog}
@@ -82,7 +75,7 @@ const SetCircle = (props) => {
                         <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
                 }
             </Picker>
-            <Text style={{color:'white', transform: [{rotate: '180deg'}]}}>^</Text>
+            <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>
         </TouchableOpacity>
     );
     /*<TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>

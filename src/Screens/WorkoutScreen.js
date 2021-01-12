@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from "react-na
 import ProgressContext from '../Contexts/ProgressContext';
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
+import Words from "../Components/Words";
 
 const primaryColor = '#66d6f8';
 
@@ -26,15 +27,15 @@ const WorkoutScreen = props => {
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Discard
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>{workout?workout.title:''}</Text>
+                    <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Next
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container}>{

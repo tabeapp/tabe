@@ -47,7 +47,7 @@ const RepSchemeEditor = props => {
                                                     return prev;
                                                 })
                                             }}>
-                                            <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Text>
+                                            <Words style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Words>
                                         </TouchableOpacity>
                                         {
                                             week.map((v, setIndex) =>
@@ -107,7 +107,7 @@ const RepSchemeEditor = props => {
                                                 })
                                             }
                                         >
-                                            <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                                            <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                                         </TouchableOpacity>
                                     </View>
                                 }
@@ -129,7 +129,7 @@ const RepSchemeEditor = props => {
                     });
                     //append a new obj
                 }}>
-                    <Text style={{fontSize: 30}}>Add Week?Cycle?idk</Text>
+                    <Words style={{fontSize: 30}}>Add Week?Cycle?idk</Words>
                 </TouchableOpacity>
             </View>
         </>

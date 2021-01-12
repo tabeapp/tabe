@@ -1,8 +1,9 @@
-import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
-import React, {useEffect, useContext, useState} from 'react';
+import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import React, {useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import ProgressContext from "../Contexts/ProgressContext";
+import Words from "../Components/Words";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -30,17 +31,17 @@ const HomeScreen = props => {
                             style={{backgroundColor: '#333', margin: 3}}>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                                <Text style={{color:'white'}}>Zyzz</Text>
+                                <Words>Zyzz</Words>
                             </View>
 
-                            <Text style={{fontSize: 40, color: 'white'}}>
+                            <Words style={{fontSize: 40}}>
                                 {item.title}
-                            </Text>
-                            <Text style={{color:'white'}}>
+                            </Words>
+                            <Words>
                                 {item.description}
-                            </Text>
-                            <Text style={{color:'white'}}>{item.exercises[0]&&item.exercises[0].name}</Text>
-                            <Text style={{color:'white'}}>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Text>
+                            </Words>
+                            <Words>{item.exercises[0]&&item.exercises[0].name}</Words>
+                            <Words>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Words>
                         </TouchableOpacity>
                     }
                     />

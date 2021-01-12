@@ -10,7 +10,9 @@ const Words = props =>
 
 const styles = StyleSheet.create({
     defaultStyle: {
-        color:'white'
+        color:'white',
+        fontFamily: 'Courier New',
+        fontWeight: 'bold'
     }
 });
 export default Words;

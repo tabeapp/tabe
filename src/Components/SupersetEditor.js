@@ -29,9 +29,9 @@ const SupersetEditor = props => {
     return(
         <View key={name} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{color:'white'}}>{name}</Text>
+                <Words>{name}</Words>
                 <TouchableOpacity onPress={deleteExercise} style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>
-                    <Text style={{color:'red'}}>X</Text>
+                    <Words style={{color:'red'}}>X</Words>
                 </TouchableOpacity>
             </View>
 
@@ -42,14 +42,14 @@ const SupersetEditor = props => {
                     info.map((subInfo, ssi) => {
                         return <View style={{flex: 1}}>
                             <Words>{subExercises[ssi]}</Words>
-                            <Text>Current Working Weight: </Text>
+                            <Words>Current Working Weight: </Words>
                             <NumericSelector
                                 onChange={rd(ssi+'.current')}
                                 numInfo={{def:subInfo.current, min: 0, max: 995, increment: 5}}
                             />
 
 
-                            <Text>Progression:</Text>
+                            <Words>Progression:</Words>
                             <View style={{alignItems: 'center', flexDirection: 'row'}}>
                                 <Words>Add</Words>
                                 <NumericSelector
@@ -66,7 +66,7 @@ const SupersetEditor = props => {
                                 <Words>time</Words>
                             </View>
 
-                            <Text>Sets:</Text>
+                            <Words>Sets:</Words>
                             <Words>Set Type:</Words>
                             <Picker
                                 style={{ width: 100, height: 50 }}
@@ -99,7 +99,7 @@ const SupersetEditor = props => {
                             {
                                 subInfo.setInfo.type === 'Normal' &&//this doesn't do shit
                                 <View>
-                                    <Text>AMRAP Last Set:</Text>
+                                    <Words>AMRAP Last Set:</Words>
                                     <Switch
                                         trackColor={{ false: "#767577", true: "#81b0ff" }}
                                         thumbColor={subInfo.amrap ? "#f5dd4b" : "#f4f3f4"}
@@ -140,7 +140,7 @@ const SupersetEditor = props => {
                         });
 
                     }}>
-                    <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 15 }}>-</Text>
+                    <Words style={{ color: 'red', fontWeight: 'bold', fontSize: 15 }}>-</Words>
                 </TouchableOpacity>
                 {
                     //the only trick here is that the sets have to be the same
@@ -246,7 +246,7 @@ const SupersetEditor = props => {
                         })
                     }}
                 >
-                    <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                    <Words style={{ color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                 </TouchableOpacity>
             </View>
 

@@ -5,6 +5,7 @@ import {TouchableOpacity, Text, View, StyleSheet}  from 'react-native';
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
 import ProgressContext from "../Contexts/ProgressContext";
+import Words from "./Words";
 
 
 const primaryColor = '#66d6f8';
@@ -30,7 +31,7 @@ const SetModButton = (props) => {
     return (
         <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
             onPress={() => updateExercise(props.exerciseN, add)}>
-            <Text style={{color: color, fontWeight: 'bold', fontSize: 15, }}>{props.type}</Text>
+            <Words>{props.type}</Words>
         </TouchableOpacity>
 
     );
@@ -123,8 +124,8 @@ const CustomExerciseCard = (props) => {
     return (
         <View style={styles.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: 'white' }}>{name}</Text>
-                <Text style={{ color: 'white' }}>{currentWeight}</Text>
+                <Words>{name}</Words>
+                <Words>{currentWeight}</Words>
             </View>
 
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

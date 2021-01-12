@@ -1,13 +1,11 @@
 import React, { useContext, useState } from "react";
-import {TouchableOpacity, ScrollView, StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {TouchableOpacity, ScrollView, StyleSheet, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
-import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
-import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
 import NumericSelector from '../Components/NumericSelector';
 import ProgressContext from "../Contexts/ProgressContext";
-import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
+import Words from "../Components/Words";
 
 const primaryColor = '#66d6f8';
 
@@ -76,27 +74,27 @@ const RoutineSetupScreen = props => {
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Back
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>Routine Setup</Text>
+                    <Words style={{fontSize: 20}}>Routine Setup</Words>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Begin
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
                 </View>
                 <ScrollView>{
                     maxEfforts.map(ex =>
                         <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
-                            <Text style={{fontSize: 20, color: 'white'}}>{ex.name}</Text>
+                            <Words style={{fontSize: 20}}>{ex.name}</Words>
                             <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
-                                <Text style={{fontSize: 20, color: 'white'}}>Enter Max Effort:</Text>
+                                <Words style={{fontSize: 20}}>Enter Max Effort:</Words>
 
                                 <NumericSelector onChange={reps => updateRep(ex.name, reps)} numInfo={repNumbers}/>
 
-                                <Text style={{fontSize: 20, color: 'white'}}>x</Text>
+                                <Words style={{fontSize: 20}}>x</Words>
 
                                 <NumericSelector onChange={weight => updateWeight(ex.name, weight)} numInfo={{def: ex.weight, min: 0, max: 1000, increment: 5}}/>
                             </View>

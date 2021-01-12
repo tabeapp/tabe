@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import ExercisePicker from './ExercisePicker';
 import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -35,12 +35,12 @@ const WorkoutEditor = props => {
     return (
         <View style={{margin: 3, width: 406, backgroundColor: '#333'}}>
             <View style={{backgroundColor: '#222', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={{color:'white'}}>Workout {props.name}</Text>
+                <Words style={{color:'white'}}>Workout {props.name}</Words>
 
                 <View style={{flexDirection:'row'}}>
 
                     <TouchableOpacity onPress={() => props.duplicateWorkout(props.name)}>
-                        <Text><Ionicons color={'gray'} size={30} name={'copy-outline'}/></Text>
+                        <Words><Ionicons color={'gray'} size={30} name={'copy-outline'}/></Words>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => {
@@ -65,7 +65,7 @@ const WorkoutEditor = props => {
                         })
 
                     }}>
-                        <Text><Ionicons color={'gray'} size={30} name={'close'}/></Text>
+                        <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -93,13 +93,13 @@ const WorkoutEditor = props => {
                         }
                         {
                             !Array.isArray(ex) &&
-                            <Text style={{ color: 'white', fontSize: 30 }}>{ex}</Text>
+                            <Words style={{ color: 'white', fontSize: 30 }}>{ex}</Words>
                         }
                         <TouchableOpacity onPress={() => {
                             //this should do the same thing as pressing the X on an exercise
                             deleteExercise(ex);
                         }}>
-                            <Text><Ionicons color={'gray'} name={'close'} size={30}/></Text>
+                            <Words><Ionicons color={'gray'} name={'close'} size={30}/></Words>
                         </TouchableOpacity>
                     </View>
                 })
@@ -110,7 +110,7 @@ const WorkoutEditor = props => {
                 //yeah maybe these should be separate components...
                 setModal(true);
             }}>
-                <Text style={{color: 'white', fontSize: 30}}>Add Exercise</Text>
+                <Words style={{color: 'white', fontSize: 30}}>Add Exercise</Words>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.configButton} onPress={() => {
@@ -119,7 +119,7 @@ const WorkoutEditor = props => {
                     return prev;
                 })
             }} >
-                <Text style={{color: 'white', fontSize: 30}}>Add Superset</Text>
+                <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
             </TouchableOpacity>
             <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(props.name,ex)} close={() => setModal(false)}/>
 

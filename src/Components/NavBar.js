@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Alert, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressContext from '../Contexts/ProgressContext';
+import Words from "./Words";
 
 const routes = [
     'home',
@@ -87,16 +88,16 @@ const NavBar = props => {
 
             if (r === 'workout') {
                 return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={routineStart} onLongPress={customStart}>
-                    <Text>
+                    <Words>
                         <Ionicons name={icon} color={'white'} size={50} />
-                    </Text>
+                    </Words>
                 </TouchableOpacity>);
             }
 
             return (<TouchableOpacity style={styles.button} key={r} onPress={() => handlePress(r)}>
-                <Text>
+                <Words>
                     <Ionicons name={icon} color={'white'} size={40}/>
-                </Text>
+                </Words>
             </TouchableOpacity>); })
     }</View>);
 };

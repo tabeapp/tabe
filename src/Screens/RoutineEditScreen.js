@@ -1,4 +1,4 @@
-import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, View } from 'react-native';
 import React, {useContext, useEffect} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
@@ -167,10 +167,9 @@ const RoutineEditScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.top} >
                     <TouchableOpacity style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                        </Text>
+                        <Words/>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>Routine Editor</Text>
+                    <Words style={{fontSize: 20}}>Routine Editor</Words>
                     <TouchableOpacity onPress={() => {
                         //at last we save it
                         // do we need to object copy?
@@ -216,9 +215,9 @@ const RoutineEditScreen = props => {
                         );*/
 
                     }} style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Save
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
                 </View>
                 <ScrollView style={styles.box}>
@@ -228,7 +227,7 @@ const RoutineEditScreen = props => {
                         onChangeText={v => rd('title', v)}
                     />
                     <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
-                        <Text style={{color:'white', fontSize: 20}}>Cycle length in days: </Text>
+                        <Words style={{fontSize: 20}}>Cycle length in days: </Words>
                         <NumericSelector
                             onChange={v =>
                                 //that's fucking it, useEffect completely suks
@@ -259,7 +258,7 @@ const RoutineEditScreen = props => {
                         <Words style={{fontSize: 20}}>failed sets</Words>
                     </View>
 
-                    <Text style={{color:'white', fontSize: 40}}>Workouts</Text>
+                    <Words style={{fontSize: 40}}>Workouts</Words>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
                         {
                             Object.entries(workouts).map(([k,v], index) =>
@@ -299,12 +298,12 @@ const RoutineEditScreen = props => {
                                 //trust me bro
                                 rd('workouts.' + newWorkoutCode(), []);
                             }}>
-                                <Text style={{fontSize: 30}}>Add Workout</Text>
+                                <Words style={{fontSize: 30}}>Add Workout</Words>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
 
-                    <Text style={{color:'white', fontSize: 40}}>Exercises</Text>
+                    <Words style={{fontSize: 40}}>Exercises</Words>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
                         //definitely the trickiest of all
                         //editing exercises involves much of the state, so I've just added them
@@ -334,14 +333,14 @@ const RoutineEditScreen = props => {
                                         rd('customSets.' + newSchemeCode(), []);
                                         console.log(JSON.stringify(customSets))
                                     }}>
-                                        <Text style={{fontSize: 30}}>Add Custom Scheme</Text>
+                                        <Words style={{fontSize: 30}}>Add Custom Scheme</Words>
                                     </TouchableOpacity>
                                 </View>
                             </ScrollView>
                         </>
                     }
 
-                    <Text style={{color:'white', fontSize: 40}}>Days</Text>
+                    <Words style={{color:'white', fontSize: 40}}>Days</Words>
                     <DaysEditor workouts={Object.keys(workouts)} days={days}/>
 
                     <View style={{height: 25/*for the red button*/}}/>

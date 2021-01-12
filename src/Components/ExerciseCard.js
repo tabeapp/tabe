@@ -4,6 +4,7 @@ import {Text, View, StyleSheet}  from 'react-native';
 
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
+import Words from "./Words";
 
 
 const primaryColor = '#66d6f8';
@@ -88,9 +89,9 @@ const ExerciseCard = (props) => {
                 <SetCircle setInfo={set} progress={progress} current={current} info={[props.exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
                 {
                     showWeightLabel &&
-                    <Text style={{color: 'white', alignSelf: 'center'}}>{
+                    <Words style={{alignSelf: 'center'}}>{
                         weight
-                    }</Text>
+                    }</Words>
                 }
             </View>
         );
@@ -112,8 +113,8 @@ const ExerciseCard = (props) => {
     return (
         <View style={styles.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Text style={{ color: 'white' }}>{name}</Text>
-                <Text style={{ color: 'white' }}>{currentWeight}</Text>
+                <Words>{name}</Words>
+                <Words>{currentWeight}</Words>
             </View>
 
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{

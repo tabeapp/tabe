@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import WeightVisual from "../Utils/WeightVisual";
+import Words from "../Components/Words";
 
 const liftMapping = {
     squat: 'orange',
@@ -55,7 +56,7 @@ const ProfileScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} >
-                    <Text style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Text>
+                    <Words style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Words>
                 </View>
                 <View style={styles.box}>
                     <View style={styles.cardContainer}>{
@@ -65,8 +66,8 @@ const ProfileScreen = props => {
                                 <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                                     <WeightVisual weight={v} reverse={true} />
                                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Text style={{ color: 'white' }}>{k}</Text>
-                                        <Text style={{ color: 'white' }}>{v}</Text>
+                                        <Words>{k}</Words>
+                                        <Words>{v}</Words>
                                     </View>
                                     <WeightVisual weight={v}/>
                                 </View>

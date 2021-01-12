@@ -12,7 +12,9 @@ const ExploreScreen = props => {
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.topBar} />
                 <View style={styles.box}>
-                    <FlatList data={data} keyExtractor={item => item} renderItem={({item}) => <Text style={{color:'white'}}>{item}</Text>} />
+                    <FlatList data={data} keyExtractor={item => item} renderItem={
+                        ({item}) => <Words>{item}</Words>
+                    } />
                 </View>
                 <NavBar current={/*better way to handle this?*/'explore'} navigation={props.navigation}/>
             </SafeAreaView>

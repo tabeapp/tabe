@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import ProgressContext from '../Contexts/ProgressContext';
 import CustomExerciseCard from '../Components/CustomExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import ExercisePicker from '../Components/ExercisePicker';
+import Words from "../Components/Words";
 
 
 const primaryColor = '#66d6f8';
@@ -40,7 +41,7 @@ const CustomWorkoutScreen = () => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <Text style={{color: 'black', fontSize: 20}}>{workout?workout.title:''}</Text>
+                    <Words style={{color: 'black', fontSize: 20}}>{workout?workout.title:''}</Words>
                 </View>
                 <View style={styles.container}>{
                     workout&&workout.exercises.map((ex, index) => (
@@ -53,17 +54,17 @@ const CustomWorkoutScreen = () => {
                             key={name}
                             style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
                             onPress={() => addFromSuggestions(name)}>
-                            <Text style={{color: 'white'}}>{name}</Text>
+                            <Words>{name}</Words>
                         </TouchableOpacity>);
                     })
                 }</View>
                 <TouchableOpacity style={styles.configButton} onPress={openExerciseSelect}>
-                    <Text style={styles.plus}>+</Text>
+                    <Words style={styles.plus}>+</Words>
                 </TouchableOpacity>
                 <ExercisePicker visible={modal} close={() => setModal(false)}/>
                 {
                     //done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
-                    <Text style={{color:'white'}} >{generateReport()}</Text>
+                    <Words>{generateReport()}</Words>
                 }
             </SafeAreaView>
         </>

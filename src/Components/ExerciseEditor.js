@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
@@ -52,10 +52,10 @@ const ExerciseEditor = props => {
     //there's gotta be a more programmatic way to do this
     return <View key={name} style={{margin: 3, width: 406, backgroundColor: '#333'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color:'white'}}>{name}</Text>
+            <Words>{name}</Words>
         </View>
 
-        <Text>Current Working Weight: </Text>
+        <Words>Current Working Weight: </Words>
         <NumericSelector onChange={value => {
             routinesDispatch({path: 'editRoutine.info.' + name + '.current', value: value});
 
@@ -76,7 +76,7 @@ const ExerciseEditor = props => {
             />
         </View>
 
-        <Text>Sets:</Text>
+        <Words>Sets:</Words>
         <Words>Set Type:</Words>
         <Picker
             style={{width: 100, height: 50}}
@@ -152,7 +152,7 @@ const ExerciseEditor = props => {
                         })
 
                     }} >
-                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
+                    <Words style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Words>
                 </TouchableOpacity>
 
                 <View style={{flexDirection: 'row', flex: 1, justifyContent: 'space-around'}}>
@@ -190,7 +190,7 @@ const ExerciseEditor = props => {
                     style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={addSet}
                 >
-                    <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                    <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                 </TouchableOpacity>
             </View>
         }
@@ -247,7 +247,7 @@ const ExerciseEditor = props => {
                         })
 
                     }} >
-                    <Text style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Text>
+                    <Words style={{color: 'red', fontWeight: 'bold', fontSize: 15}}>-</Words>
                 </TouchableOpacity>
                 {
                     info.setInfo.sets.map((v, index) =>
@@ -266,12 +266,12 @@ const ExerciseEditor = props => {
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                     onPress={addSet}
                 >
-                    <Text style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Text>
+                    <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                 </TouchableOpacity>
 
             </View>
         }
-        <Text>Progression:</Text>
+        <Words>Progression:</Words>
         <View style={{alignItems: 'center', flexDirection: 'row'}}>
             <Words>Add</Words>
             <NumericSelector onChange={value => {
@@ -287,7 +287,7 @@ const ExerciseEditor = props => {
         {
             info.setInfo.type === 'Normal' &&//this doesn't do shit
             <View>
-                <Text>AMRAP Last Set:</Text>
+                <Words>AMRAP Last Set:</Words>
                 <Switch
                     trackColor={{ false: "#767577", true: "#81b0ff" }}
                     thumbColor={info.amrap ? "#f5dd4b" : "#f4f3f4"}

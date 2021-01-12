@@ -5,6 +5,7 @@ import { TextInput, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } fro
 import ProgressContext from '../Contexts/ProgressContext';
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
+import Words from "../Components/Words";
 
 const primaryColor = '#66d6f8';
 
@@ -48,47 +49,47 @@ const PostScreen = props => {
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
                     <TouchableOpacity style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
-                        </Text>
+                        <Words style={{fontSize: 20}}>
+                        </Words>
                     </TouchableOpacity>
-                    <Text style={{fontSize: 20}}>Workout Summary</Text>
+                    <Words style={{fontSize: 20}}>Workout Summary</Words>
                     <TouchableOpacity onPress={_=>{}} style={styles.topButton}>
-                        <Text style={{color: 'white', fontSize: 20}}>
+                        <Words style={{fontSize: 20}}>
                             Next
-                        </Text>
+                        </Words>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.container}>
                     <View style={{alignItems: 'center', flexDirection: 'row'}}>
                         <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                        <Text style={{color:'white'}}>Zyzz</Text>
+                        <Words>Zyzz</Words>
                     </View>
-                    <Text style={{fontSize: 40, color: 'white'}} >
+                    <Words style={{fontSize: 40}} >
                         {workout.title}
-                    </Text>
-                    <Text style={{color:'white'}}>
+                    </Words>
+                    <Words>
                         {workout.summary}
-                    </Text>
+                    </Words>
                     {
                         workout && workout.exercises.map((ex, index) =>
                             index === 0?
                                 //first one is biggest
                                 <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                    <Text style={{fontSize: 40, color:'white'}}>{ex.name}</Text>
+                                    <Words style={{fontSize: 40}}>{ex.name}</Words>
                                     {
                                         ex.work.map((set,i) =>
-                                            <Text key={i} style={{fontSize:40, color:'white'}}>
+                                            <Words key={i} style={{fontSize:40}}>
                                                 {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                            </Text>)
+                                            </Words>)
                                     }
                                 </View>
                                 :
                                 <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                    <Text style={{fontSize: 20, color:'white'}}>{ex.name}</Text>
+                                    <Words style={{fontSize: 20}}>{ex.name}</Words>
                                     {
-                                        ex.work.map(set => <Text style={{fontSize: 20, color:'white'}}>
+                                        ex.work.map(set => <Words style={{fontSize: 20}}>
                                             {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Text>)
+                                        </Words>)
                                     }
                                 </View>
                         )

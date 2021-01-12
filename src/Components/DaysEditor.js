@@ -1,7 +1,8 @@
 import React, {useContext} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
+import Words from "./Words";
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
@@ -14,7 +15,7 @@ const DaysEditor = props => {
                 //just to mark days of week
                 ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(dow =>
                     <View key={dow} style={{ justifyContent: 'center', alignItems: 'center', width: '12.5%', height: 20, margin: 3 }} >
-                        <Text style={{color: 'white'}}>{dow}</Text>
+                        <Words>{dow}</Words>
                     </View>
                 )
             }

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import {TouchableOpacity, StyleSheet, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
@@ -7,6 +7,7 @@ import ProgressContext from "../Contexts/ProgressContext";
 import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
 import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
+import Words from "../Components/Words";
 
 const primaryColor = '#66d6f8';
 
@@ -56,9 +57,9 @@ const ChooseRoutineScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
                 <View style={styles.top}>
-                    <Text style={{color: 'black', fontSize: 20}}>Routine Selector</Text>
+                    <Words style={{color: 'black', fontSize: 20}}>Routine Selector</Words>
                 </View>
-                <Text style={{paddingVertical: 5, paddingHorizontal: 10, fontSize: 30, color: 'white'}}>Recommended Routines</Text>
+                <Words style={{paddingVertical: 5, paddingHorizontal: 10, fontSize: 30}}>Recommended Routines</Words>
                 <View style={styles.container}>{
                     routines.map(r =>
                         <TouchableOpacity
@@ -66,20 +67,20 @@ const ChooseRoutineScreen = props => {
                             onPress={() => handleRoutinePress(r)}
                             style={{backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100, width: '48%'}}
                         >
-                            <Text style={{fontSize: 20, color: 'white'}}>{
+                            <Words style={{fontSize: 20}}>{
                                 r.title
-                            }</Text>
-                            <Text style={{color: 'white'}}>{
+                            }</Words>
+                            <Words>{
                                 r.description
-                            }</Text>
+                            }</Words>
                         </TouchableOpacity>)
                 }</View>
                 <TouchableOpacity
                     onPress={handleCustomPress}
                     style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
                 >
-                    <Text style={{fontSize: 20, color: 'white'}}>Custom</Text>
-                    <Text style={{color: 'white'}}>Build your own routine</Text>
+                    <Words style={{fontSize: 20}}>Custom</Words>
+                    <Words>Build your own routine</Words>
                 </TouchableOpacity>
             </SafeAreaView>
         </>

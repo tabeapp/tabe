@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Modal, Text} from 'react-native';
 import { CATEGORIES, EX_INFO } from '../Constants/DefaultExInfo';
+import Words from "./Words";
 
 //make it possible to cancel
 const ExercisePicker = props => {
@@ -14,7 +15,7 @@ const ExercisePicker = props => {
     if(category === ''){
         list = CATEGORIES.map(cat =>
             <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
-                <Text>{cat}</Text>
+                <Words>{cat}</Words>
             </TouchableOpacity>
         )
     } else {
@@ -28,7 +29,7 @@ const ExercisePicker = props => {
                     }}
                     key={k} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
 
-                    <Text>{k}</Text>
+                    <Words>{k}</Words>
                 </TouchableOpacity>
             )
     }

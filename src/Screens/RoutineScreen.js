@@ -88,9 +88,9 @@ const RoutineScreen = props => {
                                     }}
                                     style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                                 >
-                                    <Text style={{fontSize: 20, color: 'white'}}>{
+                                    <Words style={{fontSize: 20}}>{
                                         v.title
-                                    }</Text>
+                                    }</Words>
                                     <TouchableOpacity style={{width: 50 }} onPress={() => {
                                         deleteRoutine(k);//
                                     }}>
