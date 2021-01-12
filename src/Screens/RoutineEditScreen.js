@@ -44,7 +44,7 @@ const RoutineEditScreen = props => {
     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
 
     //can i do this?
-    const {title, time, info, workouts, days, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
+    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
 
     const addExercise = (k,ex) => {
         //should this part be done before
@@ -240,6 +240,23 @@ const RoutineEditScreen = props => {
                             }
 
                             numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
+                    </View>
+
+                    {/*shoud this be towards the bottom
+                        or towards the top as it applies to all exercises?*/}
+                    <Words style={{fontSize: 20}}>Failure Behavior:</Words>
+                    <View style={{flexDirection: 'row'}}>
+                        <Words style={{fontSize: 20}}>Deload</Words>
+                        <NumericSelector
+                            onChange={v => rd('failure.deloadPercent', v)}
+                            numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
+                        />
+                        <Words style={{fontSize: 20}}>% after</Words>
+                        <NumericSelector
+                            onChange={v => rd('failure.after', v)}
+                            numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
+                        />
+                        <Words style={{fontSize: 20}}>failed sets</Words>
                     </View>
 
                     <Text style={{color:'white', fontSize: 40}}>Workouts</Text>

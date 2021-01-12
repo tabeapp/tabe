@@ -4,7 +4,8 @@ export const BLANK_ROUTINE = () => ({
     info: {},
     workouts: {},
     days: [],
-    failure: { after: 3, deload: .9 },//this is a good, right?
+    //defintely gonna have to redo the part in progressprovider that handles this tho
+    failure: { after: 3, deloadPercent: 10 },//this is a good, right?
     customScheme: false,
     customSets: {},//this fucked me up
     currentDay: 0,//do we really need these last 2?
