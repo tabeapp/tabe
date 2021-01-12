@@ -168,8 +168,16 @@ const RoutineEditScreen = props => {
             <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
             <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
                 <View style={styles.top} >
-                    <TouchableOpacity style={styles.topButton}>
-                        <Words/>
+                    <TouchableOpacity
+                        onPress={() => {
+                            //this is easier than the save, just leave
+                            //this does keep someting in 'editRoutine', but whatever
+                            //accessing routineedit later will copy in some other routine
+                            props.navigation.navigate('routine');
+                        }}
+                        style={styles.topButton}
+                    >
+                        <Words style={{fontSize: 20}}>Discard</Words>
                     </TouchableOpacity>
                     <Words style={{fontSize: 20}}>Routine Editor</Words>
                     <TouchableOpacity onPress={() => {
@@ -192,6 +200,7 @@ const RoutineEditScreen = props => {
                             //and save the new routine based on title
                             prev.routines[newRoutine.title] = newRoutine;
 
+                            delete prev.editRoutine;
                             return prev;
                         });
 
