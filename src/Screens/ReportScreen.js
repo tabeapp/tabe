@@ -11,7 +11,7 @@ import { FONT } from "../Style/Values";
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let { report, saveWorkout, analyzeWorkout, generateReport} = useContext(ProgressContext);
+    let { report, saveWorkout, analyzeWorkout}  = useContext(ProgressContext);
     //you know what fuck this, report will always be sent as an object.
 
     //should this be passed as params or generated here?

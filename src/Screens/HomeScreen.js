@@ -7,7 +7,7 @@ import Words from "../Components/Words";
 
 const HomeScreen = props => {
     //what's the best way to load
-    let {getPosts} = useContext(ProgressContext);
+    //yeah we're gonna need a Social context
     const [posts, setPosts] = useState([]);
     //const data = await getPosts();
 

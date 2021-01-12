@@ -5,6 +5,7 @@ import CustomExerciseCard from '../Components/CustomExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import ExercisePicker from '../Components/ExercisePicker';
 import Words from "../Components/Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 
 const primaryColor = '#66d6f8';
@@ -19,6 +20,7 @@ const sampleSuggestion = [
 //completely customizable
 const CustomWorkoutScreen = () => {
     let {loaded, initializeCustom, workout, addExercise, generateReport} = useContext(ProgressContext);
+    const {workoutDispatch} = useContext(WorkoutContext);
     useEffect(() => {
         if (!loaded)
         {initializeCustom();}

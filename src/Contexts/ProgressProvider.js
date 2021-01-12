@@ -452,13 +452,6 @@ class ProgressProvider extends React.Component {
         this.setState({report: null, workout: null});
     };
 
-    //yes this will ideally load from server
-    getPosts = async () => {
-        const val = await AsyncStorage.getItem('@workouts');
-        if(val === null)
-            return [];
-        return JSON.parse(val);
-    }
 
     render() {
         return (

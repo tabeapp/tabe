@@ -8,6 +8,8 @@ import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
 import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
 import Words from "../Components/Words";
+import WorkoutProvider from "../Contexts/WorkoutProvider";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 const primaryColor = '#66d6f8';
 
@@ -36,11 +38,13 @@ const routines = [
 ]
 
 const ChooseRoutineScreen = props => {
-    //let { workout, generateReport} = useContext(ProgressContext);
-    let {initializeWorkout, initializeCustom} = useContext(ProgressContext);
+    const {routineDispatch} = useContext(WorkoutContext);
     const handleCustomPress = () => {
         //set up
-        initializeCustom();
+        routineDispatch(() => ({
+            title: '',
+            exercises: []
+        }));
         props.navigation.navigate('customworkout');
     };
 

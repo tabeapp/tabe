@@ -249,6 +249,7 @@ const WorkoutProvider = props => {
             workoutDispatch: workoutDispatch,
             checkRest: checkRest,
             generateWorkout: generateWorkout,
+            //it's POSSIBLE we could use a generateCustom
         }}>
             {props.children}
         </WorkoutContext.Provider>
