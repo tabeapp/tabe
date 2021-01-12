@@ -15,11 +15,11 @@ import RoutinesContext from "./RoutinesContext";
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
-    const initState = {
-    };
+    const initState = {};
 
     //is this legal
-    const {current, routines} = useContext(RoutinesContext);
+    const {current, routines} = useContext(RoutinesContext).routines;
+    const {routinesDispatch} = useContext(RoutinesContext);
 
     const handleAppStateChange = nextAppState => {
         if(nextAppState === 'inactive' || nextAppState === 'background') {
@@ -49,6 +49,101 @@ const WorkoutProvider = props => {
             AppState.removeEventListener('change', handleAppStateChange);
     }, []);
 
+    //heavy logic here, not much you can do with usereducer here
+    const generateWorkout = () => {
+        if(JSON.stringify(workout) !== '{}')
+            return;
+
+        const r = FULL_COPY(routines[current]);
+        let day = r.days[r.currentDay % r.time];
+
+        while(day === 'R'){
+            r.currentDay++;
+            day = r.days[r.currentDay%r.time];
+        }
+
+        const exercises = r.workouts[day];
+
+        //just be careful about copying objects
+        const compiledExercises = exercises.map(name => {
+            //wait til you hear about supersets
+            if(name.includes('/'))
+                return null;
+
+            const exInfo = r.info[name];
+            const setInfo = exInfo.setInfo;
+
+            let sets = [];
+            if(setInfo.type === 'Normal'){
+                sets = setInfo.sets.map(reps => ({
+                    reps: reps,
+                    progress: null,
+                    weight: exInfo.current
+                }));
+            }
+            else if(setInfo.type === 'Custom'){
+                //very complex, but it works
+                const custom = r.customSets[setInfo.scheme][setInfo.selector]
+
+                sets = custom.map(set => ({
+                    reps: set.reps,
+                    progress: null,
+                    weight: Math.ceil(set['%'] * exInfo.current/5)*5
+                }));
+
+            }
+            else if(setInfo.type === 'Sum'){
+                //TODO
+            }
+            else if(setInfo.type === 'Timed'){
+                //TODO
+            }
+
+            if(exInfo.amrap)
+                sets[sets.length-1].amrap = true;
+
+            return {
+                name: name,
+                barbell: exInfo.barbell,
+                sets: sets,
+                rest: exInfo.rest
+            }
+
+
+        });
+        compiledExercises[0].sets[0].progress = 'c';
+
+        //cuz we updated days
+        routinesDispatch(prev => {
+            prev.routines[prev.current] = r;
+        });
+
+        workoutDispatch(() => ({
+            title: r.title + ' ' + day,
+            exercises: compiledExercises
+        }));
+    };
+
+    //can't avoid doing this
+    const checkRest = () => {
+        //if the current time is before the nextWorkout time, take a rest
+        const now = new Date().getTime();
+        //even if this isn't initialized, it should work as it just returns the current day
+        if(now < routines[current].nextWorkoutTime)
+            return true;
+
+        //if it's after, advance currentday until there's a workout
+        //and return false
+        const r = FULL_COPY(routines[current]);
+        while(!r.days[r.currentDay%r.time])
+            r.currentDay++;
+
+        routinesDispatch(prev => {
+            prev.routines[prev.current] = r;
+        });
+
+        return false;
+    };
 
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
@@ -70,8 +165,6 @@ const WorkoutProvider = props => {
         //or you can do action = ['editroutine.title', 'startingstrength']
         if(action.path || action.length === 2){
             let path, value;
-            //TODO: oh fuck this also means we cant use '.' in workout names
-            //use - instead
             if(action.path) {
                 path = action.path.split('.');
                 value = action.value;
@@ -115,7 +208,9 @@ const WorkoutProvider = props => {
     return (
         <WorkoutContext.Provider value={{
             workout: workout,
-            workoutDispatch: workoutDispatch
+            workoutDispatch: workoutDispatch,
+            checkRest: checkRest,
+            generateWorkout: generateWorkout,
         }}>
             {props.children}
         </WorkoutContext.Provider>

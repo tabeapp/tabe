@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { Alert, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Alert, TouchableOpacity, StyleSheet, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import ProgressContext from '../Contexts/ProgressContext';
 import Words from "./Words";
+import RoutinesContext from "../Contexts/RoutinesContext";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 const routes = [
     'home',
@@ -21,11 +22,12 @@ const iconMapping = {
 };
 
 const NavBar = props => {
-    const {checkRoutine, checkRest, initializeWorkout, initializeCustom} = useContext(ProgressContext);
+    const {current, routines} = useContext(RoutinesContext).routines;
+    const {workoutDispatch, checkRest, generateWorkout} = useContext(WorkoutContext);
 
-    const { current } = props;
+    const currentPage = props.current;
     const handlePress = (r) => {
-        if (r === current)
+        if (r === currentPage)
             return;
 
         if (r === 'workout')
@@ -36,20 +38,22 @@ const NavBar = props => {
 
     const customStart = () => {
         //set up
-        initializeCustom();
+        workoutDispatch(() => ({
+            title: 'Custom Workout',
+            exercises: []
+        }))
         props.navigation.navigate('customworkout');
     };
 
+    //need to fucking redo this whole thing too
     const routineStart = async () => {
-        let hasRoutine = await checkRoutine();
-        if(hasRoutine){
+        if(routines[current]){
             //if it's a rest day, ask for confirmation
             let isRest = checkRest();
-            console.log('isrest ' + isRest);
 
             if(!isRest){
                 //no it's possible it's already loaded
-                initializeWorkout();
+                generateWorkout();
                 props.navigation.navigate('workout');
             }
             else{
@@ -66,7 +70,7 @@ const NavBar = props => {
                         {
                             text: "Override",
                             onPress: () => {
-                                initializeWorkout();
+                                generateWorkout();
                                 props.navigation.navigate('workout');
                             },
                         }
@@ -83,7 +87,7 @@ const NavBar = props => {
     return (<View style={styles.navBar}>{
         routes.map(r => {
             let icon = iconMapping[r];
-            if (r !== current)
+            if (r !== currentPage)
                 icon += '-outline'
 
             if (r === 'workout') {
