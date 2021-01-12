@@ -162,6 +162,74 @@ const WorkoutProvider = props => {
         return false;
     };
 
+    //needs massive rewrite and SIMPlification
+    const generateReport = () => {
+        //just default for the report
+        if(!workout)
+            return {
+                name: '',
+                exercises: []
+            };
+
+        let report = {};
+        report.title = workout.title;
+        report.time = new Date().getTime();//get current time;
+
+        report.exercises = workout.exercises.map(exercise => {
+            let exReport = {
+                name: exercise.name,
+                work: []
+            };
+
+            //not sure when tf this would happen
+            if(!exercise.sets[0])
+                return {work:[]};
+
+            //scan and compile into somethign like 2x3@150, 1x5@180
+            let curWeight = exercise.sets[0].weight;
+            let curReps = exercise.sets[0].progress;
+            let curRun = 1;
+            for(let j = 1; j < exercise.sets.length; j++){
+                const set = exercise.sets[j];
+
+                if(set.weight === curWeight && set.progress === curReps)
+                    curRun++;
+                else{
+                    //save and restart counter
+                    exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
+                    curWeight = set.weight;
+                    curReps = set.progress;
+                    curRun = 1;
+                }
+            }
+            //save the last one
+            exReport.work.push({sets: curRun, reps: curReps, weight: curWeight });
+
+            //will this filter out 0s?
+            exReport.work = exReport.work.filter(s =>
+                s.reps && s.reps !== 'c'
+            )
+
+            return exReport;
+        });
+
+        //report is now good to save, I think
+        //get rid of empty
+        report.exercises = report.exercises.filter(ex => ex.work.length);
+
+        let x = '';
+        report.exercises.forEach(ex => {
+            x += ex.name + ' ';
+            ex.work.forEach(info => {
+                x += info.sets + 'x' + info.reps + '@' + info.weight + ', ';
+            });
+        });
+        x = x.substring(0, x.length-2);
+        report.summary = x;
+
+        //this.setState({report: report});
+        return report;
+    };
 
     //i guess like use effect?
     //this same logic shows up over and over again in the old code
@@ -259,7 +327,7 @@ const WorkoutProvider = props => {
             checkRest: checkRest,
             generateWorkout: generateWorkout,
             generateCustom: generateCustom,
-            //it's POSSIBLE we could use a generateCustom
+            generateReport: generateReport
         }}>
             {props.children}
         </WorkoutContext.Provider>

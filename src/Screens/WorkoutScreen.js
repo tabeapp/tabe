@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 //get custom icons eventually
 
-import ProgressContext from '../Contexts/ProgressContext';
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
@@ -12,9 +11,9 @@ import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
 
 const primaryColor = '#66d6f8';
 
+//TODO how about actually adjusting the wieghts on the fly?
 const WorkoutScreen = props => {
-    let {  generateReport, addExercise} = useContext(ProgressContext);
-    const {workout, workoutDispatch} = useContext(WorkoutContext);
+    const {workout, workoutDispatch, generateReport} = useContext(WorkoutContext);
 
     //workout.edit false => normal workout screen
     //workout.edit true => custom wokrout screen
