@@ -222,6 +222,7 @@ class ProgressProvider extends React.Component {
 
     //load from storage here
     //this will look at the provided routine and create a workout for the day
+    //this is a vital function
     initializeWorkout = () => {
         //this might be loaded on component mount form asyncStorage
         if(this.state.workout)
