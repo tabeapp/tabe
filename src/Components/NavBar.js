@@ -39,7 +39,7 @@ const NavBar = props => {
     const customStart = () => {
         //set up
         generateCustom();
-        props.navigation.navigate('customworkout');
+        props.navigation.navigate('workout');
     };
 
     //need to fucking redo this whole thing too

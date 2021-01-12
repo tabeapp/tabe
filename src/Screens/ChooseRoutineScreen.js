@@ -42,7 +42,7 @@ const ChooseRoutineScreen = props => {
     const handleCustomPress = () => {
         //set up
         generateCustom();
-        props.navigation.navigate('customworkout');
+        props.navigation.navigate('workout');
     };
 
     const handleRoutinePress = async r => {

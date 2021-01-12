@@ -1,10 +1,11 @@
-import React from 'react';
-import {View, StyleSheet}  from 'react-native';
+import React, { useContext } from "react";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 //get custom icons eventually
 
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
 import Words from "./Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 
 const primaryColor = '#66d6f8';
@@ -21,6 +22,33 @@ const MidLine = (props) => {
     </View>
 };
 
+const SetModButton = props => {
+    const {workoutDispatch} = useContext(WorkoutContext);
+    const {exerciseN} = props;
+
+    const add = props.type === '+';
+    const color = add ? 'lightgreen': 'red';
+
+    return (
+        <TouchableOpacity
+            style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
+            onPress={() => {
+                workoutDispatch(prev => {
+                    const x = prev.exercises[exerciseN].sets;
+                    if(add)//yes, but what if it's empty?
+                        x.push({...x[x.length-1]});
+                    else
+                        x.splice(x.length-1);
+                    return prev;
+                });
+            }}
+        >
+            <Words>{props.type}</Words>
+        </TouchableOpacity>
+
+    );
+};
+
 const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
@@ -29,10 +57,13 @@ const ExerciseCard = (props) => {
     //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
     const {name, barbell, sets} = props.exercise;
 
+    const {edit} = props;
+
     let colors = [];
     let outlines = [];
     let done = true;
 
+    //map?
     sets.forEach(set => {
         //it'll be null
         if(!set.progress || set.progress === 'c'){
@@ -117,9 +148,20 @@ const ExerciseCard = (props) => {
                 <Words>{currentWeight}</Words>
             </View>
 
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
-                items//.map(i => i)
-            }</View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                {
+                    edit&&
+                    <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
+                }
+
+                <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>{
+                    items//.map(i => i)
+                }</View>
+                {
+                    edit&&
+                    <SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>
+                }
+            </View>
         </View>
     );
 };

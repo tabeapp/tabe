@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext, useState } from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 //get custom icons eventually
 
@@ -7,12 +7,19 @@ import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import ExercisePicker from "../Components/ExercisePicker";
 
 const primaryColor = '#66d6f8';
 
 const WorkoutScreen = props => {
-    let {  generateReport} = useContext(ProgressContext);
+    let {  generateReport, addExercise} = useContext(ProgressContext);
     const {workout} = useContext(WorkoutContext);
+
+    //workout.edit false => normal workout screen
+    //workout.edit true => custom wokrout screen
+
+    //true for custom workouts
+    const edit = workout.edit;
 
     const handleNext = () => {
         //take the workout
@@ -21,6 +28,21 @@ const WorkoutScreen = props => {
         props.navigation.navigate('report', {
             report: generateReport()
         });
+    };
+
+    const [modal, setModal] = useState(false);
+
+    const sampleSuggestion = [
+        'bench', 'curl', 'deadlift',
+    ];
+    const addFromSuggestions = name => {
+        addExercise(name);
+        sampleSuggestion.splice(sampleSuggestion.indexOf(name), 1);
+
+    };
+
+    const openExerciseSelect = () => {
+        setModal(true);
     };
 
     return (
@@ -42,19 +64,50 @@ const WorkoutScreen = props => {
                 </View>
                 <View style={styles.container}>{
                     workout&&workout.exercises.map((ex, index) => (
-                        <ExerciseCard key={ex.name} exercise={ex} exerciseN={index} />
+                        <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
                     ))
                 }</View>
+
                 {
-                    //done && <TouchableOpacity style={{backgroundColor: 'green', width: 50, height: 30}}/>
-                    //<Text style={{color:'white'}} >{generateReport()}</Text>
+                    edit &&
+                        <>
+                            <View style={{flexDirection: 'row' }}>{
+                                sampleSuggestion.map(name => {
+                                    return (<TouchableOpacity
+                                        key={name}
+                                        style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
+                                        onPress={() => addFromSuggestions(name)}>
+                                        <Words>{name}</Words>
+                                    </TouchableOpacity>);
+                                })
+                            }</View>
+                            <TouchableOpacity style={styles.configButton} onPress={openExerciseSelect}>
+                                <Words style={styles.plus}>+</Words>
+                            </TouchableOpacity>
+
+                        </>
                 }
+
+                <ExercisePicker visible={modal} close={() => setModal(false)}/>
+
             </SafeAreaView>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    plus: {
+        fontSize: 35,
+    },
+    configButton: {
+        borderRadius: 25,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#333',
+        width: 50,
+        height: 50,
+    },
     container: {alignItems: 'center', justifyContent: 'center', margin: 5},
     //top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
     top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
