@@ -20,10 +20,10 @@ const sampleSuggestion = [
 //completely customizable
 const CustomWorkoutScreen = () => {
     let {loaded, initializeCustom, workout, addExercise, generateReport} = useContext(ProgressContext);
-    const {workoutDispatch} = useContext(WorkoutContext);
+    const {workoutDispatch, generateCustom} = useContext(WorkoutContext);
     useEffect(() => {
         if (!loaded)
-        {initializeCustom();}
+        {generateCustom();}
     }, []);
 
     const [modal, setModal] = useState(false);

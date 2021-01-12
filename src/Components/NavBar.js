@@ -23,7 +23,7 @@ const iconMapping = {
 
 const NavBar = props => {
     const {current, routines} = useContext(RoutinesContext).routines;
-    const {workoutDispatch, checkRest, generateWorkout} = useContext(WorkoutContext);
+    const {generateCustom, checkRest, generateWorkout} = useContext(WorkoutContext);
 
     const currentPage = props.current;
     const handlePress = (r) => {
@@ -38,10 +38,7 @@ const NavBar = props => {
 
     const customStart = () => {
         //set up
-        workoutDispatch(() => ({
-            title: 'Custom Workout',
-            exercises: []
-        }))
+        generateCustom();
         props.navigation.navigate('customworkout');
     };
 

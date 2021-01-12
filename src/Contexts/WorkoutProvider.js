@@ -127,9 +127,18 @@ const WorkoutProvider = props => {
 
         workoutDispatch(() => ({
             title: r.title + ' ' + day,
-            exercises: compiledExercises
+            exercises: compiledExercises,
+            edit: false
         }));
     };
+
+    const generateCustom = () => {
+        workoutDispatch(() => ({
+            title: '',
+            exercises: [],
+            edit: true
+        }));
+    }
 
     //can't avoid doing this
     const checkRest = () => {
@@ -249,6 +258,7 @@ const WorkoutProvider = props => {
             workoutDispatch: workoutDispatch,
             checkRest: checkRest,
             generateWorkout: generateWorkout,
+            generateCustom: generateCustom,
             //it's POSSIBLE we could use a generateCustom
         }}>
             {props.children}

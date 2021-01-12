@@ -38,13 +38,10 @@ const routines = [
 ]
 
 const ChooseRoutineScreen = props => {
-    const {routineDispatch} = useContext(WorkoutContext);
+    const {generateCustom} = useContext(WorkoutContext);
     const handleCustomPress = () => {
         //set up
-        routineDispatch(() => ({
-            title: '',
-            exercises: []
-        }));
+        generateCustom();
         props.navigation.navigate('customworkout');
     };
 
