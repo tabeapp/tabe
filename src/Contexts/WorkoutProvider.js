@@ -54,7 +54,10 @@ const WorkoutProvider = props => {
         if(JSON.stringify(workout) !== '{}')
             return;
 
+        console.log(routines);
+        console.log(current);
         const r = FULL_COPY(routines[current]);
+        console.log('here')
         let day = r.days[r.currentDay % r.time];
 
         while(day === 'R'){
@@ -83,12 +86,13 @@ const WorkoutProvider = props => {
             }
             else if(setInfo.type === 'Custom'){
                 //very complex, but it works
+                //selector is missing, I wonder why though
                 const custom = r.customSets[setInfo.scheme][setInfo.selector]
 
                 sets = custom.map(set => ({
                     reps: set.reps,
                     progress: null,
-                    weight: Math.ceil(set['%'] * exInfo.current/5)*5
+                    weight: Math.ceil(set['%']/100 * exInfo.current/5)*5
                 }));
 
             }
@@ -116,6 +120,7 @@ const WorkoutProvider = props => {
         //cuz we updated days
         routinesDispatch(prev => {
             prev.routines[prev.current] = r;
+            return prev;
         });
 
         workoutDispatch(() => ({
@@ -140,6 +145,7 @@ const WorkoutProvider = props => {
 
         routinesDispatch(prev => {
             prev.routines[prev.current] = r;
+            return prev;
         });
 
         return false;

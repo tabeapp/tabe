@@ -198,6 +198,11 @@ const RoutineEditScreen = props => {
                             const x = newRoutine.info[ex].progress;
                             if(!x.countdown)
                                 x.countdown = x.rate;
+
+                            //i don't know why this isn't correctly handled by the exercise editor
+                            const y = newRoutine.info[ex].setInfo;
+                            if(y.type === 'Custom' && !y.selector)
+                                y.selector = 0;
                         });
 
                         routinesDispatch(prev => {

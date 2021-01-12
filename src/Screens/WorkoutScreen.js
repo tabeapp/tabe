@@ -6,11 +6,13 @@ import ProgressContext from '../Contexts/ProgressContext';
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 const primaryColor = '#66d6f8';
 
 const WorkoutScreen = props => {
-    let { workout, generateReport} = useContext(ProgressContext);
+    let {  generateReport} = useContext(ProgressContext);
+    const {workout} = useContext(WorkoutContext);
 
     const handleNext = () => {
         //take the workout
