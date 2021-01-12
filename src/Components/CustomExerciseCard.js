@@ -4,8 +4,8 @@ import {TouchableOpacity, Text, View, StyleSheet}  from 'react-native';
 
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
-import ProgressContext from "../Contexts/ProgressContext";
 import Words from "./Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 
 const primaryColor = '#66d6f8';
@@ -22,15 +22,24 @@ const MidLine = (props) => {
     </View>
 };
 
-const SetModButton = (props) => {
-    let {updateExercise} = useContext(ProgressContext);
+const SetModButton = props => {
+    const {workoutDispatch} = useContext(WorkoutContext);
+    const {exerciseN} = props;
 
     const add = props.type === '+';
     const color = add ? 'lightgreen': 'red';
 
     return (
-        <TouchableOpacity style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
-            onPress={() => updateExercise(props.exerciseN, add)}>
+        <TouchableOpacity
+            style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: color}}
+            onPress={() => {
+                workoutDispatch(prev => {
+                    const x = prev.exercises[exerciseN].sets;
+                    x.push({...x[x.length-1]});
+                    return prev;
+                });
+            }}
+        >
             <Words>{props.type}</Words>
         </TouchableOpacity>
 
