@@ -1,9 +1,10 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WorkoutContext from './WorkoutContext';
-import { useReducer, useEffect }  from 'react';
+import { useReducer, useEffect, useContext }  from 'react';
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import { AppState } from "react-native";
+import RoutinesContext from "./RoutinesContext";
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -15,12 +16,10 @@ import { AppState } from "react-native";
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
     const initState = {
-
-        //current: '',
-        //routines: {},
-        //editRoutine: {}
-        //worko
     };
+
+    //is this legal
+    const {current, routines} = useContext(RoutinesContext);
 
     const handleAppStateChange = nextAppState => {
         if(nextAppState === 'inactive' || nextAppState === 'background') {
@@ -39,9 +38,16 @@ const WorkoutProvider = props => {
         //componentdidmount
         AppState.addEventListener('change', handleAppStateChange);
 
-        //componentwillunmount
-    }, []);
+        AsyncStorage.getItem('@workout').then(obj => {
+            //do we need to call generateReport here?
+            if(obj !== null)
+                workoutDispatch(() => JSON.parse(obj));
+        });
 
+        //componentwillunmount
+        return () =>
+            AppState.removeEventListener('change', handleAppStateChange);
+    }, []);
 
 
     //so i guess state is the previous state
