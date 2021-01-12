@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet}  from 'react-native';
+import {View, StyleSheet}  from 'react-native';
 //get custom icons eventually
 
 import WeightVisual from "../Utils/WeightVisual";

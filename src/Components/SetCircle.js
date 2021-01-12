@@ -1,15 +1,17 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import ProgressContext from '../Contexts/ProgressContext';
 import Words from "./Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 //const reps = [];
 //for(let i = 0; i < 20; i++)
     //reps.push(i)
 
+const CURRENT = 'c';
+
 const SetCircle = (props) => {
-    const {updateSet} = useContext(ProgressContext);
+    const {workoutDispatch} = useContext(WorkoutContext);
 
     //ok this is kinda confusing, but props.setInfo.reps is how much you're supposed to do
     const [prog, setProg] = useState(props.setInfo.reps);
@@ -22,7 +24,7 @@ const SetCircle = (props) => {
         let text = props.setInfo.reps;
         if(props.setInfo.amrap)
             text += '+';
-        if(props.setInfo.progress && props.setInfo.progress !== 'c')
+        if(props.setInfo.progress && props.setInfo.progress !== CURRENT)
             text = props.setInfo.progress;
         return (
             <View style={{ ...styles.circle, ...props.style }} >
@@ -37,8 +39,29 @@ const SetCircle = (props) => {
         //locks it esssentially
         //we could probably do something with current set, but for now just this
         //parse int cuz sometimes it says 5+
-        updateSet(exerciseN, setN, prog);
 
+        workoutDispatch(prev => {
+            const exercises = prev.exercises;
+            //check to see if we need to move the current indicator
+
+            const x = exercises[exerciseN].sets[setN];
+            const move = x.progress === CURRENT;
+            //if only would be this easy, but we also need to move the current
+            x.progress = prog;
+
+            if(move){
+                if (setN + 1 === exercises[exerciseN].sets.length){
+                    if (exerciseN + 1 === exercises.length) {
+                        prev.done = true;
+                    }
+                    else
+                        exercises[exerciseN + 1].sets[0].progress = CURRENT;
+                }
+                else
+                    exercises[exerciseN].sets[setN+1].progress = CURRENT;
+            }
+            return prev;
+        });
     };
 
 

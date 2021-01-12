@@ -1,5 +1,5 @@
-import React, {useEffect, useContext} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from "react-native";
+import React, {useContext} from 'react';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
 //get custom icons eventually
 
 import ProgressContext from '../Contexts/ProgressContext';

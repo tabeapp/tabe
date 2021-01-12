@@ -52,7 +52,7 @@ const WorkoutProvider = props => {
     //heavy logic here, not much you can do with usereducer here
     const generateWorkout = () => {
         if(JSON.stringify(workout) !== '{}')
-            return;
+            return workout;
 
         console.log(routines);
         console.log(current);
@@ -92,6 +92,7 @@ const WorkoutProvider = props => {
                 sets = custom.map(set => ({
                     reps: set.reps,
                     progress: null,
+                    //next step, rewritew workout screen and its components
                     weight: Math.ceil(set['%']/100 * exInfo.current/5)*5
                 }));
 
