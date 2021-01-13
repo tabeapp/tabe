@@ -12,21 +12,13 @@ import WorkoutContext from "../Contexts/WorkoutContext";
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let { saveWorkout, analyzeWorkout} = useContext(ProgressContext);
-    const {generateReport} = useContext(WorkoutContext);
+    let {saveWorkout} = useContext(ProgressContext);
+    const {generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
-    //should this be passed as params or generated here?
-    //const [rep, setRep] = useState(report);
-
-    //console.log(report);
-    //const [title, setTitle] = useState(props.route.params.report.name);
-    //const [description, setDescription] = useState(props.route.params.report.summary);
-    //this doesn't needs its own fn context
     const [report, setReport] = useState(generateReport()/*props.route.params.report*/);
 
-    //report should almost always not be null, even if it is the user can just add their own title
-    const [title, setTitle] = useState(report?report.name:'');
+    const [title, setTitle] = useState(report.title);
 
     const [description, setDescription] = useState(report?report.summary:'');
     //useEffect(() =>
@@ -38,7 +30,7 @@ const ReportScreen = props => {
     const handleNext = () => {
         //idk what else to call this
         //but essentially increment progressing weights, look for prs, etc
-        analyzeWorkout();
+        analyzeWorkout(report);
 
         //combine workout and title and description
         saveWorkout({...report, title: title, description: description});
