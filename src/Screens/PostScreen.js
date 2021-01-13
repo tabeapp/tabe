@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import { TextInput, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 //get custom icons eventually
 
-import ProgressContext from '../Contexts/ProgressContext';
-import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 
@@ -14,7 +12,6 @@ const PostScreen = props => {
     //this will ALWAYS be passed a param of id,
     //sometimes it'll just be passed the workout itself
     //but id will enable it to load and send requests
-    //let { report, saveWorkout, generateReport} = useContext(ProgressContext);
 
     //const id = props.route.params.postId;
     const workout = props.route.params.workout;

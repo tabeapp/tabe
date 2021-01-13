@@ -2,7 +2,6 @@ import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Text, TextInput, 
 import React, {useEffect, useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
-import ProgressContext from "../Contexts/ProgressContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Words from "../Components/Words";
 import Ionicons from "react-native-vector-icons/Ionicons";

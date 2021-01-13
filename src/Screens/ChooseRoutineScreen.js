@@ -3,7 +3,6 @@ import {TouchableOpacity, StyleSheet, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
-import ProgressContext from "../Contexts/ProgressContext";
 import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
 import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";

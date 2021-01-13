@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext} from 'react';
 import { TextInput, StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 //get custom icons eventually
 
-import ProgressContext from '../Contexts/ProgressContext';
-import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import { FONT } from "../Style/Values";
@@ -12,8 +10,7 @@ import WorkoutContext from "../Contexts/WorkoutContext";
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let {saveWorkout} = useContext(ProgressContext);
-    const {generateReport, analyzeWorkout} = useContext(WorkoutContext);
+    const {saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     const [report, setReport] = useState(generateReport()/*props.route.params.report*/);

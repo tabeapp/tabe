@@ -2,7 +2,6 @@ import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, View } from "reac
 import React, {useContext, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
-import ProgressContext from "../Contexts/ProgressContext";
 import Words from "../Components/Words";
 
 const HomeScreen = props => {

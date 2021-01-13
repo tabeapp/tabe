@@ -322,6 +322,7 @@ const WorkoutProvider = props => {
 
         //the rest of this function involves progressing the routine
         //without a routine, just quit
+        //maybe all this should go to routineprovider?
         if(workout.routine === '')
             return;
 
@@ -460,6 +461,22 @@ const WorkoutProvider = props => {
         });
     }
 
+    const saveWorkout = async workoutData => {
+        //finally clear it
+        await AsyncStorage.removeItem('@workout');
+        AsyncStorage.getItem('@workouts', (_, result) => {
+            let workouts = [];
+            if(result !== null)
+                workouts = JSON.parse(result);
+
+            workouts.push(workoutData);
+            AsyncStorage.setItem('@workouts', JSON.stringify(workouts));
+        });
+        //need to clear workout from state as well
+        //and the report, it doesn't get cleared
+        workoutDispatch({path: 'workout', value: null});
+    };
+
     //i guess like use effect?
     //this same logic shows up over and over again in the old code
     //just make sure the next set is marked as 'c', that simple
@@ -561,7 +578,8 @@ const WorkoutProvider = props => {
             generateCustom: generateCustom,
 
             generateReport: generateReport,
-            analyzeWorkout: analyzeWorkout
+            analyzeWorkout: analyzeWorkout,
+            saveWorkout: saveWorkout
         }}>
             {props.children}
         </WorkoutContext.Provider>

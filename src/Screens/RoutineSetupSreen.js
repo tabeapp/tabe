@@ -4,8 +4,9 @@ import {TouchableOpacity, ScrollView, StyleSheet, View, SafeAreaView} from 'reac
 
 import { PRIMARY } from '../Constants/Theme';
 import NumericSelector from '../Components/NumericSelector';
-import ProgressContext from "../Contexts/ProgressContext";
 import Words from "../Components/Words";
+import WorkoutContext from "../Contexts/WorkoutContext";
+import RoutinesContext from "../Contexts/RoutinesContext";
 
 const primaryColor = '#66d6f8';
 
@@ -18,7 +19,8 @@ const repNumbers = {
 
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
-    const {initializeWorkout, generateRoutine} = useContext(ProgressContext);
+    const {generateRoutine} = useContext(RoutinesContext);
+    const {generateWorkout} = useContext(WorkoutContext);
 
     //the object will be sent
     let loadRoutine = props.route.params.routine;
@@ -44,7 +46,7 @@ const RoutineSetupScreen = props => {
         //generate a routine we're gonna do this in the contextprovider
         await generateRoutine(loadRoutine, maxEfforts);
 
-        initializeWorkout();
+        generateWorkout();
         //start the workout
         //navigate('workout')
         props.navigation.navigate('workout');
