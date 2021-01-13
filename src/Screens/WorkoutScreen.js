@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from "react-native";
+import { StyleSheet, View, SafeAreaView, TouchableOpacity, Alert } from "react-native";
 //get custom icons eventually
 
 import ExerciseCard from '../Components/ExerciseCard';
@@ -8,6 +8,7 @@ import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import ExercisePicker from "../Components/ExercisePicker";
 import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
+import { CURRENT } from "../Constants/Symbols";
 
 const primaryColor = '#66d6f8';
 
@@ -21,13 +22,55 @@ const WorkoutScreen = props => {
     //true for custom workouts
     const edit = workout.edit;
 
-    const handleNext = () => {
+    const goToReport = () => {
         //take the workout
         //compile it into a report
         //show it to the user on a new screen
-        props.navigation.navigate('report', {
-            report: generateReport()
-        });
+        props.navigation.navigate('report');
+    }
+
+    //three possibilties:
+    //quit, save as is, or autocomplete
+    //last two are equal if complete
+    const handleNext = () => {
+        //this is handled by the invariant checker
+        if(workout.done)
+            goToReport()
+        else{
+            Alert.alert(
+                "Incomplete Workout",
+                "",
+                [
+                    {
+                        text: "Cancel",//don't do the workout
+                        style: "cancel"
+                    },
+                    {
+                        text: "Save as is",//don't do the workout
+                        onPress: goToReport
+                    },
+                    {
+                        text: "Auto-complete",
+                        onPress: () => {
+                            //so just fill in all of the workout
+                            workoutDispatch(prev => {
+                                for(let e = 0; e < prev.exercises.length; e++) {
+                                    const ex = prev.exercises[e];
+                                    for (let s = 0; s < ex.sets.length; s++) {
+                                        const set = ex.sets[s];
+                                        if(!set.progress || set.progress === CURRENT )
+                                            set.progress = set.reps;
+                                    }
+                                }
+                                return prev;
+                            });
+                            //god i feel like shit doing this but it works
+                            goToReport();
+                        },
+                    }
+                ]
+            )
+        }
     };
 
     const [modal, setModal] = useState(false);
@@ -66,7 +109,7 @@ const WorkoutScreen = props => {
                     <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
                     <TouchableOpacity onPress={handleNext} style={styles.topButton}>
                         <Words style={{fontSize: 20}}>
-                            Next
+                            Done
                         </Words>
                     </TouchableOpacity>
                 </View>
@@ -78,22 +121,22 @@ const WorkoutScreen = props => {
 
                 {
                     edit &&
-                        <>
-                            <View style={{flexDirection: 'row' }}>{
-                                sampleSuggestion.map(name => {
-                                    return (<TouchableOpacity
-                                        key={name}
-                                        style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
-                                        onPress={() => addFromSuggestions(name)}>
-                                        <Words>{name}</Words>
-                                    </TouchableOpacity>);
-                                })
-                            }</View>
-                            <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
-                                <Words style={styles.plus}>+</Words>
-                            </TouchableOpacity>
+                    <>
+                        <View style={{flexDirection: 'row' }}>{
+                            sampleSuggestion.map(name => {
+                                return (<TouchableOpacity
+                                    key={name}
+                                    style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
+                                    onPress={() => addFromSuggestions(name)}>
+                                    <Words>{name}</Words>
+                                </TouchableOpacity>);
+                            })
+                        }</View>
+                        <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
+                            <Words style={styles.plus}>+</Words>
+                        </TouchableOpacity>
 
-                        </>
+                    </>
                 }
 
                 <ExercisePicker handleSelection={name =>

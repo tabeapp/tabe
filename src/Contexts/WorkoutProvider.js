@@ -256,6 +256,9 @@ const WorkoutProvider = props => {
             }
         }
 
+        if(!found)
+            next.done = true;
+
         return next;
     };
 

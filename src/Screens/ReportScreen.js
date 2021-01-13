@@ -7,11 +7,13 @@ import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import { FONT } from "../Style/Values";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    let { report, saveWorkout, analyzeWorkout}  = useContext(ProgressContext);
+    let { saveWorkout, analyzeWorkout} = useContext(ProgressContext);
+    const {generateReport} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //should this be passed as params or generated here?
@@ -20,6 +22,8 @@ const ReportScreen = props => {
     //console.log(report);
     //const [title, setTitle] = useState(props.route.params.report.name);
     //const [description, setDescription] = useState(props.route.params.report.summary);
+    //this doesn't needs its own fn context
+    const [report, setReport] = useState(generateReport()/*props.route.params.report*/);
 
     //report should almost always not be null, even if it is the user can just add their own title
     const [title, setTitle] = useState(report?report.name:'');
