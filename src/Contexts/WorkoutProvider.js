@@ -91,7 +91,7 @@ const WorkoutProvider = props => {
 
                 sets = custom.map(set => {
                     let w;
-                    if(set === NEW_PR)
+                    if(set['%'] === NEW_PR)
                         //is this really the best place to store it?
                         w = exInfo.current + exInfo.progress.amount;
                     else
@@ -169,7 +169,6 @@ const WorkoutProvider = props => {
         return false;
     };
 
-    //needs massive rewrite and SIMPlification
     const generateReport = () => {
         //just default for the report
         if(!workout)

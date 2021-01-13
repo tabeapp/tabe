@@ -3,3 +3,6 @@ export const CURRENT = 'c';
 
 //used to signify to try for PR
 export const NEW_PR = 'PR';
+
+//reps to failure
+export const FAILURE = 'F';

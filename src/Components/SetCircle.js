@@ -3,14 +3,12 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
-import { CURRENT } from "../Constants/Symbols";
-
-//const reps = [];
-//for(let i = 0; i < 20; i++)
-    //reps.push(i)
+import { FAILURE, CURRENT } from "../Constants/Symbols";
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
+
+    const {current, setInfo, style, info} = props;
 
     //ok this is kinda confusing, but props.setInfo.reps is how much you're supposed to do
     const [prog, setProg] = useState(props.setInfo.reps);
@@ -19,21 +17,21 @@ const SetCircle = (props) => {
 
     //only if it's current, it will be editable
     //if(props.setInfo.progress !== 'c'){
-    if(!props.current){
-        let text = props.setInfo.reps;
-        if(props.setInfo.amrap)
+    if(!current){
+        let text = setInfo.reps;
+        if(setInfo.amrap)
             text += '+';
-        if(props.setInfo.progress && props.setInfo.progress !== CURRENT)
-            text = props.setInfo.progress;
+        if(setInfo.progress && setInfo.progress !== CURRENT)
+            text = setInfo.progress;
         return (
-            <View style={{ ...styles.circle, ...props.style }} >
+            <View style={{ ...styles.circle, ...style }} >
                 <Words>{
                     text
                 }</Words>
             </View>
         );
     }
-    let [exerciseN, setN] = props.info;
+    let [exerciseN, setN] = info;
     const handlePress = () => {
         workoutDispatch({
             path: `exercises.${exerciseN}.sets.${setN}.progress`,
@@ -51,15 +49,15 @@ const SetCircle = (props) => {
         temp.push(i)*/
     //const temp = [0,1,2,3,4,5];
     const temp = [];
-    const limit = props.setInfo.amrap?40:props.setInfo.reps;
+    //kinda complex but ok
+    const limit = (setInfo.reps === FAILURE || setInfo.amrap)?40:setInfo.reps;
     for(let i = 0; i <= limit; i++)
         temp.push(i);
-
 
     return (
         <TouchableOpacity
             onPress={handlePress}
-            style={{ ...styles.circle, ...props.style }}
+            style={{ ...styles.circle, ...style }}
         >
             <Words>^</Words>
             <Picker

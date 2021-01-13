@@ -5,8 +5,7 @@ import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
 import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
-
-const FAILURE = 'F';
+import { FAILURE } from "../Constants/Symbols";
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)

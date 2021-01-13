@@ -6,6 +6,7 @@ import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import { CURRENT } from "../Constants/Symbols";
 
 
 const primaryColor = '#66d6f8';
@@ -102,7 +103,11 @@ const ExerciseCard = (props) => {
     sets.forEach((set,index) => {
         const {amrap, progress, reps, weight} = set;
 
-        let completion = progress >= reps ? 1 : 0;
+        let completion;
+        if(reps === 'F')
+            completion = progress && progress !== CURRENT;
+        else
+            completion = progress >= reps ? 1 : 0;
         //let done = progress && progress[index] >= n;
         //if(index === sets.length-1){
         let text = reps;
