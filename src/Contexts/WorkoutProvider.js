@@ -135,7 +135,9 @@ const WorkoutProvider = props => {
         workoutDispatch(() => ({
             title: r.title + ' ' + day,
             exercises: compiledExercises,
-            edit: false
+            edit: false,
+            //very necessary for knowing which routine to progress
+            routine: r.title
         }));
     };
 
@@ -143,7 +145,8 @@ const WorkoutProvider = props => {
         workoutDispatch(() => ({
             title: '',
             exercises: [],
-            edit: true
+            edit: true,
+            routine: ''
         }));
     }
 
@@ -315,8 +318,14 @@ const WorkoutProvider = props => {
         //update routine weights
         //wait what if we just wing it
 
+        //so instead of current, we need to somehow indicate the routine the workout is based on
 
-        const newRoutine = FULL_COPY(routines[current]);
+        //the rest of this function involves progressing the routine
+        //without a routine, just quit
+        if(workout.routine === '')
+            return;
+
+        const newRoutine = FULL_COPY(routines[workout.routine]);
 
         //check for progression
         workout.exercises.forEach(ex => {
@@ -445,12 +454,10 @@ const WorkoutProvider = props => {
         newRoutine.currentDay++;
 
         //and finally, save the thing
-        routinesDispatch(prev => {
-            prev.routines[/*what if you do a custom?*/prev.current] = newRoutine;
-            return prev;
-        })
-        //this.setRoutine(newRoutine)
-        //this.setState({routine: newRoutine})
+        routinesDispatch({
+            path: `routines.${workout.routine}`,
+            value: newRoutine
+        });
     }
 
     //i guess like use effect?
