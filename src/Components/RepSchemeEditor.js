@@ -4,8 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
-
-const NEW_PR = 'PR';
+import { NEW_PR } from "../Constants/Symbols";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)

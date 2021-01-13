@@ -3,12 +3,11 @@ import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import { CURRENT } from "../Constants/Symbols";
 
 //const reps = [];
 //for(let i = 0; i < 20; i++)
     //reps.push(i)
-
-const CURRENT = 'c';
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);

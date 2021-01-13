@@ -5,14 +5,13 @@ import { useReducer, useEffect, useContext }  from 'react';
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import { AppState } from "react-native";
 import RoutinesContext from "./RoutinesContext";
+import { CURRENT, NEW_PR } from "../Constants/Symbols";
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
 
 //so the idea behind this shit is that i'm really tired of passing down modifying functions
 //so we're gonna use useReducer
-
-const CURRENT = 'c';
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -90,12 +89,20 @@ const WorkoutProvider = props => {
                 //selector is missing, I wonder why though
                 const custom = r.customSets[setInfo.scheme][setInfo.selector]
 
-                sets = custom.map(set => ({
-                    reps: set.reps,
-                    progress: null,
-                    //next step, rewritew workout screen and its components
-                    weight: Math.ceil(set['%']/100 * exInfo.current/5)*5
-                }));
+                sets = custom.map(set => {
+                    let w;
+                    if(set === NEW_PR)
+                        //is this really the best place to store it?
+                        w = exInfo.current + exInfo.progress.amount;
+                    else
+                        w = Math.ceil(set['%'] / 100 * exInfo.current / 5) * 5;
+
+                    return {
+                        reps: set.reps,
+                        progress : null,
+                        weight : w
+                    };
+                });
 
             }
             else if(setInfo.type === 'Sum'){
