@@ -7,6 +7,7 @@ import SetCircle from "./SetCircle";
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { CURRENT } from "../Constants/Symbols";
+import { PRIMARY } from "../Constants/Theme";
 
 
 const primaryColor = '#66d6f8';
@@ -60,31 +61,15 @@ const ExerciseCard = (props) => {
 
     const {edit, exerciseN} = props;
 
-    let colors = [];
-    let outlines = [];
-    let done = true;
-
-    //map?
-    sets.forEach(set => {
-        //it'll be null
-        if(!set.progress || set.progress === CURRENT){
-            colors.push('transparent');
-            outlines.push(secondaryColor);
-            done = false;
-        }
-        else{
-            colors.push(primaryColor);
-            outlines.push(primaryColor);
-        }
+    let twoColors = sets.map(set => {
+        if(!set.progress || set.progress === CURRENT)
+            return ['transparent', secondaryColor];
+        return [PRIMARY, PRIMARY];
     });
 
     //let outlines = sets.map(_ => secondaryColor);
-    if(done){
-        colors = colors.map(_ => 'lightgreen');
-        outlines = sets.map(_ => 'lightgreen');
-    }
-    //if(progress && progress.length === exercise.length)
-
+    if(sets.every(set => set.progress && set.progress !== CURRENT))
+        twoColors = twoColors.map(_ => ['lightgreen', 'lightgreen']);
 
     //only show if they're different or it's custom
     const showWeightLabel = !sets.every(s =>
@@ -92,9 +77,11 @@ const ExerciseCard = (props) => {
     );
 
     //default is that of last set
-    let currentWeight = 0;
-    if(sets[sets.length-1])
-        currentWeight = sets[sets.length-1].weight;
+    let currentWeight = sets[sets.length-1].weight;
+    sets.forEach(set =>{
+        if(set.progress === CURRENT)
+            currentWeight = set.weight;
+    });
 
     return (
         <View style={styles.card} key={name}>
@@ -119,6 +106,7 @@ const ExerciseCard = (props) => {
                     }
                     {
                         sets.map((set, index) => {
+                            //this could probably be its own component
                             const {amrap, progress, reps, weight} = set;
 
                             let completion;
@@ -132,15 +120,12 @@ const ExerciseCard = (props) => {
                             let current = progress === CURRENT;
 
                             //this isn't workign
-                            if(amrap && (!progress|| current))
+                            if(amrap && (!progress || current))
                                 text = reps + '+';
-
-                            if(current)
-                                currentWeight = weight;
 
                             return <>
                                 <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
-                                    <SetCircle setInfo={set} progress={progress} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: colors[index], borderColor: current?primaryColor:outlines[index]}}/>
+                                    <SetCircle setInfo={set} progress={progress} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?primaryColor:twoColors[index][1]}}/>
                                     {
                                         showWeightLabel &&
                                         <Words style={{alignSelf: 'center'}}>{
