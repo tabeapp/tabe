@@ -124,7 +124,7 @@ const WorkoutProvider = props => {
 
 
         });
-        compiledExercises[0].sets[0].progress = 'c';
+        compiledExercises[0].sets[0].progress = CURRENT;
 
         //cuz we updated days
         routinesDispatch(prev => {
@@ -213,7 +213,7 @@ const WorkoutProvider = props => {
 
             //will this filter out 0s?
             exReport.work = exReport.work.filter(s =>
-                s.reps && s.reps !== 'c'
+                s.reps && s.reps !== CURRENT
             )
 
             return exReport;

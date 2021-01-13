@@ -11,7 +11,7 @@ const SetCircle = (props) => {
     const {current, setInfo, style, info} = props;
 
     //ok this is kinda confusing, but props.setInfo.reps is how much you're supposed to do
-    const [prog, setProg] = useState(props.setInfo.reps);
+    const [prog, setProg] = useState(setInfo.reps === FAILURE?0:setInfo.reps);
     //const [reps, setReps] = useState(props.setInfo.reps);
     //this will be undefined and shouldn't be accessible
 
@@ -21,7 +21,7 @@ const SetCircle = (props) => {
         let text = setInfo.reps;
         if(setInfo.amrap)
             text += '+';
-        if(setInfo.progress && setInfo.progress !== CURRENT)
+        if(setInfo.progress !== null && setInfo.progress !== CURRENT)
             text = setInfo.progress;
         return (
             <View style={{ ...styles.circle, ...style }} >

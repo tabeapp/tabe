@@ -67,7 +67,7 @@ const ExerciseCard = (props) => {
     //map?
     sets.forEach(set => {
         //it'll be null
-        if(!set.progress || set.progress === 'c'){
+        if(!set.progress || set.progress === CURRENT){
             colors.push('transparent');
             outlines.push(secondaryColor);
             done = false;
@@ -111,7 +111,7 @@ const ExerciseCard = (props) => {
         //let done = progress && progress[index] >= n;
         //if(index === sets.length-1){
         let text = reps;
-        let current = progress === 'c';
+        let current = progress === CURRENT;
 
         //this isn't workign
         if(amrap && (!progress|| current))
