@@ -24,6 +24,7 @@ const WorkoutProvider = props => {
     const handleAppStateChange = async nextAppState => {
         if(nextAppState === 'inactive' || nextAppState === 'background') {
             await AsyncStorage.setItem('@workout', JSON.stringify(workout))
+                .then(() => {})
                 .catch(e => console.log(e));
         }
     };
@@ -47,10 +48,9 @@ const WorkoutProvider = props => {
 
     //heavy logic here, not much you can do with usereducer here
     const generateWorkout = () => {
-        if(JSON.stringify(workout) !== '{}'){
-            console.log('existing ' + JSON.stringify(workout));
-            return;// workout;
-        }
+        //comment this out to clear workout
+        if(JSON.stringify(workout) !== '{}')
+            return;
 
         console.log(routines);
         console.log(current);

@@ -36,8 +36,10 @@ const SetCircle = (props) => {
         workoutDispatch(prev => {
             prev.exercises[exerciseN].sets[setN].progress = prog;
             //kinda a weird place to set the timer, but it is where we the the button is pressed
-            //prev.timer = new Date().getTime/1000 + prev.exercises[exerciseN].rest
-            prev.timer = prev.exercises[exerciseN].rest;
+            //this is a unix timestamp, in seconds
+            //could also use startrest type of thing
+            prev.timer = new Date().getTime() + prev.exercises[exerciseN].rest*1000;
+            //prev.timer = prev.exercises[exerciseN].rest;
             return prev;
         });
     };

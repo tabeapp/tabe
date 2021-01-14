@@ -26,14 +26,17 @@ const RestTimer = props => {
     //you know what, fuck this we're gonna only use seconds
     //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
-        //const now = new Date().getTime()/1000
-        setSeconds(props.timer);
+        const now = new Date().getTime();
+        //setSeconds(props.timer);
         //don't run this shit if it's 0
-        //if(now > props.timer)return
+        if(now > props.timer){
+            setSeconds(0);
+            return;
+        }
 
         //setStart(now);
-        if(props.timer === 0)
-            return;
+        //if(props.timer === 0)
+            //return;
 
         //start the countdown
         const interval = setInterval(() => {
@@ -41,18 +44,24 @@ const RestTimer = props => {
                 //set to difference between now and props.timer,
                 //if props.timer - now > 0
                 //const now = new Date().getTime()
+                const newNow = new Date().getTime();
+                const diff = props.timer - newNow;
                 //const diff = props.timer - now
-                //if(diff < 0)
-                //clear
+                if(diff < 0){
+                    clearInterval(interval)
+                    return 0;
+                }
+                ///clear
                 //return 0
 
+                return Math.round(diff/1000);
                 //return diff rounded to seconds
 
-                if(prev === 0){
-                    clearInterval(interval);
-                    return prev;
-                }
-                return prev-1;
+                //if(prev === 0){
+                    //clearInterval(interval);
+                    //return prev;
+                //}
+                //return prev-1;
             });
         }, 1000);//temporarily speeding it up
 
@@ -67,9 +76,9 @@ const RestTimer = props => {
 
     //safe area view doesnt do shit
     return (
-        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0} >
+        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0}>
             <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-                <Words style={{fontSize: 60}}>{SEC_TO_TIME(seconds)}</Words>
+                <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
             </SafeAreaView>
         </Modal>
     );

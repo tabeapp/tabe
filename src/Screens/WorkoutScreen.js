@@ -17,6 +17,7 @@ const primaryColor = '#66d6f8';
 const WorkoutScreen = props => {
     const {workout, workoutDispatch, generateReport} = useContext(WorkoutContext);
 
+
     //workout.edit false => normal workout screen
     //workout.edit true => custom wokrout screen
 
