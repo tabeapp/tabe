@@ -7,6 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
 import { FULL_COPY } from "../Utils/UtilFunctions";
+import SafeBorder from "../Components/SafeBorder";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -56,79 +57,76 @@ const RoutineScreen = props => {
         routinesDispatch({path: 'current', value: k});
 
         //AsyncStorage.getItem('@routines').then(obj => {
-            //if(obj === null)
-                //return;
-            //const r = JSON.parse(obj);
-            //r.current = k;
+        //if(obj === null)
+        //return;
+        //const r = JSON.parse(obj);
+        //r.current = k;
         routinesDispatch({type: 'setItem'})//so save the thing
-            //AsyncStorage.setItem('@routines', JSON.stringify(r));
+        //AsyncStorage.setItem('@routines', JSON.stringify(r));
         //})
 
     }
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar} />
-                <View style={styles.box}>
-                    <Words>Routines</Words>
-                    <View style={{width: '100%', alignItems: 'center'}}>
-                        {
-                            Object.entries(routines).map(([k,v]) =>
-                                <TouchableOpacity
-                                    key={k}
-                                    onPress={() => {
-                                        //set it in the context
-                                        routinesDispatch({path: 'editRoutine', value: FULL_COPY(v)});
-                                        /*send it off to routine editor*/
-                                        props.navigation.navigate('routineedit');
-                                    }}
-                                    style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
-                                >
-                                    <Words style={{fontSize: 20}}>{
-                                        v.title
-                                    }</Words>
-                                    <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                        deleteRoutine(k);//
-                                    }}>
-                                        <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                        handleSetCurrent(k)
-                                    }}>
-                                        <Words>
-                                            Current:
-                                            {
-                                                k === current &&
-                                                <Ionicons color={'green'} size={30} name={'checkbox'}/>
-                                            }
-                                            {
-                                                k !== current &&
-                                                <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
-                                            }
-                                        </Words>
-                                    </TouchableOpacity>
+        <SafeBorder>
+            <View style={styles.topBar} />
+            <View style={styles.box}>
+                <Words>Routines</Words>
+                <View style={{width: '100%', alignItems: 'center'}}>
+                    {
+                        Object.entries(routines).map(([k,v]) =>
+                            <TouchableOpacity
+                                key={k}
+                                onPress={() => {
+                                    //set it in the context
+                                    routinesDispatch({path: 'editRoutine', value: FULL_COPY(v)});
+                                    /*send it off to routine editor*/
+                                    props.navigation.navigate('routineedit');
+                                }}
+                                style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
+                            >
+                                <Words style={{fontSize: 20}}>{
+                                    v.title
+                                }</Words>
+                                <TouchableOpacity style={{width: 50 }} onPress={() => {
+                                    deleteRoutine(k);//
+                                }}>
+                                    <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                                 </TouchableOpacity>
-                            )
-                        }
-                    </View>
-                    <TouchableOpacity  onPress={() => {
-                        routinesDispatch({path: 'editRoutine', value: BLANK_ROUTINE()});
 
-                        props.navigation.navigate('routineedit');
-                            //routine: emptyRoutine, // no this will be set in the context
-                            //saveRoutine: saveRoutine no this will be available in the context
-                        //})
-                    }}>
-                        <Words style={{fontSize: 40}}>+</Words>
-                    </TouchableOpacity>
-
+                                <TouchableOpacity style={{width: 50 }} onPress={() => {
+                                    handleSetCurrent(k)
+                                }}>
+                                    <Words>
+                                        Current:
+                                        {
+                                            k === current &&
+                                            <Ionicons color={'green'} size={30} name={'checkbox'}/>
+                                        }
+                                        {
+                                            k !== current &&
+                                            <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
+                                        }
+                                    </Words>
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+                        )
+                    }
                 </View>
-                <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
-            </SafeAreaView>
-        </>
+                <TouchableOpacity  onPress={() => {
+                    routinesDispatch({path: 'editRoutine', value: BLANK_ROUTINE()});
+
+                    props.navigation.navigate('routineedit');
+                    //routine: emptyRoutine, // no this will be set in the context
+                    //saveRoutine: saveRoutine no this will be available in the context
+                    //})
+                }}>
+                    <Words style={{fontSize: 40}}>+</Words>
+                </TouchableOpacity>
+
+            </View>
+            <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
+        </SafeBorder>
     );
 };
 

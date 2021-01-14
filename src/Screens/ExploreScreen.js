@@ -3,23 +3,21 @@ import React from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
+import SafeBorder from "../Components/SafeBorder";
 
 const ExploreScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar} />
-                <View style={styles.box}>
-                    <FlatList data={data} keyExtractor={item => item} renderItem={
-                        ({item}) => <Words>{item}</Words>
-                    } />
-                </View>
-                <NavBar current={/*better way to handle this?*/'explore'} navigation={props.navigation}/>
-            </SafeAreaView>
-        </>
+        <SafeBorder>
+            <View style={styles.topBar} />
+            <View style={styles.box}>
+                <FlatList data={data} keyExtractor={item => item} renderItem={
+                    ({item}) => <Words>{item}</Words>
+                } />
+            </View>
+            <NavBar current={/*better way to handle this?*/'explore'} navigation={props.navigation}/>
+        </SafeBorder>
     );
 };
 

@@ -6,6 +6,7 @@ import NumericSelector from '../Components/NumericSelector';
 import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import RoutinesContext from "../Contexts/RoutinesContext";
+import SafeBorder from "../Components/SafeBorder";
 
 const primaryColor = '#66d6f8';
 
@@ -70,47 +71,44 @@ const RoutineSetupScreen = props => {
     };
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-                <View style={styles.top}>
-                    <TouchableOpacity style={styles.topButton}>
-                        <Words style={{fontSize: 20}}>
-                            Back
-                        </Words>
-                    </TouchableOpacity>
-                    <Words style={{fontSize: 20}}>Routine Setup</Words>
-                    <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                        <Words style={{fontSize: 20}}>
-                            Begin
-                        </Words>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView>{
-                    maxEfforts.map(ex =>
-                        <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
-                            <Words style={{fontSize: 20}}>{ex.name}</Words>
-                            <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
-                                <Words style={{fontSize: 20}}>Enter Max Effort:</Words>
+        <SafeBorder>
+            <View style={styles.top}>
+                <TouchableOpacity style={styles.topButton}>
+                    <Words style={{fontSize: 20}}>
+                        Back
+                    </Words>
+                </TouchableOpacity>
+                <Words style={{fontSize: 20}}>Routine Setup</Words>
+                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
+                    <Words style={{fontSize: 20}}>
+                        Begin
+                    </Words>
+                </TouchableOpacity>
+            </View>
+            <ScrollView>{
+                maxEfforts.map(ex =>
+                    <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
+                        <Words style={{fontSize: 20}}>{ex.name}</Words>
+                        <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
+                            <Words style={{fontSize: 20}}>Enter Max Effort:</Words>
 
-                                <NumericSelector onChange={reps => updateRep(ex.name, reps)} numInfo={repNumbers}/>
+                            <NumericSelector onChange={reps => updateRep(ex.name, reps)} numInfo={repNumbers}/>
 
-                                <Words style={{fontSize: 20}}>x</Words>
+                            <Words style={{fontSize: 20}}>x</Words>
 
-                                <NumericSelector onChange={weight => updateWeight(ex.name, weight)} numInfo={{def: ex.weight, min: 0, max: 1000, increment: 5}}/>
-                            </View>
+                            <NumericSelector onChange={weight => updateWeight(ex.name, weight)} numInfo={{def: ex.weight, min: 0, max: 1000, increment: 5}}/>
                         </View>
-                    )
-                }</ScrollView>
-                {/*
+                    </View>
+                )
+            }</ScrollView>
+            {/*
                 not sure if we need this, defaults are set anyways
                 <View style={styles.bottom}>
                     <TouchableOpacity style={{marginBottom: 5, justifyContent: 'center', alignItems: 'center', height: 40, width: '100%', borderColor: PRIMARY, borderWidth: 1}}>
                         <Text style={{color: 'white', fontSize: 20}}>Skip and use Default Weights</Text>
                     </TouchableOpacity>
                 </View>*/}
-            </SafeAreaView>
-        </>
+        </SafeBorder>
     );
 };
 

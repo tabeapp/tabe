@@ -9,6 +9,7 @@ import ExercisePicker from "../Components/ExercisePicker";
 import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
 import { CURRENT } from "../Constants/Symbols";
 import RestTimer from "../Components/RestTimer";
+import SafeBorder from "../Components/SafeBorder";
 
 const primaryColor = '#66d6f8';
 
@@ -90,76 +91,73 @@ const WorkoutScreen = props => {
     };
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-                <View style={styles.top}>
-                    <TouchableOpacity
-                        onPress={() =>
-                            workoutDispatch(prev => {
-                                prev.edit = !prev.edit;
-                                return prev;
-                            })
-                        }
-                        style={styles.topButton}
-                    >
-                        <Words style={{fontSize: 20}}>
-                            Edit
-                        </Words>
+        <SafeBorder>
+            <View style={styles.top}>
+                <TouchableOpacity
+                    onPress={() =>
+                        workoutDispatch(prev => {
+                            prev.edit = !prev.edit;
+                            return prev;
+                        })
+                    }
+                    style={styles.topButton}
+                >
+                    <Words style={{fontSize: 20}}>
+                        Edit
+                    </Words>
+                </TouchableOpacity>
+                <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
+                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
+                    <Words style={{fontSize: 20}}>
+                        Done
+                    </Words>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.container}>{
+                workout&&workout.exercises.map((ex, index) => (
+                    <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
+                ))
+            }</View>
+
+            {
+                edit &&
+                <>
+                    <View style={{flexDirection: 'row' }}>{
+                        sampleSuggestion.map(name => {
+                            return (<TouchableOpacity
+                                key={name}
+                                style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
+                                onPress={() => addFromSuggestions(name)}>
+                                <Words>{name}</Words>
+                            </TouchableOpacity>);
+                        })
+                    }</View>
+                    <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
+                        <Words style={styles.plus}>+</Words>
                     </TouchableOpacity>
-                    <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
-                    <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                        <Words style={{fontSize: 20}}>
-                            Done
-                        </Words>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.container}>{
-                    workout&&workout.exercises.map((ex, index) => (
-                        <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
-                    ))
-                }</View>
 
-                {
-                    edit &&
-                    <>
-                        <View style={{flexDirection: 'row' }}>{
-                            sampleSuggestion.map(name => {
-                                return (<TouchableOpacity
-                                    key={name}
-                                    style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
-                                    onPress={() => addFromSuggestions(name)}>
-                                    <Words>{name}</Words>
-                                </TouchableOpacity>);
-                            })
-                        }</View>
-                        <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
-                            <Words style={styles.plus}>+</Words>
-                        </TouchableOpacity>
-
-                    </>
-                }
+                </>
+            }
 
 
-                <RestTimer
-                    timer={workout.timer}
-                    restStart={workout.restStart}
-                />
+            <RestTimer
+                timer={workout.timer}
+                restStart={workout.restStart}
+            />
 
-                <ExercisePicker handleSelection={name =>
-                    workoutDispatch(prev => {
-                        prev.exercises.push(DEFAULT_EX_WORKOUT(name));
-                        return prev;
-                    })
-                } visible={modal} close={() => setModal(false)}/>
-                {
-                    /*<Words>
-                        {JSON.stringify(workout)}
-                    </Words>*/
-                }
+            <ExercisePicker handleSelection={name =>
+                workoutDispatch(prev => {
+                    prev.exercises.push(DEFAULT_EX_WORKOUT(name));
+                    return prev;
+                })
+            } visible={modal} close={() => setModal(false)}/>
+            {
+                /*<Words>
+                    {JSON.stringify(workout)}
+                </Words>*/
+            }
 
-            </SafeAreaView>
-        </>
+        </SafeBorder>
     );
 };
 

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
+import SafeBorder from "../Components/SafeBorder";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -18,36 +19,33 @@ const HomeScreen = props => {
     //})
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar} />
-                <View style={styles.box}>
-                    <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
-                        item.exercises &&
-                        <TouchableOpacity
-                            onPress={() => props.navigation.navigate('post', {workout: item})}
-                            style={{backgroundColor: '#333', margin: 3}}>
-                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                                <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                                <Words>Zyzz</Words>
-                            </View>
+        <SafeBorder>
+            <View style={styles.topBar} />
+            <View style={styles.box}>
+                <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
+                    item.exercises &&
+                    <TouchableOpacity
+                        onPress={() => props.navigation.navigate('post', {workout: item})}
+                        style={{backgroundColor: '#333', margin: 3}}>
+                        <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
+                            <Words>Zyzz</Words>
+                        </View>
 
-                            <Words style={{fontSize: 40}}>
-                                {item.title}
-                            </Words>
-                            <Words>
-                                {item.description}
-                            </Words>
-                            <Words>{item.exercises[0]&&item.exercises[0].name}</Words>
-                            <Words>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Words>
-                        </TouchableOpacity>
-                    }
-                    />
-                </View>
-                <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
-            </SafeAreaView>
-        </>
+                        <Words style={{fontSize: 40}}>
+                            {item.title}
+                        </Words>
+                        <Words>
+                            {item.description}
+                        </Words>
+                        <Words>{item.exercises[0]&&item.exercises[0].name}</Words>
+                        <Words>{JSON.stringify(item.exercises[0]&&item.exercises[0].work[0])}</Words>
+                    </TouchableOpacity>
+                }
+                />
+            </View>
+            <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
+        </SafeBorder>
     );
 };
 

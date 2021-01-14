@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
-import { TextInput, StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
-import Words from "../Components/Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import Write from "../Components/Write";
+import Words from '../Components/Words';
+import WorkoutContext from '../Contexts/WorkoutContext';
+import Write from '../Components/Write';
+import SafeBorder from "../Components/SafeBorder";
 
 const primaryColor = '#66d6f8';
 
@@ -16,7 +17,7 @@ const ReportScreen = props => {
 
     const [title, setTitle] = useState(report.title);
 
-    const [description, setDescription] = useState(report?report.summary:'');
+    const [description, setDescription] = useState(report ? report.summary : '');
     //useEffect(() =>
     //setSummary(generateReport())
     //)
@@ -37,62 +38,59 @@ const ReportScreen = props => {
     };
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-                <View style={styles.top}>
-                    <TouchableOpacity style={styles.topButton}>
-                        <Words/>
-                    </TouchableOpacity>
-                    <Words style={{fontSize: 20}}>Workout Summary</Words>
-                    <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                        <Words style={{fontSize: 20}}>
-                            Next
-                        </Words>
-                    </TouchableOpacity>
+        <SafeBorder>
+            <View style={styles.top}>
+                <TouchableOpacity style={styles.topButton}>
+                    <Words/>
+                </TouchableOpacity>
+                <Words style={{fontSize: 20}}>Workout Summary</Words>
+                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
+                    <Words style={{fontSize: 20}}>
+                        Next
+                    </Words>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.container}>
+                <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                    <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
+                    <Words>Zyzz</Words>
                 </View>
-                <View style={styles.container}>
-                    <View style={{alignItems: 'center', flexDirection: 'row'}}>
-                        <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                        <Words>Zyzz</Words>
-                    </View>
-                    <Write
-                        value={title}
-                        onChange={setTitle}
-                    />
-                    <Write
-                        style={{fontSize: 20, height: 100}}
-                        value={description}
-                        onChange={setDescription}
-                    />
-                    {
-                        report && report.exercises.map((ex, index) =>
-                            index === 0?
-                                //first one is biggest
-                                <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                    <Words style={{fontSize: 40}}>{ex.name}</Words>
-                                    {
-                                        ex.work.map((set,i) =>
-                                            <Words key={i} style={{fontSize:40}}>
-                                                {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                            </Words>)
-                                    }
-                                </View>
-                                :
-                                <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                    <Words style={{fontSize: 20}}>{ex.name}</Words>
-                                    {
-                                        ex.work.map((set,i) =>
-                                            <Words key={i} style={{fontSize: 20}}>
-                                                {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                            </Words>)
-                                    }
-                                </View>
-                        )
-                    }
-                </View>
-            </SafeAreaView>
-        </>
+                <Write
+                    value={title}
+                    onChange={setTitle}
+                />
+                <Write
+                    style={{fontSize: 20, height: 100}}
+                    value={description}
+                    onChange={setDescription}
+                />
+                {
+                    report && report.exercises.map((ex, index) =>
+                        index === 0 ?
+                            //first one is biggest
+                            <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                                <Words style={{fontSize: 40}}>{ex.name}</Words>
+                                {
+                                    ex.work.map((set,i) =>
+                                        <Words key={i} style={{fontSize:40}}>
+                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                        </Words>)
+                                }
+                            </View>
+                            :
+                            <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                                <Words style={{fontSize: 20}}>{ex.name}</Words>
+                                {
+                                    ex.work.map((set,i) =>
+                                        <Words key={i} style={{fontSize: 20}}>
+                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                        </Words>)
+                                }
+                            </View>
+                    )
+                }
+            </View>
+        </SafeBorder>
     );
 };
 

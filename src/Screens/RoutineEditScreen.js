@@ -12,6 +12,7 @@ import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import Words from "../Components/Words";
 import Write from "../Components/Write";
+import SafeBorder from "../Components/SafeBorder";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -165,212 +166,209 @@ const RoutineEditScreen = props => {
     }, []);
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.top} >
-                    <TouchableOpacity
-                        onPress={() => {
-                            //this is easier than the save, just leave
-                            //this does keep someting in 'editRoutine', but whatever
-                            //accessing routineedit later will copy in some other routine
-                            props.navigation.navigate('routine');
-                        }}
-                        style={styles.topButton}
-                    >
-                        <Words style={{fontSize: 20}}>Discard</Words>
-                    </TouchableOpacity>
-                    <Words style={{fontSize: 20}}>Routine Editor</Words>
-                    <TouchableOpacity onPress={() => {
-                        //at last we save it
-                        // do we need to object copy?
-                        //not who knows
-
-
-                        //nah we're missing some things
-                        //or literally just copy the state, right?
-                        const newRoutine = FULL_COPY(routine);
-                        newRoutine.currentDay = currentDay || 0;
-                        newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
-                        //routineEx.progress.countdown = routineEx.progress.rate;
-                        //need to start the progression countdown for each exercise
-                        Object.keys(newRoutine.info).forEach(ex => {
-                            const x = newRoutine.info[ex].progress;
-                            if(!x.countdown)
-                                x.countdown = x.rate;
-
-                            //i don't know why this isn't correctly handled by the exercise editor
-                            const y = newRoutine.info[ex].setInfo;
-                            if(y.type === 'Custom' && !y.selector)
-                                y.selector = 0;
-                        });
-
-                        routinesDispatch(prev => {
-                            //if there is no current, set this to current
-                            if(!prev.current)
-                                prev.current = newRoutine.title;
-                            //and save the new routine based on title
-                            prev.routines[newRoutine.title] = newRoutine;
-
-                            //why cant i do this?
-                            //delete prev.editRoutine;
-                            return prev;
-                        });
-
-                        routinesDispatch({type: 'setItem'});
-
-
-                        //don't set it to active unless there's no active routine
-                        //so routines in async storage should look like
-                        /*
-                            current: starting strength,
-                            rouintes: {
-                                'deez nuts': {...},
-                                'starting strength': {...}
-                            }
-                         */
-
-                        //ideally we would then navigate to a list of editable routines
-                        //but for now we just go home
+        <SafeBorder>
+            <View style={styles.top} >
+                <TouchableOpacity
+                    onPress={() => {
+                        //this is easier than the save, just leave
+                        //this does keep someting in 'editRoutine', but whatever
+                        //accessing routineedit later will copy in some other routine
                         props.navigation.navigate('routine');
-                        /*Alert.alert(
-                            "Info summary",
-                            JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
-                        );*/
+                    }}
+                    style={styles.topButton}
+                >
+                    <Words style={{fontSize: 20}}>Discard</Words>
+                </TouchableOpacity>
+                <Words style={{fontSize: 20}}>Routine Editor</Words>
+                <TouchableOpacity onPress={() => {
+                    //at last we save it
+                    // do we need to object copy?
+                    //not who knows
 
-                    }} style={styles.topButton}>
-                        <Words style={{fontSize: 20}}>
-                            Save
-                        </Words>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView style={styles.box}>
-                    <Write
-                        value={title}
-                        onChange={v => rd('title', v)}
-                    />
-                    <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
-                        <Words style={{fontSize: 20}}>Cycle length in days: </Words>
-                        <NumericSelector
-                            onChange={v =>
-                                //that's fucking it, useEffect completely suks
-                                routinesDispatch(prev => {
-                                    prev.editRoutine.time = v;
-                                    prev.editRoutine.days = Array.from(new Array(v), () => 'R');
-                                    return prev;
-                                })
-                            }
 
-                            numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
-                    </View>
+                    //nah we're missing some things
+                    //or literally just copy the state, right?
+                    const newRoutine = FULL_COPY(routine);
+                    newRoutine.currentDay = currentDay || 0;
+                    newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
+                    //routineEx.progress.countdown = routineEx.progress.rate;
+                    //need to start the progression countdown for each exercise
+                    Object.keys(newRoutine.info).forEach(ex => {
+                        const x = newRoutine.info[ex].progress;
+                        if(!x.countdown)
+                            x.countdown = x.rate;
 
-                    {/*shoud this be towards the bottom
-                        or towards the top as it applies to all exercises?*/}
-                    <Words style={{fontSize: 20}}>Failure Behavior:</Words>
-                    <View style={{flexDirection: 'row'}}>
-                        <Words style={{fontSize: 20}}>Deload</Words>
-                        <NumericSelector
-                            onChange={v => rd('failure.deloadPercent', v)}
-                            numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
-                        />
-                        <Words style={{fontSize: 20}}>% after</Words>
-                        <NumericSelector
-                            onChange={v => rd('failure.after', v)}
-                            numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
-                        />
-                        <Words style={{fontSize: 20}}>failed sets</Words>
-                    </View>
+                        //i don't know why this isn't correctly handled by the exercise editor
+                        const y = newRoutine.info[ex].setInfo;
+                        if(y.type === 'Custom' && !y.selector)
+                            y.selector = 0;
+                    });
 
-                    <Words style={{fontSize: 40}}>Workouts</Words>
-                    <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
-                        {
-                            Object.entries(workouts).map(([k,v]) =>
-                                <WorkoutEditor
-                                    key={k} exercises={v} name={k}
-                                    editSuperset={(val, exerciseIndex, supersetIndex) => {
-                                        //exerciseindex is the superset order in the workout
-                                        //superset index is the exercise order in the super set
+                    routinesDispatch(prev => {
+                        //if there is no current, set this to current
+                        if(!prev.current)
+                            prev.current = newRoutine.title;
+                        //and save the new routine based on title
+                        prev.routines[newRoutine.title] = newRoutine;
 
-                                        //SUPASET TS TS TS TS
+                        //why cant i do this?
+                        //delete prev.editRoutine;
+                        return prev;
+                    });
 
-                                        routinesDispatch(prev => {
-                                            let x = prev.editRoutine.workouts[k][exerciseIndex];
-                                            x[supersetIndex] = val;
+                    routinesDispatch({type: 'setItem'});
 
-                                            if(x.every(i => i !== ''))
-                                                prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
 
-                                            return prev;
-                                        });
-
-                                    }}
-
-                                    //maybe i should just have these in workout editor...
-                                    duplicateWorkout={duplicateWorkout}
-                                    deleteExercise={deleteAnExercise}
-                                    addExercise={addExercise}
-                                />
-                            )
+                    //don't set it to active unless there's no active routine
+                    //so routines in async storage should look like
+                    /*
+                        current: starting strength,
+                        rouintes: {
+                            'deez nuts': {...},
+                            'starting strength': {...}
                         }
-                        <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
-                            <TouchableOpacity style={styles.configButton} onPress={() => {
-                                //append a new obj
-                                //works, but ideally I'd like A B C instead of 1 2 3
-                                //too complex?
-                                //this actually works now
-                                //trust me bro
-                                rd('workouts.' + newWorkoutCode(), []);
-                            }}>
-                                <Words style={{fontSize: 30}}>Add Workout</Words>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
+                     */
 
-                    <Words style={{fontSize: 40}}>Exercises</Words>
-                    <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
-                        //definitely the trickiest of all
-                        //editing exercises involves much of the state, so I've just added them
-                        Object.entries(info).map(([k,v]) =>
-                            <ExerciseEditor
-                                key={k}
-                                name={k} info={v}
+                    //ideally we would then navigate to a list of editable routines
+                    //but for now we just go home
+                    props.navigation.navigate('routine');
+                    /*Alert.alert(
+                        "Info summary",
+                        JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
+                    );*/
+
+                }} style={styles.topButton}>
+                    <Words style={{fontSize: 20}}>
+                        Save
+                    </Words>
+                </TouchableOpacity>
+            </View>
+            <ScrollView style={styles.box}>
+                <Write
+                    value={title}
+                    onChange={v => rd('title', v)}
+                />
+                <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
+                    <Words style={{fontSize: 20}}>Cycle length in days: </Words>
+                    <NumericSelector
+                        onChange={v =>
+                            //that's fucking it, useEffect completely suks
+                            routinesDispatch(prev => {
+                                prev.editRoutine.time = v;
+                                prev.editRoutine.days = Array.from(new Array(v), () => 'R');
+                                return prev;
+                            })
+                        }
+
+                        numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
+                </View>
+
+                {/*shoud this be towards the bottom
+                        or towards the top as it applies to all exercises?*/}
+                <Words style={{fontSize: 20}}>Failure Behavior:</Words>
+                <View style={{flexDirection: 'row'}}>
+                    <Words style={{fontSize: 20}}>Deload</Words>
+                    <NumericSelector
+                        onChange={v => rd('failure.deloadPercent', v)}
+                        numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
+                    />
+                    <Words style={{fontSize: 20}}>% after</Words>
+                    <NumericSelector
+                        onChange={v => rd('failure.after', v)}
+                        numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
+                    />
+                    <Words style={{fontSize: 20}}>failed sets</Words>
+                </View>
+
+                <Words style={{fontSize: 40}}>Workouts</Words>
+                <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
+                    {
+                        Object.entries(workouts).map(([k,v]) =>
+                            <WorkoutEditor
+                                key={k} exercises={v} name={k}
+                                editSuperset={(val, exerciseIndex, supersetIndex) => {
+                                    //exerciseindex is the superset order in the workout
+                                    //superset index is the exercise order in the super set
+
+                                    //SUPASET TS TS TS TS
+
+                                    routinesDispatch(prev => {
+                                        let x = prev.editRoutine.workouts[k][exerciseIndex];
+                                        x[supersetIndex] = val;
+
+                                        if(x.every(i => i !== ''))
+                                            prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
+
+                                        return prev;
+                                    });
+
+                                }}
+
+                                //maybe i should just have these in workout editor...
+                                duplicateWorkout={duplicateWorkout}
+                                deleteExercise={deleteAnExercise}
+                                addExercise={addExercise}
                             />
                         )
                     }
-                    </ScrollView>
-
-                    {
-                        customScheme &&
-                        <>
-                            <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
-                            <Words>(workouts using this scheme will cycle through the following sets)</Words>
-                            <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
-                                {
-                                    Object.entries(customSets).map(([k,v]) =>
-                                        <RepSchemeEditor sets={v} name={k} />
-                                    )
-                                }
-                                <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
-                                    <TouchableOpacity style={styles.configButton} onPress={() => {
-                                        //this actually works
-                                        rd('customSets.' + newSchemeCode(), []);
-                                        console.log(JSON.stringify(customSets))
-                                    }}>
-                                        <Words style={{fontSize: 30}}>Add Custom Scheme</Words>
-                                    </TouchableOpacity>
-                                </View>
-                            </ScrollView>
-                        </>
-                    }
-
-                    <Words style={{color:'white', fontSize: 40}}>Days</Words>
-                    <DaysEditor workouts={Object.keys(workouts)} days={days}/>
-
-                    <View style={{height: 25/*for the red button*/}}/>
+                    <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
+                        <TouchableOpacity style={styles.configButton} onPress={() => {
+                            //append a new obj
+                            //works, but ideally I'd like A B C instead of 1 2 3
+                            //too complex?
+                            //this actually works now
+                            //trust me bro
+                            rd('workouts.' + newWorkoutCode(), []);
+                        }}>
+                            <Words style={{fontSize: 30}}>Add Workout</Words>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
-                <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
-            </SafeAreaView>
-        </>
+
+                <Words style={{fontSize: 40}}>Exercises</Words>
+                <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
+                    //definitely the trickiest of all
+                    //editing exercises involves much of the state, so I've just added them
+                    Object.entries(info).map(([k,v]) =>
+                        <ExerciseEditor
+                            key={k}
+                            name={k} info={v}
+                        />
+                    )
+                }
+                </ScrollView>
+
+                {
+                    customScheme &&
+                    <>
+                        <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
+                        <Words>(workouts using this scheme will cycle through the following sets)</Words>
+                        <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
+                            {
+                                Object.entries(customSets).map(([k,v]) =>
+                                    <RepSchemeEditor sets={v} name={k} />
+                                )
+                            }
+                            <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
+                                <TouchableOpacity style={styles.configButton} onPress={() => {
+                                    //this actually works
+                                    rd('customSets.' + newSchemeCode(), []);
+                                    console.log(JSON.stringify(customSets))
+                                }}>
+                                    <Words style={{fontSize: 30}}>Add Custom Scheme</Words>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </>
+                }
+
+                <Words style={{color:'white', fontSize: 40}}>Days</Words>
+                <DaysEditor workouts={Object.keys(workouts)} days={days}/>
+
+                <View style={{height: 25/*for the red button*/}}/>
+            </ScrollView>
+            <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
+        </SafeBorder>
     );
 };
 

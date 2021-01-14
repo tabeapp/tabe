@@ -7,6 +7,7 @@ import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefau
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
 import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import SafeBorder from "../Components/SafeBorder";
 
 const primaryColor = '#66d6f8';
 
@@ -51,37 +52,34 @@ const ChooseRoutineScreen = props => {
     };
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>
-                <View style={styles.top}>
-                    <Words style={{color: 'black', fontSize: 20}}>Routine Selector</Words>
-                </View>
-                <Words style={{paddingVertical: 5, paddingHorizontal: 10, fontSize: 30}}>Recommended Routines</Words>
-                <View style={styles.container}>{
-                    routines.map(r =>
-                        <TouchableOpacity
-                            key={r.title}
-                            onPress={() => handleRoutinePress(r)}
-                            style={{backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100, width: '48%'}}
-                        >
-                            <Words style={{fontSize: 20}}>{
-                                r.title
-                            }</Words>
-                            <Words>{
-                                r.description
-                            }</Words>
-                        </TouchableOpacity>)
-                }</View>
-                <TouchableOpacity
-                    onPress={handleCustomPress}
-                    style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
-                >
-                    <Words style={{fontSize: 20}}>Custom</Words>
-                    <Words>Build your own routine</Words>
-                </TouchableOpacity>
-            </SafeAreaView>
-        </>
+        <SafeBorder>
+            <View style={styles.top}>
+                <Words style={{color: 'black', fontSize: 20}}>Routine Selector</Words>
+            </View>
+            <Words style={{paddingVertical: 5, paddingHorizontal: 10, fontSize: 30}}>Recommended Routines</Words>
+            <View style={styles.container}>{
+                routines.map(r =>
+                    <TouchableOpacity
+                        key={r.title}
+                        onPress={() => handleRoutinePress(r)}
+                        style={{backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100, width: '48%'}}
+                    >
+                        <Words style={{fontSize: 20}}>{
+                            r.title
+                        }</Words>
+                        <Words>{
+                            r.description
+                        }</Words>
+                    </TouchableOpacity>)
+            }</View>
+            <TouchableOpacity
+                onPress={handleCustomPress}
+                style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
+            >
+                <Words style={{fontSize: 20}}>Custom</Words>
+                <Words>Build your own routine</Words>
+            </TouchableOpacity>
+        </SafeBorder>
     );
 };
 

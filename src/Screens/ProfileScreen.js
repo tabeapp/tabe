@@ -5,6 +5,7 @@ import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import WeightVisual from "../Utils/WeightVisual";
 import Words from "../Components/Words";
+import SafeBorder from "../Components/SafeBorder";
 
 const liftMapping = {
     squat: 'orange',
@@ -52,45 +53,42 @@ const ProfileScreen = props => {
 
 
     return (
-        <>
-            <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-            <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>
-                <View style={styles.topBar} >
-                    <Words style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Words>
-                </View>
-                <View style={styles.box}>
-                    <View style={styles.cardContainer}>{
-                        Object.entries(userStats).map(([k,v]) =>
-                            <View style={styles.card} key={k}>
+        <SafeBorder>
+            <View style={styles.topBar} >
+                <Words style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Words>
+            </View>
+            <View style={styles.box}>
+                <View style={styles.cardContainer}>{
+                    Object.entries(userStats).map(([k,v]) =>
+                        <View style={styles.card} key={k}>
 
-                                <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                                    <WeightVisual weight={v} reverse={true} />
-                                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Words>{k}</Words>
-                                        <Words>{v}</Words>
-                                    </View>
-                                    <WeightVisual weight={v}/>
+                            <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                                <WeightVisual weight={v} reverse={true} />
+                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                    <Words>{k}</Words>
+                                    <Words>{v}</Words>
                                 </View>
+                                <WeightVisual weight={v}/>
                             </View>
+                        </View>
 
-                        )
-                    }</View>
-                    <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 1}}>{
-                        progress[0]&&
-                        progress.map(wo => {
-                            return Object.entries(wo.stats).map(([k,v]) => {
-                                //lol should I make this a <canvas>
-                                const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
-                                const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
-                                const color = liftMapping[k];
-                                return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
-                            })
+                    )
+                }</View>
+                <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 1}}>{
+                    progress[0]&&
+                    progress.map(wo => {
+                        return Object.entries(wo.stats).map(([k,v]) => {
+                            //lol should I make this a <canvas>
+                            const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
+                            const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
+                            const color = liftMapping[k];
+                            return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
                         })
-                    }</View>
-                </View>
-                <NavBar current={/*better way to handle this?*/'profile'} navigation={props.navigation}/>
-            </SafeAreaView>
-        </>
+                    })
+                }</View>
+            </View>
+            <NavBar current={/*better way to handle this?*/'profile'} navigation={props.navigation}/>
+        </SafeBorder>
     );
 };
 
