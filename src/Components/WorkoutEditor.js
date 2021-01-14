@@ -4,6 +4,7 @@ import ExercisePicker from './ExercisePicker';
 import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
+import Row from "./Row";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -33,7 +34,7 @@ const WorkoutEditor = props => {
     //wtf is this 415 number supposed to be?
     return (
         <View style={{margin: 3, width: 406, backgroundColor: '#333'}}>
-            <View style={{backgroundColor: '#222', flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Row style={{backgroundColor: '#222'}}>
                 <Words style={{color:'white'}}>Workout {props.name}</Words>
 
                 <View style={{flexDirection:'row'}}>
@@ -67,11 +68,11 @@ const WorkoutEditor = props => {
                         <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </Row>
             {
                 props.exercises.map((ex, index) =>{
                     //we actually need as many superset editors as there are exerices
-                    return <View key={ex} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    return <Row key={ex}>
                         {
                             Array.isArray(ex) &&
                             <View style={{ flex: 1, display: 'flex', height: 30, flexDirection: 'row' }}>{
@@ -100,7 +101,7 @@ const WorkoutEditor = props => {
                         }}>
                             <Words><Ionicons color={'gray'} name={'close'} size={30}/></Words>
                         </TouchableOpacity>
-                    </View>
+                    </Row>
                 })
             }
             <TouchableOpacity style={styles.configButton} onPress={() => {

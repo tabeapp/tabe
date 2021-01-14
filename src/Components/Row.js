@@ -11,7 +11,9 @@ const Row = props => {
 const styles = StyleSheet.create( {
     row:{
         flexDirection: 'row',//its a row aint it
-        alignItems: 'center'//also is used a LOT
+        alignItems: 'center',//also is used a LOT
+        justifyContent: 'space-between'
+
     }}
 );
 

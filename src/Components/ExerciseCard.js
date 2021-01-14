@@ -89,7 +89,7 @@ const ExerciseCard = (props) => {
                 <Words>{currentWeight}</Words>
             </View>
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Row>
                 {
                     edit&&
                     <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
@@ -153,7 +153,7 @@ const ExerciseCard = (props) => {
                     edit&&
                     <SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>
                 }
-            </View>
+            </Row>
         </View>
     );
 };

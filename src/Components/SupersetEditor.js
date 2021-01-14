@@ -29,12 +29,12 @@ const SupersetEditor = props => {
     console.log(JSON.stringify(info));
     return(
         <View key={name} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Row>
                 <Words>{name}</Words>
                 <TouchableOpacity onPress={deleteExercise} style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>
                     <Words style={{color:'red'}}>X</Words>
                 </TouchableOpacity>
-            </View>
+            </Row>
 
             <View style={{flexDirection: 'row'}}>
                 {
@@ -236,7 +236,7 @@ const SupersetEditor = props => {
 
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     circle: {

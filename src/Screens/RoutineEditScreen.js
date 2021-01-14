@@ -14,6 +14,7 @@ import Words from "../Components/Words";
 import Write from "../Components/Write";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want

@@ -51,9 +51,9 @@ const ExerciseEditor = props => {
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
     return <View key={name} style={{margin: 3, width: 406, backgroundColor: '#333'}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Row>
             <Words>{name}</Words>
-        </View>
+        </Row>
 
         <Words>Current Working Weight: </Words>
         <NumericSelector onChange={value => {
@@ -135,7 +135,7 @@ const ExerciseEditor = props => {
         {
             //this should actually be very similar to custom workout screen
             info.setInfo.type === 'Normal' &&
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Row>
                 <TouchableOpacity
                     style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
@@ -181,7 +181,7 @@ const ExerciseEditor = props => {
                 >
                     <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                 </TouchableOpacity>
-            </View>
+            </Row>
         }
         {
             info.setInfo.type === 'Custom' &&

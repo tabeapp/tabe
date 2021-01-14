@@ -5,6 +5,7 @@ import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import { NEW_PR } from "../Constants/Symbols";
 import Chooser from "./Chooser";
+import Row from "./Row";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
