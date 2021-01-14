@@ -18,6 +18,7 @@ const RestTimer = props => {
     //the only method we'll need
     const {workoutDispatch} = useContext(WorkoutContext);
     const close = () => workoutDispatch(prev => {
+        //would be a fine place to send a notification
         prev.timer = 0;
         prev.restStart = 0;
         return prev;
@@ -72,8 +73,8 @@ const RestTimer = props => {
 
     //safe area view doesnt do shit
     return (
-        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0}>
-            <SafeAreaView style={{backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+        <Modal animationType={'fade'} transparent={true} visible={seconds !== 0}>
+            <SafeAreaView style={{backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                 <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
 
                     <TouchableOpacity
@@ -111,9 +112,8 @@ const RestTimer = props => {
 
                 </View>
 
-                <TouchableOpacity style={{borderRadius: 100, backgroundColor: '#333'}} onPress={close}>
+                <TouchableOpacity style={{margin: 20, borderRadius: 100, backgroundColor: 'black'}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>
-
                 </TouchableOpacity>
             </SafeAreaView>
         </Modal>

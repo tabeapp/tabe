@@ -3,6 +3,7 @@ import {View} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import Words from "./Words";
+import { PickerItem } from "./PickerItem";
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
@@ -39,9 +40,7 @@ const DaysEditor = props => {
                             }
                         >
                             {
-                                temp.map(item =>
-                                    <Picker.Item key={item} color={'white'} label={'' + item} value={item} />
-                                )
+                                temp.map(PickerItem)
                             }
                         </Picker>
                     </View>

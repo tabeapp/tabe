@@ -4,6 +4,8 @@ import { Picker } from '@react-native-picker/picker';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { FAILURE, CURRENT } from "../Constants/Symbols";
+import { FONT } from "../Style/Values";
+import { PickerItem } from "./PickerItem";
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
@@ -69,14 +71,13 @@ const SetCircle = (props) => {
             <Picker
                 style={{width: 50, height: 50}}
                 selectedValue={prog}
-                itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                itemStyle={{fontSize: 20, borderRadius: 0, fontFamily: FONT, height: 50}}
                 onValueChange={(value) => {
                     setProg(value);
                 }}
             >
                 {
-                    temp.map(item =>
-                        <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                    temp.map(PickerItem)
                 }
             </Picker>
             <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>

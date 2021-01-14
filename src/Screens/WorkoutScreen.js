@@ -154,9 +154,9 @@ const WorkoutScreen = props => {
                     })
                 } visible={modal} close={() => setModal(false)}/>
                 {
-                    <Words>
+                    /*<Words>
                         {JSON.stringify(workout)}
-                    </Words>
+                    </Words>*/
                 }
 
             </SafeAreaView>

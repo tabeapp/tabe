@@ -6,6 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
+import { PickerItem } from "./PickerItem";
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -132,8 +133,7 @@ const ExerciseEditor = props => {
             }}
         >
             {
-                ['Normal', 'Custom', 'Sum', 'Timed'].map(item =>
-                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                ['Normal', 'Custom', 'Sum', 'Timed'].map(PickerItem)
             }
         </Picker>
 
@@ -177,8 +177,7 @@ const ExerciseEditor = props => {
                                     }}
                                 >
                                     {
-                                        reps.map(item =>
-                                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                                        reps.map(PickerItem)
                                     }
                                 </Picker>
                             </View>
@@ -208,8 +207,7 @@ const ExerciseEditor = props => {
                     }}
                 >
                     {
-                        Object.keys(routines.editRoutine.customSets).map(item =>
-                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                        Object.keys(routines.editRoutine.customSets).map(PickerItem)
                     }
                 </Picker>
 
@@ -227,8 +225,7 @@ const ExerciseEditor = props => {
                     }}
                 >
                     {
-                        reps.map(item =>
-                            <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                        reps.map(PickerItem)
                     }
                 </Picker>
             </View>

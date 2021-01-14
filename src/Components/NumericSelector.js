@@ -30,8 +30,7 @@ const NumericSelector = props => {
             }}
         >
             {
-                temp.map(item =>
-                    <Picker.Item key={item} color={'white'} label={''+item} value={item} style={{}}/> )
+                temp.map(PickerItem)
             }
         </Picker>
     );

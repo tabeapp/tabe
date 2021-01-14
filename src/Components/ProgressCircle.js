@@ -28,6 +28,9 @@ const renderThirdLayer = (percent) => {
 
 const colorB = 'black';
 
+const width = 10;
+
+//consider using svg
 const ProgressCircle = props => {
     const percent = props.ratio
 
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
     firstProgressLayer: {
         width: 200,
         height: 200,
-        borderWidth: 20,
+        borderWidth: width,
         borderRadius: 100,
         position: 'absolute',
         borderLeftColor: 'transparent',
@@ -73,7 +76,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         position: 'absolute',
-        borderWidth: 20,
+        borderWidth: width,
         borderRadius: 100,
         borderLeftColor: 'transparent',
         borderBottomColor: 'transparent',
@@ -83,7 +86,7 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         position: 'absolute',
-        borderWidth: 20,
+        borderWidth: width+5,
         borderRadius: 100,
         borderLeftColor: 'transparent',
         borderBottomColor: 'transparent',

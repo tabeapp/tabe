@@ -4,6 +4,7 @@ import NumericSelector from './NumericSelector';
 import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from "../Contexts/RoutinesContext";
+import { PickerItem } from "./PickerItem";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -88,10 +89,7 @@ const SupersetEditor = props => {
                             >
                                 {
                                     //fuck you only normal and timed
-                                    ['Normal', 'Timed'].map(item =>
-                                        <Picker.Item
-                                            key={item} color={'white'} label={'' + item} value={item}
-                                        />)
+                                    ['Normal', 'Timed'].map(PickerItem)
                                 }
                             </Picker>
 
@@ -173,11 +171,7 @@ const SupersetEditor = props => {
                                                     }}
                                                 >
                                                     {
-                                                        reps.map(item =>
-                                                            <Picker.Item
-                                                                key={item} color={'white'} label={'' + item}
-                                                                value={item}
-                                                            />)
+                                                        reps.map(PickerItem)
                                                     }
                                                 </Picker>
                                             </View>
