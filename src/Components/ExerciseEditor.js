@@ -6,6 +6,7 @@ import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
 import Chooser from "./Chooser";
+import Row from "./Row";
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -210,7 +211,7 @@ const ExerciseEditor = props => {
         }
         {
             info.setInfo.type === 'Timed' &&
-            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+            <Row>
                 <TouchableOpacity
                     style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                     onPress={() => {
@@ -244,10 +245,10 @@ const ExerciseEditor = props => {
                     <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
                 </TouchableOpacity>
 
-            </View>
+            </Row>
         }
         <Words>Progression:</Words>
-        <View style={{alignItems: 'center', flexDirection: 'row'}}>
+        <Row>
             <Words>Add</Words>
             <NumericSelector onChange={value => {
                 rd('progress.amount', value);
@@ -257,7 +258,7 @@ const ExerciseEditor = props => {
                 rd('progress.rate', value);
             }} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
             <Words>times the workout is done</Words>
-        </View>
+        </Row>
 
         {
             info.setInfo.type === 'Normal' &&//this doesn't do shit

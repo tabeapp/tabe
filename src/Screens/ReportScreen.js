@@ -42,10 +42,10 @@ const ReportScreen = props => {
         <SafeBorder>
             <TopBar title='Workout Summary' rightText='Next' onPressRight={handleNext}/>
             <View style={styles.container}>
-                <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                     <Words>Zyzz</Words>
-                </View>
+                </Row>
                 <Write
                     value={title}
                     onChange={setTitle}

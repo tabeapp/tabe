@@ -6,6 +6,7 @@ import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -29,10 +30,10 @@ const HomeScreen = props => {
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('post', {workout: item})}
                         style={{backgroundColor: '#333', margin: 3}}>
-                        <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <Row>
                             <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                             <Words>Zyzz</Words>
-                        </View>
+                        </Row>
 
                         <Words style={{fontSize: 40}}>
                             {item.title}

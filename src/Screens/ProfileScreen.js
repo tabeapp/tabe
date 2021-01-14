@@ -8,6 +8,7 @@ import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 const liftMapping = {
     squat: 'orange',
@@ -64,10 +65,10 @@ const ProfileScreen = props => {
 
                             <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                                 <WeightVisual weight={v} reverse={true} />
-                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Row style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Words>{k}</Words>
                                     <Words>{v}</Words>
-                                </View>
+                                </Row>
                                 <WeightVisual weight={v}/>
                             </View>
                         </View>
@@ -97,6 +98,7 @@ const styles = StyleSheet.create({
     },
     container: { flex: 1, backgroundColor: PRIMARY },
     cardContainer: {width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
+    //what is this and why is it everywhere
     box: {
         flex: 1,
         width: '100%',

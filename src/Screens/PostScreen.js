@@ -5,6 +5,7 @@ import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 const primaryColor = '#66d6f8';
 
@@ -45,10 +46,10 @@ const PostScreen = props => {
         <SafeBorder>
             <TopBar title='Workout Summary' rightText='Next'/>
             <View style={styles.container}>
-                <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                     <Words>Zyzz</Words>
-                </View>
+                </Row>
                 <Words style={{fontSize: 40}} >
                     {workout.title}
                 </Words>

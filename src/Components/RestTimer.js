@@ -6,6 +6,7 @@ import WorkoutContext from '../Contexts/WorkoutContext';
 import { SEC_TO_TIME } from "../Utils/UtilFunctions";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressCircle from "./ProgressCircle";
+import Row from "./Row";
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
@@ -75,7 +76,7 @@ const RestTimer = props => {
     return (
         <Modal animationType={'fade'} transparent={true} visible={seconds !== 0}>
             <SafeAreaView style={{backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
-                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
+                <Row style={{width: '100%', justifyContent: 'space-around'}}>
 
                     <TouchableOpacity
                         onPress={() => {
@@ -110,7 +111,7 @@ const RestTimer = props => {
                         <Words style={{fontSize: 15, textAlign: 'center'}}>Hard +2:00</Words>
                     </TouchableOpacity>
 
-                </View>
+                </Row>
 
                 <TouchableOpacity style={{margin: 20, borderRadius: 100, backgroundColor: 'black'}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>

@@ -32,7 +32,7 @@ const RepSchemeEditor = props => {
                 <Words>Rep Scheme {name}</Words>
                 {
                     props.sets.map((week, weekIndex) =>
-                        <View key={weekIndex} style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <Row key={weekIndex}>
                             <Words>{weekIndex+1}:</Words>
                             <View style={{flex: 1, height: 60, backgroundColor: 'transparent', borderRadius: 20}}>
                                 {
@@ -100,7 +100,7 @@ const RepSchemeEditor = props => {
                                 }
 
                             </View>
-                        </View>
+                        </Row>
 
                     )
 

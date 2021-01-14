@@ -1,5 +1,6 @@
 import React from 'react';
 import { View} from 'react-native';
+import Row from "../Components/Row";
 
 //adjustable?
 //this is based on rouge plates
@@ -25,13 +26,13 @@ const WeightVisual = props => {
     if(reverse)
         info = info.reverse();
 
-    return (<View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+    return (<Row style={{display: 'flex'}}>
         {
             info.map((i,index) =>
                 <View key={index} style={{...i.style, borderStyle: 'solid', borderWidth: 1, borderColor: 'black'}} />
             )
         }
-    </View>);
+    </Row>);
 }
 
 export default WeightVisual;

@@ -8,6 +8,7 @@ import WorkoutContext from "../Contexts/WorkoutContext";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 const primaryColor = '#66d6f8';
 
@@ -81,7 +82,7 @@ const RoutineSetupScreen = props => {
                 maxEfforts.map(ex =>
                     <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
                         <Words style={{fontSize: 20}}>{ex.name}</Words>
-                        <View style={{justifyContent: 'space-around', alignItems: 'center', height: 90, flexDirection: 'row'}}>
+                        <Row style={{justifyContent: 'space-around', height: 90}}>
                             <Words style={{fontSize: 20}}>Enter Max Effort:</Words>
 
                             <NumericSelector onChange={reps => updateRep(ex.name, reps)} numInfo={repNumbers}/>
@@ -89,7 +90,7 @@ const RoutineSetupScreen = props => {
                             <Words style={{fontSize: 20}}>x</Words>
 
                             <NumericSelector onChange={weight => updateWeight(ex.name, weight)} numInfo={{def: ex.weight, min: 0, max: 1000, increment: 5}}/>
-                        </View>
+                        </Row>
                     </View>
                 )
             }</ScrollView>

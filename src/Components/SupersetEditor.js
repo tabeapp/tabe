@@ -4,6 +4,7 @@ import NumericSelector from './NumericSelector';
 import Words from './Words';
 import RoutinesContext from "../Contexts/RoutinesContext";
 import Chooser from "./Chooser";
+import Row from "./Row";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -50,21 +51,21 @@ const SupersetEditor = props => {
 
 
                             <Words>Progression:</Words>
-                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            <Row>
                                 <Words>Add</Words>
                                 <NumericSelector
                                     onChange={rd(ssi+'.progress.amount')}
                                     numInfo={{def:subInfo.progress.amount, min: 0, max: 25, increment: 2.5}}
                                 />
                                 <Words>lb</Words>
-                            </View>
-                            <View style={{alignItems: 'center', flexDirection: 'row'}}>
+                            </Row>
+                            <Row>
                                 <Words>every</Words>
                                 <NumericSelector
                                     onChange={rd(ssi+'.progress.rate')}
                                     numInfo={{def:subInfo.progress.rate, min: 1, max: 10, increment: 1}}/>
                                 <Words>time</Words>
-                            </View>
+                            </Row>
 
                             <Words>Sets:</Words>
                             <Words>Set Type:</Words>

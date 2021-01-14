@@ -213,7 +213,7 @@ const RoutineEditScreen = props => {
                     value={title}
                     onChange={v => rd('title', v)}
                 />
-                <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
+                <Row style={{justifyContent: 'space-between'}}>
                     <Words style={{fontSize: 20}}>Cycle length in days: </Words>
                     <NumericSelector
                         onChange={v =>
@@ -226,7 +226,7 @@ const RoutineEditScreen = props => {
                         }
 
                         numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
-                </View>
+                </Row>
 
                 {/*shoud this be towards the bottom
                         or towards the top as it applies to all exercises?*/}
