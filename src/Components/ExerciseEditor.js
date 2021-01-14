@@ -7,6 +7,7 @@ import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
 import { PickerItem } from "./PickerItem";
+import Chooser from "./Chooser";
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -79,11 +80,10 @@ const ExerciseEditor = props => {
 
         <Words>Sets:</Words>
         <Words>Set Type:</Words>
-        <Picker
-            style={{width: 100, height: 50}}
-            selectedValue={info.setInfo.type}
-            itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-            onValueChange={value => {
+        <Chooser
+            style={{width: 100}}
+            selected={info.setInfo.type}
+            onChange={value => {
                 routinesDispatch(prev => {
                     const x = prev.editRoutine.info[name].setInfo;
                     x.type = value;
@@ -131,11 +131,8 @@ const ExerciseEditor = props => {
                     return prev;
                 })
             }}
-        >
-            {
-                ['Normal', 'Custom', 'Sum', 'Timed'].map(PickerItem)
-            }
-        </Picker>
+            list={ ['Normal', 'Custom', 'Sum', 'Timed']}
+        />
 
         {
             //this should actually be very similar to custom workout screen
@@ -160,11 +157,9 @@ const ExerciseEditor = props => {
                         info.setInfo.sets.map((v, index) =>
 
                             <View key={index} style={styles.circle}>
-                                <Picker
-                                    style={{width: 50, height: 50}}
-                                    selectedValue={v}
-                                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                                    onValueChange={(value) => {
+                                <Chooser
+                                    selected={v}
+                                    onChange={(value) => {
                                         //how the fuck
                                         //would defeinitely be a good idea to set all following sets to current rep
                                         routinesDispatch(prev => {
@@ -175,11 +170,8 @@ const ExerciseEditor = props => {
                                             return prev;
                                         })
                                     }}
-                                >
-                                    {
-                                        reps.map(PickerItem)
-                                    }
-                                </Picker>
+                                    list={reps}
+                                />
                             </View>
                         )
                     }
@@ -198,36 +190,25 @@ const ExerciseEditor = props => {
             //finally, the selector, somethign unique to custom
             <View>
                 <Words>Select Custom Scheme:</Words>
-                <Picker
-                    style={{width: 100, height: 50}}
-                    selectedValue={info.setInfo.scheme}
-                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                    onValueChange={value => {
+                <Chooser
+                    selected={info.setInfo.scheme}
+                    onChange={value => {
                         rd('setInfo.scheme', value);
                     }}
-                >
-                    {
-                        Object.keys(routines.editRoutine.customSets).map(PickerItem)
-                    }
-                </Picker>
-
+                    list={Object.keys(routines.editRoutine.customSets)}
+                />
             </View>
         }
         {
             info.setInfo.type === 'Sum' &&
             <View style={styles.circle}>
-                <Picker
-                    style={{width: 50, height: 50}}
-                    selectedValue={info.setInfo.sum}
-                    itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
-                    onValueChange={(value) => {
+                <Chooser
+                    selected={info.setInfo.sum}
+                    onChange={(value) => {
                         routinesDispatch({path: 'editRoutine.info.' + name + '.setInfo.sum', value: value})
                     }}
-                >
-                    {
-                        reps.map(PickerItem)
-                    }
-                </Picker>
+                    list={reps}
+                />
             </View>
         }
         {

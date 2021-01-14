@@ -5,6 +5,7 @@ import Words from './Words';
 import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { PickerItem } from "./PickerItem";
+import Chooser from "./Chooser";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -69,11 +70,10 @@ const SupersetEditor = props => {
 
                             <Words>Sets:</Words>
                             <Words>Set Type:</Words>
-                            <Picker
-                                style={{ width: 100, height: 50 }}
-                                selectedValue={subInfo.setInfo.type}
-                                itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
-                                onValueChange={value => {
+                            <Chooser
+                                style={{width:100}}
+                                selected={subInfo.setInfo.type}
+                                onChange={value => {
                                     routinesDispatch(prev => {
                                         const x = prev.editRoutine.info[name][ssi].setInfo;
                                         x.type = value;
@@ -86,13 +86,8 @@ const SupersetEditor = props => {
                                         return prev;
                                     })
                                 }}
-                            >
-                                {
-                                    //fuck you only normal and timed
-                                    ['Normal', 'Timed'].map(PickerItem)
-                                }
-                            </Picker>
-
+                                list={['Normal', 'Timed']}
+                            />
 
                             {
                                 subInfo.setInfo.type === 'Normal' &&//this doesn't do shit
@@ -155,11 +150,9 @@ const SupersetEditor = props => {
                                         subInfo.setInfo.sets.map((v, index) =>
 
                                             <View key={index} style={styles.circle}>
-                                                <Picker
-                                                    style={{ width: 50, height: 50 }}
-                                                    selectedValue={v}
-                                                    itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
-                                                    onValueChange={(value) => {
+                                                <Chooser
+                                                    selected={v}
+                                                    onChange={(value) => {
                                                         routinesDispatch(prev => {
                                                             const x = prev.editRoutine.info[name][ssi].setInfo.sets;
                                                             for(let i = index; i < x.length; i++)
@@ -169,11 +162,8 @@ const SupersetEditor = props => {
                                                         //how the fuck
                                                         //would defeinitely be a good idea to set all following sets to current rep
                                                     }}
-                                                >
-                                                    {
-                                                        reps.map(PickerItem)
-                                                    }
-                                                </Picker>
+                                                    list={reps}
+                                                />
                                             </View>
                                         )
                                     }

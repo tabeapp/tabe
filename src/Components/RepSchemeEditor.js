@@ -5,6 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import { NEW_PR } from "../Constants/Symbols";
+import Chooser from "./Chooser";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -53,41 +54,29 @@ const RepSchemeEditor = props => {
 
                                                 <>
                                                     <View key={setIndex} style={styles.circle}>
-                                                        <Picker
-                                                            style={{width: 50, height: 50}}
-                                                            selectedValue={v.reps}
-                                                            itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                                                        <Chooser
+                                                            selected={v.reps}
                                                             onValueChange={value => {
                                                                 routinesDispatch({
                                                                     path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
                                                                     value: value
                                                                 });
                                                             }}
-                                                        >
-                                                            {
-                                                                reps.map((item,i) =>
-                                                                    <Picker.Item key={i} color={'white'} label={''+item} value={item} style={{}}/> )
-                                                            }
-                                                        </Picker>
+                                                            list={reps}
+                                                        />
                                                     </View>
                                                     <Words key={setIndex+'a'}>@</Words>
                                                     <View key={setIndex+'f'} style={styles.circle}>
-                                                        <Picker
-                                                            style={{width: 50, height: 50}}
-                                                            selectedValue={v['%']}
-                                                            itemStyle={{fontSize: 20, borderRadius: 0, height: 50}}
+                                                        <Chooser
+                                                            selected={v['%']}
                                                             onValueChange={value => {
                                                                 routinesDispatch({
                                                                     path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
                                                                     value: value
                                                                 });
                                                             }}
-                                                        >
-                                                            {
-                                                                percents.map((item, i) =>
-                                                                    <Picker.Item key={i} color={'white'} label={''+item} value={item} style={{}}/> )
-                                                            }
-                                                        </Picker>
+                                                            list={percents}
+                                                        />
                                                     </View>
                                                     <Words key={setIndex+'b'}>%</Words>
                                                 </>

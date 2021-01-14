@@ -1,14 +1,13 @@
-
-//my version of picker, whose style I just keep
-
+import React from 'react';
 import { Picker } from "@react-native-picker/picker";
 import { FONT } from "../Style/Values";
 import { PickerItem } from "./PickerItem";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-const Chooser = ({selected, onChange, list}) => {
+//my version of picker, whose style I just keep
+const Chooser = ({selected, onChange, list, style}) => {
     return <Picker
-        style={{width: 50, height: 50}}
+        style={{...styles.pickerStyle, ...style}}
         selectedValue={selected}
         itemStyle={styles.itemStyle}
         onValueChange={value => onChange(value)}

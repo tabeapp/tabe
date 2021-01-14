@@ -6,6 +6,7 @@ import WorkoutContext from "../Contexts/WorkoutContext";
 import { FAILURE, CURRENT } from "../Constants/Symbols";
 import { FONT } from "../Style/Values";
 import { PickerItem } from "./PickerItem";
+import Chooser from "./Chooser";
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
@@ -68,18 +69,11 @@ const SetCircle = (props) => {
             style={{ ...styles.circle, ...style }}
         >
             <Words>^</Words>
-            <Picker
-                style={{width: 50, height: 50}}
-                selectedValue={prog}
-                itemStyle={{fontSize: 20, borderRadius: 0, fontFamily: FONT, height: 50}}
-                onValueChange={(value) => {
-                    setProg(value);
-                }}
-            >
-                {
-                    temp.map(PickerItem)
-                }
-            </Picker>
+            <Chooser
+                selected={prog}
+                onChange={setProg}
+                list={temp}
+            />
             <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>
         </TouchableOpacity>
     );

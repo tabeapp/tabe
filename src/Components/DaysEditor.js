@@ -4,6 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import Words from "./Words";
 import { PickerItem } from "./PickerItem";
+import Chooser from "./Chooser";
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
@@ -31,18 +32,13 @@ const DaysEditor = props => {
                         backgroundColor: '#333',
                         margin: 3
                     }}>
-                        <Picker
-                            style={{ width: 50, height: 50 }}
-                            selectedValue={d}
-                            itemStyle={{ fontSize: 20, borderRadius: 0, height: 50 }}
-                            onValueChange={(value) =>
+                        <Chooser
+                            selected={d}
+                            onChange={value =>
                                 routinesDispatch({path: 'editRoutine.days.' + index, value: value})
                             }
-                        >
-                            {
-                                temp.map(PickerItem)
-                            }
-                        </Picker>
+                            list={temp}
+                        />
                     </View>
                     //good enough lol
                 })
