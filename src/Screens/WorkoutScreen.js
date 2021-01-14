@@ -142,7 +142,7 @@ const WorkoutScreen = props => {
 
 
                 <RestTimer
-                    visible={workout.timer.minutes !== 0 || workout.timer.seconds !== 0}
+                    visible={workout.timer !== 0}
                     timer={workout.timer}
                 />
 

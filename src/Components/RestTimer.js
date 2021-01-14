@@ -11,13 +11,13 @@ const RestTimer = props => {
     //props.visible
 
     //not too sure about this but idk
-    const [minutes, setMinutes] = useState(0);
     const [seconds, setSeconds] = useState(0);
 
     //as long as this component doesn't update props.timer, you should be good
+    //you know what, fuck this we're gonna only use seconds
+    //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
-        setMinutes(props.timer.minutes);
-        setSeconds(props.timer.seconds);
+        setSeconds(props.timer);
     }, [props.timer]);
 
 
@@ -25,7 +25,7 @@ const RestTimer = props => {
     return (
         <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
             <SafeAreaView style={{backgroundColor: 'orange'}}>
-                <Words>{minutes + ' ' + seconds}</Words>
+                <Words>{seconds}</Words>
             </SafeAreaView>
         </Modal>
     );

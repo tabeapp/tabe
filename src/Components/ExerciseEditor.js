@@ -65,13 +65,14 @@ const ExerciseEditor = props => {
         <View style={{flexDirection:'row'}}>
             <NumericSelector
                 //you should add default incrememtn value
-                onChange={value => rd('rest.minutes', value)}
-                numInfo={{def:info.rest.minutes, min: 0, max: 10, increment: 1}}
+                //this is so dumb, but it does make rest a single thing and handle it ok
+                onChange={value => rd('rest', value*60 + info.rest%60) }
+                numInfo={{def:Math.floor(info.rest/60), min: 0, max: 10, increment: 1}}
             />
             <Words>:</Words>
             <NumericSelector
-                onChange={value => rd('rest.seconds', value)}
-                numInfo={{def:info.rest.seconds, min: 0, max: 55, increment: 5}}
+                onChange={value => rd('rest', value + Math.floor(info.rest/60)*60)}
+                numInfo={{def:info.rest%60, min: 0, max: 55, increment: 5}}
             />
         </View>
 

@@ -91,10 +91,7 @@ export const DEFAULT_EX_WORKOUT = ex => {
     return {
         name: ex,
         barbell: info.barbell,
-        rest: {
-            minutes: info.barbell?3:1,
-            seconds: 0,
-        },
+        rest: info.barbell?180:60,
         sets: FIVE_BY_FIVE.map(s => ({
             reps: s,
             progress: null,
@@ -121,11 +118,7 @@ export const DEFAULT_EX_INFO = ex => {
             amount: 0,
             rate: 1
         },
-        rest:{
-            //stupid logic? yes, but whatever
-            minutes: info.barbell?3:1,
-            seconds: 0,
-        },
+        rest: info.barbell?180:60,
         setInfo: {
             type: 'Normal',
             sets: [5,5,5,5,5]
