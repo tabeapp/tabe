@@ -346,7 +346,7 @@ const RoutineEditScreen = props => {
                         <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
                             {
                                 Object.entries(customSets).map(([k,v]) =>
-                                    <RepSchemeEditor sets={v} name={k} />
+                                    <RepSchemeEditor key={k} sets={v} name={k} />
                                 )
                             }
                             <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
