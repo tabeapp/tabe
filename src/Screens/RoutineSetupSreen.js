@@ -7,6 +7,7 @@ import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import SafeBorder from "../Components/SafeBorder";
+import TopBar from "../Components/TopBar";
 
 const primaryColor = '#66d6f8';
 
@@ -72,19 +73,10 @@ const RoutineSetupScreen = props => {
 
     return (
         <SafeBorder>
-            <View style={styles.top}>
-                <TouchableOpacity style={styles.topButton}>
-                    <Words style={{fontSize: 20}}>
-                        Back
-                    </Words>
-                </TouchableOpacity>
-                <Words style={{fontSize: 20}}>Routine Setup</Words>
-                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                    <Words style={{fontSize: 20}}>
-                        Begin
-                    </Words>
-                </TouchableOpacity>
-            </View>
+            <TopBar
+                leftText='Back' title='Routine Setup' right='Begin'
+                    onPressRight={handleNext}
+            />
             <ScrollView>{
                 maxEfforts.map(ex =>
                     <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>

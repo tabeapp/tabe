@@ -10,6 +10,7 @@ import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
 import { CURRENT } from "../Constants/Symbols";
 import RestTimer from "../Components/RestTimer";
 import SafeBorder from "../Components/SafeBorder";
+import TopBar from "../Components/TopBar";
 
 const primaryColor = '#66d6f8';
 
@@ -92,27 +93,17 @@ const WorkoutScreen = props => {
 
     return (
         <SafeBorder>
-            <View style={styles.top}>
-                <TouchableOpacity
-                    onPress={() =>
-                        workoutDispatch(prev => {
-                            prev.edit = !prev.edit;
-                            return prev;
-                        })
-                    }
-                    style={styles.topButton}
-                >
-                    <Words style={{fontSize: 20}}>
-                        Edit
-                    </Words>
-                </TouchableOpacity>
-                <Words style={{fontSize: 20}}>{workout?workout.title:''}</Words>
-                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                    <Words style={{fontSize: 20}}>
-                        Done
-                    </Words>
-                </TouchableOpacity>
-            </View>
+            <TopBar
+                leftText='Edit' title={workout.title} rightText='Done'
+                onPressLeft={() =>
+                    workoutDispatch(prev => {
+                        prev.edit = !prev.edit;
+                        return prev;
+                    })
+                }
+                onPressRight={handleNext}
+            />
+
             <View style={styles.container}>{
                 workout&&workout.exercises.map((ex, index) => (
                     <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />

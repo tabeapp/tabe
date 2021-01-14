@@ -9,6 +9,7 @@ import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
+import TopBar from "../Components/TopBar";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -70,9 +71,8 @@ const RoutineScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'routine'}>
-            <View style={styles.topBar} />
+            <TopBar title='Routines'/>
             <View style={styles.box}>
-                <Words>Routines</Words>
                 <View style={{width: '100%', alignItems: 'center'}}>
                     {
                         Object.entries(routines).map(([k,v]) =>

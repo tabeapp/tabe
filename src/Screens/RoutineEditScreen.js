@@ -13,6 +13,7 @@ import { FULL_COPY } from "../Utils/UtilFunctions";
 import Words from "../Components/Words";
 import Write from "../Components/Write";
 import SafeBorder from "../Components/SafeBorder";
+import TopBar from "../Components/TopBar";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -167,32 +168,17 @@ const RoutineEditScreen = props => {
 
     return (
         <SafeBorder>
-            <View style={styles.top} >
-                <TouchableOpacity
-                    onPress={() => {
-                        //this is easier than the save, just leave
-                        //this does keep someting in 'editRoutine', but whatever
-                        //accessing routineedit later will copy in some other routine
-                        props.navigation.navigate('routine');
-                    }}
-                    style={styles.topButton}
-                >
-                    <Words style={{fontSize: 20}}>Discard</Words>
-                </TouchableOpacity>
-                <Words style={{fontSize: 20}}>Routine Editor</Words>
-                <TouchableOpacity onPress={() => {
-                    //at last we save it
-                    // do we need to object copy?
-                    //not who knows
-
-
-                    //nah we're missing some things
-                    //or literally just copy the state, right?
+            <TopBar
+                leftText='Discard' title='Routine Editor' rightText='Save'
+                onPressLeft={() => {
+                    props.navigation.navigate('routine');
+                }}
+                onPressRight={() => {
+                    //this is copied over, it's the save process
                     const newRoutine = FULL_COPY(routine);
                     newRoutine.currentDay = currentDay || 0;
                     newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
-                    //routineEx.progress.countdown = routineEx.progress.rate;
-                    //need to start the progression countdown for each exercise
+
                     Object.keys(newRoutine.info).forEach(ex => {
                         const x = newRoutine.info[ex].progress;
                         if(!x.countdown)
@@ -216,33 +202,12 @@ const RoutineEditScreen = props => {
                         return prev;
                     });
 
-                    routinesDispatch({type: 'setItem'});
+                    //for safe measure
+                    setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);
 
-
-                    //don't set it to active unless there's no active routine
-                    //so routines in async storage should look like
-                    /*
-                        current: starting strength,
-                        rouintes: {
-                            'deez nuts': {...},
-                            'starting strength': {...}
-                        }
-                     */
-
-                    //ideally we would then navigate to a list of editable routines
-                    //but for now we just go home
                     props.navigation.navigate('routine');
-                    /*Alert.alert(
-                        "Info summary",
-                        JSON.stringify(rName) + JSON.stringify(rTime) + JSON.stringify(info) + JSON.stringify(workouts) + JSON.stringify(days) + JSON.stringify(customSets)
-                    );*/
-
-                }} style={styles.topButton}>
-                    <Words style={{fontSize: 20}}>
-                        Save
-                    </Words>
-                </TouchableOpacity>
-            </View>
+                }}
+            />
             <ScrollView style={styles.box}>
                 <Write
                     value={title}
