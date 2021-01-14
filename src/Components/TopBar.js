@@ -44,4 +44,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default WorkoutScreen;
+export default TopBar;

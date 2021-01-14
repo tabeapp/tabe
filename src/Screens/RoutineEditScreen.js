@@ -367,7 +367,6 @@ const RoutineEditScreen = props => {
 
                 <View style={{height: 25/*for the red button*/}}/>
             </ScrollView>
-            <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
         </SafeBorder>
     );
 };

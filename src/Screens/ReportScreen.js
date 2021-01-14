@@ -6,6 +6,7 @@ import Words from '../Components/Words';
 import WorkoutContext from '../Contexts/WorkoutContext';
 import Write from '../Components/Write';
 import SafeBorder from "../Components/SafeBorder";
+import TopBar from "../Components/TopBar";
 
 const primaryColor = '#66d6f8';
 
@@ -39,17 +40,7 @@ const ReportScreen = props => {
 
     return (
         <SafeBorder>
-            <View style={styles.top}>
-                <TouchableOpacity style={styles.topButton}>
-                    <Words/>
-                </TouchableOpacity>
-                <Words style={{fontSize: 20}}>Workout Summary</Words>
-                <TouchableOpacity onPress={handleNext} style={styles.topButton}>
-                    <Words style={{fontSize: 20}}>
-                        Next
-                    </Words>
-                </TouchableOpacity>
-            </View>
+            <TopBar title='Workout Summary' rightText='Next' onPressRight={handleNext}/>
             <View style={styles.container}>
                 <View style={{alignItems: 'center', flexDirection: 'row'}}>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>

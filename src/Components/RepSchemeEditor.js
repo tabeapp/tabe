@@ -55,7 +55,7 @@ const RepSchemeEditor = props => {
                                                     <View key={setIndex} style={styles.circle}>
                                                         <Chooser
                                                             selected={v.reps}
-                                                            onValueChange={value => {
+                                                            onChange={value => {
                                                                 routinesDispatch({
                                                                     path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
                                                                     value: value
@@ -68,7 +68,7 @@ const RepSchemeEditor = props => {
                                                     <View key={setIndex+'f'} style={styles.circle}>
                                                         <Chooser
                                                             selected={v['%']}
-                                                            onValueChange={value => {
+                                                            onChange={value => {
                                                                 routinesDispatch({
                                                                     path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
                                                                     value: value

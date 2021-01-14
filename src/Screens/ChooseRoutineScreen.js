@@ -8,6 +8,7 @@ import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefau
 import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import SafeBorder from "../Components/SafeBorder";
+import TopBar from "../Components/TopBar";
 
 const primaryColor = '#66d6f8';
 
@@ -53,9 +54,7 @@ const ChooseRoutineScreen = props => {
 
     return (
         <SafeBorder>
-            <View style={styles.top}>
-                <Words style={{color: 'black', fontSize: 20}}>Routine Selector</Words>
-            </View>
+            <TopBar title='Routine Selector'/>
             <Words style={{paddingVertical: 5, paddingHorizontal: 10, fontSize: 30}}>Recommended Routines</Words>
             <View style={styles.container}>{
                 routines.map(r =>

@@ -5,6 +5,7 @@ import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
+import TopBar from "../Components/TopBar";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -21,7 +22,7 @@ const HomeScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'home'}>
-            <View style={styles.topBar} />
+            <TopBar title='Feed'/>
             <View style={styles.box}>
                 <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
                     item.exercises &&

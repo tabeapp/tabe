@@ -7,6 +7,7 @@ import WeightVisual from "../Utils/WeightVisual";
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
+import TopBar from "../Components/TopBar";
 
 const liftMapping = {
     squat: 'orange',
@@ -55,9 +56,7 @@ const ProfileScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'profile'}>
-            <View style={styles.topBar} >
-                <Words style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Words>
-            </View>
+            <TopBar title='Zyzz'/>
             <View style={styles.box}>
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>

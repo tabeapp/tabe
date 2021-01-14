@@ -5,13 +5,14 @@ import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
+import TopBar from "../Components/TopBar";
 
 const ExploreScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];
 
     return (
         <SafeBorderNav {...props} screen={'explore'}>
-            <View style={styles.topBar} />
+            <TopBar title='Explore'/>
             <View style={styles.box}>
                 <FlatList data={data} keyExtractor={item => item} renderItem={
                     ({item}) => <Words>{item}</Words>
