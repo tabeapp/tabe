@@ -4,8 +4,8 @@ import { TextInput, StyleSheet, View, SafeAreaView, TouchableOpacity } from 'rea
 
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
-import { FONT } from "../Style/Values";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import Write from "../Components/Write";
 
 const primaryColor = '#66d6f8';
 
@@ -57,15 +57,14 @@ const ReportScreen = props => {
                         <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                         <Words>Zyzz</Words>
                     </View>
-                    <TextInput
-                        style={{fontFamily: FONT, fontSize: 40, color: 'white'}}
+                    <Write
                         value={title}
-                        onChangeText={setTitle}
+                        onChange={setTitle}
                     />
-                    <TextInput
-                        style={{fontFamily: FONT, color:'white'}}
+                    <Write
+                        style={{fontSize: 20}}
                         value={description}
-                        onChangeText={setDescription}
+                        onChange={setDescription}
                     />
                     {
                         report && report.exercises.map((ex, index) =>

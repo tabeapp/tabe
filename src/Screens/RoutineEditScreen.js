@@ -11,7 +11,7 @@ import RepSchemeEditor from '../Components/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import Words from "../Components/Words";
-import { FONT } from "../Style/Values";
+import Write from "../Components/Write";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -245,10 +245,9 @@ const RoutineEditScreen = props => {
                     </TouchableOpacity>
                 </View>
                 <ScrollView style={styles.box}>
-                    <TextInput
-                        style={{fontFamily: FONT, color:'white', textAlign: 'center', fontSize: 40}}
+                    <Write
                         value={title}
-                        onChangeText={v => rd('title', v)}
+                        onChange={v => rd('title', v)}
                     />
                     <View style={{alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row'}}>
                         <Words style={{fontSize: 20}}>Cycle length in days: </Words>

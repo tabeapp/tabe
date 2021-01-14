@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderRadius: 0,
         fontFamily: FONT,
+        fontWeight: 'bold',
         height: 50,
     },
 });
