@@ -39,7 +39,6 @@ const SetCircle = (props) => {
             //this is a unix timestamp, in seconds
             //could also use startrest type of thing
             prev.timer = new Date().getTime() + prev.exercises[exerciseN].rest*1000;
-            //prev.timer = prev.exercises[exerciseN].rest;
             return prev;
         });
     };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Modal} from 'react-native';
+import {Modal, TouchableOpacity} from 'react-native';
 import Words from './Words';
 import { SafeAreaView } from 'react-navigation';
 import WorkoutContext from '../Contexts/WorkoutContext';
@@ -19,7 +19,6 @@ const RestTimer = props => {
 
     //not too sure about this but idk
     //there's a reason for -1, we have a useeffect that clears timer when seconds = 0
-
     const [seconds, setSeconds] = useState(-1);
 
     //as long as this component doesn't update props.timer, you should be good
@@ -34,36 +33,20 @@ const RestTimer = props => {
             return;
         }
 
-        //setStart(now);
-        //if(props.timer === 0)
-            //return;
-
         //start the countdown
         const interval = setInterval(() => {
-            setSeconds(prev => {
-                //set to difference between now and props.timer,
-                //if props.timer - now > 0
+            setSeconds(() => {
                 //const now = new Date().getTime()
                 const newNow = new Date().getTime();
                 const diff = props.timer - newNow;
-                //const diff = props.timer - now
                 if(diff < 0){
                     clearInterval(interval)
                     return 0;
                 }
-                ///clear
-                //return 0
 
-                return Math.round(diff/1000);
-                //return diff rounded to seconds
-
-                //if(prev === 0){
-                    //clearInterval(interval);
-                    //return prev;
-                //}
-                //return prev-1;
+                return Math.floor(diff/1000);
             });
-        }, 1000);//temporarily speeding it up
+        }, 100);//temporarily speeding it up
 
         return () => clearInterval(interval);
 
@@ -79,6 +62,10 @@ const RestTimer = props => {
         <Modal animationType={'slide'} transparent={true} visible={seconds !== 0}>
             <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
                 <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
+                <TouchableOpacity onPress={close}>
+                    <Words>end it</Words>
+
+                </TouchableOpacity>
             </SafeAreaView>
         </Modal>
     );

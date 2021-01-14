@@ -21,29 +21,13 @@ const WorkoutProvider = props => {
     const {current, routines} = useContext(RoutinesContext).routines;
     const {routinesDispatch} = useContext(RoutinesContext);
 
-    const handleAppStateChange = async nextAppState => {
-        if(nextAppState === 'inactive' || nextAppState === 'background') {
-            await AsyncStorage.setItem('@workout', JSON.stringify(workout))
-                .then(() => {})
-                .catch(e => console.log(e));
-        }
-    };
-
-    //initial load from storage
     useEffect(() => {
-        //componentdidmount
-        AppState.addEventListener('change', handleAppStateChange);
-
         AsyncStorage.getItem('@workout').then(obj => {
             //do we need to call generateReport here?
             console.log('@workout ' + obj);
             if(obj !== null)
                 workoutDispatch(() => JSON.parse(obj));
         });
-
-        //componentwillunmount
-        return () =>
-            AppState.removeEventListener('change', handleAppStateChange);
     }, []);
 
     //heavy logic here, not much you can do with usereducer here
