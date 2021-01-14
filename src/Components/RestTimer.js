@@ -18,20 +18,36 @@ const RestTimer = props => {
     const close = () => workoutDispatch({ path: 'timer', value: 0 });
 
     //not too sure about this but idk
-    const [seconds, setSeconds] = useState(0);
+    //there's a reason for -1, we have a useeffect that clears timer when seconds = 0
+
+    const [seconds, setSeconds] = useState(-1);
 
     //as long as this component doesn't update props.timer, you should be good
     //you know what, fuck this we're gonna only use seconds
     //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
+        //const now = new Date().getTime()/1000
         setSeconds(props.timer);
         //don't run this shit if it's 0
+        //if(now > props.timer)return
+
+        //setStart(now);
         if(props.timer === 0)
             return;
 
         //start the countdown
         const interval = setInterval(() => {
             setSeconds(prev => {
+                //set to difference between now and props.timer,
+                //if props.timer - now > 0
+                //const now = new Date().getTime()
+                //const diff = props.timer - now
+                //if(diff < 0)
+                //clear
+                //return 0
+
+                //return diff rounded to seconds
+
                 if(prev === 0){
                     clearInterval(interval);
                     return prev;
@@ -51,7 +67,7 @@ const RestTimer = props => {
 
     //safe area view doesnt do shit
     return (
-        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0} onCloseRequest={close}>
+        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0} >
             <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
                 <Words style={{fontSize: 60}}>{SEC_TO_TIME(seconds)}</Words>
             </SafeAreaView>

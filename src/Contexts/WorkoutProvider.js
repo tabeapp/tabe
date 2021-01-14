@@ -21,15 +21,10 @@ const WorkoutProvider = props => {
     const {current, routines} = useContext(RoutinesContext).routines;
     const {routinesDispatch} = useContext(RoutinesContext);
 
-    const handleAppStateChange = nextAppState => {
+    const handleAppStateChange = async nextAppState => {
         if(nextAppState === 'inactive' || nextAppState === 'background') {
-            (async () => {
-                try {
-                    await AsyncStorage.setItem('@workout',
-                        JSON.stringify(workout)
-                    );
-                } catch (e) { }
-            })();
+            await AsyncStorage.setItem('@workout', JSON.stringify(workout))
+                .catch(e => console.log(e));
         }
     };
 
@@ -40,6 +35,7 @@ const WorkoutProvider = props => {
 
         AsyncStorage.getItem('@workout').then(obj => {
             //do we need to call generateReport here?
+            console.log('@workout ' + obj);
             if(obj !== null)
                 workoutDispatch(() => JSON.parse(obj));
         });
@@ -51,8 +47,10 @@ const WorkoutProvider = props => {
 
     //heavy logic here, not much you can do with usereducer here
     const generateWorkout = () => {
-        if(JSON.stringify(workout) !== '{}')
-            return workout;
+        if(JSON.stringify(workout) !== '{}'){
+            console.log('existing ' + JSON.stringify(workout));
+            return;// workout;
+        }
 
         console.log(routines);
         console.log(current);
@@ -514,7 +512,7 @@ const WorkoutProvider = props => {
 
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
-    //guess it would make sense to save workout to disk every time, maybe
+    //guess it would make sense to save workout to disk every time, maybe YES
     const workoutReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
         //need deeper copy
@@ -523,7 +521,14 @@ const WorkoutProvider = props => {
         //so just edit the passed in object directly
         if(action.constructor === Function){
             //run action on state
-            return invariantCheck(action(next));
+            const x = invariantCheck(action(next));
+            AsyncStorage.setItem('@workout', JSON.stringify(x))
+                .then(() => {})
+                .catch(e => console.log(e));
+            //AsyncStorage.setItem('@workout', JSON.stringify( x )).catch(e => {
+                //console.log(e);
+            //});
+            return x;
         }
 
         //otherwise
@@ -559,16 +564,18 @@ const WorkoutProvider = props => {
         }
 
         //i guess we could store some logic here
-        if(action.type){
+        //if(action.type){
             //this needs to happen a lot
-            if(action.type === 'setItem')
-                //don't save editRoutine... or should we?
-                AsyncStorage.setItem('@workout', JSON.stringify({
-                    workout: next.workout
-                }));
-        }
+        //if(action.type === 'setItem')
+        //don't save editRoutine... or should we?
+        const x = invariantCheck(next);
+        //AsyncStorage.setItem('@workout', JSON.stringify( x ));
+        AsyncStorage.setItem('@workout', JSON.stringify(x))
+            .then(() => {})
+            .catch(e => console.log(e));
+        //}
 
-        return invariantCheck(next);
+        return x;
     };
 
     const [workout, workoutDispatch] = useReducer(workoutReducer, initState);
