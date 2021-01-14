@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { Picker } from '@react-native-picker/picker';
-import { PickerItem } from "./PickerItem";
+import React from 'react';
+import Chooser from "./Chooser";
 
 //im making my own, screw the libs
 //min reps is 0, max reps is lets say 50 width __ is good
@@ -21,19 +20,13 @@ const NumericSelector = props => {
 
     //this has a weird gray box
     return (
-        <Picker
-            selectedValue={selected}
+        <Chooser
+            selected={selected}
             style={{width: 100}}
             itemStyle={{fontSize: 40, borderRadius: 5, height: 70}}
-            onValueChange={(value) => {
-                //setSelected(value);
-                onChange(value);
-            }}
-        >
-            {
-                temp.map(PickerItem)
-            }
-        </Picker>
+            onChange={onChange}
+            list={temp}
+        />
     );
 };
 

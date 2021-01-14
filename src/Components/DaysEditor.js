@@ -1,9 +1,7 @@
 import React, {useContext} from 'react';
 import {View} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import Words from "./Words";
-import { PickerItem } from "./PickerItem";
 import Chooser from "./Chooser";
 
 const DaysEditor = props => {

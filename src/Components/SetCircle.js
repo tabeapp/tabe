@@ -1,11 +1,8 @@
 import React, {useState, useContext} from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { FAILURE, CURRENT } from "../Constants/Symbols";
-import { FONT } from "../Style/Values";
-import { PickerItem } from "./PickerItem";
 import Chooser from "./Chooser";
 
 const SetCircle = (props) => {

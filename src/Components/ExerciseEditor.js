@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import { StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
-import { Picker } from '@react-native-picker/picker';
 import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
-import { PickerItem } from "./PickerItem";
 import Chooser from "./Chooser";
 
 const reps = [FAILURE];
