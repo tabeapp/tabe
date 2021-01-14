@@ -3,10 +3,15 @@ import {Modal} from 'react-native';
 import Words from './Words';
 import { SafeAreaView } from 'react-navigation';
 import WorkoutContext from '../Contexts/WorkoutContext';
+import { SEC_TO_TIME } from "../Utils/UtilFunctions";
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
+//note: maybe this should be saved as part of the workout, or do some kind of
+//next workout = new Date().getTime() + seconds
+//then countdown to that
+//cuz if you close the app during the rest, it'll just reset instead of go away
 const RestTimer = props => {
     //the only method we'll need
     const {workoutDispatch} = useContext(WorkoutContext);
@@ -33,7 +38,7 @@ const RestTimer = props => {
                 }
                 return prev-1;
             });
-        }, 100);//temporarily speeding it up
+        }, 1000);//temporarily speeding it up
 
         return () => clearInterval(interval);
 
@@ -41,14 +46,14 @@ const RestTimer = props => {
 
     useEffect(() => {
         if(seconds === 0)
-            close()
-    }, [seconds])
+            close();
+    }, [seconds]);
 
     //safe area view doesnt do shit
     return (
         <Modal animationType={'slide'} transparent={true} visible={seconds !== 0} onCloseRequest={close}>
-            <SafeAreaView style={{backgroundColor: 'orange'}}>
-                <Words>{seconds}</Words>
+            <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                <Words style={{fontSize: 60}}>{SEC_TO_TIME(seconds)}</Words>
             </SafeAreaView>
         </Modal>
     );

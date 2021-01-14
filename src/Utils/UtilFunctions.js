@@ -6,3 +6,12 @@ export const FULL_COPY = o => {
     return JSON.parse(JSON.stringify(o));
 };
 
+//90 => 1:30
+export const SEC_TO_TIME = seconds => {
+    let m = Math.floor(seconds/60);
+    let s = seconds%60;
+    if(s < 10)
+        s = '0' + s;
+    return m + ':' + s;
+};
+
