@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Picker } from '@react-native-picker/picker';
+import { PickerItem } from "./PickerItem";
 
 //im making my own, screw the libs
 //min reps is 0, max reps is lets say 50 width __ is good
