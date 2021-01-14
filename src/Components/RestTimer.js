@@ -81,9 +81,10 @@ const RestTimer = props => {
                         <Words style={{fontSize: 15, textAlign: 'center'}}>Easy -2:00</Words>
                     </TouchableOpacity>
 
-                    <View style={{width: 200, height: 200, backgroundColor: 'black', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}>
+                    <ProgressCircle percent={seconds/60/10*100}>
                         <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
-                    </View>
+                    </ProgressCircle>
+
                     <TouchableOpacity
                         onPress={() => {
                             //you can always add time
@@ -98,7 +99,6 @@ const RestTimer = props => {
                     </TouchableOpacity>
 
                 </View>
-                <ProgressCircle percent={20}/>
 
                 <TouchableOpacity style={{borderRadius: 100, backgroundColor: '#333'}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>
