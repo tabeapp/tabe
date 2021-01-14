@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Modal, TouchableOpacity, View} from 'react-native';
+import {Modal, TouchableOpacity, View, StyleSheet} from 'react-native';
 import Words from './Words';
 import { SafeAreaView } from 'react-navigation';
 import WorkoutContext from '../Contexts/WorkoutContext';
 import { SEC_TO_TIME } from "../Utils/UtilFunctions";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import ProgressCircle from "./ProgressCircle";
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
@@ -61,8 +62,8 @@ const RestTimer = props => {
     //safe area view doesnt do shit
     return (
         <Modal animationType={'slide'} transparent={true} visible={seconds !== 0}>
-            <SafeAreaView style={{width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <SafeAreaView style={{backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
 
                     <TouchableOpacity
                         onPress={() => {
@@ -75,19 +76,30 @@ const RestTimer = props => {
                                 return prev;
                             });
                         }}
-                        style={{width: 50, height: 50, backgroundColor: '#333', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
+                        style={{width: 50, height: 50, backgroundColor: 'green', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
                     >
-                        <Words style={{fontSize: 40}}>-2</Words>
+                        <Words style={{fontSize: 15, textAlign: 'center'}}>Easy -2:00</Words>
                     </TouchableOpacity>
 
-                    <View style={{width: 200, height: 200, backgroundColor: '#333', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={{width: 200, height: 200, backgroundColor: 'black', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}>
                         <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
                     </View>
-                    <TouchableOpacity style={{width: 50, height: 50, backgroundColor: '#333', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}>
-                        <Words style={{fontSize: 40}}>+2</Words>
+                    <TouchableOpacity
+                        onPress={() => {
+                            //you can always add time
+                            workoutDispatch(prev => {
+                                prev.timer += 2*60*1000;
+                                return prev;
+                            });
+                        }}
+                        style={{width: 50, height: 50, backgroundColor: 'red', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
+                    >
+                        <Words style={{fontSize: 15, textAlign: 'center'}}>Hard +2:00</Words>
                     </TouchableOpacity>
 
                 </View>
+                <ProgressCircle percent={20}/>
+
                 <TouchableOpacity style={{borderRadius: 100, backgroundColor: '#333'}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>
 
@@ -95,6 +107,6 @@ const RestTimer = props => {
             </SafeAreaView>
         </Modal>
     );
-}
+};
 
 export default RestTimer;
