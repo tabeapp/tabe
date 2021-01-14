@@ -120,7 +120,10 @@ const WorkoutProvider = props => {
             edit: false,
             //very necessary for knowing which routine to progress
             routine: r.title,
-            timer: 0
+            //are these even necessary
+            timer: 0,
+            restStart: 0
+
         }));
     };
 
@@ -130,7 +133,10 @@ const WorkoutProvider = props => {
             exercises: [],
             edit: true,
             routine: '',
-            timer: 0
+            //necessary?
+            timer: 0,
+            restStart: 0
+
         }));
     }
 

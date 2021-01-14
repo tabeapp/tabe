@@ -144,6 +144,7 @@ const WorkoutScreen = props => {
 
                 <RestTimer
                     timer={workout.timer}
+                    restStart={workout.restStart}
                 />
 
                 <ExercisePicker handleSelection={name =>

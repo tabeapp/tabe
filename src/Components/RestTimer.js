@@ -17,11 +17,21 @@ import ProgressCircle from "./ProgressCircle";
 const RestTimer = props => {
     //the only method we'll need
     const {workoutDispatch} = useContext(WorkoutContext);
-    const close = () => workoutDispatch({ path: 'timer', value: 0 });
+    const close = () => workoutDispatch(prev => {
+        prev.timer = 0;
+        prev.restStart = 0;
+        return prev;
+    });
 
     //not too sure about this but idk
     //there's a reason for -1, we have a useeffect that clears timer when seconds = 0
     const [seconds, setSeconds] = useState(-1);
+
+    //startrest ---- now ---------- timer
+    //(now-timer)/(startrest-timer)
+    const [ratio, setRatio] = useState(0);
+
+    const {timer, restStart} = props;
 
     //as long as this component doesn't update props.timer, you should be good
     //you know what, fuck this we're gonna only use seconds
@@ -30,7 +40,7 @@ const RestTimer = props => {
         const now = new Date().getTime();
         //setSeconds(props.timer);
         //don't run this shit if it's 0
-        if(now > props.timer){
+        if(now > timer){
             setSeconds(0);
             return;
         }
@@ -40,7 +50,7 @@ const RestTimer = props => {
             setSeconds(() => {
                 //const now = new Date().getTime()
                 const newNow = new Date().getTime();
-                const diff = props.timer - newNow;
+                const diff = timer - newNow;
                 if(diff < 0){
                     clearInterval(interval)
                     return 0;
@@ -52,9 +62,10 @@ const RestTimer = props => {
 
         return () => clearInterval(interval);
 
-    }, [props.timer]);
+    }, [timer]);
 
     useEffect(() => {
+        setRatio(seconds/(timer-restStart)*1000);
         if(seconds === 0)
             close();
     }, [seconds]);
@@ -81,7 +92,7 @@ const RestTimer = props => {
                         <Words style={{fontSize: 15, textAlign: 'center'}}>Easy -2:00</Words>
                     </TouchableOpacity>
 
-                    <ProgressCircle ratio={seconds/60/10}>
+                    <ProgressCircle ratio={ratio}>
                         <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
                     </ProgressCircle>
 
