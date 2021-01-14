@@ -4,6 +4,7 @@ import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
+import SafeBorderNav from "../Components/SafeBorderNav";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -19,7 +20,7 @@ const HomeScreen = props => {
     //})
 
     return (
-        <SafeBorder>
+        <SafeBorderNav {...props} screen={'home'}>
             <View style={styles.topBar} />
             <View style={styles.box}>
                 <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
@@ -44,8 +45,7 @@ const HomeScreen = props => {
                 }
                 />
             </View>
-            <NavBar current={/*better way to handle this?*/'home'} navigation={props.navigation}/>
-        </SafeBorder>
+        </SafeBorderNav>
     );
 };
 

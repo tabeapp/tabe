@@ -8,6 +8,7 @@ import RoutinesContext from "../Contexts/RoutinesContext";
 import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
 import { FULL_COPY } from "../Utils/UtilFunctions";
 import SafeBorder from "../Components/SafeBorder";
+import SafeBorderNav from "../Components/SafeBorderNav";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -68,7 +69,7 @@ const RoutineScreen = props => {
     }
 
     return (
-        <SafeBorder>
+        <SafeBorderNav {...props} screen={'routine'}>
             <View style={styles.topBar} />
             <View style={styles.box}>
                 <Words>Routines</Words>
@@ -125,8 +126,7 @@ const RoutineScreen = props => {
                 </TouchableOpacity>
 
             </View>
-            <NavBar current={/*better way to handle this?*/'routine'} navigation={props.navigation}/>
-        </SafeBorder>
+        </SafeBorderNav>
     );
 };
 

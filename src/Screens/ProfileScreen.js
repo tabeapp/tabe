@@ -6,6 +6,7 @@ import { PRIMARY } from '../Constants/Theme';
 import WeightVisual from "../Utils/WeightVisual";
 import Words from "../Components/Words";
 import SafeBorder from "../Components/SafeBorder";
+import SafeBorderNav from "../Components/SafeBorderNav";
 
 const liftMapping = {
     squat: 'orange',
@@ -53,7 +54,7 @@ const ProfileScreen = props => {
 
 
     return (
-        <SafeBorder>
+        <SafeBorderNav {...props} screen={'profile'}>
             <View style={styles.topBar} >
                 <Words style={{fontSize: 20}}>{'Zyzz'/*the username*/}</Words>
             </View>
@@ -87,8 +88,7 @@ const ProfileScreen = props => {
                     })
                 }</View>
             </View>
-            <NavBar current={/*better way to handle this?*/'profile'} navigation={props.navigation}/>
-        </SafeBorder>
+        </SafeBorderNav>
     );
 };
 
