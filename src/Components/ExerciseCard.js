@@ -100,8 +100,8 @@ const ExerciseCard = (props) => {
                     {
                         barbell&&
                         <>
-                            <WeightVisual key={'a'} weight={currentWeight} reverse={true} />
-                            <MidLine key={'b'} completion={1}/>
+                            <WeightVisual key={'b'} weight={currentWeight} reverse={true} />
+                            <MidLine key={'c'} completion={1}/>
                         </>
                     }
                     {

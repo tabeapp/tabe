@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {Modal} from 'react-native';
-import Words from "./Words";
-import { SafeAreaView } from "react-navigation";
+import Words from './Words';
+import { SafeAreaView } from 'react-navigation';
+import WorkoutContext from '../Contexts/WorkoutContext';
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
 const RestTimer = props => {
-    //just remember to fix this in CustomExerciseCard, just pass onSelect = {addExercise}
-    //props.visible
+    //the only method we'll need
+    const {workoutDispatch} = useContext(WorkoutContext);
+    const close = () => workoutDispatch({ path: 'timer', value: 0 });
 
     //not too sure about this but idk
     const [seconds, setSeconds] = useState(0);
@@ -18,12 +20,27 @@ const RestTimer = props => {
     //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
         setSeconds(props.timer);
+        console.log('useeffect called');
+
+        //start the countdown
+        const interval = setInterval(() => {
+            setSeconds(prev => {
+                if(prev === 0){
+                    clearInterval(interval);
+                    return prev;
+                }
+                return prev-1;
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+
     }, [props.timer]);
 
 
     //safe area view doesnt do shit
     return (
-        <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
+        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0} onCloseRequest={close}>
             <SafeAreaView style={{backgroundColor: 'orange'}}>
                 <Words>{seconds}</Words>
             </SafeAreaView>
