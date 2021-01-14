@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import {TouchableOpacity, ScrollView, StyleSheet, View, SafeAreaView} from 'react-native';
-//get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
 import NumericSelector from '../Components/NumericSelector';

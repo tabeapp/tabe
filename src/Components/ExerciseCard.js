@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-//get custom icons eventually
 
 import WeightVisual from "../Utils/WeightVisual";
 import SetCircle from "./SetCircle";

@@ -1,6 +1,5 @@
 import React, {useContext} from 'react';
 import {TouchableOpacity, StyleSheet, View, SafeAreaView} from 'react-native';
-//get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
 import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";

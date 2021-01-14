@@ -1,6 +1,5 @@
 import React, {useState, useContext} from 'react';
 import { TextInput, StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
-//get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
@@ -62,7 +61,7 @@ const ReportScreen = props => {
                         onChange={setTitle}
                     />
                     <Write
-                        style={{fontSize: 20}}
+                        style={{fontSize: 20, height: 100}}
                         value={description}
                         onChange={setDescription}
                     />

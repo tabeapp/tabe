@@ -7,6 +7,7 @@ const Write = ({value, onChange, style}) => {
     return <TextInput
         style={{...styles.style, ...style}}
         value={value}
+        multiline={true}
         onChangeText={onChange}
     />;
 };

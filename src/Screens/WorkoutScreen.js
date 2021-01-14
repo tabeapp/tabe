@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, View, SafeAreaView, TouchableOpacity, Alert } from "react-native";
-//get custom icons eventually
 
 import ExerciseCard from '../Components/ExerciseCard';
 import { PRIMARY } from '../Constants/Theme';
