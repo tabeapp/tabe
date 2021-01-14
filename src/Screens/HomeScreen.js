@@ -1,5 +1,5 @@
 import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, View } from "react-native";
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";

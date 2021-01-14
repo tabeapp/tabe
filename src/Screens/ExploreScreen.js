@@ -1,7 +1,8 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import React from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
+import Words from "../Components/Words";
 
 const ExploreScreen = props => {
     const data = ['pee pee', 'poo poo', 'oooooh'];

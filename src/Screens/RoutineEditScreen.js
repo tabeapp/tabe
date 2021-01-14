@@ -285,7 +285,7 @@ const RoutineEditScreen = props => {
                     <Words style={{fontSize: 40}}>Workouts</Words>
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
                         {
-                            Object.entries(workouts).map(([k,v], index) =>
+                            Object.entries(workouts).map(([k,v]) =>
                                 <WorkoutEditor
                                     key={k} exercises={v} name={k}
                                     editSuperset={(val, exerciseIndex, supersetIndex) => {
@@ -347,7 +347,7 @@ const RoutineEditScreen = props => {
                             <Words>(workouts using this scheme will cycle through the following sets)</Words>
                             <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
                                 {
-                                    Object.entries(customSets).map(([k,v], index) =>
+                                    Object.entries(customSets).map(([k,v]) =>
                                         <RepSchemeEditor sets={v} name={k} />
                                     )
                                 }

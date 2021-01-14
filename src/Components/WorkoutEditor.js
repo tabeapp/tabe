@@ -4,7 +4,6 @@ import ExercisePicker from './ExercisePicker';
 import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
-import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from "../Constants/DefaultExInfo";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints

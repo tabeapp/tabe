@@ -20,9 +20,9 @@ const renderThirdLayer = (percent) => {
          * Since first 50 percent is already taken care  by second layer circle, hence we subtract it
          * before passing to the propStyle function
          **/
-        return <View style={[styles.secondProgressLayer,propStyle((percent - 0.5), 45), {borderTopColor: colorC, borderRightColor: colorC} ]}></View>
+        return <View style={[styles.secondProgressLayer,propStyle((percent - 0.5), 45), {borderTopColor: colorC, borderRightColor: colorC} ]}/>
     }else{
-        return <View style={styles.offsetLayer}></View>
+        return <View style={styles.offsetLayer}/>
     }
 }
 
@@ -46,7 +46,7 @@ const ProgressCircle = props => {
 
     return(
         <View style={styles.container}>
-            <View style={[styles.firstProgressLayer, firstProgressLayerStyle, {borderTopColor: colorC, borderRightColor: colorC}]}></View>
+            <View style={[styles.firstProgressLayer, firstProgressLayerStyle, {borderTopColor: colorC, borderRightColor: colorC}]}/>
             {renderThirdLayer(percent)}
             {props.children}
         </View>

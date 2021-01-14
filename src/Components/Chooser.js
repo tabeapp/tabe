@@ -1,7 +1,7 @@
 import React from 'react';
-import { Picker } from "@react-native-picker/picker";
-import { FONT } from "../Style/Values";
-import { StyleSheet } from "react-native";
+import { Picker } from '@react-native-picker/picker';
+import { FONT } from '../Style/Values';
+import { StyleSheet } from 'react-native';
 
 //my version of picker, whose style I just keep
 const Chooser = ({selected, onChange, list, style, itemStyle}) => {
@@ -21,7 +21,7 @@ const Chooser = ({selected, onChange, list, style, itemStyle}) => {
                 />
             )
         }
-    </Picker>
+    </Picker>;
 };
 
 const styles = StyleSheet.create({
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         borderRadius: 0,
         fontFamily: FONT,
-        height: 50
-    }
+        height: 50,
+    },
 });
 
 export default Chooser;

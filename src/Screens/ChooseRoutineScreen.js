@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react';
+import React, {useContext} from 'react';
 import {TouchableOpacity, StyleSheet, View, SafeAreaView} from 'react-native';
 //get custom icons eventually
 
@@ -7,7 +7,6 @@ import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
 import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
 import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
 import Words from "../Components/Words";
-import WorkoutProvider from "../Contexts/WorkoutProvider";
 import WorkoutContext from "../Contexts/WorkoutContext";
 
 const primaryColor = '#66d6f8';

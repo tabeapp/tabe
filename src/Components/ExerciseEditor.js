@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
-import NumericSelector from './NumericSelector';
-import Words from './Words';
+import { StyleSheet, Switch, TouchableOpacity, View } from "react-native";
+import NumericSelector from "./NumericSelector";
+import Words from "./Words";
 import SupersetEditor from "./SupersetEditor";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
@@ -102,13 +102,12 @@ const ExerciseEditor = props => {
                         x.selector = 0;
                     }
                     else{
-                        const hasCustom = Object.values(prev.editRoutine.info).some(i => {
+                        prev.editRoutine.customScheme = Object.values(prev.editRoutine.info).some(i => {
                             //always jujmping through hoops for supersets
-                            if(Array.isArray(i))
+                            if (Array.isArray(i))
                                 return i.some(j => j.setInfo.type === 'Custom');
                             return i.setInfo.type === 'Custom';
                         });
-                        prev.editRoutine.customScheme = hasCustom;
                     }
 
                     //the thing is, we need to add a new thing, similar to the way we had it in

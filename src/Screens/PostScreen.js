@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import { TextInput, StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 //get custom icons eventually
 
 import { PRIMARY } from '../Constants/Theme';

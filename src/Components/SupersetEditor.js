@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from './Words';
 import RoutinesContext from "../Contexts/RoutinesContext";

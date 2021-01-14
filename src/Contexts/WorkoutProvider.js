@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import WorkoutContext from './WorkoutContext';
 import { useReducer, useEffect, useContext }  from 'react';
 import { FULL_COPY } from "../Utils/UtilFunctions";
-import { AppState } from "react-native";
 import RoutinesContext from "./RoutinesContext";
 import { CURRENT, FAILURE, NEW_PR } from "../Constants/Symbols";
 
@@ -336,9 +335,9 @@ const WorkoutProvider = props => {
             //check if progress >= reps for every set
             //then you have completed it
             //maybe have some minimum for
-            const passed = ex.sets.every(set => {
+            const passed = ex.sets.every(set =>
                 set.reps === FAILURE || set.progress >= set.reps
-            });
+            );
 
             //if you dont pass, you dont decremenent the counter
             if (passed) {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Modal, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {Modal, TouchableOpacity, View} from 'react-native';
 import Words from './Words';
 import { SafeAreaView } from 'react-navigation';
 import WorkoutContext from '../Contexts/WorkoutContext';

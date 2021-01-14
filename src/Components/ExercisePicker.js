@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Modal, Text} from 'react-native';
+import { TouchableOpacity, Modal} from 'react-native';
 import { CATEGORIES, EX_INFO } from '../Constants/DefaultExInfo';
 import Words from "./Words";
 
@@ -19,7 +19,7 @@ const ExercisePicker = props => {
             </TouchableOpacity>
         )
     } else {
-        list = Object.entries(EX_INFO).filter(([k,v]) => v.categories.includes(category))
+        list = Object.entries(EX_INFO).filter(([,v]) => v.categories.includes(category))
             .map(([k]) =>
                 <TouchableOpacity
                     onPress={() => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import { TextInput, StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 //get custom icons eventually
 
@@ -13,7 +13,7 @@ const ReportScreen = props => {
     const {saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
-    const [report, setReport] = useState(generateReport()/*props.route.params.report*/);
+    const [report] = useState(generateReport()/*props.route.params.report*/);
 
     const [title, setTitle] = useState(report.title);
 

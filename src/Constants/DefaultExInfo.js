@@ -91,19 +91,19 @@ export const DEFAULT_EX_WORKOUT = ex => {
     return {
         name: ex,
         barbell: info.barbell,
-        rest: info.barbell?180:60,
+        rest: info.barbell ? 180 : 60,
         sets: FIVE_BY_FIVE.map(s => ({
             reps: s,
             progress: null,
-            weight: info.weight
-        }))
+            weight: info.weight,
+        })),
     };
 };
 
 export const DEFAULT_EX_INFO = ex => {
     //TODO you know, it would be a  good idea to test if it's a superset here
-    if(ex.includes('/'))
-        return DEFAULT_SUPERSET_INFO(ex.split('/'))
+    if (ex.includes('/'))
+    {return DEFAULT_SUPERSET_INFO(ex.split('/'));}
     //just in case someting like squat-b gets through
     ex = ex.split('-')[0];
 
@@ -116,15 +116,15 @@ export const DEFAULT_EX_INFO = ex => {
         //bit aggressive, but whatever, you can change it
         progress:{
             amount: 0,
-            rate: 1
+            rate: 1,
         },
-        rest: info.barbell?180:60,
+        rest: info.barbell ? 180 : 60,
         setInfo: {
             type: 'Normal',
-            sets: [5,5,5,5,5]
+            sets: [5,5,5,5,5],
         },
-    }
-}
+    };
+};
 
 //how the fuck, idk?
 //should we add a superset: true property?

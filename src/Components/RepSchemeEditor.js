@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import Words from './Words';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import { NEW_PR } from "../Constants/Symbols";

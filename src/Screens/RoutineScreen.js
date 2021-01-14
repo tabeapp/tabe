@@ -1,8 +1,7 @@
-import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
-import React, {useEffect, useContext, useState} from 'react';
+import { TouchableOpacity, SafeAreaView, StyleSheet, View } from "react-native";
+import React, {useContext} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Words from "../Components/Words";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
