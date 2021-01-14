@@ -20,7 +20,9 @@ const RestTimer = props => {
     //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
         setSeconds(props.timer);
-        console.log('useeffect called');
+        //don't run this shit if it's 0
+        if(props.timer === 0)
+            return;
 
         //start the countdown
         const interval = setInterval(() => {
@@ -31,12 +33,16 @@ const RestTimer = props => {
                 }
                 return prev-1;
             });
-        }, 1000);
+        }, 100);//temporarily speeding it up
 
         return () => clearInterval(interval);
 
     }, [props.timer]);
 
+    useEffect(() => {
+        if(seconds === 0)
+            close()
+    }, [seconds])
 
     //safe area view doesnt do shit
     return (
