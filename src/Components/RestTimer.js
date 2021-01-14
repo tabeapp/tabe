@@ -81,7 +81,7 @@ const RestTimer = props => {
                         <Words style={{fontSize: 15, textAlign: 'center'}}>Easy -2:00</Words>
                     </TouchableOpacity>
 
-                    <ProgressCircle percent={seconds/60/10*100}>
+                    <ProgressCircle ratio={seconds/60/10}>
                         <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
                     </ProgressCircle>
 
