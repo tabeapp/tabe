@@ -348,8 +348,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#333',
     },
 
-    topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
-    top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: PRIMARY, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
     scroller: {
         flex: 1,
         width: '100%',

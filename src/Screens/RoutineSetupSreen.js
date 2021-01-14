@@ -105,9 +105,7 @@ const RoutineSetupScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
     container: {flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', margin: 5},
-    top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
     bottom: {width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
 

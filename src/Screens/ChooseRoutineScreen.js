@@ -84,7 +84,6 @@ const ChooseRoutineScreen = props => {
 
 const styles = StyleSheet.create({
     container: {flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', margin: 5},
-    top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
 });
 
 export default ChooseRoutineScreen;

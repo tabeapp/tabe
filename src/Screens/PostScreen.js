@@ -86,9 +86,6 @@ const PostScreen = props => {
 
 const styles = StyleSheet.create({
     container: {justifyContent: 'center', margin: 5},
-    //top: {height: 40, width: '100%', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
-    top: {height: 40, width: '100%', flexDirection: 'row', backgroundColor: primaryColor, alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'space-between'},
-    topButton: {alignItems: 'center', width: 80, paddingHorizontal: 15},
 });
 
 export default PostScreen;
