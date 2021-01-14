@@ -33,9 +33,11 @@ const SetCircle = (props) => {
     }
     let [exerciseN, setN] = info;
     const handlePress = () => {
-        workoutDispatch({
-            path: `exercises.${exerciseN}.sets.${setN}.progress`,
-            value: prog
+        workoutDispatch(prev => {
+            prev.exercises[exerciseN].sets[setN].progress = prog;
+            //kinda a weird place to set the timer, but it is where we the the button is pressed
+            prev.timer = {...prev.exercises[exerciseN].rest};
+            return prev;
         });
     };
 

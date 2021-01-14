@@ -137,7 +137,11 @@ const WorkoutProvider = props => {
             exercises: compiledExercises,
             edit: false,
             //very necessary for knowing which routine to progress
-            routine: r.title
+            routine: r.title,
+            timer: {
+                minutes: 0,
+                seconds: 0
+            }
         }));
     };
 
@@ -146,7 +150,11 @@ const WorkoutProvider = props => {
             title: '',
             exercises: [],
             edit: true,
-            routine: ''
+            routine: '',
+            timer: {
+                minutes: 0,
+                seconds: 0
+            }
         }));
     }
 
@@ -242,6 +250,7 @@ const WorkoutProvider = props => {
     };
 
     //this is the real meat and potatoes that handles this entire app
+    //i guess put it here tomorrow, but you need to clear workout out of state & storage
     const analyzeWorkout = async report => {
 
         ///----------------update user stats and get effort of workout ---------------
@@ -474,7 +483,8 @@ const WorkoutProvider = props => {
         });
         //need to clear workout from state as well
         //and the report, it doesn't get cleared
-        workoutDispatch({path: 'workout', value: null});
+        //does this not work?
+        workoutDispatch(() => {});
     };
 
     //i guess like use effect?

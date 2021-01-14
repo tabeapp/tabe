@@ -9,6 +9,7 @@ import WorkoutContext from "../Contexts/WorkoutContext";
 import ExercisePicker from "../Components/ExercisePicker";
 import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
 import { CURRENT } from "../Constants/Symbols";
+import RestTimer from "../Components/RestTimer";
 
 const primaryColor = '#66d6f8';
 
@@ -138,6 +139,12 @@ const WorkoutScreen = props => {
 
                     </>
                 }
+
+
+                <RestTimer
+                    visible={workout.timer.minutes !== 0 || workout.timer.seconds !== 0}
+                    timer={workout.timer}
+                />
 
                 <ExercisePicker handleSelection={name =>
                     workoutDispatch(prev => {
