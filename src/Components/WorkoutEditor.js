@@ -5,6 +5,7 @@ import Words from './Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import Row from "./Row";
+import { STYLES } from "../Style/Values";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -104,7 +105,7 @@ const WorkoutEditor = props => {
                     </Row>
                 })
             }
-            <TouchableOpacity style={styles.configButton} onPress={() => {
+            <TouchableOpacity style={STYLES.textButton} onPress={() => {
                 //append a new obj
                 //works, but ideally I'd like A B C instead of 1 2 3
                 //yeah maybe these should be separate components...
@@ -113,7 +114,7 @@ const WorkoutEditor = props => {
                 <Words style={{color: 'white', fontSize: 30}}>Add Exercise</Words>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.configButton} onPress={() => {
+            <TouchableOpacity style={STYLES.textButton} onPress={() => {
                 routinesDispatch(prev => {
                     prev.editRoutine.workouts[name].push(['','']);
                     return prev;
@@ -126,14 +127,5 @@ const WorkoutEditor = props => {
 
         </View>);
 };
-
-const styles = StyleSheet.create({
-    configButton: {
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#333',
-    },
-});
 
 export default WorkoutEditor;

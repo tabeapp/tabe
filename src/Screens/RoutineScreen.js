@@ -131,7 +131,6 @@ const RoutineScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: PRIMARY },
     box: {
         flex: 1,
         width: '100%',

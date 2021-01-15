@@ -11,6 +11,7 @@ import { CURRENT } from "../Constants/Symbols";
 import RestTimer from "../Components/RestTimer";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
+import { STYLES } from "../Style/Values";
 
 const primaryColor = '#66d6f8';
 
@@ -123,7 +124,7 @@ const WorkoutScreen = props => {
                             </TouchableOpacity>);
                         })
                     }</View>
-                    <TouchableOpacity style={styles.configButton} onPress={() => setModal(true)}>
+                    <TouchableOpacity style={STYLES.button} onPress={() => setModal(true)}>
                         <Words style={styles.plus}>+</Words>
                     </TouchableOpacity>
 
@@ -155,15 +156,6 @@ const WorkoutScreen = props => {
 const styles = StyleSheet.create({
     plus: {
         fontSize: 35,
-    },
-    configButton: {
-        borderRadius: 25,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#333',
-        width: 50,
-        height: 50,
     },
     container: {alignItems: 'center', justifyContent: 'center', margin: 5},
 });

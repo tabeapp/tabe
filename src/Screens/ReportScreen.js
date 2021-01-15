@@ -7,6 +7,7 @@ import WorkoutContext from '../Contexts/WorkoutContext';
 import Write from '../Components/Write';
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
+import Row from "../Components/Row";
 
 const primaryColor = '#66d6f8';
 

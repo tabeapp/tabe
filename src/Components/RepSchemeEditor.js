@@ -6,6 +6,7 @@ import { FULL_COPY } from '../Utils/UtilFunctions';
 import { NEW_PR } from "../Constants/Symbols";
 import Chooser from "./Chooser";
 import Row from "./Row";
+import { STYLES } from "../Style/Values";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -106,7 +107,7 @@ const RepSchemeEditor = props => {
                     )
 
                 }
-                <TouchableOpacity style={styles.configButton} onPress={() => {
+                <TouchableOpacity style={STYLES.textButton} onPress={() => {
                     routinesDispatch(prev => {
                         const x = prev.editRoutine.customSets[name];
                         if(x.length === 0)
@@ -124,14 +125,5 @@ const RepSchemeEditor = props => {
     )
 
 }
-
-const styles = StyleSheet.create({
-    configButton: {
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#333',
-    }
-})
 
 export default RepSchemeEditor;

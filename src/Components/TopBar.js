@@ -29,12 +29,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: PRIMARY,
         alignItems: 'center',
-        borderStyle: 'solid',
-        borderRightWidth: 0,
-        borderLeftWidth: 0,
-        borderTopWidth: 0,
-        borderColor: 'black',
-        borderWidth: 1,
         justifyContent: 'space-between'
     },
     topButton: {

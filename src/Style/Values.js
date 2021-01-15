@@ -17,4 +17,34 @@ export const STYLES = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
     },
+    button: {
+        borderRadius: 25,
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#333',
+        width: 50,
+        height: 50,
+    },
+    textButton: {
+        borderRadius: 25,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(143,143,143,0.5)'
+    },
+    text: {
+        fontFamily: FONT,
+        fontWeight: 'bold',
+        fontSize: 40,
+        color: 'white'
+    },
+    box: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: 'black',
+        alignItems: 'center',
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderWidth: 1,
+    },
 });

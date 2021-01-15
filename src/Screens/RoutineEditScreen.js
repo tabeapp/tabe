@@ -15,6 +15,7 @@ import Write from "../Components/Write";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
+import { STYLES } from "../Style/Values";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -278,7 +279,7 @@ const RoutineEditScreen = props => {
                         )
                     }
                     <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
-                        <TouchableOpacity style={styles.configButton} onPress={() => {
+                        <TouchableOpacity style={STYLES.textButton} onPress={() => {
                             //append a new obj
                             //works, but ideally I'd like A B C instead of 1 2 3
                             //too complex?
@@ -316,7 +317,7 @@ const RoutineEditScreen = props => {
                                 )
                             }
                             <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
-                                <TouchableOpacity style={styles.configButton} onPress={() => {
+                                <TouchableOpacity style={STYLES.textButton} onPress={() => {
                                     //this actually works
                                     rd('customSets.' + newSchemeCode(), []);
                                     console.log(JSON.stringify(customSets))
@@ -338,14 +339,6 @@ const RoutineEditScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: PRIMARY },
-    configButton: {
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#333',
-    },
-
     scroller: {
         flex: 1,
         width: '100%',
