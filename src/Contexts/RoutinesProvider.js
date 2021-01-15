@@ -23,7 +23,6 @@ const RoutinesProvider = props => {
     //initial load from storage
     useEffect(() => {
         AsyncStorage.getItem('@routines').then(obj => {
-            console.log('object ' + obj);
             //kinda weird, but this will just set the state to this load
             //it does work tho
             if(obj !== null)

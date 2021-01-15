@@ -54,7 +54,6 @@ const NavBar = props => {
                 props.navigation.navigate('workout');
             }
             else{
-                console.log('no workout for you, take a breather')
                 Alert.alert(
                     "Recovery Day",
                     "Are you sure you want to skip recovery?",

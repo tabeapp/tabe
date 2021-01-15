@@ -17,7 +17,7 @@ const primaryColor = '#66d6f8';
 
 //TODO how about actually adjusting the wieghts on the fly?
 const WorkoutScreen = props => {
-    const {workout, workoutDispatch} = useContext(WorkoutContext);
+    const {workout, workoutDispatch, quitWorkout} = useContext(WorkoutContext);
 
 
     //workout.edit false => normal workout screen
@@ -95,18 +95,16 @@ const WorkoutScreen = props => {
     return (
         <SafeBorder>
             <TopBar
-                leftText='Edit' title={workout.title} rightText='Done'
-                onPressLeft={() =>
-                    workoutDispatch(prev => {
-                        prev.edit = !prev.edit;
-                        return prev;
-                    })
-                }
+                leftText='Quit' title={workout.title} rightText='Done'
+                onPressLeft={() =>{
+                    quitWorkout();
+                    props.navigation.navigate('home');
+                }}
                 onPressRight={handleNext}
             />
 
             <View>{
-                workout&&workout.exercises.map((ex, index) => (
+                workout.exercises&&workout.exercises.map((ex, index) => (
                     <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
                 ))
             }</View>

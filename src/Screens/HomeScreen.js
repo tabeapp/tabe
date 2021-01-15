@@ -1,5 +1,5 @@
-import { TouchableOpacity, FlatList, SafeAreaView, StyleSheet, View } from "react-native";
-import React, {useState} from 'react';
+import { TouchableOpacity, FlatList, Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import React, {useState, useContext, useEffect} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
@@ -8,6 +8,7 @@ import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
+import WorkoutContext from "../Contexts/WorkoutContext";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -19,7 +20,7 @@ const HomeScreen = props => {
     //how the fuck am i supposed to do this
     //ok this is fucked, truning it off for no
     //useEffect( () => {
-        //getPosts().then(v => setPosts(v))
+    //getPosts().then(v => setPosts(v))
     //})
 
     return (

@@ -74,7 +74,7 @@ const RestTimer = props => {
 
     //safe area view doesnt do shit
     return (
-        <Modal animationType={'fade'} transparent={true} visible={seconds !== 0}>
+        <Modal animationType={'slide'} transparent={true} visible={seconds !== 0}>
             <SafeAreaView style={{backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%', justifyContent: 'flex-end', alignItems: 'center'}}>
                 <Row style={{width: '100%', justifyContent: 'space-around'}}>
 

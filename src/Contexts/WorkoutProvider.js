@@ -2,15 +2,11 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WorkoutContext from './WorkoutContext';
 import { useReducer, useEffect, useContext }  from 'react';
-import { FULL_COPY } from "../Utils/UtilFunctions";
-import RoutinesContext from "./RoutinesContext";
-import { CURRENT, FAILURE, NEW_PR } from "../Constants/Symbols";
-
-//heirarchy: routine => workout => exercise => set => rep
-//ro, wo, ex, se, re
-
-//so the idea behind this shit is that i'm really tired of passing down modifying functions
-//so we're gonna use useReducer
+import { FULL_COPY } from '../Utils/UtilFunctions';
+import RoutinesContext from './RoutinesContext';
+import { CURRENT, FAILURE, NEW_PR } from '../Constants/Symbols';
+import { Alert } from "react-native";
+import {useNavigation} from '@react-navigation/native';
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -23,7 +19,6 @@ const WorkoutProvider = props => {
     useEffect(() => {
         AsyncStorage.getItem('@workout').then(obj => {
             //do we need to call generateReport here?
-            console.log('@workout ' + obj);
             if(obj !== null)
                 workoutDispatch(() => JSON.parse(obj));
         });
@@ -35,10 +30,7 @@ const WorkoutProvider = props => {
         if(JSON.stringify(workout) !== '{}')
             return;
 
-        console.log(routines);
-        console.log(current);
         const r = FULL_COPY(routines[current]);
-        console.log('here')
         let day = r.days[r.currentDay % r.time];
 
         while(day === 'R'){
@@ -449,7 +441,13 @@ const WorkoutProvider = props => {
             path: `routines.${workout.routine}`,
             value: newRoutine
         });
-    }
+    };
+
+    //only here cuz of the async storage
+    const quitWorkout = () => {
+        workoutDispatch(() => ({}));
+        AsyncStorage.removeItem('@workout');
+    };
 
     const saveWorkout = async workoutData => {
         //finally clear it
@@ -465,7 +463,7 @@ const WorkoutProvider = props => {
         //need to clear workout from state as well
         //and the report, it doesn't get cleared
         //does this not work?
-        workoutDispatch(() => {});
+        workoutDispatch(() => initState);
     };
 
     //i guess like use effect?
@@ -473,7 +471,7 @@ const WorkoutProvider = props => {
     //just make sure the next set is marked as 'c', that simple
     //this seems to work, just make sure adding workouts doesn't mess with this
     const invariantCheck = next => {
-        if(!next.exercises)
+        if(!next || !next.exercises)
             return next;
 
         let found = false;
@@ -493,8 +491,7 @@ const WorkoutProvider = props => {
             }
         }
 
-        if(!found)
-            next.done = true;
+        next.done = !found
 
         return next;
     };
@@ -571,12 +568,17 @@ const WorkoutProvider = props => {
 
     return (
         <WorkoutContext.Provider value={{
+            //during
             workout: workout,
             workoutDispatch: workoutDispatch,
+            quitWorkout:quitWorkout,
+
+            //pre
             checkRest: checkRest,
             generateWorkout: generateWorkout,
             generateCustom: generateCustom,
 
+            //after
             generateReport: generateReport,
             analyzeWorkout: analyzeWorkout,
             saveWorkout: saveWorkout
