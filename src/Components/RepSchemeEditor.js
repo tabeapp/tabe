@@ -53,7 +53,7 @@ const RepSchemeEditor = props => {
                                             week.map((v, setIndex) =>
 
                                                 <>
-                                                    <View key={setIndex} style={styles.circle}>
+                                                    <View key={setIndex}>
                                                         <Chooser
                                                             selected={v.reps}
                                                             onChange={value => {
@@ -66,7 +66,7 @@ const RepSchemeEditor = props => {
                                                         />
                                                     </View>
                                                     <Words key={setIndex+'a'}>@</Words>
-                                                    <View key={setIndex+'f'} style={styles.circle}>
+                                                    <View key={setIndex+'f'}>
                                                         <Chooser
                                                             selected={v['%']}
                                                             onChange={value => {

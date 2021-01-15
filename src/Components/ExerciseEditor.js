@@ -7,6 +7,7 @@ import RoutinesContext from "../Contexts/RoutinesContext";
 import { FAILURE } from "../Constants/Symbols";
 import Chooser from "./Chooser";
 import Row from "./Row";
+import { STYLES } from "../Style/Values";
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -154,7 +155,7 @@ const ExerciseEditor = props => {
                     {
                         info.setInfo.sets.map((v, index) =>
 
-                            <View key={index} style={styles.circle}>
+                            <View key={index} style={STYLES.circle}>
                                 <Chooser
                                     selected={v}
                                     onChange={(value) => {
@@ -199,7 +200,7 @@ const ExerciseEditor = props => {
         }
         {
             info.setInfo.type === 'Sum' &&
-            <View style={styles.circle}>
+            <View style={STYLES.circle}>
                 <Chooser
                     selected={info.setInfo.sum}
                     onChange={(value) => {
@@ -277,19 +278,5 @@ const ExerciseEditor = props => {
         }
     </View>
 }
-
-const styles = StyleSheet.create({
-    circle: {
-        flex: 1,
-        minWidth: 20,
-        maxWidth: 50,
-        minHeight: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        borderWidth: 1,
-        borderStyle: 'solid'
-    }
-});
 
 export default ExerciseEditor;

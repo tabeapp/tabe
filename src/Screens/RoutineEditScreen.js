@@ -365,17 +365,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         //justifyContent: 'center',
     },
-    circle: {
-        flex: 1,
-        minWidth:20,
-        maxWidth:50,
-        minHeight: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        borderWidth: 1,
-        borderStyle: 'solid',
-    },
 });
 
 export default RoutineEditScreen;

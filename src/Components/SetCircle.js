@@ -4,6 +4,7 @@ import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { FAILURE, CURRENT } from "../Constants/Symbols";
 import Chooser from "./Chooser";
+import { STYLES } from "../Style/Values";
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
@@ -24,7 +25,7 @@ const SetCircle = (props) => {
         if(setInfo.progress !== null && setInfo.progress !== CURRENT)
             text = setInfo.progress;
         return (
-            <View style={{ ...styles.circle, ...style }} >
+            <View style={{ ...STYLES.circle, ...style }} >
                 <Words>{
                     text
                 }</Words>
@@ -63,7 +64,7 @@ const SetCircle = (props) => {
     return (
         <TouchableOpacity
             onPress={handlePress}
-            style={{ ...styles.circle, ...style }}
+            style={{ ...STYLES.circle, ...style }}
         >
             <Words>^</Words>
             <Chooser
@@ -74,26 +75,7 @@ const SetCircle = (props) => {
             <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>
         </TouchableOpacity>
     );
-    /*<TouchableOpacity style={{ ...styles.circle, ...props.style }} onPress={handlePress}>
-        <Text style={{ color: 'white' }}>{
-            props.text
-        }</Text>
-    </TouchableOpacity>*/
 };
-
-const styles = StyleSheet.create({
-    circle: {
-        flex: 1,
-        minWidth:20,
-        maxWidth:50,
-        minHeight: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 100,
-        borderWidth: 1,
-        borderStyle: 'solid'
-    },
-});
 
 export default SetCircle;
 
