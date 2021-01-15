@@ -97,7 +97,7 @@ const ExerciseCard = (props) => {
                     <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
                 }
 
-                <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                <Row style={{ flex: 1, justifyContent: 'center'}}>
                     {
                         barbell&&
                         <>
@@ -150,7 +150,7 @@ const ExerciseCard = (props) => {
                             <WeightVisual key={'y'} weight={currentWeight} reverse={false} />
                         </>
                     }
-                </View>
+                </Row>
                 {
                     edit&&
                     <SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>

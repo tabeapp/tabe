@@ -128,6 +128,15 @@ const WorkoutScreen = props => {
 
                 </>
             }
+            <TouchableOpacity onPress={() =>
+                //works, but really not sure where to put this edit button
+                workoutDispatch(prev => {
+                    prev.edit = !prev.edit
+                    return prev;
+                })
+            }>
+                <Words>Edit</Words>
+            </TouchableOpacity>
 
 
             <RestTimer
