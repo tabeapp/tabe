@@ -73,7 +73,7 @@ const RoutineScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'routine'}>
             <TopBar title='Routines'/>
-            <View style={STYLES.box}>
+            <View style={STYLES.body}>
                 <View style={{width: '100%', alignItems: 'center'}}>
                     {
                         Object.entries(routines).map(([k,v]) =>

@@ -8,6 +8,7 @@ import Write from '../Components/Write';
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
+import { STYLES } from "../Style/Values";
 
 const primaryColor = '#66d6f8';
 
@@ -42,7 +43,7 @@ const ReportScreen = props => {
     return (
         <SafeBorder>
             <TopBar title='Workout Summary' rightText='Next' onPressRight={handleNext}/>
-            <View style={styles.container}>
+            <View style={STYLES.card}>
                 <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                     <Words>Zyzz</Words>
@@ -85,9 +86,5 @@ const ReportScreen = props => {
         </SafeBorder>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {justifyContent: 'center', margin: 5},
-});
 
 export default ReportScreen;

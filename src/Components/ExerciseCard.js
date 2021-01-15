@@ -7,6 +7,8 @@ import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { CURRENT } from "../Constants/Symbols";
 import { PRIMARY } from "../Constants/Theme";
+import Row from "./Row";
+import { STYLES } from "../Style/Values";
 
 
 const primaryColor = '#66d6f8';
@@ -83,7 +85,7 @@ const ExerciseCard = (props) => {
     });
 
     return (
-        <View style={styles.card} key={name}>
+        <View style={STYLES.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Words>{name}</Words>
                 <Words>{currentWeight}</Words>
@@ -158,8 +160,5 @@ const ExerciseCard = (props) => {
     );
 };
 
-const styles = StyleSheet.create(
-    { card: {margin: 5, padding: 5, borderRadius: 5, width: '100%', backgroundColor: '#222'}, }
-);
 
 export default ExerciseCard;

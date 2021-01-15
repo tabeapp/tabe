@@ -59,7 +59,7 @@ const ProfileScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'profile'}>
             <TopBar title='Zyzz'/>
-            <View style={STYLES.box}>
+            <View style={STYLES.body}>
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>
                         <View style={styles.card} key={k}>

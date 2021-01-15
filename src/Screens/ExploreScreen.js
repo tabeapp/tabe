@@ -14,7 +14,7 @@ const ExploreScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'explore'}>
             <TopBar title='Explore'/>
-            <View style={STYLES.box}>
+            <View style={STYLES.body}>
                 <FlatList data={data} keyExtractor={item => item} renderItem={
                     ({item}) => <Words>{item}</Words>
                 } />

@@ -37,7 +37,7 @@ export const STYLES = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white'
     },
-    box: {
+    body: {
         flex: 1,
         width: '100%',
         backgroundColor: 'black',
@@ -46,4 +46,13 @@ export const STYLES = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 1,
     },
+    //like a container, just a bit of padding
+    card:{
+        margin: 5,
+        justifyContent: 'center',
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: 'rgba(143,143,143,0.2)'
+
+    }
 });

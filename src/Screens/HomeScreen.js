@@ -25,7 +25,7 @@ const HomeScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'home'}>
             <TopBar title='Feed'/>
-            <View style={STYLES.box}>
+            <View style={STYLES.body}>
                 <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
                     item.exercises &&
                     <TouchableOpacity

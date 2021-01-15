@@ -105,7 +105,7 @@ const WorkoutScreen = props => {
                 onPressRight={handleNext}
             />
 
-            <View style={styles.container}>{
+            <View>{
                 workout&&workout.exercises.map((ex, index) => (
                     <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
                 ))
@@ -125,7 +125,7 @@ const WorkoutScreen = props => {
                         })
                     }</View>
                     <TouchableOpacity style={STYLES.button} onPress={() => setModal(true)}>
-                        <Words style={styles.plus}>+</Words>
+                        <Words style={{fontSize: 35}}>+</Words>
                     </TouchableOpacity>
 
                 </>
@@ -152,12 +152,5 @@ const WorkoutScreen = props => {
         </SafeBorder>
     );
 };
-
-const styles = StyleSheet.create({
-    plus: {
-        fontSize: 35,
-    },
-    container: {alignItems: 'center', justifyContent: 'center', margin: 5},
-});
 
 export default WorkoutScreen;
