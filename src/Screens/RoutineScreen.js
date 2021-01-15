@@ -10,6 +10,7 @@ import { FULL_COPY } from "../Utils/UtilFunctions";
 import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
+import { STYLES } from "../Style/Values";
 
 //this is for choosing a routine to edit, instead of jumping right in
 const RoutineScreen = props => {
@@ -72,7 +73,7 @@ const RoutineScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'routine'}>
             <TopBar title='Routines'/>
-            <View style={styles.box}>
+            <View style={STYLES.box}>
                 <View style={{width: '100%', alignItems: 'center'}}>
                     {
                         Object.entries(routines).map(([k,v]) =>
@@ -84,7 +85,7 @@ const RoutineScreen = props => {
                                     /*send it off to routine editor*/
                                     props.navigation.navigate('routineedit');
                                 }}
-                                style={{width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
+                                style={{flexDirection: 'row', width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                             >
                                 <Words style={{fontSize: 20}}>{
                                     v.title
@@ -98,7 +99,7 @@ const RoutineScreen = props => {
                                 <TouchableOpacity style={{width: 50 }} onPress={() => {
                                     handleSetCurrent(k)
                                 }}>
-                                    <Words>
+                                    <Words style={{fontSize:20}}>
                                         Current:
                                         {
                                             k === current &&
@@ -130,15 +131,4 @@ const RoutineScreen = props => {
     );
 };
 
-const styles = StyleSheet.create({
-    box: {
-        flex: 1,
-        width: '100%',
-        backgroundColor: 'black',
-        alignItems: 'center',
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderWidth: 1,
-    },
-});
 export default RoutineScreen;

@@ -9,6 +9,7 @@ import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
+import { STYLES } from "../Style/Values";
 
 const liftMapping = {
     squat: 'orange',
@@ -58,7 +59,7 @@ const ProfileScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'profile'}>
             <TopBar title='Zyzz'/>
-            <View style={styles.box}>
+            <View style={STYLES.box}>
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>
                         <View style={styles.card} key={k}>
@@ -95,13 +96,6 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
     cardContainer: {width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
     //what is this and why is it everywhere
-    box: {
-        flex: 1,
-        width: '100%',
-        backgroundColor: 'black',
-        alignItems: 'center',
-        //justifyContent: 'center',
-    },
     card: {
         height: 80,
         margin: 5,

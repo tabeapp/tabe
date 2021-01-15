@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
-import { FONT } from '../Style/Values';
+import { TextInput } from 'react-native';
+import { STYLES } from "../Style/Values";
 
 //my own text input, just want to keep style consistent
 const Write = ({value, onChange, style}) => {
     return <TextInput
-        style={{...styles.style, ...style}}
+        style={{...STYLES.text, ...style}}
         value={value}
         multiline={true}
         blurOnSubmit={true}
@@ -14,14 +14,5 @@ const Write = ({value, onChange, style}) => {
         returnKeyType="done"
     />;
 };
-
-const styles = StyleSheet.create({
-    style: {
-        fontFamily: FONT,
-        fontWeight: 'bold',
-        fontSize: 40,
-        color: 'white'
-    },
-});
 
 export default Write;

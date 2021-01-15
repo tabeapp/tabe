@@ -7,6 +7,7 @@ import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
+import { STYLES } from "../Style/Values";
 
 const HomeScreen = props => {
     //what's the best way to load
@@ -24,7 +25,7 @@ const HomeScreen = props => {
     return (
         <SafeBorderNav {...props} screen={'home'}>
             <TopBar title='Feed'/>
-            <View style={styles.box}>
+            <View style={STYLES.box}>
                 <FlatList data={posts} keyExtractor={item => ''+item.time} renderItem={({item}) =>
                     item.exercises &&
                     <TouchableOpacity
@@ -52,15 +53,3 @@ const HomeScreen = props => {
 };
 
 export default HomeScreen;
-const styles = StyleSheet.create({
-    box: {
-        flex: 1,
-        width: '100%',
-        backgroundColor: 'black',
-        alignItems: 'center',
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderWidth: 1,
-        justifyContent: 'center',
-    },
-});

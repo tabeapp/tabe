@@ -35,7 +35,6 @@ export const STYLES = StyleSheet.create({
     text: {
         fontFamily: FONT,
         fontWeight: 'bold',
-        fontSize: 40,
         color: 'white'
     },
     box: {
