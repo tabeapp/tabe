@@ -210,7 +210,7 @@ const RoutineEditScreen = props => {
                     props.navigation.navigate('routine');
                 }}
             />
-            <ScrollView style={styles.box}>
+            <ScrollView style={STYLES.box}>
                 <Write
                     value={title}
                     onChange={v => rd('title', v)}

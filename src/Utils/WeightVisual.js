@@ -5,11 +5,11 @@ import Row from "../Components/Row";
 //adjustable?
 //this is based on rouge plates
 const denoms = [
-    {weight: 45, style: {width: 12, height: '100%', backgroundColor: 'blue'}},
-    {weight: 25, style: {width: 7, height: '100%', backgroundColor: 'green'}},
-    {weight: 10, style: {width: 5, height: '50%', backgroundColor: 'white'}},
-    {weight: 5, style: {width: 4, height: '42%', backgroundColor: 'blue'}},
-    {weight: 2.5, style: {width: 3, height: '36%', backgroundColor: 'green'}},
+    {weight: 45, style: {width: 12, height: 100, backgroundColor: 'blue'}},
+    {weight: 25, style: {width: 7, height: 100, backgroundColor: 'green'}},
+    {weight: 10, style: {width: 5, height: 50, backgroundColor: 'white'}},
+    {weight: 5, style: {width: 4, height: 42, backgroundColor: 'blue'}},
+    {weight: 2.5, style: {width: 3, height: 36, backgroundColor: 'green'}},
 ];
 
 const WeightVisual = props => {

@@ -62,7 +62,7 @@ const ProfileScreen = props => {
             <View style={STYLES.body}>
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>
-                        <View style={styles.card} key={k}>
+                        <View style={{...STYLES.card, width: '100%', height: 120}} key={k}>
 
                             <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                                 <WeightVisual weight={v} reverse={true} />
@@ -94,15 +94,7 @@ const ProfileScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    cardContainer: {width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
-    //what is this and why is it everywhere
-    card: {
-        height: 80,
-        margin: 5,
-        padding: 5,
-        borderRadius: 5,
-        width: '100%',
-        backgroundColor: '#222'},
+    cardContainer: {height: 500, width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
 });
 
 export default ProfileScreen;

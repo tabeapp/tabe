@@ -52,7 +52,7 @@ export const STYLES = StyleSheet.create({
         justifyContent: 'center',
         padding: 5,
         borderRadius: 5,
-        backgroundColor: 'rgba(143,143,143,0.2)'
+        backgroundColor: 'rgba(143,143,143,0.2)',
 
     }
 });
