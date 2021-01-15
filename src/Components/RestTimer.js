@@ -39,6 +39,10 @@ const RestTimer = props => {
     //you know what, fuck this we're gonna only use seconds
     //this minutes and seconds shit is gonna make a lot of ode and headache
     useEffect(() => {
+        //this bs can happen when workoutscreen closes
+        if(timer === undefined)
+            return;
+
         const now = new Date().getTime();
         //setSeconds(props.timer);
         //don't run this shit if it's 0
