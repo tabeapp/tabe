@@ -338,9 +338,6 @@ const RoutineEditScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    navBar: {
-
-    },
     container: { flex: 1, backgroundColor: PRIMARY },
     configButton: {
         borderRadius: 25,

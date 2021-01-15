@@ -53,9 +53,6 @@ const HomeScreen = props => {
 
 export default HomeScreen;
 const styles = StyleSheet.create({
-    navBar: {
-
-    },
     container: { flex: 1, backgroundColor: PRIMARY },
     box: {
         flex: 1,

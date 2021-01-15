@@ -117,8 +117,6 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 2,
     },
-    button:{
-    },
     navBar: {
         height: 60,
         width: '100%',

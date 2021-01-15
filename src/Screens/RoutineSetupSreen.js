@@ -105,9 +105,4 @@ const RoutineSetupScreen = props => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', margin: 5},
-    bottom: {width: '100%', backgroundColor: 'black', alignItems: 'center', borderStyle: 'solid', borderRightWidth: 0, borderLeftWidth: 0, borderTopWidth: 0, borderColor: 'black', borderWidth: 1, justifyContent: 'center'},
-});
-
 export default RoutineSetupScreen;

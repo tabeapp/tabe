@@ -93,9 +93,6 @@ const ProfileScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    navBar: {
-
-    },
     container: { flex: 1, backgroundColor: PRIMARY },
     cardContainer: {width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
     //what is this and why is it everywhere
