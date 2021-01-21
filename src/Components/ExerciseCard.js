@@ -150,7 +150,7 @@ const ExerciseCard = (props) => {
                                                 style={{alignSelf: 'center', width: 60}}
                                                 itemStyle={{height: 50, fontSize: 20}}
                                                 onChange={value =>
-                                                    workoutDispatch({path: `exercises.${exerciseN}.sets.${index}.current`, value: value})
+                                                    workoutDispatch({path: `exercises.${exerciseN}.sets.${index}.weight`, value: value})
                                                 }
                                             />
                                     }
