@@ -9,6 +9,7 @@ import { CURRENT } from "../Constants/Symbols";
 import { PRIMARY } from "../Constants/Theme";
 import Row from "./Row";
 import { STYLES } from "../Style/Values";
+import NumericSelector from "./NumericSelector";
 
 
 const primaryColor = '#66d6f8';
@@ -55,6 +56,7 @@ const SetModButton = props => {
 const ExerciseCard = (props) => {
     //this is a string
     //maybe not the worst idea to pass this stuff down if we're gonna be calling much
+    const {workoutDispatch} = useContext(WorkoutContext);
 
     //this shoudl be fine
     //name is deadlfit, sets is [5,5,5], progress is [5,'c', null]
@@ -132,6 +134,25 @@ const ExerciseCard = (props) => {
                                         <Words style={{alignSelf: 'center'}}>{
                                             weight
                                         }</Words>
+                                    }
+                                    {
+                                        //so if it's in edit mode, we need to be able to adjust the weight on the fly
+                                        edit &&
+                                            <NumericSelector
+                                                numInfo={{
+                                                    def: weight,
+                                                    min: 0,
+                                                    max: 1000,
+                                                    increment: 5
+                                                }}
+                                                //is this really the best idea?
+                                                //or should we restyle numeric selector?
+                                                style={{alignSelf: 'center', width: 60}}
+                                                itemStyle={{height: 50, fontSize: 20}}
+                                                onChange={value =>
+                                                    workoutDispatch({path: `exercises.${exerciseN}.sets.${index}.current`, value: value})
+                                                }
+                                            />
                                     }
                                 </View>
 

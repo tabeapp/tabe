@@ -22,8 +22,8 @@ const NumericSelector = props => {
     return (
         <Chooser
             selected={selected}
-            style={{width: 100}}
-            itemStyle={{fontSize: 40, borderRadius: 5, height: 70}}
+            style={{width: 100, ...props.style}}
+            itemStyle={{fontSize: 40, borderRadius: 5, height: 70, ...props.itemStyle}}
             onChange={onChange}
             list={temp}
         />
