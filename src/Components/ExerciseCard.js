@@ -112,6 +112,7 @@ const ExerciseCard = (props) => {
                             //this could probably be its own component
                             const {amrap, progress, reps, weight} = set;
 
+                            //should I move this logic to set circle?
                             let completion;
                             if(reps === 'F')
                                 completion = progress && progress !== CURRENT;
@@ -128,7 +129,7 @@ const ExerciseCard = (props) => {
 
                             return <>
                                 <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
-                                    <SetCircle setInfo={set} progress={progress} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?primaryColor:twoColors[index][1]}}/>
+                                    <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?primaryColor:twoColors[index][1]}}/>
                                     {
                                         showWeightLabel &&
                                         <Words style={{alignSelf: 'center'}}>{

@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Words from "./Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import { FAILURE, CURRENT } from "../Constants/Symbols";
@@ -9,7 +9,9 @@ import { STYLES } from "../Style/Values";
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
 
-    const {current, setInfo, style, info} = props;
+    const {current, setInfo, style, info, edit} = props;
+
+    const {reps, progress, amrap} = setInfo;
 
     //ok this is kinda confusing, but props.setInfo.reps is how much you're supposed to do
     const [prog, setProg] = useState(setInfo.reps === FAILURE?0:setInfo.reps);
@@ -18,12 +20,14 @@ const SetCircle = (props) => {
 
     //only if it's current, it will be editable
     //if(props.setInfo.progress !== 'c'){
-    if(!current){
-        let text = setInfo.reps;
-        if(setInfo.amrap)
+
+    //
+    if(!current && !edit){
+        let text = reps;
+        if(amrap)
             text += '+';
-        if(setInfo.progress !== null && setInfo.progress !== CURRENT)
-            text = setInfo.progress;
+        if(progress !== null && progress !== CURRENT)
+            text = progress;
         return (
             <View style={{ ...STYLES.circle, ...style }} >
                 <Words>{
@@ -34,6 +38,11 @@ const SetCircle = (props) => {
     }
     let [exerciseN, setN] = info;
     const handlePress = () => {
+        //now with edit, it's possible to press non-current sets
+        //this'll make sure nothign happens in taht case
+        if(!current)
+            return;
+
         workoutDispatch(prev => {
             prev.exercises[exerciseN].sets[setN].progress = prog;
             //kinda a weird place to set the timer, but it is where we the the button is pressed
@@ -55,11 +64,26 @@ const SetCircle = (props) => {
     for(let i = 0; i < props.setInfo.amrap?props.setInfo.reps:40; i++)
         temp.push(i)*/
     //const temp = [0,1,2,3,4,5];
+
+    //if reps go to failure, or it's amrap, or edit is turned on, you can set it to as many reps as you want
+    let limit = reps;
+    if(reps === FAILURE || amrap || edit)
+        limit = 40;
+
     const temp = [];
-    //kinda complex but ok
-    const limit = (setInfo.reps === FAILURE || setInfo.amrap)?40:setInfo.reps;
     for(let i = 0; i <= limit; i++)
         temp.push(i);
+
+    //wonder if this works with amrap and failure
+    //three scenarios
+    //current
+    let selected = prog;
+    //past set
+    if(progress && progress !== CURRENT)
+        selected = progress;
+    //future
+    else if(!current)
+        selected = reps;
 
     return (
         <TouchableOpacity
@@ -68,8 +92,23 @@ const SetCircle = (props) => {
         >
             <Words>^</Words>
             <Chooser
-                selected={prog}
-                onChange={setProg}
+                selected={selected}
+                //fuck it, if we're in edit mode, you can just set progress to whatever you want
+                onChange={value => {
+                    if(!edit)
+                        setProg(value);
+                    //otherwise we're actually gonna directly change expected reps in the workout
+                    else
+                        //if it's a past or currentset, change the completed reps(progress)
+                        if(progress && progress !== CURRENT)
+                            workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.progress`, value: value});
+                        else if(current)
+                            setProg(value);
+                        //if it's a future set, change the expected reps(reps)
+                        else
+                            workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.reps`, value: value});
+
+                }}
                 list={temp}
             />
             <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>
