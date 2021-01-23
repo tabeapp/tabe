@@ -33,7 +33,7 @@
 		FA1A3F07257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FA1A3F08257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FA1A3F09257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
-		FAAB8A24257FE34B00E6638E /* interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAAB8A23257FE34B00E6638E /* interface.storyboard */; };
+		FA450D9525BCE54E00AC03CC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA450D9425BCE54E00AC03CC /* Interface.storyboard */; };
 		FAAB8A33257FE55600E6638E /* interfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB8A32257FE55600E6638E /* interfaceController.swift */; };
 		FAB3E211258021F6009CB837 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB3E210258021F6009CB837 /* Ionicons.ttf */; };
 		FE6D1CAA4A94A68EBD98F275 /* libPods-Tabe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA548BB48C0F840767638AC4 /* libPods-Tabe-tvOS.a */; };
@@ -138,7 +138,7 @@
 		FA1A3BB1257F05EB007D3480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA1A3BB2257F05EB007D3480 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		FA1A3F04257F0B7A007D3480 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		FAAB8A23257FE34B00E6638E /* interface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = interface.storyboard; sourceTree = "<group>"; };
+		FA450D9425BCE54E00AC03CC /* Interface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Interface.storyboard; sourceTree = "<group>"; };
 		FAAB8A32257FE55600E6638E /* interfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = interfaceController.swift; sourceTree = "<group>"; };
 		FAB3E210258021F6009CB837 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -304,7 +304,7 @@
 			children = (
 				FA1A3B96257F05EB007D3480 /* Assets.xcassets */,
 				FA1A3B98257F05EB007D3480 /* Info.plist */,
-				FAAB8A23257FE34B00E6638E /* interface.storyboard */,
+				FA450D9425BCE54E00AC03CC /* Interface.storyboard */,
 			);
 			path = TabeWatch;
 			sourceTree = "<group>";
@@ -557,7 +557,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAAB8A24257FE34B00E6638E /* interface.storyboard in Resources */,
+				FA450D9525BCE54E00AC03CC /* Interface.storyboard in Resources */,
 				FA1A3B97257F05EB007D3480 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
