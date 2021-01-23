@@ -9,8 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, Test!")
-            .padding()
+        VStack {
+            Text("Squat")
+                .font(.headline)
+                .lineLimit(0)
+            
+          
+            Divider()
+          
+            Text("5 sets")
+                .font(.caption)
+                .bold()
+                .lineLimit(0)
+
+            Text("5 reps")
+                .font(.caption)
+          
+        }
+       
     }
 }
 
