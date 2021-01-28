@@ -4,7 +4,7 @@ import { ROUND_5 } from "./UtilFunctions";
 //does this even matter?
 //not too sure what to do, so roughly copying starting strengtsh
 export const WARMUP_WEIGHTS = (ex, workoutWeight) => {
-    const bb = EX_INFO(ex).barbell;
+    const bb = EX_INFO[ex].barbell;
     const min = bb ? 45 : 0;
 
     const sets = [];

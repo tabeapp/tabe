@@ -53,7 +53,7 @@ const WorkoutProvider = props => {
             const setInfo = exInfo.setInfo;
 
             //add a warmup as a separate exercise
-            if(setInfo.warmup){
+            if(exInfo.warmup){
                 //entirely based on weight
                 let warmupSets = WARMUP_WEIGHTS(name, exInfo.current);
 
