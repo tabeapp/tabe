@@ -15,3 +15,7 @@ export const SEC_TO_TIME = seconds => {
     return m + ':' + s;
 };
 
+export const ROUND_5 = num => {
+    return Math.round(num/5)*5;
+};
+

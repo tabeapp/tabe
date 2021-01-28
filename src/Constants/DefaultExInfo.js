@@ -111,6 +111,7 @@ export const DEFAULT_EX_INFO = ex => {
 
     return {
         current: info.weight,
+        warmup: false,
         barbell: info.barbell,
         amrap: false,
         //bit aggressive, but whatever, you can change it

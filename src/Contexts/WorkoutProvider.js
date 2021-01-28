@@ -7,6 +7,7 @@ import RoutinesContext from './RoutinesContext';
 import { CURRENT, FAILURE, NEW_PR } from '../Constants/Symbols';
 import { Alert } from "react-native";
 import {useNavigation} from '@react-navigation/native';
+import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -25,6 +26,7 @@ const WorkoutProvider = props => {
     }, []);
 
     //heavy logic here, not much you can do with usereducer here
+    //wonder if this could be a lambda function...
     const generateWorkout = () => {
         //comment this out to clear workout
         if(JSON.stringify(workout) !== '{}')
@@ -41,13 +43,27 @@ const WorkoutProvider = props => {
         const exercises = r.workouts[day];
 
         //just be careful about copying objects
-        const compiledExercises = exercises.map(name => {
+        const compiledExercises = [];
+        exercises.forEach(name => {
             //wait til you hear about supersets
             if(name.includes('/'))
                 return null;
 
             const exInfo = r.info[name];
             const setInfo = exInfo.setInfo;
+
+            //add a warmup as a separate exercise
+            if(setInfo.warmup){
+                //entirely based on weight
+                let warmupSets = WARMUP_WEIGHTS(name, exInfo.current);
+
+                compiledExercises.push({
+                    name: name + ' Warmup',
+                    barbell: exInfo.barbell,
+                    sets: warmupSets,
+                    rest: 0//too much?
+                });
+            }
 
             let sets = [];
             if(setInfo.type === 'Normal'){
@@ -88,13 +104,14 @@ const WorkoutProvider = props => {
             if(exInfo.amrap)
                 sets[sets.length-1].amrap = true;
 
-            return {
+            compiledExercises.push({
                 name: name,
                 barbell: exInfo.barbell,
                 sets: sets,
                 rest: exInfo.rest
-            }
+            });
 
+            //return;
 
         });
         compiledExercises[0].sets[0].progress = CURRENT;
@@ -512,7 +529,7 @@ const WorkoutProvider = props => {
                 .then(() => {})
                 .catch(e => console.log(e));
             //AsyncStorage.setItem('@workout', JSON.stringify( x )).catch(e => {
-                //console.log(e);
+            //console.log(e);
             //});
             return x;
         }
@@ -551,7 +568,7 @@ const WorkoutProvider = props => {
 
         //i guess we could store some logic here
         //if(action.type){
-            //this needs to happen a lot
+        //this needs to happen a lot
         //if(action.type === 'setItem')
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
