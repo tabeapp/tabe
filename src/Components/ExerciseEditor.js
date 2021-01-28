@@ -276,6 +276,18 @@ const ExerciseEditor = props => {
                 />
             </View>
         }
+        <View>
+            <Words>Warmup</Words>
+            <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                thumbColor={info.warmup ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={val => {
+                    rd('warmup', val);
+                }}
+                value={info.warmup}
+            />
+        </View>
     </View>
 }
 
