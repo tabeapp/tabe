@@ -9,19 +9,27 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
-import { NavigationActions } from "react-navigation";
+import { NavigationActions, StackActions } from "react-navigation";
 
 const primaryColor = '#66d6f8';
 
 const ReportScreen = props => {
-    const {saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
+    const {workout, saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky
-    const [report, setReport] = useState(generateReport());
+    const [report, setReport] = useState({
+        title: '',
+        summary: '',
+        exercises: []
+    });
+    //bruh
     useEffect(() => {
-        setReport(generateReport())
-    }, []);
+        let x = generateReport();
+        setReport(x);
+        setTitle(x.title);
+        setDescription(x.summary);
+    }, [workout]);
 
     const [title, setTitle] = useState(report.title);
 
@@ -42,7 +50,7 @@ const ReportScreen = props => {
 
 
         //clear the entire nav stack, no going back through workouts
-        props.navigation.dispatch(NavigationActions.reset({
+        props.navigation.dispatch(StackActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({routeName: 'home'})]
         }));
@@ -59,11 +67,11 @@ const ReportScreen = props => {
                     <Words>Zyzz</Words>
                 </Row>
                 <Write
+                    style={{fontSize: 20, height: 100}}
                     value={title}
                     onChange={setTitle}
                 />
                 <Write
-                    style={{fontSize: 20, height: 100}}
                     value={description}
                     onChange={setDescription}
                 />
