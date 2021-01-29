@@ -33,6 +33,8 @@ const WorkoutProvider = props => {
             return;
 
         const r = FULL_COPY(routines[current]);
+
+        console.log(r)
         let day = r.days[r.currentDay % r.time];
 
         while(day === 'R'){
@@ -58,7 +60,7 @@ const WorkoutProvider = props => {
                 let warmupSets = WARMUP_WEIGHTS(name, exInfo.current);
 
                 compiledExercises.push({
-                    name: name + ' Warmup',
+                    name: name + '-Warmup',
                     barbell: exInfo.barbell,
                     sets: warmupSets,
                     rest: 0//too much?
@@ -183,8 +185,11 @@ const WorkoutProvider = props => {
         report.title = workout.title;
         report.time = new Date().getTime();//get current time;
 
-        //there's a problem right here
+        //now that we have workout-warmup, this is parsing incorrectly
         report.exercises = workout.exercises.map(exercise => {
+            if(exercise.name.includes('-Warmup'))
+                return {work: []}
+
             let exReport = {
                 name: exercise.name,
                 work: []
@@ -243,6 +248,7 @@ const WorkoutProvider = props => {
     //this is the real meat and potatoes that handles this entire app
     //i guess put it here tomorrow, but you need to clear workout out of state & storage
     const analyzeWorkout = async report => {
+        //console.log(report);
 
         ///----------------update user stats and get effort of workout ---------------
         //finally, user info comes into play
@@ -262,8 +268,9 @@ const WorkoutProvider = props => {
 
         if(report.exercises){
             report.exercises.forEach(ex => {
+                const name = ex.name.split('-')[0];
                 //or do we want to track accessory PRs???
-                if(!(ex.name in userStats))
+                if(!(name in userStats))
                     return;
 
                 //calculate the largest 5rm for the day
@@ -287,11 +294,11 @@ const WorkoutProvider = props => {
 
                 //this would be a good place to detect PRs
                 //maybe this should be ran before showing the summary...
-                if(fiveRM > userStats[ex.name])
-                    userStats[ex.name] = fiveRM;
+                if(fiveRM > userStats[name])
+                    userStats[name] = fiveRM;
 
                 //would be a good idea to save 5rm to some list, use later for graph
-                workoutMaxes[ex.name] = fiveRM;
+                workoutMaxes[name] = fiveRM;
             });
         }
 
@@ -307,7 +314,7 @@ const WorkoutProvider = props => {
         });
         AsyncStorage.setItem('@progress', JSON.stringify(statProgress));
 
-        console.log(statProgress[statProgress.length-1]);
+        //console.log(statProgress[statProgress.length-1]);
         AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
 
         //----------------------------------------
@@ -328,8 +335,15 @@ const WorkoutProvider = props => {
 
         const newRoutine = FULL_COPY(routines[workout.routine]);
 
+        console.log(newRoutine);
+        console.log(workout);
+
         //check for progression
+        //this needs progress, so it uses workout
         workout.exercises.forEach(ex => {
+            //dont progress warmup
+            if(ex.name.includes('-Warmup'))
+                return;
 
             //ex has name, and array of sets
             //this is what we added
@@ -372,7 +386,8 @@ const WorkoutProvider = props => {
         //-----------------
 
         //-----------------increment cusotm cycles------
-        workout.exercises.forEach(ex => {
+        //i don't know why this uses workout, not anymore
+        report.exercises.forEach(ex => {
             const setInfo = newRoutine.info[ex.name].setInfo;
             if(setInfo.type !== 'Custom')
                 return;
@@ -387,7 +402,12 @@ const WorkoutProvider = props => {
 
         //------------------incrementn fialure countdowns-----------
         //check the failures
+        //uses workout becuase this has progress info
         workout.exercises.forEach(ex => {
+            //cant fail a warmup
+            if(ex.name.includes('-Warmup'))
+                return;
+
             //fail one, fail the exercise
             const failure = ex.sets.some(set => {
                 //I'll add this feature later, but metallica ppl has a minimum of 8 for some reps
