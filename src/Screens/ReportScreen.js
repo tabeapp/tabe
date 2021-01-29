@@ -9,7 +9,8 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
-import { NavigationActions, StackActions } from "react-navigation";
+import { NavigationActions, } from "react-navigation";
+import { CommonActions, StackActions } from '@react-navigation/native';
 
 const primaryColor = '#66d6f8';
 
@@ -29,7 +30,7 @@ const ReportScreen = props => {
         setReport(x);
         setTitle(x.title);
         setDescription(x.summary);
-    }, [workout]);
+    }, [/*workout*/]);
 
     const [title, setTitle] = useState(report.title);
 
@@ -45,16 +46,21 @@ const ReportScreen = props => {
         //but essentially increment progressing weights, look for prs, etc
         analyzeWorkout(report);
 
-        //combine workout and title and description
-        saveWorkout({...report, title: title, description: description});
 
 
         //clear the entire nav stack, no going back through workouts
-        props.navigation.dispatch(StackActions.reset({
+        //props.navigation.dispatch(StackActions.popToTop());
+        props.navigation.dispatch(CommonActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({routeName: 'home'})]
-        }));
+            routes: [{name: 'home'}]
+        }))
+            //index: 0,
+            //routes: {name: 'home'}
+        //}));
         //props.navigation.navigate('home');
+
+        //combine workout and title and description
+        saveWorkout({...report, title: title, description: description});
 
     };
 
