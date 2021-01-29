@@ -7,7 +7,7 @@ import Words from "../Components/Words";
 import WorkoutContext from "../Contexts/WorkoutContext";
 import ExercisePicker from "../Components/ExercisePicker";
 import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
-import { CURRENT } from "../Constants/Symbols";
+import { CURRENT, FAILURE } from "../Constants/Symbols";
 import RestTimer from "../Components/RestTimer";
 import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
@@ -62,8 +62,11 @@ const WorkoutScreen = props => {
                                     const ex = prev.exercises[e];
                                     for (let s = 0; s < ex.sets.length; s++) {
                                         const set = ex.sets[s];
-                                        if(!set.progress || set.progress === CURRENT )
+                                        if(!set.progress || set.progress === CURRENT ){
                                             set.progress = set.reps;
+                                            if(set.reps === FAILURE)
+                                                set.progress = 5;//idk
+                                        }
                                     }
                                 }
                                 return prev;

@@ -2,7 +2,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import WorkoutContext from './WorkoutContext';
 import { useReducer, useEffect, useContext }  from 'react';
-import { FULL_COPY } from '../Utils/UtilFunctions';
+import { FULL_COPY, ROUND_5 } from "../Utils/UtilFunctions";
 import RoutinesContext from './RoutinesContext';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
 import { Alert } from "react-native";
@@ -84,9 +84,10 @@ const WorkoutProvider = props => {
                     let w;
                     if(set['%'] === NEW_PR)
                         //is this really the best place to store it?
-                        w = exInfo.current + exInfo.progress.amount;
+                        //no
+                        w = exInfo.current + 5;
                     else
-                        w = Math.ceil(set['%'] / 100 * exInfo.current / 5) * 5;
+                        w = ROUND_5(set['%'] / 100 * exInfo.current);
 
                     return {
                         reps: set.reps,
@@ -349,8 +350,12 @@ const WorkoutProvider = props => {
             //this is what we added
             const exInfo = newRoutine.info[ex.name];
 
-            if(exInfo.setInfo.type === 'Custom')
-                return;
+            //how the fuck would we increment 5/3/1
+            // a progress rate of 4 is perfect for this
+            //if(exInfo.setInfo.type === 'Custom')
+                //return;
+            //5/3/1 will progress here
+            //texas method will progress by detecting 5rm
 
             //this exercise doesn't progress
             if (!exInfo.progress || exInfo.progress.amount === 0)
@@ -398,6 +403,23 @@ const WorkoutProvider = props => {
             setInfo.selector = (setInfo.selector+1)%newRoutine.customSets[setInfo.scheme].length;
         });
         //-----------
+
+        //-----------------see if PRs attempts worked---------
+        Object.entries(workoutMaxes).forEach(([k,v]) => {
+            if(k.includes('-Warmup'))
+                return;
+
+            const exInfo = newRoutine.info[k];
+            //this only happens with cusomt sets, NEW_PR specifically
+            if(exInfo.setInfo.type !== 'Custom')
+                return;
+
+            //essentially, go through the best calculated 5rm efforts
+            //and go through the
+            if(v > exInfo.current)
+                exInfo.current = ROUND_5(v);//lol
+        });
+        //----------------------
 
 
         //------------------incrementn fialure countdowns-----------
