@@ -4,6 +4,15 @@ type Group @model {
 
 }
 
+type Routine @model
+  @key(name: "byUser", fields: ["userID", "data"]) {
+  userID: ID!
+  id: ID!
+  title: String!
+  data: String!
+  current: Boolean!
+}
+
 type User @model {
   id: ID!
   name: String!
@@ -14,6 +23,7 @@ type User @model {
   city: String
   gym: String
   posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+  routines: [Routine] @connection(keyName: "byUser", fields: ["id"])
   currentWorkout: Workout @connection
   following: [User]
   followers: [User]
@@ -36,7 +46,7 @@ type Post @model
 }
 
 type Comment @model
-  @key(name: "byPost", fields: ["postID", "data"]) {
+  @key(name: "byPost", fields: ["postID", "content"]) {
   id: ID!
   postID: ID!
   content: String!
