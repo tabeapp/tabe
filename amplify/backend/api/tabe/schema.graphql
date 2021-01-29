@@ -1,6 +1,43 @@
-type Todo @model {
+type Group @model {
   id: ID!
   name: String!
+
+}
+
+type User @model {
+  id: ID!
+  name: String!
+  username: String!
+  records: String
+  country: String
+  state: String
+  city: String
+  gym: String
+  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+  currentWorkout: Workout @connection
+  following: [User]
+  followers: [User]
+}
+
+type Workout @model {
+  id: ID!
+  data: String!
+}
+
+type Post @model
+  @key(name: "byUser", fields: ["userID", "data"]) {
+  id: ID!
+  userID: ID!
+  title: String
   description: String
-  place: String
+  data: String
+  gainz: Int
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+}
+
+type Comment @model
+  @key(name: "byPost", fields: ["postID", "data"]) {
+  id: ID!
+  postID: ID!
+  content: String!
 }
