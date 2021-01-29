@@ -54,18 +54,6 @@ const WorkoutProvider = props => {
             const exInfo = r.info[name];
             const setInfo = exInfo.setInfo;
 
-            //add a warmup as a separate exercise
-            if(exInfo.warmup){
-                //entirely based on weight
-                let warmupSets = WARMUP_WEIGHTS(name, exInfo.current);
-
-                compiledExercises.push({
-                    name: name + '-Warmup',
-                    barbell: exInfo.barbell,
-                    sets: warmupSets,
-                    rest: 0//too much?
-                });
-            }
 
             let sets = [];
             if(setInfo.type === 'Normal'){
@@ -106,6 +94,19 @@ const WorkoutProvider = props => {
 
             if(exInfo.amrap)
                 sets[sets.length-1].amrap = true;
+
+            //add a warmup as a separate exercise
+            if(exInfo.warmup){
+                //entirely based on first set weight
+                let warmupSets = WARMUP_WEIGHTS(name, sets[0].weight);
+
+                compiledExercises.push({
+                    name: name + '-Warmup',
+                    barbell: exInfo.barbell,
+                    sets: warmupSets,
+                    rest: 0//too much?
+                });
+            }
 
             compiledExercises.push({
                 name: name,

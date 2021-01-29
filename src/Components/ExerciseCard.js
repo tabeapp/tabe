@@ -80,11 +80,16 @@ const ExerciseCard = (props) => {
     );
 
     //default is that of last set
-    let currentWeight = sets[sets.length-1].weight;
-    sets.forEach(set =>{
-        if(set.progress === CURRENT)
-            currentWeight = set.weight;
-    });
+    //here's the deal
+    //if no sets are done, use the first set
+    //if all sets are done, use the last
+    //otherwise use the weight of the current set
+    let currentWeight = sets[0].weight;
+    for(let i = 0; i < sets.length; i++){
+        currentWeight = sets[i].weight;
+        if(sets[i].progress === CURRENT)
+            break;
+    }
 
     return (
         <View style={STYLES.card} key={name}>
@@ -139,21 +144,21 @@ const ExerciseCard = (props) => {
                                     {
                                         //so if it's in edit mode, we need to be able to adjust the weight on the fly
                                         edit &&
-                                            <NumericSelector
-                                                numInfo={{
-                                                    def: weight,
-                                                    min: 0,
-                                                    max: 1000,
-                                                    increment: 5
-                                                }}
-                                                //is this really the best idea?
-                                                //or should we restyle numeric selector?
-                                                style={{alignSelf: 'center', width: 60}}
-                                                itemStyle={{height: 50, fontSize: 20}}
-                                                onChange={value =>
-                                                    workoutDispatch({path: `exercises.${exerciseN}.sets.${index}.weight`, value: value})
-                                                }
-                                            />
+                                        <NumericSelector
+                                            numInfo={{
+                                                def: weight,
+                                                min: 0,
+                                                max: 1000,
+                                                increment: 5
+                                            }}
+                                            //is this really the best idea?
+                                            //or should we restyle numeric selector?
+                                            style={{alignSelf: 'center', width: 60}}
+                                            itemStyle={{height: 50, fontSize: 20}}
+                                            onChange={value =>
+                                                workoutDispatch({path: `exercises.${exerciseN}.sets.${index}.weight`, value: value})
+                                            }
+                                        />
                                     }
                                 </View>
 
