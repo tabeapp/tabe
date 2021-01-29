@@ -183,6 +183,7 @@ const WorkoutProvider = props => {
         report.title = workout.title;
         report.time = new Date().getTime();//get current time;
 
+        //there's a problem right here
         report.exercises = workout.exercises.map(exercise => {
             let exReport = {
                 name: exercise.name,

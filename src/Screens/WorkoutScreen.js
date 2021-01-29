@@ -17,7 +17,7 @@ const primaryColor = '#66d6f8';
 
 //TODO how about actually adjusting the wieghts on the fly?
 const WorkoutScreen = props => {
-    const {workout, workoutDispatch, quitWorkout} = useContext(WorkoutContext);
+    const {workout, workoutDispatch, quitWorkout, generateReport} = useContext(WorkoutContext);
 
 
     //workout.edit false => normal workout screen

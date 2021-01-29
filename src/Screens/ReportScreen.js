@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
@@ -9,6 +9,7 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
+import { NavigationActions } from "react-navigation";
 
 const primaryColor = '#66d6f8';
 
@@ -16,7 +17,11 @@ const ReportScreen = props => {
     const {saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
-    const [report] = useState(generateReport()/*props.route.params.report*/);
+    //this is fucky
+    const [report, setReport] = useState(generateReport());
+    useEffect(() => {
+        setReport(generateReport())
+    }, []);
 
     const [title, setTitle] = useState(report.title);
 
@@ -36,7 +41,12 @@ const ReportScreen = props => {
         saveWorkout({...report, title: title, description: description});
 
 
-        props.navigation.navigate('home');
+        //clear the entire nav stack, no going back through workouts
+        props.navigation.dispatch(NavigationActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({routeName: 'home'})]
+        }));
+        //props.navigation.navigate('home');
 
     };
 
