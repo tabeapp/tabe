@@ -16,6 +16,7 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
+import { REST_DAY } from "../Constants/Symbols";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -163,7 +164,7 @@ const RoutineEditScreen = props => {
     useEffect(() => {
         routinesDispatch(prev => {
             if(prev.editRoutine.days.length !== prev.editRoutine.time)
-                prev.editRoutine.days = Array.from(new Array(time), () => 'R')
+                prev.editRoutine.days = Array.from(new Array(time), () => REST_DAY);
             return prev;
         });
     }, []);
@@ -222,7 +223,7 @@ const RoutineEditScreen = props => {
                             //that's fucking it, useEffect completely suks
                             routinesDispatch(prev => {
                                 prev.editRoutine.time = v;
-                                prev.editRoutine.days = Array.from(new Array(v), () => 'R');
+                                prev.editRoutine.days = Array.from(new Array(v), () => REST_DAY);
                                 return prev;
                             })
                         }

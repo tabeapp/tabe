@@ -3,11 +3,12 @@ import {View} from 'react-native';
 import RoutinesContext from '../Contexts/RoutinesContext';
 import Words from "./Words";
 import Chooser from "./Chooser";
+import { REST_DAY } from "../Constants/Symbols";
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
 
-    const temp = ['R', ...props.workouts];
+    const temp = [REST_DAY, ...props.workouts];
 
     return (<>
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap'}}>

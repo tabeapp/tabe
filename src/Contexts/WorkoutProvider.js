@@ -4,7 +4,7 @@ import WorkoutContext from './WorkoutContext';
 import { useReducer, useEffect, useContext }  from 'react';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import RoutinesContext from './RoutinesContext';
-import { CURRENT, FAILURE, NEW_PR } from '../Constants/Symbols';
+import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
 import { Alert } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
@@ -37,7 +37,7 @@ const WorkoutProvider = props => {
         console.log(r)
         let day = r.days[r.currentDay % r.time];
 
-        while(day === 'R'){
+        while(day === REST_DAY){
             r.currentDay++;
             day = r.days[r.currentDay%r.time];
         }
@@ -161,7 +161,7 @@ const WorkoutProvider = props => {
         //if it's after, advance currentday until there's a workout
         //and return false
         const r = FULL_COPY(routines[current]);
-        while(!r.days[r.currentDay%r.time])
+        while(r.days[r.currentDay%r.time] === REST_DAY)
             r.currentDay++;
 
         routinesDispatch(prev => {
@@ -449,10 +449,11 @@ const WorkoutProvider = props => {
         //scan through the routine to find next workout
         let nextWorkoutTime = new Date();
         //not a rest day
+        //this isn't caluclting correctly
         let daysToNext = 1;
         //scan through days to find next workout day
         //limit 14, just in case of errors
-        while(!newRoutine.days[(newRoutine.currentDay+daysToNext)%newRoutine.time] && daysToNext < 14)
+        while(newRoutine.days[(newRoutine.currentDay+daysToNext)%newRoutine.time] === REST_DAY && daysToNext < 14)
             daysToNext++;
 
         //temporarily set it to minutes to test it out
