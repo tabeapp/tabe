@@ -17,6 +17,10 @@ import RoutineScreen from './src/Screens/RoutineScreen';
 import RoutinesProvider from './src/Contexts/RoutinesProvider';
 import WorkoutProvider from './src/Contexts/WorkoutProvider';
 
+import Amplify, {API, graphqlOperation} from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 const Stack = createStackNavigator();
 
 const App = () => {

@@ -60,13 +60,14 @@ const ReportScreen = props => {
         //props.navigation.navigate('home');
 
         //combine workout and title and description
-        saveWorkout({...report, title: title, description: description});
+        //necessary transformation
+        saveWorkout({title: title, description: description, data: JSON.stringify(report.exercises)});
 
     };
 
     return (
         <SafeBorder>
-            <TopBar title='Workout Summary' rightText='Next' onPressRight={handleNext}/>
+            <TopBar title='Workout Summary' rightText='Save' onPressRight={handleNext}/>
             <View style={STYLES.card}>
                 <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>

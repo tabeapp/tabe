@@ -5,9 +5,10 @@ import { useReducer, useEffect, useContext }  from 'react';
 import { FULL_COPY, ROUND_5 } from "../Utils/UtilFunctions";
 import RoutinesContext from './RoutinesContext';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
-import { Alert } from "react-native";
-import {useNavigation} from '@react-navigation/native';
 import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
+
+import { API, graphqlOperation } from "aws-amplify";
+import {createPost} from '../../graphql/mutations';
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -185,7 +186,8 @@ const WorkoutProvider = props => {
 
         let report = {};
         report.title = workout.title;
-        report.time = new Date().getTime();//get current time;
+        //this seems to mess with graphQl?
+        //report.time = new Date().getTime();//get current time;
 
         //now that we have workout-warmup, this is parsing incorrectly
         report.exercises = workout.exercises.map(exercise => {
@@ -522,6 +524,14 @@ const WorkoutProvider = props => {
             workouts.push(workoutData);
             AsyncStorage.setItem('@workouts', JSON.stringify(workouts));
         });
+
+        //make a post to aws db, this is the first i implemented
+        //lets see if it works
+        console.log(workoutData);
+        await API.graphql(graphqlOperation(createPost, {input: workoutData}));
+
+
+
         //need to clear workout from state as well
         //and the report, it doesn't get cleared
         //does this not work?

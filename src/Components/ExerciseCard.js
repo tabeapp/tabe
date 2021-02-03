@@ -20,7 +20,7 @@ const MidLine = (props) => {
 
     //use key here to check a timer
     //clever flex
-    return <View key={props.id} style={{alignSelf: 'center', height:4, maxWidth: 20, flex: 1, flexDirection: 'row'}}>
+    return <View style={{alignSelf: 'center', height:4, maxWidth: 20, flex: 1, flexDirection: 'row'}}>
         <View style={{ flex: props.completion, backgroundColor: 'white' }} />
         <View style={{ flex: 1-props.completion, backgroundColor: 'gray' }} />
     </View>
