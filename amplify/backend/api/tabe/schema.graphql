@@ -1,53 +1,16 @@
-type Group @model {
-  id: ID!
-  name: String!
-
+type Post
+@model (subscriptions: {level: public})
+@auth(rules:[
+  {allow: owner, ownerField: "owner", provider: userPools, operations: [read, create]}
+  {allow: private, provider: userPools, operations: [read]}
+])
+@key(name: "SortByTimestamp", fields: ["type", "timestamp"], queryField: "listPostsSortedByTimestamp")
+@key(name: "BySpecificOwner", fields: ["owner", "timestamp"], queryField: "listPostsBySpecificOwner")
+{
+  type: String!
+  id: ID
+  content: String
+  owner: String
+  timestamp: Int!
 }
 
-type Routine @model
-  @key(name: "byUser", fields: ["userID", "data"]) {
-  userID: ID!
-  id: ID!
-  title: String!
-  data: String!
-  current: Boolean!
-}
-
-type User @model {
-  id: ID!
-  name: String!
-  username: String!
-  records: String
-  country: String
-  state: String
-  city: String
-  gym: String
-  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
-  routines: [Routine] @connection(keyName: "byUser", fields: ["id"])
-  currentWorkout: Workout @connection
-  following: [User]
-  followers: [User]
-}
-
-type Workout @model {
-  id: ID!
-  data: String!
-}
-
-type Post @model
-  @key(name: "byUser", fields: ["userID", "data"]) {
-  id: ID!
-  userID: ID!
-  title: String
-  description: String
-  data: String
-  gainz: Int
-  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
-}
-
-type Comment @model
-  @key(name: "byPost", fields: ["postID", "content"]) {
-  id: ID!
-  postID: ID!
-  content: String!
-}

@@ -1,5 +1,11 @@
 {
   "AppSyncApiName": "tabe",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
-  "DynamoDBEnableServerSideEncryption": false
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authtabe3052bd2b",
+      "Outputs.UserPoolId"
+    ]
+  }
 }
