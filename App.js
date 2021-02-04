@@ -17,8 +17,11 @@ import RoutineScreen from './src/Screens/RoutineScreen';
 import RoutinesProvider from './src/Contexts/RoutinesProvider';
 import WorkoutProvider from './src/Contexts/WorkoutProvider';
 
+//this might help
+//https://medium.com/javascript-in-plain-english/the-ultimate-guide-for-integrate-aws-amplify-authentication-for-react-native-15a8eec10890
 import Amplify, {API, graphqlOperation} from 'aws-amplify';
 import awsconfig from './aws-exports';
+import { withAuthenticator } from "aws-amplify-react-native";
 Amplify.configure(awsconfig);
 
 const Stack = createStackNavigator();

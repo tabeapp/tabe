@@ -10,6 +10,7 @@ import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
+import { withAuthenticator } from "aws-amplify-react-native";
 
 const liftMapping = {
     squat: 'orange',
@@ -97,4 +98,4 @@ const styles = StyleSheet.create({
     cardContainer: {height: 500, width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
 });
 
-export default ProfileScreen;
+export default withAuthenticator(ProfileScreen);
