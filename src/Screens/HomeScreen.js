@@ -59,9 +59,9 @@ const HomeScreen = props => {
 
     //not doing this here lol
     const signOut = () => {
-        /*Auth.signOut()
+        Auth.signOut()
             .then(data => console.log(data))
-            .catch(err => console.log(err));*/
+            .catch(err => console.log(err));
     };
 
     const [posts, dispatch] = useReducer(reducer, []);
@@ -133,6 +133,7 @@ const HomeScreen = props => {
                 </TouchableOpacity>
                 <View>
                     <PostList
+                        navigation={props.navigation}
                         isLoading={isLoading}
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}

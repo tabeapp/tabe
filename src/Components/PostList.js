@@ -52,8 +52,8 @@ const PostItem = ({ post, navigation }) => {
     return (
         <View alignItems='flex-start' key={post.id}>
             <View>
-                <TouchableOpacity onClick={() => {
-                    navigation.navigate('profile', {id: post.owner})
+                <TouchableOpacity onPress={() => {
+                    navigation.navigate('profile', {userId: post.owner})
                 }}>
                     <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
                 </TouchableOpacity>
