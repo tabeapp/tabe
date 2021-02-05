@@ -15,7 +15,10 @@ const PostList = props => {
                     <Words>{listHeaderTitle}</Words>
                     <Words>{listHeaderTitleButton && listHeaderTitleButton}</Words>
                     {
-                        posts.map(PostItem)
+                        posts.map(post => <PostItem
+                            post={post}
+                            navigation={props.navigation}
+                        />)
                             //<Words>{JSON.stringify(post)}</Words>
                         //})
                     }
@@ -30,9 +33,7 @@ const PostList = props => {
     </View>
 };
 
-const PostItem = ({ post }) => {
-    const classes = useStyles();
-    const history = useHistory();
+const PostItem = ({ post, navigation }) => {
     const now = moment();
     console.log(now)
 
@@ -51,7 +52,9 @@ const PostItem = ({ post }) => {
     return (
         <View alignItems='flex-start' key={post.id}>
             <View>
-                <TouchableOpacity className={classes.clickable} onClick={() => history.push('/' + post.owner)}>
+                <TouchableOpacity onClick={() => {
+                    navigation.navigate('profile', {id: post.owner})
+                }}>
                     <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
                 </TouchableOpacity>
             </View>

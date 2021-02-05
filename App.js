@@ -22,7 +22,12 @@ import WorkoutProvider from './src/Contexts/WorkoutProvider';
 import Amplify, {API, graphqlOperation} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { withAuthenticator } from "aws-amplify-react-native";
-Amplify.configure(awsconfig);
+Amplify.configure({
+    ...awsconfig,
+    Analytics: {
+        disabled: true
+    }
+});
 
 const Stack = createStackNavigator();
 

@@ -51,7 +51,7 @@ const HomeScreen = props => {
             input: {
                 type: 'post',
                 content: value,
-                timestamp: Date.now()
+                timestamp: parseInt(Date.now(), 10)
             }}));
         console.log(res);
         setValue('')
@@ -112,12 +112,16 @@ const HomeScreen = props => {
         <SafeBorderNav {...props} screen={'home'}>
             <TopBar title='Feed'/>
             <View style={STYLES.body}>
-                <Write value={value} onChange={v => {
-                    //arbitrary limit lol
-                    if(v.length <= 140)
-                        setValue(v)
-                }}/>
-                <TouchableOpacity style={{backgroundColor: 'blue'}} onPress={onPost} >
+                <Write
+                    style={{padding: 20, height: 40, borderColor: 'red', borderWidth: 1}}
+                    value={value}
+                    onChange={v => {
+                        //arbitrary limit lol
+                        if(v.length <= 140)
+                            setValue(v)
+                    }}
+                />
+                <TouchableOpacity style={{padding: 20, backgroundColor: 'blue'}} onPress={onPost} >
                     <Words>Post</Words>
                 </TouchableOpacity>
                 <Words/>
