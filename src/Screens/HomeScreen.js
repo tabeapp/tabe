@@ -197,10 +197,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default withAuthenticator(HomeScreen, {
-    signUpConfig:{
-        hiddenDefaults: ['phone_number']
-
-    }
-
-});
+export default HomeScreen;

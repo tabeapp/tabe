@@ -176,4 +176,4 @@ const styles = StyleSheet.create({
     cardContainer: {height: 500, width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
 });
 
-export default withAuthenticator(ProfileScreen);
+export default ProfileScreen;

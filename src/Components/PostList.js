@@ -42,7 +42,7 @@ const PostItem = ({ post, navigation }) => {
 
         for (let i=0; i < scales.length; i++){
             const scale = scales[i];
-            const diff = moment(now).diff(timestamp * 1000, scale);
+            const diff = moment(now).diff(timestamp /** 1000*/, scale);
             if( diff > 0) return diff + scale.charAt(0)
         }
 
