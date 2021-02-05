@@ -14,3 +14,15 @@ type Post
   timestamp: AWSTimestamp!
 }
 
+type FollowRelationship
+@model
+@auth(rules: [
+  {allow: owner, ownerField:"followerId", provider: userPools, operations:[read, create]}
+  {allow: private, provider: userPools, operations: [read]}
+])
+@key(fields: ["followeeId", "followerId"])
+{
+  followeeId: ID!
+  followerId: ID!
+  timestamp: AWSTimestamp!
+}

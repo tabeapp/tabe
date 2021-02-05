@@ -40,3 +40,36 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
+export const onCreateFollowRelationship = /* GraphQL */ `
+  subscription OnCreateFollowRelationship {
+    onCreateFollowRelationship {
+      followeeId
+      followerId
+      timestamp
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFollowRelationship = /* GraphQL */ `
+  subscription OnUpdateFollowRelationship {
+    onUpdateFollowRelationship {
+      followeeId
+      followerId
+      timestamp
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFollowRelationship = /* GraphQL */ `
+  subscription OnDeleteFollowRelationship {
+    onDeleteFollowRelationship {
+      followeeId
+      followerId
+      timestamp
+      createdAt
+      updatedAt
+    }
+  }
+`;

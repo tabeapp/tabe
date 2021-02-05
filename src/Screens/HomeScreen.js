@@ -51,7 +51,7 @@ const HomeScreen = props => {
             input: {
                 type: 'post',
                 content: value,
-                timestamp: parseInt(Date.now(), 10)
+                timestamp: Date.now()
             }}));
         console.log(res);
         setValue('')

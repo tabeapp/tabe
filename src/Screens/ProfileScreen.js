@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { StyleSheet, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useEffect, useReducer, useState} from 'react';
 import NavBar from '../Components/NavBar';
@@ -12,9 +12,11 @@ import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
 import { withAuthenticator } from "aws-amplify-react-native";
 import { API, graphqlOperation } from "aws-amplify";
-import { listPostsBySpecificOwner } from "../../graphql/queries";
+import { getFollowRelationship, listPostsBySpecificOwner } from "../../graphql/queries";
 import PostList from "../Components/PostList";
 import { onCreatePost } from "../../graphql/subscriptions";
+import { Auth } from 'aws-amplify';
+import { createFollowRelationship, deleteFollowRelationship } from "../../graphql/mutations";
 
 const liftMapping = {
     squat: 'orange',
@@ -72,14 +74,32 @@ const ProfileScreen = props => {
         getPosts(ADDITIONAL_QUERY, nextToken);
     };
 
+    const [currentUser, setCurrentUser] = useState(null);
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    const getIsFollowing = async ({followeeId, followerId}) => {
+
+        const res = await API.graphql(graphqlOperation(getFollowRelationship, {
+            followeeId: followeeId,
+            followerId: followerId
+        }))
+        console.log(res);
+        return res.data.getFollowRelationship !== null;
+
+    };
+
     useEffect(() => {
-        //first off
-        //if a userid is in the params, load that user
-        //otherwise load self
-        //if(!userId)
-            //Auth.currentAuthenticatedUser()
-        //
-        getPosts(INITIAL_QUERY);
+        const init = async () => {
+            const currentUser = await Auth.currentAuthenticatedUser();
+            setCurrentUser(currentUser);
+
+            setIsFollowing(await getIsFollowing({
+                followeeId: userId, followerId: currentUser.username
+            }));
+
+            getPosts(INITIAL_QUERY);
+        };
+        init();
 
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
             next: msg => {
@@ -124,6 +144,31 @@ const ProfileScreen = props => {
     console.log(timeEnd-timeStart);
     console.log(weightEnd-weightStart);
 
+    const follow = async () => {
+        const input = {
+            followeeId: userId,
+            followerId: currentUser.username,
+            timestamp: Date.now()
+        };
+        const res = await API.graphql(graphqlOperation(createFollowRelationship, {
+            input: input
+        }));
+        if(!res.data.createFollowRelationship.errors)//is it errors or error?
+            setIsFollowing(true);
+    };
+
+    const unfollow = async () => {
+        const input = {
+            followeeId: userId,
+            followerId: currentUser.username,
+        };
+        const res = await API.graphql(graphqlOperation(deleteFollowRelationship, {
+            input: input
+        }));
+        if(!res.data.deleteFollowRelationship.errors)//is it errors or error?
+            setIsFollowing(false);
+    };
+
 
     return (
         <SafeBorderNav {...props} screen={'profile'}>
@@ -136,9 +181,30 @@ const ProfileScreen = props => {
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}
                         listHeaderTitle={userId + ' Timeline'}
+                        listHeaderTitleButton={
+                            (currentUser && userId !== currentUser.username) &&
+                            (isFollowing ?
+                                <TouchableOpacity
+                                    style={{width: 100, height: 40, backgroundColor: PRIMARY}}
+                                    onPress={unfollow}
+                                >
+                                    <Words>Unfollow</Words>
+                                </TouchableOpacity>
+                            :
+                                <TouchableOpacity
+                                    style={{width: 100, height: 40, backgroundColor: 'gray'}}
+                                    onPress={follow}
+                                >
+                                    <Words>Follow</Words>
+                                </TouchableOpacity>
+                            )
+                        }
                     />
 
                 </View>
+
+
+
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>
                         <View style={{...STYLES.card, width: '100%', height: 120}} key={k}>

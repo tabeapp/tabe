@@ -1,6 +1,6 @@
 projects:
   tabe:
-    schemaPath: graphql/schema.json
+    schemaPath: amplify/backend/api/tabe/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
