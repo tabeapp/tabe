@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Words from "./Words";
 import RoutinesContext from "../Contexts/RoutinesContext";
 import WorkoutContext from "../Contexts/WorkoutContext";
+import { Auth } from "aws-amplify";
 
 const routes = [
     'home',
@@ -32,6 +33,12 @@ const NavBar = props => {
 
         if (r === 'workout')
             props.navigation.navigate(r);
+        else if (r === 'profile'){
+            Auth.currentAuthenticatedUser().then(user => {
+                props.navigation.replace(r, {userId: user.username})
+            });
+        }
+
         else
             props.navigation.replace(r);
     };

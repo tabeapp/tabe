@@ -73,6 +73,12 @@ const ProfileScreen = props => {
     };
 
     useEffect(() => {
+        //first off
+        //if a userid is in the params, load that user
+        //otherwise load self
+        //if(!userId)
+            //Auth.currentAuthenticatedUser()
+        //
         getPosts(INITIAL_QUERY);
 
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
