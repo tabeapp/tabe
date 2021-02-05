@@ -1,24 +1,40 @@
 import { TextInput, TouchableOpacity, FlatList, Alert, SafeAreaView, StyleSheet, View } from "react-native";
-import React, {useState, useContext, useEffect} from 'react';
-import NavBar from '../Components/NavBar';
-import { PRIMARY } from '../Constants/Theme';
+import React, {useState, useReducer, useEffect} from 'react';
 import Words from "../Components/Words";
-import SafeBorder from "../Components/SafeBorder";
 import SafeBorderNav from "../Components/SafeBorderNav";
 import TopBar from "../Components/TopBar";
-import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
-import WorkoutContext from "../Contexts/WorkoutContext";
 import { withAuthenticator } from "aws-amplify-react-native";
 import Write from "../Components/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createPost } from "../../graphql/mutations";
+import { listPostsSortedByTimestamp } from "../../graphql/queries";
+import { onCreatePost } from "../../graphql/subscriptions";
+import PostList from "../Components/PostList";
+
+const SUBSCRIPTION = 'SUBSCRIPTION';
+const INITIAL_QUERY = 'INITIAL_QUERY';
+const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
+
+
+const reducer = (state, action) => {
+    switch(action.type){
+        case INITIAL_QUERY:
+            return action.posts;
+        case ADDITIONAL_QUERY:
+            return [...state, ...action.posts];
+        case SUBSCRIPTION:
+            return [action.post, ...state];
+        default:
+            return state;
+    }
+};
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const HomeScreen = props => {
     //what's the best way to load
     //yeah we're gonna need a Social context
-    const [posts, setPosts] = useState([]);
+    //const [posts, setPosts] = useState([]);
     //const data = await getPosts();
 
     //only will run once, right? right?
@@ -48,6 +64,50 @@ const HomeScreen = props => {
             .catch(err => console.log(err));*/
     };
 
+    const [posts, dispatch] = useReducer(reducer, []);
+    const [nextToken, setNextToken] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    //fetch the shits
+    const getPosts = async (type, nextToken=null) => {
+        const res = await API.graphql(graphqlOperation(listPostsSortedByTimestamp, {
+            type: "post",
+            sortDirection: 'DESC',
+            limit: 20,
+            nextToken: nextToken
+        }))
+        console.log(res);
+        dispatch({
+            type: type,
+            posts: res.data.listPostsSortedByTimestamp.items
+        });
+        setNextToken(res.data.listPostsSortedByTimestamp.nextToken);
+        setIsLoading(false);
+    };
+
+    const getAdditionalPosts = () => {
+        if(nextToken === null)
+            return;
+        getPosts(ADDITIONAL_QUERY, nextToken);
+    };
+
+    //set up and break down everything
+    useEffect(() => {
+        getPosts(INITIAL_QUERY).then(_ => {});
+
+        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
+            next: msg => {
+                console.log('allposts subscription fired');
+                const post = msg.value.data.onCreatePost;
+                dispatch({type:SUBSCRIPTION, post: post});
+            }
+
+        });
+
+        return () => subscription.unsubscribe();
+
+    }, []);
+
     return (
         <SafeBorderNav {...props} screen={'home'}>
             <TopBar title='Feed'/>
@@ -67,6 +127,15 @@ const HomeScreen = props => {
                 <TouchableOpacity style={{backgroundColor: 'red'}} onPress={signOut} >
                     <Words>Sign out</Words>
                 </TouchableOpacity>
+                <View>
+                    <PostList
+                        isLoading={isLoading}
+                        posts={posts}
+                        getAdditionalPosts={getAdditionalPosts}
+                        listHeaderTitle={'Global Timeline'}
+                    />
+
+                </View>
             </View>
         </SafeBorderNav>
     );

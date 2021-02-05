@@ -1,6 +1,6 @@
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 import NavBar from '../Components/NavBar';
 import { PRIMARY } from '../Constants/Theme';
 import WeightVisual from "../Utils/WeightVisual";
@@ -11,6 +11,10 @@ import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
 import { withAuthenticator } from "aws-amplify-react-native";
+import { API, graphqlOperation } from "aws-amplify";
+import { listPostsBySpecificOwner } from "../../graphql/queries";
+import PostList from "../Components/PostList";
+import { onCreatePost } from "../../graphql/subscriptions";
 
 const liftMapping = {
     squat: 'orange',
@@ -19,10 +23,68 @@ const liftMapping = {
     press: 'blue'
 }
 
+const SUBSCRIPTION = 'SUBSCRIPTION';
+const INITIAL_QUERY = 'INITIAL_QUERY';
+const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case INITIAL_QUERY:
+            return action.posts;
+        case ADDITIONAL_QUERY:
+            return [...state, ...action.posts]
+        case SUBSCRIPTION:
+            return [action.post, ...state]
+        default:
+            return state;
+    }
+};
+
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [progress, setProgress] = useState([]);
     const [userStats, setUserStats] = useState({});
+
+    //post loading bs part
+    const {userId} = props.route.params;
+
+    const [posts, dispatch] = useReducer(reducer, []);
+    const [nextToken, setNextToken] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getPosts = async (type, nextToken = null) => {
+        const res = await API.graphql(graphqlOperation(listPostsBySpecificOwner, {
+            owner: userId,
+            sortDirection: 'DESC',
+            limit: 20,
+            nextToken: nextToken
+        }))
+        console.log(res);
+        dispatch({
+            type: type,
+            posts: res.data.listPostsBySpecificOwner.items
+        })
+        setNextToken(res.data.listPostsBySpecificOwner.nextToken)
+        setIsLoading(false);
+    };
+    const getAdditionalPosts = () => {
+        if (nextToken === null) return; //Reached the last page
+        getPosts(ADDITIONAL_QUERY, nextToken);
+    };
+
+    useEffect(() => {
+        getPosts(INITIAL_QUERY);
+
+        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
+            next: msg => {
+                const post = msg.value.data.onCreatePost;
+                if(post.owner !== userId)
+                    return;
+                dispatch({type: SUBSCRIPTION, post: post});
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, [])
 
     useEffect(() => {
         //console.log('reloading progress ' + JSON.stringify(progress));
@@ -61,6 +123,16 @@ const ProfileScreen = props => {
         <SafeBorderNav {...props} screen={'profile'}>
             <TopBar title='Zyzz'/>
             <View style={STYLES.body}>
+                <View>
+                    {/*posts by user bs here*/}
+                    <PostList
+                        isLoading={isLoading}
+                        posts={posts}
+                        getAdditionalPosts={getAdditionalPosts}
+                        listHeaderTitle={userId + ' Timeline'}
+                    />
+
+                </View>
                 <View style={styles.cardContainer}>{
                     Object.entries(userStats).map(([k,v]) =>
                         <View style={{...STYLES.card, width: '100%', height: 120}} key={k}>
