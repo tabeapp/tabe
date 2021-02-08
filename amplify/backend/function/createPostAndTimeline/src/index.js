@@ -1,4 +1,6 @@
 /* Amplify Params - DO NOT EDIT
+	API_TABE_GRAPHQLAPIENDPOINTOUTPUT
+	API_TABE_GRAPHQLAPIIDOUTPUT
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -32,7 +34,7 @@ exports.handler = async (event, context, callback) => {
     } else {
         // for local mock
         env = {
-            API_URL: 'http://192.168.1.2:20002/graphql',
+            API_TABE_GRAPHQLAPIENDPOINTOUTPUT: 'http://192.168.1.2:20002/graphql',
             REGION: 'us-east-1',
         }
         graphql_auth = {
@@ -50,7 +52,7 @@ exports.handler = async (event, context, callback) => {
     if (!graphqlClient) {
         graphqlClient = new AWSAppSyncClient({
             //i think this is the problem
-            url: env.API_URL,
+            url: env.API_TABE_GRAPHQLAPIENDPOINTOUTPUT,
             region: env.REGION,
             auth: graphql_auth,
             disableOffline: true,
