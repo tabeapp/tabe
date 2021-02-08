@@ -92,9 +92,10 @@ exports.handler = async (event, context, callback) => {
     console.log(followers);
 
     //post to timeline
-    followers.push({
-        followerId: post.owner,
-    })
+    //only add yourself if you're not already added
+    if(!followers.some(follower => follower.followerId === post.owner )){
+        followers.push({ followerId: post.owner });
+    }
     //is this scalable...
     const results = await Promise.all(followers.map((follower)=> createTimelineForAUser({follower: follower, post: post})));
     console.log(results)
