@@ -49,6 +49,6 @@ type Mutation{
   ): Post
   @function(name: "createPostAndTimeline-${env}")
   @auth(rules:[
-    {allow: private, provider, userPools},
+    {allow: private, provider: userPools},
   ])
 }

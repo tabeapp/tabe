@@ -8,8 +8,8 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import Write from "../Components/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createPost } from "../../graphql/mutations";
-import { listPostsSortedByTimestamp } from "../../graphql/queries";
-import { onCreatePost } from "../../graphql/subscriptions";
+import { listPostsSortedByTimestamp, listTimelines } from "../../graphql/queries";
+import { onCreatePost, onCreateTimeline } from "../../graphql/subscriptions";
 import PostList from "../Components/PostList";
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
@@ -67,11 +67,12 @@ const HomeScreen = props => {
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentUser, setCurrentUser] = useState(null);
 
     //fetch the shits
-    const getPosts = async (type, nextToken=null) => {
-        const res = await API.graphql(graphqlOperation(listPostsSortedByTimestamp, {
-            type: "post",
+    const getPosts = async (type, currentUser, nextToken=null) => {
+        const res = await API.graphql(graphqlOperation(listTimelines, {
+            userId: currentUser.username,
             sortDirection: 'DESC',
             limit: 20,
             nextToken: nextToken
@@ -79,9 +80,9 @@ const HomeScreen = props => {
         console.log(res);
         dispatch({
             type: type,
-            posts: res.data.listPostsSortedByTimestamp.items
+            posts: Object.values(res.data.listTimelines.items).map(i => i.post)
         });
-        setNextToken(res.data.listPostsSortedByTimestamp.nextToken);
+        setNextToken(res.data.listTimelines.nextToken);
         setIsLoading(false);
     };
 
@@ -91,22 +92,35 @@ const HomeScreen = props => {
         getPosts(ADDITIONAL_QUERY, nextToken);
     };
 
+    useEffect(() => {
+        console.log('init')
+        const init = async () => {
+            const currentUser = await Auth.currentAuthenticatedUser();
+            setCurrentUser(currentUser);
+            getPosts(INITIAL_QUERY, currentUser);
+        }
+    })
+
     //set up and break down everything
     useEffect(() => {
-        getPosts(INITIAL_QUERY).then(_ => {});
+        console.log(currentUser);
+        if(!currentUser)
+            return;
+        console.log('make subscription')
+        const subscription = API.graphql(graphqlOperation(onCreateTimeline, {
+            userId: currentUser.username
+        }))
+            .subscribe({
+                next: msg => {
+                    console.log('timeline subscription fired');
+                    console.log(msg);
+                    dispatch({type:SUBSCRIPTION, post: msg.value.data.onCreateTimeline.post});
 
-        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
-            next: msg => {
-                console.log('allposts subscription fired');
-                const post = msg.value.data.onCreatePost;
-                dispatch({type:SUBSCRIPTION, post: post});
-            }
-
-        });
-
+                }
+            })
         return () => subscription.unsubscribe();
 
-    }, []);
+    }, [currentUser]);
 
     return (
         <SafeBorderNav {...props} screen={'home'}>
