@@ -138,6 +138,8 @@ const listFollowRelationships = /* GraphQL */ `
         followeeId
         followerId
         timestamp
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -155,6 +157,8 @@ const createPost = /* GraphQL */ `
       content
       owner
       timestamp
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -168,12 +172,16 @@ const createTimeline = /* GraphQL */ `
       userId
       timestamp
       postId
+      createdAt
+      updatedAt
       post {
         id
         content
         type
         owner
         timestamp
+        createdAt
+        updatedAt
       }
     }
   }
