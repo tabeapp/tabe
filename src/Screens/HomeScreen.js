@@ -7,7 +7,7 @@ import { STYLES } from "../Style/Values";
 import { withAuthenticator } from "aws-amplify-react-native";
 import Write from "../Components/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createPost } from "../../graphql/mutations";
+import { createPost, createPostAndTimeline } from "../../graphql/mutations";
 import { listPostsSortedByTimestamp, listTimelines } from "../../graphql/queries";
 import { onCreatePost, onCreateTimeline } from "../../graphql/subscriptions";
 import PostList from "../Components/PostList";
@@ -47,12 +47,10 @@ const HomeScreen = props => {
     const [value, setValue] = useState('eyyyy');
 
     const onPost = async () => {
-        const res = await API.graphql(graphqlOperation(createPost, {
-            input: {
-                type: 'post',
-                content: value,
-                timestamp: Date.now()
-            }}));
+
+        const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
+            content: value
+        }));
         console.log(res);
         setValue('')
     };
@@ -99,7 +97,8 @@ const HomeScreen = props => {
             setCurrentUser(currentUser);
             getPosts(INITIAL_QUERY, currentUser);
         }
-    })
+        init();
+    }, [])
 
     //set up and break down everything
     useEffect(() => {
@@ -151,7 +150,7 @@ const HomeScreen = props => {
                         isLoading={isLoading}
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={'Global Timeline'}
+                        listHeaderTitle={'Home'}
                     />
 
                 </View>

@@ -47,9 +47,9 @@ const ExploreScreen = props => {
     //getPosts().then(v => setPosts(v))
     //})
 
-    const [value, setValue] = useState('eyyyy');
+    //const [value, setValue] = useState('eyyyy');
 
-    const onPost = async () => {
+    /*const onPost = async () => {
         const res = await API.graphql(graphqlOperation(createPost, {
             input: {
                 type: 'post',
@@ -58,7 +58,7 @@ const ExploreScreen = props => {
             }}));
         console.log(res);
         setValue('')
-    };
+    };*/
 
     //not doing this here lol
     const signOut = () => {
@@ -115,19 +115,6 @@ const ExploreScreen = props => {
         <SafeBorderNav {...props} screen={'explore'}>
             <TopBar title='Explore'/>
             <View style={STYLES.body}>
-                <Write
-                    style={{padding: 20, height: 40, borderColor: 'red', borderWidth: 1}}
-                    value={value}
-                    onChange={v => {
-                        //arbitrary limit lol
-                        if(v.length <= 140)
-                            setValue(v)
-                    }}
-                />
-                <TouchableOpacity style={{padding: 20, backgroundColor: 'blue'}} onPress={onPost} >
-                    <Words>Post</Words>
-                </TouchableOpacity>
-                <Words/>
                 <Words/>
                 <Words/>
                 <Words/>
