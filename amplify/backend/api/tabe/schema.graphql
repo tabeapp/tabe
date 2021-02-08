@@ -3,6 +3,7 @@ type Post
 @auth(rules:[
   {allow: owner, ownerField: "owner", provider: userPools, operations: [read, create]}
   {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [create]}
 ])
 @key(name: "SortByTimestamp", fields: ["type", "timestamp"], queryField: "listPostsSortedByTimestamp")
 @key(name: "BySpecificOwner", fields: ["owner", "timestamp"], queryField: "listPostsBySpecificOwner")
@@ -19,6 +20,7 @@ type FollowRelationship
 @auth(rules: [
   {allow: owner, ownerField:"followerId", provider: userPools, operations:[read, create]}
   {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read]}
 ])
 @key(fields: ["followeeId", "followerId"])
 {
@@ -39,4 +41,14 @@ type Timeline
   timestamp: AWSTimestamp!
   postId: ID!
   post: Post @connection(fields: ["postId"])
+}
+
+type Mutation{
+  createPostAndTimeline(
+    content: String!
+  ): Post
+  @function(name: "createPostAndTimeline-${env}")
+  @auth(rules:[
+    {allow: private, provider, userPools},
+  ])
 }
