@@ -1,19 +1,31 @@
+type User @model{
+  id: ID!
+  username: String!
+  email: String!
+  image: String
+  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
+}
+
 type Post
 @model (subscriptions: {level: public})
 @auth(rules:[
-  {allow: owner, ownerField: "owner", provider: userPools, operations: [read, create]}
+  {allow: owner, ownerField: "userID", provider: userPools, operations: [read, create]}
   {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [create]}
 ])
-@key(name: "SortByTimestamp", fields: ["type", "timestamp"], queryField: "listPostsSortedByTimestamp")
-@key(name: "BySpecificOwner", fields: ["owner", "timestamp"], queryField: "listPostsBySpecificOwner")
+@key(name: "byUser", fields: ["userID"])
+#@key(name: "SortByTimestamp", fields: ["timestamp"], queryField: "listPostsSortedByTimestamp")
+#@key(name: "BySpecificOwner", fields: ["userID", "timestamp"], queryField: "listPostsBySpecificOwner")
 @searchable
 {
-  type: String!
-  id: ID
-  content: String
-  owner: String
-  timestamp: AWSTimestamp!
+  id: ID!
+  mediaUri: String
+  title: String
+  description: String
+  data: String
+  userID: ID!
+  user: User @connection(fields: ["userID"])
+  #timestamp: AWSTimestamp!
 }
 
 type FollowRelationship

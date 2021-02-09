@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Video from 'react-native-video';
+import Words from "../Words";
 
 const Post = () => {
     const [paused, setPaused] = useState(false);
@@ -11,7 +12,7 @@ const Post = () => {
         <View
             style={{
                 width: '100%',
-                height: Dimensions.get('window').height
+                height: Dimensions.get('window').height*.8
             }}
         >
             <TouchableWithoutFeedback onPress={onPlayPausePress}>
@@ -30,6 +31,20 @@ const Post = () => {
                     paused={paused}
                 />
             </TouchableWithoutFeedback>
+
+            <View style={{
+                height: '100%',
+                justifyContent: 'flex-end'
+            }}>
+                <View style={{justifyContent: 'flex-end'}}>
+                    <Words style={{fontSize: 20, right: 0}}>Side</Words>
+                </View>
+                <View>
+                    <Words style={{fontSize: 20}}>@daviddobrik</Words>
+                    <Words style={{fontSize: 20}}>testing description</Words>
+                    <Words style={{fontSize: 20}}>song icon and song</Words>
+                </View>
+            </View>
         </View>
     )
 };
