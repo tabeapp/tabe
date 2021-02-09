@@ -95,24 +95,14 @@ const ExploreScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'explore'}>
-            <TopBar title='Explore'/>
+            <TopBar title='Global Feed'/>
             <View style={STYLES.body}>
-                <Words/>
-                <Words/>
-                <Words/>
-                <TouchableOpacity style={{backgroundColor: 'red'}} onPress={signOut} >
-                    <Words>Sign out</Words>
-                </TouchableOpacity>
-                <View>
-                    <PostList
-                        navigation={props.navigation}
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={'Global'}
-                    />
-
-                </View>
+                <PostList
+                    navigation={props.navigation}
+                    isLoading={isLoading}
+                    posts={posts}
+                    getAdditionalPosts={getAdditionalPosts}
+                />
             </View>
         </SafeBorderNav>
     );

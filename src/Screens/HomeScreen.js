@@ -145,13 +145,19 @@ const HomeScreen = props => {
                     <Words>Sign out</Words>
                 </TouchableOpacity>
                 <View>
-                    <PostList
-                        navigation={props.navigation}
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={'Home'}
-                    />
+                    {
+                        /*
+                        I'm going to rethink how i handle following and followers soon
+                        just gonna use a global feed for now
+                        <PostList
+                            navigation={props.navigation}
+                            isLoading={isLoading}
+                            posts={posts}
+                            getAdditionalPosts={getAdditionalPosts}
+                            listHeaderTitle={'Home'}
+                        />
+                        */
+                    }
 
                 </View>
             </View>

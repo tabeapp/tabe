@@ -2,9 +2,10 @@ import React from 'react';
 import {View, TouchableOpacity, ScrollView} from 'react-native';
 import Words from "./Words";
 import moment from 'moment';
+import Row from "./Row";
 
 const PostList = props => {
-    const {isLoading, posts, getAdditionalPosts, listHeaderTitle, listHeaderTitleButton} = props;
+    const {isLoading, posts, getAdditionalPosts, listHeaderTitleButton} = props;
     return <View>
         {
             isLoading
@@ -12,7 +13,6 @@ const PostList = props => {
                 <Words>loading...</Words>
                 :
                 <ScrollView>
-                    <Words>{listHeaderTitle}</Words>
                     <Words>{listHeaderTitleButton && listHeaderTitleButton}</Words>
                     {
                         posts.map(post => <PostItem
@@ -50,31 +50,26 @@ const PostItem = ({ post, navigation }) => {
     }
 
     return (
-        <View alignItems='flex-start' key={post.id}>
-            <View>
+        <TouchableOpacity
+            onPress={() => {}}
+            style={{backgroundColor: '#333', margin: 3}}
+        >
+            <Row>
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate('profile', {userId: post.owner})
+                    navigation.navigate('profile', {userId: post.userID})
                 }}>
                     <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
+                    <Words>{post.userID}</Words>
+                    <Words>{post.title}</Words>
+                    <Words>{post.description}</Words>
+                    <Words>{post.data}</Words>
+                    <Words>
+                        {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.timestamp)}
+                    </Words>
                 </TouchableOpacity>
-            </View>
-            <View>
-                <Words
-                    color='textSecondary'
-                    display='inline'
-                >
-                    {post.owner}
-                    {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.timestamp)}
-                </Words>
-            </View>
-            <View>
-                <Words
-                    color='textPrimary'
-                >
-                    {post.content}
-                </Words>
-            </View>
-        </View>
+            </Row>
+
+        </TouchableOpacity>
     )
 }
 
