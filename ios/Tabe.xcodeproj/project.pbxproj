@@ -35,7 +35,6 @@
 		FA1A3F09257F0B7A007D3480 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1A3F04257F0B7A007D3480 /* File.swift */; };
 		FA450D9525BCE54E00AC03CC /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA450D9425BCE54E00AC03CC /* Interface.storyboard */; };
 		FAAB8A33257FE55600E6638E /* interfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAB8A32257FE55600E6638E /* interfaceController.swift */; };
-		FAB3E211258021F6009CB837 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB3E210258021F6009CB837 /* Ionicons.ttf */; };
 		FE6D1CAA4A94A68EBD98F275 /* libPods-Tabe-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA548BB48C0F840767638AC4 /* libPods-Tabe-tvOS.a */; };
 		FFBA36844BBD2C9CAFF70BF8 /* libPods-Tabe-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2452BBB14D39B2D7F5EC2214 /* libPods-Tabe-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -536,7 +535,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				FAB3E211258021F6009CB837 /* Ionicons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
