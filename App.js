@@ -22,6 +22,7 @@ import WorkoutProvider from './src/Contexts/WorkoutProvider';
 import Amplify, {API, graphqlOperation} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { withAuthenticator } from "aws-amplify-react-native";
+import TutorialScreen from "./src/Screens/TutorialScreen";
 Amplify.configure({
     ...awsconfig,
     Analytics: {
@@ -43,7 +44,7 @@ const App = () => {
                     }}>
                         <Stack.Screen name="home" component={HomeScreen}/>
                         <Stack.Screen name="post" component={PostScreen}/>
-                        <Stack.Screen name="explore" component={ExploreScreen}/>
+                        <Stack.Screen name="explore" component={TutorialScreen}/>
                         <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                         <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                         <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
