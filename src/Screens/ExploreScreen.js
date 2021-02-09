@@ -70,6 +70,7 @@ const ExploreScreen = props => {
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [query, setQuery] = useState('');
 
     //fetch the shits
     const getPosts = async (type, nextToken=null) => {
@@ -127,7 +128,15 @@ const ExploreScreen = props => {
                         isLoading={isLoading}
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={'Global Timeline'}
+                        listHeaderTitle={'Search'}
+                        listHeaderTitleButton={
+                            <>
+                                <Write value={query} onChange={setQuery}/>
+                                <TouchableOpacity onPress={() => searchPosts(INITIAL_QUERY)}>
+                                    <Words>Search</Words>
+                                </TouchableOpacity>
+                            </>
+                        }
                     />
 
                 </View>
