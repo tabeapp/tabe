@@ -44,7 +44,7 @@ const App = () => {
                     }}>
                         <Stack.Screen name="home" component={HomeScreen}/>
                         <Stack.Screen name="post" component={PostScreen}/>
-                        <Stack.Screen name="explore" component={TutorialScreen}/>
+                        <Stack.Screen name="explore" component={ExploreScreen}/>
                         <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                         <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                         <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>

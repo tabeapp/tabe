@@ -1,6 +1,53 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      username
+      email
+      image
+      createdAt
+      updatedAt
+      posts {
+        items {
+          id
+          mediaUri
+          title
+          description
+          data
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        posts {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput
@@ -9,11 +56,20 @@ export const listPosts = /* GraphQL */ `
   ) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        type
         id
-        content
-        owner
-        timestamp
+        mediaUri
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -24,73 +80,25 @@ export const listPosts = /* GraphQL */ `
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
-      type
       id
-      content
-      owner
-      timestamp
+      mediaUri
+      title
+      description
+      data
+      userID
+      user {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        posts {
+          nextToken
+        }
+      }
       createdAt
       updatedAt
-    }
-  }
-`;
-export const listPostsSortedByTimestamp = /* GraphQL */ `
-  query ListPostsSortedByTimestamp(
-    $type: String
-    $timestamp: ModelIntKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPostsSortedByTimestamp(
-      type: $type
-      timestamp: $timestamp
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        type
-        id
-        content
-        owner
-        timestamp
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listPostsBySpecificOwner = /* GraphQL */ `
-  query ListPostsBySpecificOwner(
-    $owner: String
-    $timestamp: ModelIntKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPostsBySpecificOwner(
-      owner: $owner
-      timestamp: $timestamp
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        type
-        id
-        content
-        owner
-        timestamp
-        createdAt
-        updatedAt
-      }
-      nextToken
     }
   }
 `;
@@ -110,11 +118,20 @@ export const searchPosts = /* GraphQL */ `
       from: $from
     ) {
       items {
-        type
         id
-        content
-        owner
-        timestamp
+        mediaUri
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -171,11 +188,20 @@ export const getTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
-        type
         id
-        content
-        owner
-        timestamp
+        mediaUri
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -206,11 +232,12 @@ export const listTimelines = /* GraphQL */ `
         createdAt
         updatedAt
         post {
-          type
           id
-          content
-          owner
-          timestamp
+          mediaUri
+          title
+          description
+          data
+          userID
           createdAt
           updatedAt
         }

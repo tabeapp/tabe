@@ -11,7 +11,7 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import Write from "../Components/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createPost } from "../../graphql/mutations";
-import { listPostsSortedByTimestamp, searchPosts } from "../../graphql/queries";
+import { listPosts, listPostsSortedByTimestamp, searchPosts } from "../../graphql/queries";
 import { onCreatePost } from "../../graphql/subscriptions";
 import PostList from "../Components/PostList";
 
@@ -35,31 +35,6 @@ const reducer = (state, action) => {
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const ExploreScreen = props => {
-    //what's the best way to load
-    //yeah we're gonna need a Social context
-    //const [posts, setPosts] = useState([]);
-    //const data = await getPosts();
-
-    //only will run once, right? right?
-    //how the fuck am i supposed to do this
-    //ok this is fucked, truning it off for no
-    //useEffect( () => {
-    //getPosts().then(v => setPosts(v))
-    //})
-
-    //const [value, setValue] = useState('eyyyy');
-
-    /*const onPost = async () => {
-        const res = await API.graphql(graphqlOperation(createPost, {
-            input: {
-                type: 'post',
-                content: value,
-                timestamp: Date.now()
-            }}));
-        console.log(res);
-        setValue('')
-    };*/
-
     //not doing this here lol
     const signOut = () => {
         Auth.signOut()
@@ -69,35 +44,38 @@ const ExploreScreen = props => {
 
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [query, setQuery] = useState('query');
+    const [isLoading, setIsLoading] = useState(true);
 
-    //fetch the shits
-    const search = async (type, nextToken=null) => {
-        console.log('searchposts called');
-        if(query === '')
-            return;
-        setIsLoading(true);
-        const res = await API.graphql(graphqlOperation(searchPostsGql, {
-            filter: {content: {matchPhrase: query}},
-            limit: 20,
-            nextToken: nextToken
-        }))
+    const getPosts = async (type, nextToken = null) => {
+        const res = await API.graphql(graphqlOperation(listPosts, {
+            //type: "post",
+            sortDirection: 'DESC',
+            limit: 20, //default = 10
+            nextToken: nextToken,
+        }));
         console.log(res);
-        dispatch({
-            type: type,
-            posts: res.data.searchPosts.items
-        });
-        setNextToken(res.data.searchPosts.nextToken);
+        dispatch({ type: type, posts: res.data.listPosts.items })
+        setNextToken(res.data.listPosts.nextToken);
         setIsLoading(false);
-    };
+    }
 
     const getAdditionalPosts = () => {
-        if(nextToken === null)
-            return;
-        search(ADDITIONAL_QUERY, nextToken);
-    };
+        if (nextToken === null) return; //Reached the last page
+        getPosts(ADDITIONAL_QUERY, nextToken);
+    }
 
+    useEffect(() => {
+        getPosts(INITIAL_QUERY);
+
+        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
+            next: (msg) => {
+                console.log('allposts subscription fired')
+                const post = msg.value.data.onCreatePost;
+                dispatch({ type: SUBSCRIPTION, post: post });
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, []);
     //set up and break down everything
     //useEffect(() => {
         //search(INITIAL_QUERY).then(_ => {});
@@ -131,22 +109,7 @@ const ExploreScreen = props => {
                         isLoading={isLoading}
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={'Search'}
-                        listHeaderTitleButton={
-                            <View>
-                                <Write
-                                    style={{width: 100, height: 50, backgroundColor: 'red'}}
-                                    value={query}
-                                    onChange={setQuery}
-                                />
-                                <TouchableOpacity
-                                    style={{width: 100, height: 50, backgroundColor: 'green'}}
-                                    onPress={() => search(INITIAL_QUERY)}
-                                >
-                                    <Words>Search</Words>
-                                </TouchableOpacity>
-                            </View>
-                        }
+                        listHeaderTitle={'Global'}
                     />
 
                 </View>

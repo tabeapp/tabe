@@ -7,7 +7,7 @@ import RoutinesContext from './RoutinesContext';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
 import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
 
-import { API, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import {createPost} from '../../graphql/mutations';
 
 const WorkoutProvider = props => {
@@ -528,7 +528,16 @@ const WorkoutProvider = props => {
         //make a post to aws db, this is the first i implemented
         //lets see if it works
         console.log(workoutData);
-        await API.graphql(graphqlOperation(createPost, {input: workoutData}));
+        const currentUser = await Auth.currentAuthenticatedUser();
+        //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
+        await API.graphql(graphqlOperation(createPost, {
+            input: {
+                title: workoutData.title,
+                description: workoutData.description,
+                data: workoutData.data,
+                userID: currentUser.username,
+            }
+        }))
 
 
 
