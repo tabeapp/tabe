@@ -51,24 +51,21 @@ const PostItem = ({ post, navigation }) => {
 
     return (
         <TouchableOpacity
-            onPress={() => {}}
             style={{backgroundColor: '#333', margin: 3}}
+            onPress={() => {
+                navigation.navigate('profile', {userId: post.userID})
+            }}
         >
             <Row>
-                <TouchableOpacity onPress={() => {
-                    navigation.navigate('profile', {userId: post.userID})
-                }}>
-                    <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
-                    <Words>{post.userID}</Words>
-                    <Words>{post.title}</Words>
-                    <Words>{post.description}</Words>
-                    <Words>{post.data}</Words>
-                    <Words>
-                        {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.timestamp)}
-                    </Words>
-                </TouchableOpacity>
+                <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
+                <Words>{post.userID}</Words>
             </Row>
-
+            <Words>{post.title}</Words>
+            <Words>{post.description}</Words>
+            <Words>{post.data}</Words>
+            <Words>
+                {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.timestamp)}
+            </Words>
         </TouchableOpacity>
     )
 }
