@@ -8,7 +8,7 @@ const Write = ({value, onChange, style}) => {
         style={{...STYLES.text, ...style}}
         value={value}
         multiline={true}
-        blurOnSubmit={true}
+        //blurOnSubmit={true}
         onChangeText={onChange}
         keyboardType="default"
         returnKeyType="done"

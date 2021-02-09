@@ -11,7 +11,7 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import Write from "../Components/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createPost } from "../../graphql/mutations";
-import { listPostsSortedByTimestamp } from "../../graphql/queries";
+import { listPostsSortedByTimestamp, searchPosts } from "../../graphql/queries";
 import { onCreatePost } from "../../graphql/subscriptions";
 import PostList from "../Components/PostList";
 
@@ -69,48 +69,51 @@ const ExploreScreen = props => {
 
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [query, setQuery] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [query, setQuery] = useState('query');
 
     //fetch the shits
-    const getPosts = async (type, nextToken=null) => {
-        const res = await API.graphql(graphqlOperation(listPostsSortedByTimestamp, {
-            type: "post",
-            sortDirection: 'DESC',
+    const search = async (type, nextToken=null) => {
+        console.log('searchposts called');
+        if(query === '')
+            return;
+        setIsLoading(true);
+        const res = await API.graphql(graphqlOperation(searchPostsGql, {
+            filter: {content: {matchPhrase: query}},
             limit: 20,
             nextToken: nextToken
         }))
         console.log(res);
         dispatch({
             type: type,
-            posts: res.data.listPostsSortedByTimestamp.items
+            posts: res.data.searchPosts.items
         });
-        setNextToken(res.data.listPostsSortedByTimestamp.nextToken);
+        setNextToken(res.data.searchPosts.nextToken);
         setIsLoading(false);
     };
 
     const getAdditionalPosts = () => {
         if(nextToken === null)
             return;
-        getPosts(ADDITIONAL_QUERY, nextToken);
+        search(ADDITIONAL_QUERY, nextToken);
     };
 
     //set up and break down everything
-    useEffect(() => {
-        getPosts(INITIAL_QUERY).then(_ => {});
-
-        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
-            next: msg => {
-                console.log('allposts subscription fired');
-                const post = msg.value.data.onCreatePost;
-                dispatch({type:SUBSCRIPTION, post: post});
-            }
-
-        });
-
-        return () => subscription.unsubscribe();
-
-    }, []);
+    //useEffect(() => {
+        //search(INITIAL_QUERY).then(_ => {});
+//
+        //const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
+            //next: msg => {
+                //console.log('allposts subscription fired');
+                //const post = msg.value.data.onCreatePost;
+                //dispatch({type:SUBSCRIPTION, post: post});
+            //}
+//
+        //});
+//
+        //return () => subscription.unsubscribe();
+//
+    ////}, []);
 
     return (
         <SafeBorderNav {...props} screen={'explore'}>
@@ -130,12 +133,19 @@ const ExploreScreen = props => {
                         getAdditionalPosts={getAdditionalPosts}
                         listHeaderTitle={'Search'}
                         listHeaderTitleButton={
-                            <>
-                                <Write value={query} onChange={setQuery}/>
-                                <TouchableOpacity onPress={() => searchPosts(INITIAL_QUERY)}>
+                            <View>
+                                <Write
+                                    style={{width: 100, height: 50, backgroundColor: 'red'}}
+                                    value={query}
+                                    onChange={setQuery}
+                                />
+                                <TouchableOpacity
+                                    style={{width: 100, height: 50, backgroundColor: 'green'}}
+                                    onPress={() => search(INITIAL_QUERY)}
+                                >
                                     <Words>Search</Words>
                                 </TouchableOpacity>
-                            </>
+                            </View>
                         }
                     />
 
@@ -175,6 +185,7 @@ const ExploreScreen = props => {
     );*/
 };
 
+
 const drawerWidth = 340;
 const MAX_POST_CONTENT_LENGTH = 140;
 const styles = StyleSheet.create({
@@ -196,6 +207,29 @@ const styles = StyleSheet.create({
         width: 300,
     },
 });
-
+export const searchPostsGql = /* GraphQL */ `
+  query SearchPosts(
+    $filter: SearchablePostFilterInput
+    $sort: SearchablePostSortInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    searchPosts(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        content
+        owner
+      }
+      nextToken
+      total
+    }
+  }
+`;
 
 export default ExploreScreen;
