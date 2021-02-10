@@ -14,7 +14,7 @@ import { CommonActions, StackActions } from '@react-navigation/native';
 
 const primaryColor = '#66d6f8';
 
-//lets go add media additions, using s3
+// lets go add media additions, using s3
 const ReportScreen = props => {
     const {workout, saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
@@ -36,6 +36,8 @@ const ReportScreen = props => {
     const [title, setTitle] = useState(report.title);
 
     const [description, setDescription] = useState(report ? report.summary : '');
+
+    const [media, setMedia] = useState([]);
     //useEffect(() =>
     //setSummary(generateReport())
     //)
@@ -107,6 +109,9 @@ const ReportScreen = props => {
                                 }
                             </View>
                     )
+                }
+                {
+                    //something to add photos
                 }
             </View>
         </SafeBorder>
