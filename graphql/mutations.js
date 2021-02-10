@@ -22,8 +22,8 @@ export const createUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -51,8 +51,8 @@ export const updateUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -80,8 +80,8 @@ export const deleteUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -112,8 +112,8 @@ export const updatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -141,8 +141,8 @@ export const deletePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -201,8 +201,8 @@ export const updateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -234,8 +234,8 @@ export const deleteTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -264,8 +264,8 @@ export const createPost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -310,8 +310,8 @@ export const createTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -337,8 +337,8 @@ export const createPostAndTimeline = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;

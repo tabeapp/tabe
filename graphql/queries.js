@@ -19,8 +19,8 @@ export const getUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -72,8 +72,8 @@ export const listPosts = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -100,15 +100,15 @@ export const getPost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
 export const listPostsSortedByTimestamp = /* GraphQL */ `
   query ListPostsSortedByTimestamp(
     $type: String
-    $createdOn: ModelStringKeyConditionInput
+    $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelPostFilterInput
     $limit: Int
@@ -116,7 +116,7 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
   ) {
     listPostsSortedByTimestamp(
       type: $type
-      createdOn: $createdOn
+      createdAt: $createdAt
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -138,8 +138,8 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -176,8 +176,8 @@ export const searchPosts = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
       nextToken
       total
@@ -247,8 +247,8 @@ export const getTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -284,8 +284,8 @@ export const listTimelines = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
       }
       nextToken

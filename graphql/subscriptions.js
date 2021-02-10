@@ -19,8 +19,8 @@ export const onCreateUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -45,8 +45,8 @@ export const onUpdateUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -71,8 +71,8 @@ export const onDeleteUser = /* GraphQL */ `
           description
           data
           userID
-          createdOn
-          updatedOn
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -100,8 +100,8 @@ export const onCreatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -126,8 +126,8 @@ export const onUpdatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -152,8 +152,8 @@ export const onDeletePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdOn
-      updatedOn
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -214,8 +214,8 @@ export const onCreateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -244,8 +244,8 @@ export const onUpdateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
@@ -274,8 +274,8 @@ export const onDeleteTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdOn
-        updatedOn
+        createdAt
+        updatedAt
       }
     }
   }
