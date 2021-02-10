@@ -12,14 +12,15 @@ export const getUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -56,6 +57,7 @@ export const listPosts = /* GraphQL */ `
   ) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        type
         id
         mediaUri
         title
@@ -70,8 +72,8 @@ export const listPosts = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
       nextToken
     }
@@ -80,6 +82,7 @@ export const listPosts = /* GraphQL */ `
 export const getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
+      type
       id
       mediaUri
       title
@@ -97,8 +100,48 @@ export const getPost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
+    }
+  }
+`;
+export const listPostsSortedByTimestamp = /* GraphQL */ `
+  query ListPostsSortedByTimestamp(
+    $type: String
+    $createdOn: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsSortedByTimestamp(
+      type: $type
+      createdOn: $createdOn
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        mediaUri
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        createdOn
+        updatedOn
+      }
+      nextToken
     }
   }
 `;
@@ -118,6 +161,7 @@ export const searchPosts = /* GraphQL */ `
       from: $from
     ) {
       items {
+        type
         id
         mediaUri
         title
@@ -132,8 +176,8 @@ export const searchPosts = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
       nextToken
       total
@@ -188,6 +232,7 @@ export const getTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -202,8 +247,8 @@ export const getTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -232,14 +277,15 @@ export const listTimelines = /* GraphQL */ `
         createdAt
         updatedAt
         post {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
       }
       nextToken

@@ -7,17 +7,17 @@ type User @model{
 }
 
 type Post
-@model (subscriptions: {level: public})
+@model (subscriptions: {level: public}, timestamps: {createdAt: "createdOn", updatedAt: "updatedOn"})
 @auth(rules:[
   {allow: owner, ownerField: "userID", provider: userPools, operations: [read, create]}
   {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [create]}
 ])
 @key(name: "byUser", fields: ["userID"])
-#@key(name: "SortByTimestamp", fields: ["timestamp"], queryField: "listPostsSortedByTimestamp")
-#@key(name: "BySpecificOwner", fields: ["userID", "timestamp"], queryField: "listPostsBySpecificOwner")
+@key(name: "SortByTimestamp", fields: ["type", "createdOn"], queryField: "listPostsSortedByTimestamp")
 @searchable
 {
+  type: String!#this is annoying but its the only way to get all sorted
   id: ID!
   mediaUri: String
   title: String
@@ -25,7 +25,8 @@ type Post
   data: String
   userID: ID!
   user: User @connection(fields: ["userID"])
-  #timestamp: AWSTimestamp!
+  createdOn: AWSDateTime!
+  updatedOn: AWSDateTime!
 }
 
 type FollowRelationship

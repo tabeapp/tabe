@@ -12,14 +12,15 @@ export const onCreateUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -37,14 +38,15 @@ export const onUpdateUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -62,14 +64,15 @@ export const onDeleteUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -79,6 +82,7 @@ export const onDeleteUser = /* GraphQL */ `
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost {
     onCreatePost {
+      type
       id
       mediaUri
       title
@@ -96,14 +100,15 @@ export const onCreatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
   subscription OnUpdatePost {
     onUpdatePost {
+      type
       id
       mediaUri
       title
@@ -121,14 +126,15 @@ export const onUpdatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
 export const onDeletePost = /* GraphQL */ `
   subscription OnDeletePost {
     onDeletePost {
+      type
       id
       mediaUri
       title
@@ -146,8 +152,8 @@ export const onDeletePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -193,6 +199,7 @@ export const onCreateTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -207,8 +214,8 @@ export const onCreateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -222,6 +229,7 @@ export const onUpdateTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -236,8 +244,8 @@ export const onUpdateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -251,6 +259,7 @@ export const onDeleteTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -265,8 +274,8 @@ export const onDeleteTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }

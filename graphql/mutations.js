@@ -15,14 +15,15 @@ export const createUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -43,14 +44,15 @@ export const updateUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -71,14 +73,15 @@ export const deleteUser = /* GraphQL */ `
       updatedAt
       posts {
         items {
+          type
           id
           mediaUri
           title
           description
           data
           userID
-          createdAt
-          updatedAt
+          createdOn
+          updatedOn
         }
         nextToken
       }
@@ -91,6 +94,7 @@ export const updatePost = /* GraphQL */ `
     $condition: ModelPostConditionInput
   ) {
     updatePost(input: $input, condition: $condition) {
+      type
       id
       mediaUri
       title
@@ -108,8 +112,8 @@ export const updatePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -119,6 +123,7 @@ export const deletePost = /* GraphQL */ `
     $condition: ModelPostConditionInput
   ) {
     deletePost(input: $input, condition: $condition) {
+      type
       id
       mediaUri
       title
@@ -136,8 +141,8 @@ export const deletePost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -181,6 +186,7 @@ export const updateTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -195,8 +201,8 @@ export const updateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -213,6 +219,7 @@ export const deleteTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -227,8 +234,8 @@ export const deleteTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -239,6 +246,7 @@ export const createPost = /* GraphQL */ `
     $condition: ModelPostConditionInput
   ) {
     createPost(input: $input, condition: $condition) {
+      type
       id
       mediaUri
       title
@@ -256,8 +264,8 @@ export const createPost = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;
@@ -287,6 +295,7 @@ export const createTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
+        type
         id
         mediaUri
         title
@@ -301,8 +310,8 @@ export const createTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        createdAt
-        updatedAt
+        createdOn
+        updatedOn
       }
     }
   }
@@ -310,6 +319,7 @@ export const createTimeline = /* GraphQL */ `
 export const createPostAndTimeline = /* GraphQL */ `
   mutation CreatePostAndTimeline($content: String!) {
     createPostAndTimeline(content: $content) {
+      type
       id
       mediaUri
       title
@@ -327,8 +337,8 @@ export const createPostAndTimeline = /* GraphQL */ `
           nextToken
         }
       }
-      createdAt
-      updatedAt
+      createdOn
+      updatedOn
     }
   }
 `;

@@ -37,6 +37,7 @@ const PostItem = ({ post, navigation }) => {
     const now = moment();
     console.log(now)
 
+    //wouldn't it be better to just show the time?
     const calcTimestampDiff = (timestamp) => {
         const scales = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
 
@@ -57,14 +58,18 @@ const PostItem = ({ post, navigation }) => {
             }}
         >
             <Row>
-                <View style={{height: 40, width: 40, backgroundColor: 'blue'}}/>
-                <Words>{post.userID}</Words>
+                <View style={{height: 40, width: 40, borderRadius: 20, backgroundColor: 'blue'}}/>
+                <View>
+
+                    <Words>{post.userID}</Words>
+                    <Words>{moment(post.createdAt).format('MMMM D YYYY, h:mma')}</Words>
+                </View>
             </Row>
             <Words>{post.title}</Words>
             <Words>{post.description}</Words>
             <Words>{post.data}</Words>
             <Words>
-                {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.timestamp)}
+                {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.createdAt)}
             </Words>
         </TouchableOpacity>
     )

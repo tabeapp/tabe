@@ -532,6 +532,7 @@ const WorkoutProvider = props => {
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
         await API.graphql(graphqlOperation(createPost, {
             input: {
+                type: 'workout',
                 title: workoutData.title,
                 description: workoutData.description,
                 data: workoutData.data,
