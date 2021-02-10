@@ -14,7 +14,6 @@ export const getUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -49,6 +48,35 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getPostMedia = /* GraphQL */ `
+  query GetPostMedia($id: ID!) {
+    getPostMedia(id: $id) {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPostMedias = /* GraphQL */ `
+  query ListPostMedias(
+    $filter: ModelPostMediaFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        postID
+        uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput
@@ -59,7 +87,9 @@ export const listPosts = /* GraphQL */ `
       items {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -84,7 +114,16 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -125,7 +164,9 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
       items {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -163,7 +204,9 @@ export const searchPosts = /* GraphQL */ `
       items {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -234,7 +277,9 @@ export const getTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -279,7 +324,6 @@ export const listTimelines = /* GraphQL */ `
         post {
           type
           id
-          mediaUri
           title
           description
           data

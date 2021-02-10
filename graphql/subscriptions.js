@@ -14,7 +14,6 @@ export const onCreateUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -40,7 +39,6 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -66,7 +64,6 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -84,7 +81,16 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -110,7 +116,16 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -136,7 +151,16 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -152,6 +176,39 @@ export const onDeletePost = /* GraphQL */ `
           nextToken
         }
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePostMedia = /* GraphQL */ `
+  subscription OnCreatePostMedia {
+    onCreatePostMedia {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePostMedia = /* GraphQL */ `
+  subscription OnUpdatePostMedia {
+    onUpdatePostMedia {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePostMedia = /* GraphQL */ `
+  subscription OnDeletePostMedia {
+    onDeletePostMedia {
+      id
+      postID
+      uri
       createdAt
       updatedAt
     }
@@ -201,7 +258,9 @@ export const onCreateTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -231,7 +290,9 @@ export const onUpdateTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -261,7 +322,9 @@ export const onDeleteTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data

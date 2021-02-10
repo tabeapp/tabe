@@ -14,6 +14,7 @@ import { CommonActions, StackActions } from '@react-navigation/native';
 
 const primaryColor = '#66d6f8';
 
+//lets go add media additions, using s3
 const ReportScreen = props => {
     const {workout, saveWorkout, generateReport, analyzeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.

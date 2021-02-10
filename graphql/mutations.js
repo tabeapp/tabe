@@ -17,7 +17,6 @@ export const createUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -46,7 +45,6 @@ export const updateUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -75,7 +73,6 @@ export const deleteUser = /* GraphQL */ `
         items {
           type
           id
-          mediaUri
           title
           description
           data
@@ -96,7 +93,16 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -125,7 +131,16 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -141,6 +156,48 @@ export const deletePost = /* GraphQL */ `
           nextToken
         }
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPostMedia = /* GraphQL */ `
+  mutation CreatePostMedia(
+    $input: CreatePostMediaInput!
+    $condition: ModelPostMediaConditionInput
+  ) {
+    createPostMedia(input: $input, condition: $condition) {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePostMedia = /* GraphQL */ `
+  mutation UpdatePostMedia(
+    $input: UpdatePostMediaInput!
+    $condition: ModelPostMediaConditionInput
+  ) {
+    updatePostMedia(input: $input, condition: $condition) {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePostMedia = /* GraphQL */ `
+  mutation DeletePostMedia(
+    $input: DeletePostMediaInput!
+    $condition: ModelPostMediaConditionInput
+  ) {
+    deletePostMedia(input: $input, condition: $condition) {
+      id
+      postID
+      uri
       createdAt
       updatedAt
     }
@@ -188,7 +245,9 @@ export const updateTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -221,7 +280,9 @@ export const deleteTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -248,7 +309,16 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data
@@ -297,7 +367,9 @@ export const createTimeline = /* GraphQL */ `
       post {
         type
         id
-        mediaUri
+        media {
+          nextToken
+        }
         title
         description
         data
@@ -321,7 +393,16 @@ export const createPostAndTimeline = /* GraphQL */ `
     createPostAndTimeline(content: $content) {
       type
       id
-      mediaUri
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       title
       description
       data

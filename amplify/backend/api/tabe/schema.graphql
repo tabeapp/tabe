@@ -19,7 +19,7 @@ type Post
 {
   type: String!#this is annoying but its the only way to get all sorted
   id: ID!
-  mediaUri: [String]
+  media: [PostMedia] @connection(keyName: "byPost", fields: ["id"])
   title: String
   description: String
   data: String
@@ -28,6 +28,15 @@ type Post
   #createdOn: AWSDateTime!
   #updatedOn: AWSDateTime!
   createdAt: String!
+}
+
+type PostMedia
+@model
+@key(name: "byPost", fields: ["postID"])
+{
+  id: ID!
+  postID: ID!
+  uri: String!
 }
 
 type FollowRelationship
