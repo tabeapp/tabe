@@ -106,6 +106,27 @@ export const onCreatePost = /* GraphQL */ `
           nextToken
         }
       }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -140,6 +161,27 @@ export const onUpdatePost = /* GraphQL */ `
         posts {
           nextToken
         }
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -176,6 +218,126 @@ export const onDeletePost = /* GraphQL */ `
           nextToken
         }
       }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
+      id
+      userID
+      postID
+      content
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment {
+    onUpdateComment {
+      id
+      userID
+      postID
+      content
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment {
+    onDeleteComment {
+      id
+      userID
+      postID
+      content
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLike = /* GraphQL */ `
+  subscription OnCreateLike {
+    onCreateLike {
+      id
+      parentID
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLike = /* GraphQL */ `
+  subscription OnUpdateLike {
+    onUpdateLike {
+      id
+      parentID
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLike = /* GraphQL */ `
+  subscription OnDeleteLike {
+    onDeleteLike {
+      id
+      parentID
+      userID
       createdAt
       updatedAt
     }
@@ -273,6 +435,12 @@ export const onCreateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        likes {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -305,6 +473,12 @@ export const onUpdateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        likes {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -336,6 +510,12 @@ export const onDeleteTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+        }
+        likes {
+          nextToken
+        }
+        comments {
+          nextToken
         }
         createdAt
         updatedAt

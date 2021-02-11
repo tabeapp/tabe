@@ -25,9 +25,29 @@ type Post
   data: String
   userID: ID!
   user: User @connection(fields: ["userID"])
-  #createdOn: AWSDateTime!
-  #updatedOn: AWSDateTime!
+  likes: [Like] @connection(keyName: "byParent", fields: ["id"])
+  comments: [Comment] @connection(keyName: "byParent", fields: ["id"])
   createdAt: String!
+}
+
+type Comment
+@model
+@key(name: "byParent", fields: ["postID"])
+{
+  id: ID!
+  userID: ID!
+  postID: ID!
+  content: String!
+  likes: [Like] @connection(keyName: "byParent", fields: ["id"])
+}
+
+type Like
+@model
+@key(name: "byParent", fields: ["parentID"])
+{
+  id: ID!
+  parentID: ID!
+  userID: ID
 }
 
 type PostMedia
