@@ -2,7 +2,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-export const FONT = 'Helvetica';
+export const FONT = 'Arial';
 
 //finally, some consistency for our styles
 export const STYLES = StyleSheet.create({

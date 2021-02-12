@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Image, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
 import Words from '../Components/Words';
@@ -11,6 +11,7 @@ import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
 import { NavigationActions, } from "react-navigation";
 import { CommonActions, StackActions } from '@react-navigation/native';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const primaryColor = '#66d6f8';
 
@@ -38,6 +39,33 @@ const ReportScreen = props => {
     const [description, setDescription] = useState(report ? report.summary : '');
 
     const [media, setMedia] = useState([]);
+
+    const selectImage = () => {
+        const options = {
+            maxWidth: 1080,//is this important?
+            maxHeight: 1080,
+            durationLimit: 60,
+            mediaType: 'photo'
+        }
+
+        launchImageLibrary(options, res => {
+            console.log({ res });
+
+            if(res.didCancel)
+                console.log('user cancelled');
+            else if(res.errorMessage)
+                console.log('error', res.errorMessage)
+            else{
+                //save uri and show image
+                console.log(res.uri);
+                setMedia(m => [...m, res.uri]);
+                //res.uri is what you want
+            }
+
+
+
+        });
+    }
     //useEffect(() =>
     //setSummary(generateReport())
     //)
@@ -111,7 +139,20 @@ const ReportScreen = props => {
                     )
                 }
                 {
+                    media.map(uri =>
+                        //<Words>{uri}</Words>
+                        <Image style={{width: 50, height: 50}} source={{uri: uri}}/>
+                    )
+                }
+                {
                     //something to add photos
+
+                    <TouchableOpacity
+                        style={{backgroundColor: 'gray', width: 100, height: 100}}
+                        onPress={selectImage}
+                    >
+                        <Words>Choose image</Words>
+                    </TouchableOpacity>
                 }
             </View>
         </SafeBorder>
