@@ -33,6 +33,7 @@ type Post
 type Comment
 @model
 @key(name: "byParent", fields: ["postID"])
+#@auth(rules: [{ allow: private, provider: iam, operations: [read, update, delete] }])
 {
   id: ID!
   userID: ID!
@@ -70,7 +71,7 @@ type FollowRelationship
 {
   followeeId: ID!
   followerId: ID!
-  timestamp: AWSTimestamp!
+  createdAt: String!
 }
 
 type Timeline

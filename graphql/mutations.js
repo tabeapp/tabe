@@ -370,7 +370,6 @@ export const updateFollowRelationship = /* GraphQL */ `
     updateFollowRelationship(input: $input, condition: $condition) {
       followeeId
       followerId
-      timestamp
       createdAt
       updatedAt
     }
@@ -384,7 +383,6 @@ export const deleteFollowRelationship = /* GraphQL */ `
     deleteFollowRelationship(input: $input, condition: $condition) {
       followeeId
       followerId
-      timestamp
       createdAt
       updatedAt
     }
@@ -537,7 +535,6 @@ export const createFollowRelationship = /* GraphQL */ `
     createFollowRelationship(input: $input, condition: $condition) {
       followeeId
       followerId
-      timestamp
       createdAt
       updatedAt
     }

@@ -344,7 +344,6 @@ export const getFollowRelationship = /* GraphQL */ `
     getFollowRelationship(followeeId: $followeeId, followerId: $followerId) {
       followeeId
       followerId
-      timestamp
       createdAt
       updatedAt
     }
@@ -370,7 +369,6 @@ export const listFollowRelationships = /* GraphQL */ `
       items {
         followeeId
         followerId
-        timestamp
         createdAt
         updatedAt
       }

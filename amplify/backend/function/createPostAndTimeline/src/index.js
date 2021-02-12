@@ -110,7 +110,6 @@ const createTimelineForAUser = async ({follower, post}) => {
         variables: {
             input: {
                 userId: follower.followerId,
-                //timestamp: post.timestamp,
                 postId: post.id,
             },
         },
@@ -139,7 +138,6 @@ const listFollowRelationships = /* GraphQL */ `
       items {
         followeeId
         followerId
-        timestamp
         createdAt
         updatedAt
       }
@@ -184,7 +182,6 @@ const createTimeline = /* GraphQL */ `
   ) {
     createTimeline(input: $input, condition: $condition) {
       userId
-      timestamp
       postId
       createdAt
       updatedAt

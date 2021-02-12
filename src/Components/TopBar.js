@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import WorkoutScreen from "../Screens/WorkoutScreen";
 import Words from "./Words";
 import { PRIMARY } from "../Constants/Theme";
 //again, this appears in nearly every screen

@@ -549,6 +549,7 @@ const WorkoutProvider = props => {
             }
         }))*/
         //once we have res, we should be able to use its id to upload images
+        //to s3
 
 
 
