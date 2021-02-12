@@ -79,17 +79,19 @@ type Timeline
   {allow: owner, ownerField: "userId", provider: userPools, operations: [read, create]},
   {allow: private, provider: iam, operations:[create]}
 ])
-@key(fields: ["userId", "timestamp"])
+@key(fields: ["userId", "createdAt"])
 {
   userId: ID!
-  timestamp: AWSTimestamp!
   postId: ID!
   post: Post @connection(fields: ["postId"])
+  createdAt: String!
 }
 
 type Mutation{
   createPostAndTimeline(
-    content: String!
+    title: String!
+    description: String!
+    data: String!
   ): Post
   @function(name: "createPostAndTimeline-${env}")
   @auth(rules:[
