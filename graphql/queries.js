@@ -379,10 +379,9 @@ export const listFollowRelationships = /* GraphQL */ `
   }
 `;
 export const getTimeline = /* GraphQL */ `
-  query GetTimeline($userId: ID!, $timestamp: AWSTimestamp!) {
-    getTimeline(userId: $userId, timestamp: $timestamp) {
+  query GetTimeline($userId: ID!, $createdAt: String!) {
+    getTimeline(userId: $userId, createdAt: $createdAt) {
       userId
-      timestamp
       postId
       createdAt
       updatedAt
@@ -419,7 +418,7 @@ export const getTimeline = /* GraphQL */ `
 export const listTimelines = /* GraphQL */ `
   query ListTimelines(
     $userId: ID
-    $timestamp: ModelIntKeyConditionInput
+    $createdAt: ModelStringKeyConditionInput
     $filter: ModelTimelineFilterInput
     $limit: Int
     $nextToken: String
@@ -427,7 +426,7 @@ export const listTimelines = /* GraphQL */ `
   ) {
     listTimelines(
       userId: $userId
-      timestamp: $timestamp
+      createdAt: $createdAt
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -435,7 +434,6 @@ export const listTimelines = /* GraphQL */ `
     ) {
       items {
         userId
-        timestamp
         postId
         createdAt
         updatedAt

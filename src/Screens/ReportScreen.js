@@ -92,7 +92,13 @@ const ReportScreen = props => {
 
         //combine workout and title and description
         //necessary transformation
-        saveWorkout({title: title, description: description, data: JSON.stringify(report.exercises)});
+        saveWorkout({
+            title: title,
+            description: description,
+            data: JSON.stringify(report.exercises),
+            media: media
+
+        });
 
     };
 

@@ -8,7 +8,7 @@ import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
 import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
 
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import {createPost} from '../../graphql/mutations';
+import { createPost, createPostAndTimeline } from "../../graphql/mutations";
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -530,7 +530,16 @@ const WorkoutProvider = props => {
         console.log(workoutData);
         const currentUser = await Auth.currentAuthenticatedUser();
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
-        await API.graphql(graphqlOperation(createPost, {
+
+
+        //ugh, I guess this should call that labmda actually
+        const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
+            title: workoutData.title,
+            description: workoutData.description,
+            data: workoutData.data,
+        }));
+        console.log(res)
+        /*await API.graphql(graphqlOperation(createPost, {
             input: {
                 type: 'workout',
                 title: workoutData.title,
@@ -538,7 +547,8 @@ const WorkoutProvider = props => {
                 data: workoutData.data,
                 userID: currentUser.username,
             }
-        }))
+        }))*/
+        //once we have res, we should be able to use its id to upload images
 
 
 

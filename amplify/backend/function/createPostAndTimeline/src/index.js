@@ -16,9 +16,9 @@ exports.handler = async (event, context, callback) => {
     let env;
     let graphql_auth;
 
-    if(event.arguments.content.length > 140) {
-        callback('content length is over 140', null);
-    }
+    //if(event.arguments.content.length > 140) {
+        //callback('content length is over 140', null);
+    //}
 
     if ('AWS_EXECUTION_ENV' in process.env && process.env.AWS_EXECUTION_ENV.startsWith('AWS_Lambda_')) {
         //for cloud env
@@ -66,9 +66,10 @@ exports.handler = async (event, context, callback) => {
         variables: {
             input: {
                 type: 'post',
-                timestamp: Date.now(),
-                owner: event.identity.username,
-                content: event.arguments.content,
+                title: event.arguments.title,
+                description: event.arguments.description,
+                data: event.arguments.data,
+                userID: event.identity.username,
             },
         },
     };
@@ -93,8 +94,8 @@ exports.handler = async (event, context, callback) => {
 
     //post to timeline
     //only add yourself if you're not already added
-    if(!followers.some(follower => follower.followerId === post.owner )){
-        followers.push({ followerId: post.owner });
+    if(!followers.some(follower => follower.followerId === post.userID )){
+        followers.push({ followerId: post.userID });
     }
     //is this scalable...
     const results = await Promise.all(followers.map((follower)=> createTimelineForAUser({follower: follower, post: post})));
@@ -109,7 +110,7 @@ const createTimelineForAUser = async ({follower, post}) => {
         variables: {
             input: {
                 userId: follower.followerId,
-                timestamp: post.timestamp,
+                //timestamp: post.timestamp,
                 postId: post.id,
             },
         },
@@ -155,9 +156,52 @@ const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       type
       id
-      content
-      owner
-      timestamp
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      title
+      description
+      data
+      userID
+      user {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+        posts {
+          nextToken
+        }
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -176,11 +220,29 @@ const createTimeline = /* GraphQL */ `
       createdAt
       updatedAt
       post {
-        id
-        content
         type
-        owner
-        timestamp
+        id
+        media {
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        likes {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
       }

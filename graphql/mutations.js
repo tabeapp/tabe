@@ -397,7 +397,6 @@ export const updateTimeline = /* GraphQL */ `
   ) {
     updateTimeline(input: $input, condition: $condition) {
       userId
-      timestamp
       postId
       createdAt
       updatedAt
@@ -438,7 +437,6 @@ export const deleteTimeline = /* GraphQL */ `
   ) {
     deleteTimeline(input: $input, condition: $condition) {
       userId
-      timestamp
       postId
       createdAt
       updatedAt
@@ -552,7 +550,6 @@ export const createTimeline = /* GraphQL */ `
   ) {
     createTimeline(input: $input, condition: $condition) {
       userId
-      timestamp
       postId
       createdAt
       updatedAt
@@ -587,8 +584,16 @@ export const createTimeline = /* GraphQL */ `
   }
 `;
 export const createPostAndTimeline = /* GraphQL */ `
-  mutation CreatePostAndTimeline($content: String!) {
-    createPostAndTimeline(content: $content) {
+  mutation CreatePostAndTimeline(
+    $title: String!
+    $description: String!
+    $data: String!
+  ) {
+    createPostAndTimeline(
+      title: $title
+      description: $description
+      data: $data
+    ) {
       type
       id
       media {
