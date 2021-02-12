@@ -156,16 +156,6 @@ const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
@@ -180,27 +170,6 @@ const createPost = /* GraphQL */ `
         posts {
           nextToken
         }
-      }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -222,9 +191,6 @@ const createTimeline = /* GraphQL */ `
       post {
         type
         id
-        media {
-          nextToken
-        }
         title
         description
         data
@@ -236,12 +202,6 @@ const createTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-        }
-        likes {
-          nextToken
-        }
-        comments {
-          nextToken
         }
         createdAt
         updatedAt
