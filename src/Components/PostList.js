@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, TouchableOpacity, ScrollView} from 'react-native';
+import { View, TouchableOpacity, ScrollView, Image } from "react-native";
+import {S3Image} from 'aws-amplify-react-native';
 import Words from "./Words";
 import moment from 'moment';
 import Row from "./Row";
@@ -33,7 +34,6 @@ const PostList = props => {
 
 const PostItem = ({ post, navigation }) => {
     const now = moment();
-    console.log(now)
 
     //wouldn't it be better to just show the time?
     const calcTimestampDiff = (timestamp) => {
@@ -67,6 +67,12 @@ const PostItem = ({ post, navigation }) => {
             <Words>{post.description}</Words>
             <Words>{post.data}</Words>
             <Words>{JSON.stringify(post)}</Words>
+            {
+                post.media.items.map(({uri}) =>
+                    //<Words>{uri}</Words>
+                    <S3Image style={{width: 50, height: 50}} imgKey={uri}/>
+                )
+            }
             <Words>
                 {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.createdAt)}
             </Words>

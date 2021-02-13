@@ -553,7 +553,7 @@ const WorkoutProvider = props => {
         //to s3
         //should this be in the labmda function?
         //get the post id for later linking
-        const postID = res.createPostAndTimeline.id;
+        const postID = res.data.createPostAndTimeline.id;
         //upload the images to s3
 
 
@@ -561,22 +561,35 @@ const WorkoutProvider = props => {
         //there's a way to do this with await promise.all but its so fn complicated
         for(let i = 0; i < workoutData.media.length; i++){
             //suppose this could be a function of its own
-            const response = await fetch(workoutData[i]);
-            const blob = await response.blob();
+            try{
 
-            const urlParts = workoutData[i].split('.');
-            const extension = urlParts[urlParts.length-1];
-            const key = `${uuidv4()}.${extension}`;
-            await Storage.put(key, blob);
-            s3Urls.push(key);
+                console.log('starting image fetch');
+                const response = await fetch(workoutData.media[i]);
+                console.log('fetched');
+                const blob = await response.blob();
+                console.log('blobbed');
+
+                const urlParts = workoutData.media[i].split('.');
+                const extension = urlParts[urlParts.length-1];
+                const key = `${uuidv4()}.${extension}`;
+                await Storage.put(key, blob);
+                console.log('putted');
+                s3Urls.push(key);
+            }
+            catch (e) {
+                console.log(e);
+
+            }
         }
 
         //now s3 urls are ready
         //lets save some postmedias
         s3Urls.forEach(key => {
             API.graphql(graphqlOperation(createPostMedia, {
-                postID: postID,
-                uri: key
+                input: {
+                    postID: postID,
+                    uri: key
+                }
             }));
         });
 
