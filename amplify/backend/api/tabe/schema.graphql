@@ -30,6 +30,39 @@ type Post
   createdAt: String!
 }
 
+type Effort
+@model
+#is this the best way to do it?
+@key(name: "byCountry", fields: ["countryID", "exercise", "weight"])
+@key(name: "byState", fields: ["stateID", "exercise", "weight"])
+@key(name: "byCity", fields: ["cityID", "exercise", "weight"])
+@key(name: "byGym", fields: ["gymID", "exercise", "weight"])
+{
+  id: ID!
+  postID: ID!
+  userID: ID!
+  exercise: String!
+  weight: Int!
+  countryID: ID!
+  country: Location @connection(fields: ["countryID"])
+  stateID: ID!
+  state: Location @connection(fields: ["stateID"])
+  cityID: ID!
+  city: Location @connection(fields: ["cityID"])
+  gymID: ID!
+  gym: Location @connection(fields: ["gymID"])
+  createdAt: String!
+}
+
+type Location
+@model
+#just id for a key fine, right?
+{
+  id: ID!
+  name: String!
+}
+
+
 type Comment
 @model
 @key(name: "byParent", fields: ["postID"])

@@ -14,10 +14,27 @@ export const getUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -41,8 +58,134 @@ export const listUsers = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const getEffort = /* GraphQL */ `
+  query GetEffort($id: ID!) {
+    getEffort(id: $id) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listEfforts = /* GraphQL */ `
+  query ListEfforts(
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEfforts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getLocation = /* GraphQL */ `
+  query GetLocation($id: ID!) {
+    getLocation(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLocations = /* GraphQL */ `
+  query ListLocations(
+    $filter: ModelLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -83,6 +226,13 @@ export const listComments = /* GraphQL */ `
         postID
         content
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -161,6 +311,13 @@ export const listPosts = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -174,11 +331,29 @@ export const listPosts = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -215,6 +390,16 @@ export const getPost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -234,6 +419,9 @@ export const getPost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -265,6 +453,13 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -278,11 +473,29 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -311,6 +524,13 @@ export const searchPosts = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -324,11 +544,29 @@ export const searchPosts = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -387,6 +625,13 @@ export const getTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -400,11 +645,29 @@ export const getTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -438,10 +701,27 @@ export const listTimelines = /* GraphQL */ `
         post {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }

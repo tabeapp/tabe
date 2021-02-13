@@ -17,10 +17,27 @@ export const createUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -45,10 +62,27 @@ export const updateUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -73,10 +107,27 @@ export const deleteUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -115,6 +166,16 @@ export const updatePost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -134,6 +195,9 @@ export const updatePost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -174,6 +238,16 @@ export const deletePost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -193,11 +267,185 @@ export const deletePost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createEffort = /* GraphQL */ `
+  mutation CreateEffort(
+    $input: CreateEffortInput!
+    $condition: ModelEffortConditionInput
+  ) {
+    createEffort(input: $input, condition: $condition) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateEffort = /* GraphQL */ `
+  mutation UpdateEffort(
+    $input: UpdateEffortInput!
+    $condition: ModelEffortConditionInput
+  ) {
+    updateEffort(input: $input, condition: $condition) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteEffort = /* GraphQL */ `
+  mutation DeleteEffort(
+    $input: DeleteEffortInput!
+    $condition: ModelEffortConditionInput
+  ) {
+    deleteEffort(input: $input, condition: $condition) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLocation = /* GraphQL */ `
+  mutation CreateLocation(
+    $input: CreateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    createLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLocation = /* GraphQL */ `
+  mutation UpdateLocation(
+    $input: UpdateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    updateLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLocation = /* GraphQL */ `
+  mutation DeleteLocation(
+    $input: DeleteLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    deleteLocation(input: $input, condition: $condition) {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -402,6 +650,13 @@ export const updateTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -415,11 +670,29 @@ export const updateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -442,6 +715,13 @@ export const deleteTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -455,11 +735,29 @@ export const deleteTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -498,6 +796,16 @@ export const createPost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -517,6 +825,9 @@ export const createPost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -554,6 +865,13 @@ export const createTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -567,11 +885,29 @@ export const createTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -615,6 +951,16 @@ export const createPostAndTimeline = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -634,6 +980,9 @@ export const createPostAndTimeline = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }

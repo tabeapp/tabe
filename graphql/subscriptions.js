@@ -14,10 +14,27 @@ export const onCreateUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -39,10 +56,27 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -64,10 +98,27 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           type
           id
+          media {
+            nextToken
+          }
           title
           description
           data
           userID
+          user {
+            id
+            username
+            email
+            image
+            createdAt
+            updatedAt
+          }
+          likes {
+            nextToken
+          }
+          comments {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -103,6 +154,16 @@ export const onCreatePost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -122,6 +183,9 @@ export const onCreatePost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -159,6 +223,16 @@ export const onUpdatePost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -178,6 +252,9 @@ export const onUpdatePost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
@@ -215,6 +292,16 @@ export const onDeletePost = /* GraphQL */ `
         createdAt
         updatedAt
         posts {
+          items {
+            type
+            id
+            title
+            description
+            data
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -234,11 +321,167 @@ export const onDeletePost = /* GraphQL */ `
           userID
           postID
           content
+          likes {
+            nextToken
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateEffort = /* GraphQL */ `
+  subscription OnCreateEffort {
+    onCreateEffort {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateEffort = /* GraphQL */ `
+  subscription OnUpdateEffort {
+    onUpdateEffort {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteEffort = /* GraphQL */ `
+  subscription OnDeleteEffort {
+    onDeleteEffort {
+      id
+      postID
+      userID
+      exercise
+      weight
+      countryID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLocation = /* GraphQL */ `
+  subscription OnCreateLocation {
+    onCreateLocation {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLocation = /* GraphQL */ `
+  subscription OnUpdateLocation {
+    onUpdateLocation {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLocation = /* GraphQL */ `
+  subscription OnDeleteLocation {
+    onDeleteLocation {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -417,6 +660,13 @@ export const onCreateTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -430,11 +680,29 @@ export const onCreateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -454,6 +722,13 @@ export const onUpdateTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -467,11 +742,29 @@ export const onUpdateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
@@ -491,6 +784,13 @@ export const onDeleteTimeline = /* GraphQL */ `
         type
         id
         media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
@@ -504,11 +804,29 @@ export const onDeleteTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
+          posts {
+            nextToken
+          }
         }
         likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         createdAt
