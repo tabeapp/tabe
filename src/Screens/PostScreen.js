@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { TextInput, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
 import Words from "../Components/Words";
@@ -10,45 +10,20 @@ import { STYLES } from "../Style/Values";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { listPosts, listPostsSortedByTimestamp } from "../../graphql/queries";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { createLike, deleteLike } from "../../graphql/mutations";
+import { createComment, createLike, deleteLike } from "../../graphql/mutations";
 import { UserContext } from "../Contexts/UserProvider";
+import NavBar from "../Components/NavBar";
+import Write from "../Components/Write";
 
 const primaryColor = '#66d6f8';
 
 //yes this is a copy of report screen
 const PostScreen = props => {
-    //this will ALWAYS be passed a param of id,
-    //sometimes it'll just be passed the workout itself
-    //but id will enable it to load and send requests
-
-    //const id = props.route.params.postId;
     const {postID} = props.route.params;
 
     const {username} = useContext(UserContext);
 
-    //you know what fuck this, report will always be sent as an object.
 
-    //should this be passed as params or generated here?
-    //const [rep, setRep] = useState(report);
-
-    //console.log(report);
-    //const [title, setTitle] = useState(props.route.params.report.name);
-    //const [description, setDescription] = useState(props.route.params.report.summary);
-
-    //report should almost always not be null, even if it is the user can just add their own title
-
-    //useEffect(() =>
-    //setSummary(generateReport())
-    //)
-
-    //console.log('summary ' + JSON.stringify(workout));
-
-    /*const handleNext = () => {
-        //combine workout and title and description
-        saveWorkout({...report, title: title, description: description})
-        props.navigation.navigate('home');
-
-    };*/
     const [post, setPost] = useState({
         title: '',
         description: '',
@@ -56,7 +31,9 @@ const PostScreen = props => {
         userID: '',
         comments: []
 
-    })
+    });
+
+    const [comment, setComment] = useState('');
 
     const [loaded, setLoaded] = useState(false);
 
@@ -93,8 +70,8 @@ const PostScreen = props => {
 
     return (
         <SafeBorder>
-            <TopBar title='Workout Summary' rightText='Next'/>
-            <View style={STYLES.card}>
+            <TopBar title='Workout Summary'/>
+            <View style={STYLES.body}>
                 <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                     <Words>Zyzz</Words>
@@ -111,53 +88,68 @@ const PostScreen = props => {
                 {
                     //easier than adding dumb default properties
                     loaded &&
-                    <Row>
-                        <Words>Likes:{post.likes.items.length}</Words>
-                        <TouchableOpacity
-                            onPress={() => {
-                                //the like function
+                    <>
+                        <Row>
+                            <Words>Likes:{post.likes.items.length}</Words>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    //the like function
 
-                                if(liked){
-                                    //unlike
-                                    setLiked(false);
+                                    if(liked){
+                                        //unlike
+                                        setLiked(false);
 
-                                    const likeID = post.likes.items.find(like =>
-                                        like.userID === username
-                                    ).id;
+                                        const likeID = post.likes.items.find(like =>
+                                            like.userID === username
+                                        ).id;
 
-                                    //this needs id
-                                    API.graphql(graphqlOperation(deleteLike, {
-                                        input: {
-                                            id: likeID
-                                        }
-                                    }))
-                                        .then(res => {
-                                            if(res.data.deleteLike.errors)
-                                                setLiked(true);
-                                        })
+                                        //this needs id
+                                        API.graphql(graphqlOperation(deleteLike, {
+                                            input: {
+                                                id: likeID
+                                            }
+                                        }))
+                                            .then(res => {
+                                                if(res.data.deleteLike.errors)
+                                                    setLiked(true);
+                                            })
 
-                                } else{
-                                    // like
-                                    setLiked(true);
-                                    API.graphql(graphqlOperation(createLike, {
-                                        input: {
-                                            parentID: postID,
-                                            userID: username
-                                        }
-                                    }))
-                                        .then(res => {
-                                            if (res.data.createLike.errors)//is it errors or error?
-                                                setLiked(false)
-                                        })
-                                }
-                            }}
-                        >
-                            <Words><Ionicons name={icon}/></Words>
-                        </TouchableOpacity>
-                        <Words>Comments:{post.comments.items.length}</Words>
-                    </Row>
+                                    } else{
+                                        // like
+                                        setLiked(true);
+                                        API.graphql(graphqlOperation(createLike, {
+                                            input: {
+                                                parentID: postID,
+                                                userID: username
+                                            }
+                                        }))
+                                            .then(res => {
+                                                if (res.data.createLike.errors)//is it errors or error?
+                                                    setLiked(false)
+                                            })
+                                    }
+                                }}
+                            >
+                                <Words><Ionicons name={icon}/></Words>
+                            </TouchableOpacity>
+                            <Words>Comments:{post.comments.items.length}</Words>
+                        </Row>
+                        <View style={{width: '100%', borderColor: 'red', borderWidth: 1}}>
+                            {
+                                post.comments.items.map(comment =>
+                                    <Row>
+                                        <Words>{comment.userID}</Words>
+                                        <Words>{comment.content}</Words>
+
+                                    </Row>
+                                )
+                            }
+                        </View>
+
+                    </>
 
                 }
+
                 {
                     /*workout && workout.exercises.map((ex, index) =>
                         index === 0?
@@ -183,8 +175,40 @@ const PostScreen = props => {
                     )*/
                 }
             </View>
+            <View
+                style={{height: 60, width: '100%', backgroundColor: '#222'}}
+            >
+                <Row>
+
+                    <Write
+                        value={comment}
+                        onChange={setComment}
+                        style={{width: 150, borderColor: 'red', borderWidth: 1}}
+                    />
+                    <TouchableOpacity
+                        onPress={() => {
+                            //so far looks like dog shit but here is where we comment
+                            API.graphql(graphqlOperation(createComment, {
+                                input: {
+                                    userID: username,
+                                    postID: postID,
+                                    content: comment
+                                }
+                            }))
+                                .then(res => {
+                                    setComment('')
+                                })
+
+                        }}
+                    >
+                        <Words>Comment</Words>
+                    </TouchableOpacity>
+                </Row>
+
+            </View>
         </SafeBorder>
     );
 };
+
 
 export default PostScreen;
