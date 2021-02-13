@@ -76,7 +76,7 @@ const PostItem = ({ post, navigation }) => {
             {
                 post.media.items.map(({uri}) =>
                     //<Words>{uri}</Words>
-                    <S3Image style={{width: 50, height: 50}} imgKey={uri}/>
+                    <S3Image key={uri} style={{width: 50, height: 50}} imgKey={uri}/>
                 )
             }
             <Words>

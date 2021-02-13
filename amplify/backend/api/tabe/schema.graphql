@@ -81,7 +81,7 @@ type Like
 {
   id: ID!
   parentID: ID!
-  userID: ID
+  userID: ID!
 }
 
 type PostMedia

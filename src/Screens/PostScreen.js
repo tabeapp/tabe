@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
@@ -7,8 +7,11 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, Auth, graphqlOperation } from "aws-amplify";
 import { listPosts, listPostsSortedByTimestamp } from "../../graphql/queries";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { createLike, deleteLike } from "../../graphql/mutations";
+import { UserContext } from "../Contexts/UserProvider";
 
 const primaryColor = '#66d6f8';
 
@@ -20,6 +23,8 @@ const PostScreen = props => {
 
     //const id = props.route.params.postId;
     const {postID} = props.route.params;
+
+    const {username} = useContext(UserContext);
 
     //you know what fuck this, report will always be sent as an object.
 
@@ -53,18 +58,38 @@ const PostScreen = props => {
 
     })
 
+    const [loaded, setLoaded] = useState(false);
+
+    const [liked, setLiked] = useState(false);
+
 
     useEffect(() => {
+        setLoaded(false);
         API.graphql(graphqlOperation(listPosts, {
-            id: postID
+            filter:{
+                id: {
+                    eq: postID
+                }
+            }
         }))
             .then(res => {
                 console.log(res)
                 //should only be one?
-                setPost(res.data.listPosts.items[0])
+                const p = res.data.listPosts.items[0];
+                setPost(p);
+                //this is so dumb, should we have a username provider?
+                //console.log(JSON.stringify(res))
+                //console.log(username);
+                const l = p.likes.items.some(like =>
+                    like.userID === username
+                )
+                setLiked(l);
+                setLoaded(true)
             })
 
     }, [postID]);
+
+    const icon = liked? 'heart': 'heart-outline';
 
     return (
         <SafeBorder>
@@ -77,12 +102,62 @@ const PostScreen = props => {
                 <Words style={{fontSize: 40}} >
                     {post.title}
                 </Words>
-                <Words>
+                <Words style={{fontSize: 20}}>
                     {post.description}
                 </Words>
                 <Words>
                     {JSON.stringify(post)}
                 </Words>
+                {
+                    //easier than adding dumb default properties
+                    loaded &&
+                    <Row>
+                        <Words>Likes:{post.likes.items.length}</Words>
+                        <TouchableOpacity
+                            onPress={() => {
+                                //the like function
+
+                                if(liked){
+                                    //unlike
+                                    setLiked(false);
+
+                                    const likeID = post.likes.items.find(like =>
+                                        like.userID === username
+                                    ).id;
+
+                                    //this needs id
+                                    API.graphql(graphqlOperation(deleteLike, {
+                                        input: {
+                                            id: likeID
+                                        }
+                                    }))
+                                        .then(res => {
+                                            if(res.data.deleteLike.errors)
+                                                setLiked(true);
+                                        })
+
+                                } else{
+                                    // like
+                                    setLiked(true);
+                                    API.graphql(graphqlOperation(createLike, {
+                                        input: {
+                                            parentID: postID,
+                                            userID: username
+                                        }
+                                    }))
+                                        .then(res => {
+                                            if (res.data.createLike.errors)//is it errors or error?
+                                                setLiked(false)
+                                        })
+                                }
+                            }}
+                        >
+                            <Words><Ionicons name={icon}/></Words>
+                        </TouchableOpacity>
+                        <Words>Comments:{post.comments.items.length}</Words>
+                    </Row>
+
+                }
                 {
                     /*workout && workout.exercises.map((ex, index) =>
                         index === 0?

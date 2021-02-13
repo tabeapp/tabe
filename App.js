@@ -23,6 +23,7 @@ import Amplify, {API, graphqlOperation} from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { withAuthenticator } from "aws-amplify-react-native";
 import TutorialScreen from "./src/Screens/TutorialScreen";
+import UserProvider from "./src/Contexts/UserProvider";
 Amplify.configure({
     ...awsconfig,
     Analytics: {
@@ -35,28 +36,31 @@ const Stack = createStackNavigator();
 const App = () => {
 
     return (
-        <RoutinesProvider>
-            <WorkoutProvider>
+        <UserProvider>
 
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="explore" screenOptions={{headerShown:false,
-                        cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
-                    }}>
-                        <Stack.Screen name="home" component={HomeScreen}/>
-                        <Stack.Screen name="post" component={PostScreen}/>
-                        <Stack.Screen name="explore" component={ExploreScreen}/>
-                        <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                        <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                        <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                        <Stack.Screen name="report" component={ReportScreen}/>
-                        <Stack.Screen name="routine" component={RoutineScreen}/>
-                        <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
-                        <Stack.Screen name="profile" component={ProfileScreen}/>
-                    </Stack.Navigator>
-                </NavigationContainer>
+            <RoutinesProvider>
+                <WorkoutProvider>
 
-            </WorkoutProvider>
-        </RoutinesProvider>
+                    <NavigationContainer>
+                        <Stack.Navigator initialRouteName="explore" screenOptions={{headerShown:false,
+                            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+                        }}>
+                            <Stack.Screen name="home" component={HomeScreen}/>
+                            <Stack.Screen name="post" component={PostScreen}/>
+                            <Stack.Screen name="explore" component={ExploreScreen}/>
+                            <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                            <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                            <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                            <Stack.Screen name="report" component={ReportScreen}/>
+                            <Stack.Screen name="routine" component={RoutineScreen}/>
+                            <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
+                            <Stack.Screen name="profile" component={ProfileScreen}/>
+                        </Stack.Navigator>
+                    </NavigationContainer>
+
+                </WorkoutProvider>
+            </RoutinesProvider>
+        </UserProvider>
     );
 };
 
