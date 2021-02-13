@@ -19,8 +19,6 @@ const PostList = props => {
                             post={post}
                             navigation={props.navigation}
                         />)
-                            //<Words>{JSON.stringify(post)}</Words>
-                        //})
                     }
                     <TouchableOpacity onPress={getAdditionalPosts}>
                         <Words>More</Words>
@@ -68,6 +66,7 @@ const PostItem = ({ post, navigation }) => {
             <Words>{post.title}</Words>
             <Words>{post.description}</Words>
             <Words>{post.data}</Words>
+            <Words>{JSON.stringify(post)}</Words>
             <Words>
                 {' ' + String.fromCharCode(183) + ' ' + calcTimestampDiff(post.createdAt)}
             </Words>

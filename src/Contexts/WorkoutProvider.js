@@ -7,8 +7,9 @@ import RoutinesContext from './RoutinesContext';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
 import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
 
-import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createPost, createPostAndTimeline } from "../../graphql/mutations";
+import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
+import { createPost, createPostAndTimeline, createPostMedia } from "../../graphql/mutations";
+import {v4 as uuidv4} from 'uuid';
 
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
@@ -538,7 +539,7 @@ const WorkoutProvider = props => {
             description: workoutData.description,
             data: workoutData.data,
         }));
-        console.log(res)
+        console.log('res: ' + JSON.stringify(res));
         /*await API.graphql(graphqlOperation(createPost, {
             input: {
                 type: 'workout',
@@ -550,8 +551,34 @@ const WorkoutProvider = props => {
         }))*/
         //once we have res, we should be able to use its id to upload images
         //to s3
+        //should this be in the labmda function?
+        //get the post id for later linking
+        const postID = res.createPostAndTimeline.id;
+        //upload the images to s3
 
 
+        const s3Urls = [];
+        //there's a way to do this with await promise.all but its so fn complicated
+        for(let i = 0; i < workoutData.media.length; i++){
+            //suppose this could be a function of its own
+            const response = await fetch(workoutData[i]);
+            const blob = await response.blob();
+
+            const urlParts = workoutData[i].split('.');
+            const extension = urlParts[urlParts.length-1];
+            const key = `${uuidv4()}.${extension}`;
+            await Storage.put(key, blob);
+            s3Urls.push(key);
+        }
+
+        //now s3 urls are ready
+        //lets save some postmedias
+        s3Urls.forEach(key => {
+            API.graphql(graphqlOperation(createPostMedia, {
+                postID: postID,
+                uri: key
+            }));
+        });
 
         //need to clear workout from state as well
         //and the report, it doesn't get cleared
