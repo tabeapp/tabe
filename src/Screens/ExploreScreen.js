@@ -47,15 +47,15 @@ const ExploreScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken = null) => {
-        const res = await API.graphql(graphqlOperation(listPosts, {
-            //type: "post",
+        const res = await API.graphql(graphqlOperation(listPostsSortedByTimestamp, {
+            type: "post",
             sortDirection: 'DESC',
             limit: 20, //default = 10
             nextToken: nextToken,
         }));
         console.log(res);
-        dispatch({ type: type, posts: res.data.listPosts.items })
-        setNextToken(res.data.listPosts.nextToken);
+        dispatch({ type: type, posts: res.data.listPostsSortedByTimestamp.items })
+        setNextToken(res.data.listPostsSortedByTimestamp.nextToken);
         setIsLoading(false);
     }
 
