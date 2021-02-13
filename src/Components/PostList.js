@@ -17,6 +17,7 @@ const PostList = props => {
                     <Words>{listHeaderTitleButton && listHeaderTitleButton}</Words>
                     {
                         posts.map(post => <PostItem
+                            key={post.id}
                             post={post}
                             navigation={props.navigation}
                         />)
@@ -52,11 +53,16 @@ const PostItem = ({ post, navigation }) => {
         <TouchableOpacity
             style={{backgroundColor: '#333', margin: 3}}
             onPress={() => {
-                navigation.navigate('profile', {userId: post.userID})
+                navigation.navigate('post', {postID: post.id})
             }}
         >
             <Row>
-                <View style={{height: 40, width: 40, borderRadius: 20, backgroundColor: 'blue'}}/>
+                <TouchableOpacity
+                    style={{height: 40, width: 40, borderRadius: 20, backgroundColor: 'blue'}}
+                    onPress={() => {
+                        navigation.navigate('profile', {userId: post.userID})
+                    }}
+                />
                 <View>
 
                     <Words>{post.userID}</Words>

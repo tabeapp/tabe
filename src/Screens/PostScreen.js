@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { PRIMARY } from '../Constants/Theme';
@@ -7,6 +7,8 @@ import SafeBorder from "../Components/SafeBorder";
 import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
+import { API, graphqlOperation } from "aws-amplify";
+import { listPosts, listPostsSortedByTimestamp } from "../../graphql/queries";
 
 const primaryColor = '#66d6f8';
 
@@ -17,7 +19,7 @@ const PostScreen = props => {
     //but id will enable it to load and send requests
 
     //const id = props.route.params.postId;
-    const workout = props.route.params.workout;
+    const {postID} = props.route.params;
 
     //you know what fuck this, report will always be sent as an object.
 
@@ -42,6 +44,27 @@ const PostScreen = props => {
         props.navigation.navigate('home');
 
     };*/
+    const [post, setPost] = useState({
+        title: '',
+        description: '',
+        data: '',
+        userID: '',
+        comments: []
+
+    })
+
+
+    useEffect(() => {
+        API.graphql(graphqlOperation(listPosts, {
+            id: postID
+        }))
+            .then(res => {
+                console.log(res)
+                //should only be one?
+                setPost(res.data.listPosts.items[0])
+            })
+
+    }, [postID]);
 
     return (
         <SafeBorder>
@@ -52,13 +75,16 @@ const PostScreen = props => {
                     <Words>Zyzz</Words>
                 </Row>
                 <Words style={{fontSize: 40}} >
-                    {workout.title}
+                    {post.title}
                 </Words>
                 <Words>
-                    {workout.summary}
+                    {post.description}
+                </Words>
+                <Words>
+                    {JSON.stringify(post)}
                 </Words>
                 {
-                    workout && workout.exercises.map((ex, index) =>
+                    /*workout && workout.exercises.map((ex, index) =>
                         index === 0?
                             //first one is biggest
                             <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
@@ -79,7 +105,7 @@ const PostScreen = props => {
                                     </Words>)
                                 }
                             </View>
-                    )
+                    )*/
                 }
             </View>
         </SafeBorder>
