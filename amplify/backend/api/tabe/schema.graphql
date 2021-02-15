@@ -75,6 +75,24 @@ type Comment
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
 }
 
+type Routine
+@model
+@key(name: "byUser", fields: ["userID"])
+@key(name: "byUserAndCurrent", fields: ["userID", "current", "createdAt"], queryField: "listCurrentRoutinesByUser")
+{
+  id: ID!
+  userID: ID!
+  title: String!
+  current: Int!#this is dumb but we need to sort on this so its not bool
+  routine: String!#json, useful info
+  #maybe some routines are branched off of others as variants
+  #might be neat to keep link to base routine
+  baseRoutineID: ID!
+  baseRoutine: Routine @connection(fields: ["baseRoutineID"])
+  createdAt: String!
+  updatedAt: String!
+}
+
 type Like
 @model
 @key(name: "byParent", fields: ["parentID"])

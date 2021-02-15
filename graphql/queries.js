@@ -242,6 +242,91 @@ export const listComments = /* GraphQL */ `
     }
   }
 `;
+export const getRoutine = /* GraphQL */ `
+  query GetRoutine($id: ID!) {
+    getRoutine(id: $id) {
+      id
+      userID
+      title
+      current
+      routine
+      baseRoutineID
+      baseRoutine {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRoutines = /* GraphQL */ `
+  query ListRoutines(
+    $filter: ModelRoutineFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRoutines(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getLike = /* GraphQL */ `
   query GetLike($id: ID!) {
     getLike(id: $id) {
@@ -293,6 +378,57 @@ export const listPostMedias = /* GraphQL */ `
         id
         postID
         uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listCurrentRoutinesByUser = /* GraphQL */ `
+  query ListCurrentRoutinesByUser(
+    $userID: ID
+    $currentCreatedAt: ModelRoutineByUserAndCurrentCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRoutineFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCurrentRoutinesByUser(
+      userID: $userID
+      currentCreatedAt: $currentCreatedAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

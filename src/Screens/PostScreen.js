@@ -83,7 +83,10 @@ const PostScreen = props => {
                     {post.description}
                 </Words>
                 <Words>
-                    {JSON.stringify(post)}
+                    {JSON.stringify(post.media.items.map(m => m.uri))}
+                </Words>
+                <Words>
+                    {JSON.stringify(post.data)}
                 </Words>
                 {
                     //easier than adding dumb default properties
@@ -134,7 +137,7 @@ const PostScreen = props => {
                             </TouchableOpacity>
                             <Words>Comments:{post.comments.items.length}</Words>
                         </Row>
-                        <View style={{width: '100%', borderColor: 'red', borderWidth: 1}}>
+                        <View style={{width: '100%'}}>
                             {
                                 post.comments.items.map(comment =>
                                     <Row>

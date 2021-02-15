@@ -553,6 +553,138 @@ export const onDeleteComment = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRoutine = /* GraphQL */ `
+  subscription OnCreateRoutine {
+    onCreateRoutine {
+      id
+      userID
+      title
+      current
+      routine
+      baseRoutineID
+      baseRoutine {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRoutine = /* GraphQL */ `
+  subscription OnUpdateRoutine {
+    onUpdateRoutine {
+      id
+      userID
+      title
+      current
+      routine
+      baseRoutineID
+      baseRoutine {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRoutine = /* GraphQL */ `
+  subscription OnDeleteRoutine {
+    onDeleteRoutine {
+      id
+      userID
+      title
+      current
+      routine
+      baseRoutineID
+      baseRoutine {
+        id
+        userID
+        title
+        current
+        routine
+        baseRoutineID
+        baseRoutine {
+          id
+          userID
+          title
+          current
+          routine
+          baseRoutineID
+          baseRoutine {
+            id
+            userID
+            title
+            current
+            routine
+            baseRoutineID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateLike = /* GraphQL */ `
   subscription OnCreateLike {
     onCreateLike {
