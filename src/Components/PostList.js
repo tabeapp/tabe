@@ -72,7 +72,6 @@ const PostItem = ({ post, navigation }) => {
             <Words>{post.title}</Words>
             <Words>{post.description}</Words>
             <Words>{post.data}</Words>
-            <Words>{JSON.stringify(post)}</Words>
             {
                 post.media.items.map(({uri}) =>
                     //<Words>{uri}</Words>

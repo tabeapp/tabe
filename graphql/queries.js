@@ -250,37 +250,6 @@ export const getRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -299,27 +268,6 @@ export const listRoutines = /* GraphQL */ `
         title
         current
         routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -408,27 +356,6 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
         title
         current
         routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }

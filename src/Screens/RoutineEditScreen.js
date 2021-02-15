@@ -17,12 +17,16 @@ import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
 import { REST_DAY } from "../Constants/Symbols";
+import { API, graphqlOperation } from "aws-amplify";
+import { createRoutine } from "../../graphql/mutations";
+import { UserContext } from "../Contexts/UserProvider";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
 //the only trick is putting it in a nice formattable way
 
 const RoutineEditScreen = props => {
+    const {username} = useContext(UserContext);
     //this is used more than you'd think
     const altExName = ex => {
         let suffix = '-b';
@@ -176,6 +180,7 @@ const RoutineEditScreen = props => {
                 onPressLeft={() => {
                     props.navigation.navigate('routine');
                 }}
+                //rewriting this part to save to aws
                 onPressRight={() => {
                     //this is copied over, it's the save process
                     const newRoutine = FULL_COPY(routine);
@@ -204,6 +209,17 @@ const RoutineEditScreen = props => {
                         //delete prev.editRoutine;
                         return prev;
                     });
+
+                    API.graphql(graphqlOperation(createRoutine, {
+                        input: {
+                            userID: username,
+                            title: newRoutine.title,
+                            current: 0,
+                            routine: JSON.stringify(newRoutine)
+                        }
+                    })).then(res => {
+                        console.log(JSON.stringify(res));
+                    })
 
                     //for safe measure
                     setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);

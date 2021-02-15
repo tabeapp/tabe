@@ -561,37 +561,6 @@ export const onCreateRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -605,37 +574,6 @@ export const onUpdateRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -649,37 +587,6 @@ export const onDeleteRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }

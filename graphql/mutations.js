@@ -537,37 +537,6 @@ export const createRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -584,37 +553,6 @@ export const updateRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -631,37 +569,6 @@ export const deleteRoutine = /* GraphQL */ `
       title
       current
       routine
-      baseRoutineID
-      baseRoutine {
-        id
-        userID
-        title
-        current
-        routine
-        baseRoutineID
-        baseRoutine {
-          id
-          userID
-          title
-          current
-          routine
-          baseRoutineID
-          baseRoutine {
-            id
-            userID
-            title
-            current
-            routine
-            baseRoutineID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
