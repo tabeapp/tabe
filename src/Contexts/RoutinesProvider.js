@@ -1,8 +1,11 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RoutinesContext from './RoutinesContext';
-import { useReducer, useEffect }  from 'react';
+import { useContext, useState, useReducer, useEffect }  from 'react';
 import { FULL_COPY } from "../Utils/UtilFunctions";
+import { API, graphqlOperation } from "aws-amplify";
+import { listRoutines } from "../../graphql/queries";
+import { UserContext } from "./UserProvider";
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -20,6 +23,9 @@ const RoutinesProvider = props => {
         editRoutine: {}
     };
 
+    const [nextToken, setNextToken] = useState(null);
+    const {username} = useContext(UserContext);
+
     //initial load from storage
     useEffect(() => {
         AsyncStorage.getItem('@routines').then(obj => {
@@ -28,6 +34,16 @@ const RoutinesProvider = props => {
             if(obj !== null)
                 routinesDispatch(() => JSON.parse(obj));
         })
+        API.graphql(graphqlOperation(listRoutines, {
+            userID: username,
+            sortDirection: 'DESC',
+            limit: 20,
+            nextToken: nextToken
+        }))
+            .then(res => {
+                //need to actually try this out
+                console.log(JSON.stringify(res));
+            });
     }, []);
 
     //you generate a routine, so it makes sense to have this here
