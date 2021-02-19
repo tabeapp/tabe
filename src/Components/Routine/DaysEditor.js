@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
-import RoutinesContext from '../../Contexts/RoutinesProvider';
+import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import Words from '../Simple/Words';
 import Chooser from '../Simple/Chooser';
 import { REST_DAY } from '../../Constants/Symbols';

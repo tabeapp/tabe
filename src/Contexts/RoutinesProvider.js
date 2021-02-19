@@ -32,7 +32,7 @@ const RoutinesProvider = props => {
         //maybe it needs subscription
         DataStore.query(Routine)//, r => r.userID('eq', username))
             .then(routines => {
-                //console.log('routines', JSON.stringify(routines[0]));
+                console.log('routines', routines);
 
                 //temporary code to remove some dumb accidental entries
                 routines.forEach(routine => {

@@ -3,7 +3,7 @@ import { Alert, TouchableOpacity, View } from 'react-native';
 
 import ExerciseCard from '../Components/Workout/ExerciseCard';
 import Words from '../Components/Simple/Words';
-import WorkoutContext from '../Contexts/WorkoutProvider';
+import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
 import { DEFAULT_EX_WORKOUT } from '../Constants/DefaultExInfo';
 import { CURRENT, FAILURE } from '../Constants/Symbols';

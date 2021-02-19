@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
 import Words from '../Simple/Words';
 import { SafeAreaView } from 'react-navigation';
-import WorkoutContext from '../../Contexts/WorkoutProvider';
+import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressCircle from './ProgressCircle';

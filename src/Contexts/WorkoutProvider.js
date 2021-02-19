@@ -13,7 +13,7 @@ import { UserContext } from './UserProvider';
 
 export const WorkoutContext = React.createContext();
 
-//this needs to really be redone because routines was redone too
+// this needs to really be redone because routines was redone too
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
     const initState = {};
@@ -27,14 +27,11 @@ const WorkoutProvider = props => {
     useEffect(() => {
         DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
             .then(res => {
-                console.log(res);
-
+                console.log('workouts', res);
+                if(!res[0]){ /*need to make new one*/ }
+                else
+                    workoutDispatch(() => JSON.parse(res[0].data))
             });
-        AsyncStorage.getItem('@workout').then(obj => {
-            //do we need to call generateReport here?
-            if(obj !== null)
-                workoutDispatch(() => JSON.parse(obj));
-        });
     }, []);
 
     //heavy logic here, not much you can do with usereducer here
@@ -44,7 +41,7 @@ const WorkoutProvider = props => {
         if(JSON.stringify(workout) !== '{}')
             return;
 
-        const r = FULL_COPY(routines.find(r => r.current === 1));
+        const r = FULL_COPY(routines.find(x => x.current === 1));
 
         console.log(r)
         let day = r.days[r.currentDay % r.time];
@@ -367,7 +364,7 @@ const WorkoutProvider = props => {
             //how the fuck would we increment 5/3/1
             // a progress rate of 4 is perfect for this
             //if(exInfo.setInfo.type === 'Custom')
-                //return;
+            //return;
             //5/3/1 will progress here
             //texas method will progress by detecting 5rm
 

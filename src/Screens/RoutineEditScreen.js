@@ -6,7 +6,7 @@ import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExIn
 import DaysEditor from '../Components/Routine/DaysEditor';
 import ExerciseEditor from '../Components/Routine/ExerciseEditor';
 import RepSchemeEditor from '../Components/Routine/RepSchemeEditor';
-import RoutinesContext from '../Contexts/RoutinesProvider';
+import { RoutinesContext } from '../Contexts/RoutinesProvider';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';

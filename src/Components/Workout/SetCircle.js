@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
-import WorkoutContext from '../../Contexts/WorkoutProvider';
+import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { CURRENT, FAILURE } from '../../Constants/Symbols';
 import Chooser from '../Simple/Chooser';
 import { STYLES } from '../../Style/Values';

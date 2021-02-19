@@ -3,7 +3,7 @@ import { TouchableOpacity, View } from 'react-native';
 import ExercisePicker from '../Workout/ExercisePicker';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import RoutinesContext from '../../Contexts/RoutinesProvider';
+import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 
