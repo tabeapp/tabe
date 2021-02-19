@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 
-import WeightVisual from "../Utils/WeightVisual";
+import WeightVisual from "../../Utils/WeightVisual";
 import SetCircle from "./SetCircle";
-import Words from "./Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import { CURRENT } from "../Constants/Symbols";
-import { PRIMARY } from "../Constants/Theme";
-import Row from "./Row";
-import { STYLES } from "../Style/Values";
-import NumericSelector from "./NumericSelector";
+import Words from "../Simple/Words";
+import WorkoutContext from "../../Contexts/WorkoutContext";
+import { CURRENT } from "../../Constants/Symbols";
+import { PRIMARY } from "../../Style/Theme";
+import Row from "../Simple/Row";
+import { STYLES } from "../../Style/Values";
+import NumericSelector from "../Routine/NumericSelector";
 
 
 const primaryColor = '#66d6f8';

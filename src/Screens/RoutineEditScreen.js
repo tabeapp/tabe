@@ -1,24 +1,21 @@
-import { Alert, TextInput, ScrollView, TouchableOpacity, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Alert, ScrollView, TouchableOpacity, StyleSheet, View } from 'react-native';
 import React, {useContext, useEffect} from 'react';
-import NavBar from '../Components/NavBar';
-import { PRIMARY } from '../Constants/Theme';
-import NumericSelector from '../Components/NumericSelector';
-import WorkoutEditor from '../Components/WorkoutEditor';
+import NumericSelector from '../Components/Routine/NumericSelector';
+import WorkoutEditor from '../Components/Routine/WorkoutEditor';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExInfo';
-import DaysEditor from '../Components/DaysEditor';
-import ExerciseEditor from '../Components/ExerciseEditor';
-import RepSchemeEditor from '../Components/RepSchemeEditor';
-import RoutinesContext from '../Contexts/RoutinesContext';
-import { FULL_COPY } from "../Utils/UtilFunctions";
-import Words from "../Components/Words";
-import Write from "../Components/Write";
-import SafeBorder from "../Components/SafeBorder";
-import TopBar from "../Components/TopBar";
-import Row from "../Components/Row";
+import DaysEditor from '../Components/Routine/DaysEditor';
+import ExerciseEditor from '../Components/Routine/ExerciseEditor';
+import RepSchemeEditor from '../Components/Routine/RepSchemeEditor';
+import RoutinesContext from '../Contexts/RoutinesProvider';
+import { FULL_COPY } from '../Utils/UtilFunctions';
+import Words from "../Components/Simple/Words";
+import Write from "../Components/Simple/Write";
+import SafeBorder from "../Components/Navigation/SafeBorder";
+import TopBar from "../Components/Navigation/TopBar";
+import Row from "../Components/Simple/Row";
 import { STYLES } from "../Style/Values";
 import { REST_DAY } from "../Constants/Symbols";
-import { API, DataStore, graphqlOperation } from "aws-amplify";
-import { createRoutine } from "../../graphql/mutations";
+import { DataStore } from "aws-amplify";
 import { UserContext } from "../Contexts/UserProvider";
 import { Routine } from "../../models";
 
@@ -219,37 +216,9 @@ const RoutineEditScreen = props => {
                                     updated.routine = JSON.stringify(newRoutine)
                                     updated.title = newRoutine.title
                                 })
-                            )
+                            );
                         }
-                    })
-
-                    //}
-                    //new
-                    //else{
-                    //DataStore.save(Routine, new Routine({
-                    //routine: JSON.stringify(newRoutine),
-                    //title: newRoutine.title,
-                    //current: 0,
-                    //userID: username
-
-                    //}))
-
-                    //}
-
-                    /*routinesDispatch(prev => {
-                        //if there is no current, set this to current
-                        if(!prev.current)
-                            prev.current = newRoutine.title;
-                        //and save the new routine based on title
-                        prev.routines[newRoutine.title] = newRoutine;
-
-                        //why cant i do this?
-                        //delete prev.editRoutine;
-                        return prev;
-                    });*/
-
-                    //for safe measure
-                    //setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);
+                    });
 
                     props.navigation.navigate('routine');
                 }}

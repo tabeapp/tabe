@@ -1,12 +1,12 @@
 import React, {useContext} from 'react';
-import Words from './Words';
+import Words from '../Simple/Words';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import RoutinesContext from '../Contexts/RoutinesContext';
-import { FULL_COPY } from '../Utils/UtilFunctions';
-import { NEW_PR } from "../Constants/Symbols";
-import Chooser from "./Chooser";
-import Row from "./Row";
-import { STYLES } from "../Style/Values";
+import RoutinesContext from '../../Contexts/RoutinesProvider';
+import { FULL_COPY } from '../../Utils/UtilFunctions';
+import { NEW_PR } from "../../Constants/Symbols";
+import Chooser from "../Simple/Chooser";
+import Row from "../Simple/Row";
+import { STYLES } from "../../Style/Values";
 
 const reps = [];
 for(let i = 0; i <= 50; i++)

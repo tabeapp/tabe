@@ -1,16 +1,14 @@
 import { TextInput, TouchableOpacity, FlatList, Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import React, {useState, useReducer, useEffect} from 'react';
-import Words from "../Components/Words";
-import SafeBorderNav from "../Components/SafeBorderNav";
-import TopBar from "../Components/TopBar";
+import Words from "../Components/Simple/Words";
+import SafeBorderNav from "../Components/Navigation/SafeBorderNav";
+import TopBar from "../Components/Navigation/TopBar";
 import { STYLES } from "../Style/Values";
-import { withAuthenticator } from "aws-amplify-react-native";
-import Write from "../Components/Write";
+import Write from "../Components/Simple/Write";
 import { API, Auth, graphqlOperation } from "aws-amplify";
 import { createPost, createPostAndTimeline } from "../../graphql/mutations";
 import { listPostsSortedByTimestamp, listTimelines } from "../../graphql/queries";
 import { onCreatePost, onCreateTimeline } from "../../graphql/subscriptions";
-import PostList from "../Components/PostList";
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';

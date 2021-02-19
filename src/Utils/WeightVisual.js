@@ -1,6 +1,6 @@
 import React from 'react';
 import { View} from 'react-native';
-import Row from "../Components/Row";
+import Row from "../Components/Simple/Row";
 
 //adjustable?
 //this is based on rouge plates

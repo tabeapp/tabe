@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {View} from 'react-native';
-import RoutinesContext from '../Contexts/RoutinesContext';
-import Words from "./Words";
-import Chooser from "./Chooser";
-import { REST_DAY } from "../Constants/Symbols";
+import RoutinesContext from '../../Contexts/RoutinesProvider';
+import Words from "../Simple/Words";
+import Chooser from "../Simple/Chooser";
+import { REST_DAY } from "../../Constants/Symbols";
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);

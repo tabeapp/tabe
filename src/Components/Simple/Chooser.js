@@ -1,6 +1,6 @@
 import React from 'react';
 import { Picker } from '@react-native-picker/picker';
-import { FONT } from '../Style/Values';
+import { FONT } from '../../Style/Values';
 import { StyleSheet } from 'react-native';
 
 //my version of picker, whose style I just keep

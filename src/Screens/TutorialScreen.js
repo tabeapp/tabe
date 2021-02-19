@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { View, Dimensions, TouchableWithoutFeedback } from 'react-native';
-import Words from '../Components/Words';
-import SafeBorderNav from '../Components/SafeBorderNav';
-import TopBar from '../Components/TopBar';
+import Words from '../Components/Simple/Words';
+import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
+import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import Video from 'react-native-video';
 import Post from "../Components/Social/Post";

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Alert, TouchableOpacity, StyleSheet, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Words from "./Words";
-import RoutinesContext from "../Contexts/RoutinesContext";
-import WorkoutContext from "../Contexts/WorkoutContext";
+import Words from "../Simple/Words";
+import WorkoutContext from "../../Contexts/WorkoutContext";
 import { Auth } from "aws-amplify";
+import { RoutinesContext } from "../../Contexts/RoutinesProvider";
 
 const routes = [
     'home',

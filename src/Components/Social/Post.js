@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Video from 'react-native-video';
-import Words from "../Words";
+import Words from "../Simple/Words";
 
 const Post = () => {
     const [paused, setPaused] = useState(false);

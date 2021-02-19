@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, ScrollView, Image } from "react-native";
 import {S3Image} from 'aws-amplify-react-native';
-import Words from "./Words";
+import Words from "../Simple/Words";
 import moment from 'moment';
-import Row from "./Row";
+import Row from "../Simple/Row";
 
 const PostList = props => {
     const {isLoading, posts, getAdditionalPosts, listHeaderTitleButton} = props;

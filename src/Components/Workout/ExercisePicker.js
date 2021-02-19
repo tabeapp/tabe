@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Modal} from 'react-native';
-import { CATEGORIES, EX_INFO } from '../Constants/DefaultExInfo';
-import Words from "./Words";
+import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
+import Words from "../Simple/Words";
 
 //make it possible to cancel
 const ExercisePicker = props => {

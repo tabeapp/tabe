@@ -1,10 +1,10 @@
 import React, {useState, useContext} from 'react';
 import {View, TouchableOpacity} from 'react-native';
-import Words from "./Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import { FAILURE, CURRENT } from "../Constants/Symbols";
-import Chooser from "./Chooser";
-import { STYLES } from "../Style/Values";
+import Words from "../Simple/Words";
+import WorkoutContext from "../../Contexts/WorkoutContext";
+import { FAILURE, CURRENT } from "../../Constants/Symbols";
+import Chooser from "../Simple/Chooser";
+import { STYLES } from "../../Style/Values";
 
 const SetCircle = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView } from "react-native";
-import { PRIMARY } from "../Constants/Theme";
+import { PRIMARY } from "../../Style/Theme";
 //not really sure what to call this but I use this a lot
 
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Chooser from "./Chooser";
+import Chooser from "../Simple/Chooser";
 
 //im making my own, screw the libs
 //min reps is 0, max reps is lets say 50 width __ is good

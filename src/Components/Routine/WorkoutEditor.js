@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import ExercisePicker from './ExercisePicker';
-import Words from './Words';
+import ExercisePicker from '../Workout/ExercisePicker';
+import Words from '../Simple/Words';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import RoutinesContext from "../Contexts/RoutinesContext";
-import Row from "./Row";
-import { STYLES } from "../Style/Values";
+import RoutinesContext from "../../Contexts/RoutinesProvider";
+import Row from "../Simple/Row";
+import { STYLES } from "../../Style/Values";
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints

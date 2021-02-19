@@ -1,19 +1,14 @@
-import { TouchableOpacity, SafeAreaView, StyleSheet, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import React, {useContext} from 'react';
-import NavBar from '../Components/NavBar';
-import { PRIMARY } from '../Constants/Theme';
-import Words from "../Components/Words";
+import Words from "../Components/Simple/Words";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import RoutinesContext from "../Contexts/RoutinesContext";
+import RoutinesContext from "../Contexts/RoutinesProvider";
 import { BLANK_ROUTINE } from "../Constants/DefaultRoutineInfo";
-import { FULL_COPY } from "../Utils/UtilFunctions";
-import SafeBorder from "../Components/SafeBorder";
-import SafeBorderNav from "../Components/SafeBorderNav";
-import TopBar from "../Components/TopBar";
+import SafeBorderNav from "../Components/Navigation/SafeBorderNav";
+import TopBar from "../Components/Navigation/TopBar";
 import { STYLES } from "../Style/Values";
 import { Routine } from "../../models";
-import { API, DataStore, graphqlOperation } from "aws-amplify";
-import { updateRoutine } from "../../graphql/mutations";
+import { DataStore } from "aws-amplify";
 import { UserContext } from "../Contexts/UserProvider";
 
 //this is for choosing a routine to edit, instead of jumping right in

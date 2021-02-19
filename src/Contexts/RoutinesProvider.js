@@ -1,10 +1,7 @@
 import React from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import RoutinesContext from './RoutinesContext';
-import { useContext, useState, useReducer, useEffect }  from 'react';
+import { useContext, useReducer, useEffect }  from 'react';
 import { FULL_COPY } from "../Utils/UtilFunctions";
-import { API, DataStore, graphqlOperation } from "aws-amplify";
-import { listRoutines } from "../../graphql/queries";
+import { DataStore } from "aws-amplify";
 import { UserContext } from "./UserProvider";
 import { Routine } from "../../models";
 
@@ -14,7 +11,7 @@ import { Routine } from "../../models";
 //so the idea behind this shit is that i'm really tired of passing down modifying functions
 //so we're gonna use useReducer
 
-
+export const RoutinesContext = React.createContext();
 //this is for all thigns routines
 //edit the routine, set the current routine, and just manage all saved routines
 const RoutinesProvider = props => {
@@ -24,7 +21,6 @@ const RoutinesProvider = props => {
         editRoutine: {}
     };
 
-    const [nextToken, setNextToken] = useState(null);
     const {username} = useContext(UserContext);
 
     //initial load from storage
@@ -155,47 +151,6 @@ const RoutinesProvider = props => {
 
         //i guess we could store some logic here
         if(action.type){
-            //this needs to happen a lot
-            if(action.type === 'setItem') {
-                //don't save editRoutine... or should we?
-                //DataStore.clear()
-                //first step is to save the routine to the data store
-
-                //we're probably gonna have to redo all this shit
-                //but here's the deal
-                //the routine we just edited should have some kind of id
-                //so first check if exists
-                DataStore.query(Routine, 'id').then(original => {
-                    if (original === undefined) {
-                        //need to save new routine to the user
-                        console.log('response undefined');
-                        DataStore.save(new Routine({
-                            //where the fuck is all this data we need
-                            routine: JSON.stringify(next.routines[next.current]),
-                            title: next.current,
-                            current: 0,
-                            userID: username
-
-
-                        }))
-                    } else {
-                        //need to update new routine
-                        DataStore.save(
-                            Routine.copyOf(original, updated => {
-                                updated.routine = JSON.stringify(next.routines[next.current]);
-                                updated.title = next.current;
-                            })
-                        )
-
-                    }
-                })
-
-
-                AsyncStorage.setItem('@routines', JSON.stringify({
-                    current: next.current,
-                    routines: next.routines,
-                }));
-            }
         }
 
         return next;
