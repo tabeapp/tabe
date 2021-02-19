@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useReducer } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FULL_COPY, ROUND_5 } from '../Utils/UtilFunctions';
-import RoutinesContext from './RoutinesProvider';
+import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
 import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
 
@@ -13,6 +13,7 @@ import { UserContext } from './UserProvider';
 
 export const WorkoutContext = React.createContext();
 
+//this needs to really be redone because routines was redone too
 const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
     const initState = {};
@@ -21,8 +22,7 @@ const WorkoutProvider = props => {
 
     const {username} = useContext(UserContext);
     //is this legal
-    const {current, routines} = useContext(RoutinesContext).routines;
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routines, routinesDispatch} = useContext(RoutinesContext);
 
     useEffect(() => {
         DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
@@ -44,7 +44,7 @@ const WorkoutProvider = props => {
         if(JSON.stringify(workout) !== '{}')
             return;
 
-        const r = FULL_COPY(routines[current]);
+        const r = FULL_COPY(routines.find(r => r.current === 1));
 
         console.log(r)
         let day = r.days[r.currentDay % r.time];

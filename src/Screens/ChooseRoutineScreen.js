@@ -4,7 +4,7 @@ import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
 import { FiveThreeOneDefault } from '../Assets/DefaultRoutines/FiveThreeOneDefault';
 import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
 import Words from '../Components/Simple/Words';
-import WorkoutContext from '../Contexts/WorkoutProvider';
+import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 

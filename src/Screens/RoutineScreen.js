@@ -2,7 +2,6 @@ import { TouchableOpacity, View } from 'react-native';
 import React, { useContext } from 'react';
 import Words from '../Components/Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import RoutinesContext from '../Contexts/RoutinesProvider';
 import { BLANK_ROUTINE } from '../Constants/DefaultRoutineInfo';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
@@ -10,6 +9,7 @@ import { STYLES } from '../Style/Values';
 import { Routine } from '../../models';
 import { DataStore } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
+import { RoutinesContext } from '../Contexts/RoutinesProvider';
 
 //this is for choosing a routine to edit, instead of jumping right in
 //crud operations on this level deserve server calls
