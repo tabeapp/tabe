@@ -42,7 +42,7 @@ const App = () => {
                 <WorkoutProvider>
 
                     <NavigationContainer>
-                        <Stack.Navigator initialRouteName="explore" screenOptions={{headerShown:false,
+                        <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false,
                             cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
                         }}>
                             <Stack.Screen name="home" component={HomeScreen}/>

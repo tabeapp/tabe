@@ -31,16 +31,30 @@ const RoutinesProvider = props => {
     //BETTER IDEA, USE DATA STORE
     useEffect(() => {
         //load routine from the magical datastore
-        DataStore.query(Routine).then(routines => {
+        DataStore.query(Routine, r => r.userID('eq', username)).then(routines => {
             console.log('routines', routines);
+
+            //temporary code to remove some dumb accidental entries
+            routines.forEach(routine => {
+                if(!routine.userID)
+                    DataStore.delete(Routine, r => r.id('eq', routine.id))
+            });
+
+
+            //take the routines and set them to the format we need
+            routinesDispatch(() => ({
+                //holy shit
+                routines: routines.map(routine => JSON.parse(routine.routine))
+
+            }));
         });
-        AsyncStorage.getItem('@routines').then(obj => {
+        /*AsyncStorage.getItem('@routines').then(obj => {
             //kinda weird, but this will just set the state to this load
             //it does work tho
             if(obj !== null)
                 routinesDispatch(() => JSON.parse(obj));
-        })
-        API.graphql(graphqlOperation(listRoutines, {
+        })*/
+        /*API.graphql(graphqlOperation(listRoutines, {
             userID: username,
             sortDirection: 'DESC',
             limit: 20,
@@ -49,7 +63,7 @@ const RoutinesProvider = props => {
             .then(res => {
                 //need to actually try this out
                 console.log(JSON.stringify(res));
-            });
+            });*/
     }, []);
 
     //you generate a routine, so it makes sense to have this here
