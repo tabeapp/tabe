@@ -210,7 +210,7 @@ const RoutineEditScreen = props => {
                         return prev;
                     });
 
-                    API.graphql(graphqlOperation(createRoutine, {
+                    /*API.graphql(graphqlOperation(createRoutine, {
                         input: {
                             userID: username,
                             title: newRoutine.title,
@@ -219,7 +219,7 @@ const RoutineEditScreen = props => {
                         }
                     })).then(res => {
                         console.log(JSON.stringify(res));
-                    })
+                    })*/
 
                     //for safe measure
                     setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);

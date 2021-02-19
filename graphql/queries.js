@@ -87,6 +87,21 @@ export const getEffort = /* GraphQL */ `
       country {
         id
         name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -94,6 +109,21 @@ export const getEffort = /* GraphQL */ `
       state {
         id
         name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -101,6 +131,21 @@ export const getEffort = /* GraphQL */ `
       city {
         id
         name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -108,6 +153,21 @@ export const getEffort = /* GraphQL */ `
       gym {
         id
         name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -133,6 +193,14 @@ export const listEfforts = /* GraphQL */ `
         country {
           id
           name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -140,6 +208,14 @@ export const listEfforts = /* GraphQL */ `
         state {
           id
           name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -147,6 +223,14 @@ export const listEfforts = /* GraphQL */ `
         city {
           id
           name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -154,6 +238,14 @@ export const listEfforts = /* GraphQL */ `
         gym {
           id
           name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -169,6 +261,28 @@ export const getLocation = /* GraphQL */ `
     getLocation(id: $id) {
       id
       name
+      superLocationID
+      superLocation {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -184,6 +298,21 @@ export const listLocations = /* GraphQL */ `
       items {
         id
         name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
