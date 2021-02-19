@@ -27,7 +27,7 @@ const RoutineScreen = props => {
     const deleteRoutine = async id => {
         //datastore actually makes this simple
         const toDelete = await DataStore.query(Routine, id);
-        DataStore.delete(toDelete);
+        DataStore.delete(Routine, toDelete);
     };
 
     const handleSetCurrent = async id => {
