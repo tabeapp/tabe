@@ -61,7 +61,7 @@ const RoutineScreen = props => {
                                 key={routine.id}
                                 onPress={() => {
                                     //set it in the context
-                                    routinesDispatch({path: 'editRoutine', value: FULL_COPY(routine.routine)});
+                                    routinesDispatch({path: 'editRoutine', value: JSON.parse(routine.routine)});
                                     /*send it off to routine editor*/
                                     props.navigation.navigate('routineedit');
                                 }}

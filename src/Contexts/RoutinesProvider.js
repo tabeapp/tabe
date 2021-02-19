@@ -54,22 +54,6 @@ const RoutinesProvider = props => {
 
                 }));
             });
-        /*AsyncStorage.getItem('@routines').then(obj => {
-            //kinda weird, but this will just set the state to this load
-            //it does work tho
-            if(obj !== null)
-                routinesDispatch(() => JSON.parse(obj));
-        })*/
-        /*API.graphql(graphqlOperation(listRoutines, {
-            userID: username,
-            sortDirection: 'DESC',
-            limit: 20,
-            nextToken: nextToken
-        }))
-            .then(res => {
-                //need to actually try this out
-                console.log(JSON.stringify(res));
-            });*/
     }, []);
 
     //you generate a routine, so it makes sense to have this here

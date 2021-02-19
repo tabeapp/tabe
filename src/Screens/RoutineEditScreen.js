@@ -48,14 +48,13 @@ const RoutineEditScreen = props => {
         return String.fromCharCode(code.charCodeAt(0)+1);
     };
 
-    const routine = useContext(RoutinesContext).routines.editRoutine;
-    console.log(routine);
+    const {editRoutine} = useContext(RoutinesContext);
     const {routinesDispatch} = useContext(RoutinesContext);
     //maybe i can do this shortcut?
     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
 
     //can i do this?
-    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime} = routine;
+    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime} = editRoutine;
 
     const addExercise = (k,ex) => {
         //should this part be done before
@@ -209,17 +208,6 @@ const RoutineEditScreen = props => {
                         //delete prev.editRoutine;
                         return prev;
                     });
-
-                    /*API.graphql(graphqlOperation(createRoutine, {
-                        input: {
-                            userID: username,
-                            title: newRoutine.title,
-                            current: 0,
-                            routine: JSON.stringify(newRoutine)
-                        }
-                    })).then(res => {
-                        console.log(JSON.stringify(res));
-                    })*/
 
                     //for safe measure
                     setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);
