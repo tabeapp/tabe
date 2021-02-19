@@ -27,7 +27,7 @@ const RoutinesProvider = props => {
     useEffect(() => {
         //load routine from the magical datastore
         //||r.current('eq', 1)) will get only current
-        console.log(username);
+        console.log('username', username);
         //sometimes the username filter works, sometimes not
         //maybe it needs subscription
         DataStore.query(Routine)//, r => r.userID('eq', username))
@@ -48,7 +48,8 @@ const RoutinesProvider = props => {
                     routines: routines
 
                 }));
-            });
+            })
+            .catch(err => console.log(err));
     }, []);
 
     //you generate a routine, so it makes sense to have this here

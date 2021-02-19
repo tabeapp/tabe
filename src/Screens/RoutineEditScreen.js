@@ -199,26 +199,36 @@ const RoutineEditScreen = props => {
                     //dont worry about routines dispatch, the subscription should update it
                     //existing
                     //if(id){
-                    DataStore.query(Routine, id).then(original => {
-                        if (original === undefined) {
-                            //need to save new routine to the user
-                            DataStore.save(new Routine({
-                                //where the fuck is all this data we need
-                                routine: JSON.stringify(newRoutine),
-                                title: newRoutine.title,
-                                current: 0,
-                                userID: username
-                            }))
-                        } else {
-                            //need to update new routine
-                            DataStore.save(
-                                Routine.copyOf(original, updated => {
-                                    updated.routine = JSON.stringify(newRoutine)
-                                    updated.title = newRoutine.title
-                                })
-                            );
-                        }
-                    });
+                    if(!id){
+                        DataStore.save(new Routine({
+                            routine: JSON.stringify(newRoutine),
+                            title: newRoutine.title,
+                            current: 0,
+                            userID: username
+                        }));
+                    }
+                    else{
+
+                        DataStore.query(Routine, id).then(original => {
+                            if (original === undefined) {
+                                //need to save new routine to the user
+                                DataStore.save(new Routine({
+                                    routine: JSON.stringify(newRoutine),
+                                    title: newRoutine.title,
+                                    current: 0,
+                                    userID: username
+                                }))
+                            } else {
+                                //need to update new routine
+                                DataStore.save(
+                                    Routine.copyOf(original, updated => {
+                                        updated.routine = JSON.stringify(newRoutine)
+                                        updated.title = newRoutine.title
+                                    })
+                                );
+                            }
+                        });
+                    }
 
                     props.navigation.navigate('routine');
                 }}
