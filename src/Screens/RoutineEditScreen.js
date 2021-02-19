@@ -17,9 +17,10 @@ import TopBar from "../Components/TopBar";
 import Row from "../Components/Row";
 import { STYLES } from "../Style/Values";
 import { REST_DAY } from "../Constants/Symbols";
-import { API, graphqlOperation } from "aws-amplify";
+import { API, DataStore, graphqlOperation } from "aws-amplify";
 import { createRoutine } from "../../graphql/mutations";
 import { UserContext } from "../Contexts/UserProvider";
+import { Routine } from "../../models";
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -49,12 +50,13 @@ const RoutineEditScreen = props => {
     };
 
     const {editRoutine} = useContext(RoutinesContext);
+    //consider making an edit routine dispatch just for editRoutine, this is annoying
     const {routinesDispatch} = useContext(RoutinesContext);
     //maybe i can do this shortcut?
     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
 
     //can i do this?
-    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime} = editRoutine;
+    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = editRoutine;
 
     const addExercise = (k,ex) => {
         //should this part be done before
@@ -182,7 +184,7 @@ const RoutineEditScreen = props => {
                 //rewriting this part to save to aws
                 onPressRight={() => {
                     //this is copied over, it's the save process
-                    const newRoutine = FULL_COPY(routine);
+                    const newRoutine = FULL_COPY(editRoutine);
                     newRoutine.currentDay = currentDay || 0;
                     newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
 
@@ -197,7 +199,44 @@ const RoutineEditScreen = props => {
                             y.selector = 0;
                     });
 
-                    routinesDispatch(prev => {
+                    //dont worry about routines dispatch, the subscription should update it
+                    //existing
+                    //if(id){
+                    DataStore.query(Routine, id).then(original => {
+                        if (original === undefined) {
+                            //need to save new routine to the user
+                            DataStore.save(new Routine({
+                                //where the fuck is all this data we need
+                                routine: JSON.stringify(newRoutine),
+                                title: newRoutine.title,
+                                current: 0,
+                                userID: username
+                            }))
+                        } else {
+                            //need to update new routine
+                            DataStore.save(
+                                Routine.copyOf(original, updated => {
+                                    updated.routine = JSON.stringify(newRoutine)
+                                    updated.title = newRoutine.title
+                                })
+                            )
+                        }
+                    })
+
+                    //}
+                    //new
+                    //else{
+                    //DataStore.save(Routine, new Routine({
+                    //routine: JSON.stringify(newRoutine),
+                    //title: newRoutine.title,
+                    //current: 0,
+                    //userID: username
+
+                    //}))
+
+                    //}
+
+                    /*routinesDispatch(prev => {
                         //if there is no current, set this to current
                         if(!prev.current)
                             prev.current = newRoutine.title;
@@ -207,10 +246,10 @@ const RoutineEditScreen = props => {
                         //why cant i do this?
                         //delete prev.editRoutine;
                         return prev;
-                    });
+                    });*/
 
                     //for safe measure
-                    setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);
+                    //setTimeout(() => routinesDispatch({type: 'setItem'}), 1000);
 
                     props.navigation.navigate('routine');
                 }}
