@@ -1,5 +1,5 @@
-import { EX_INFO } from "../Constants/DefaultExInfo";
-import { ROUND_5 } from "./UtilFunctions";
+import { EX_INFO } from '../Constants/DefaultExInfo';
+import { ROUND_5 } from './UtilFunctions';
 
 //does this even matter?
 //not too sure what to do, so roughly copying starting strengtsh

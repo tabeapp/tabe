@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { useEffect }  from 'react';
-import { Auth } from "aws-amplify";
+import React, { useEffect, useState } from 'react';
+import { Auth } from 'aws-amplify';
 
 export const UserContext = React.createContext();
 

@@ -1,17 +1,16 @@
-import React, { useContext, useState } from "react";
-import { StyleSheet, View, SafeAreaView, TouchableOpacity, Alert } from "react-native";
+import React, { useContext, useState } from 'react';
+import { Alert, TouchableOpacity, View } from 'react-native';
 
 import ExerciseCard from '../Components/Workout/ExerciseCard';
-import { PRIMARY } from '../Style/Theme';
-import Words from "../Components/Simple/Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import ExercisePicker from "../Components/Workout/ExercisePicker";
-import { DEFAULT_EX_WORKOUT } from "../Constants/DefaultExInfo";
-import { CURRENT, FAILURE } from "../Constants/Symbols";
-import RestTimer from "../Components/Workout/RestTimer";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
-import { STYLES } from "../Style/Values";
+import Words from '../Components/Simple/Words';
+import WorkoutContext from '../Contexts/WorkoutContext';
+import ExercisePicker from '../Components/Workout/ExercisePicker';
+import { DEFAULT_EX_WORKOUT } from '../Constants/DefaultExInfo';
+import { CURRENT, FAILURE } from '../Constants/Symbols';
+import RestTimer from '../Components/Workout/RestTimer';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
+import { STYLES } from '../Style/Values';
 
 const primaryColor = '#66d6f8';
 

@@ -1,14 +1,12 @@
-import React, {useContext} from 'react';
-import {TouchableOpacity, StyleSheet, View, SafeAreaView} from 'react-native';
-
-import { PRIMARY } from '../Style/Theme';
-import { SSDefault } from "../Assets/DefaultRoutines/SSDefault";
-import { FiveThreeOneDefault } from "../Assets/DefaultRoutines/FiveThreeOneDefault";
-import { MetallicaPPLDefault } from "../Assets/DefaultRoutines/MetallicaPPLDefault";
-import Words from "../Components/Simple/Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
+import React, { useContext } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SSDefault } from '../Assets/DefaultRoutines/SSDefault';
+import { FiveThreeOneDefault } from '../Assets/DefaultRoutines/FiveThreeOneDefault';
+import { MetallicaPPLDefault } from '../Assets/DefaultRoutines/MetallicaPPLDefault';
+import Words from '../Components/Simple/Words';
+import WorkoutContext from '../Contexts/WorkoutContext';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
 
 const primaryColor = '#66d6f8';
 

@@ -1,19 +1,16 @@
-import React, {useEffect, useState, useContext} from 'react';
-import { TextInput, View, SafeAreaView, TouchableOpacity } from 'react-native';
-
-import { PRIMARY } from '../Style/Theme';
-import Words from "../Components/Simple/Words";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
-import Row from "../Components/Simple/Row";
-import { STYLES } from "../Style/Values";
-import { API, Auth, graphqlOperation } from "aws-amplify";
-import { listPosts, listPostsSortedByTimestamp } from "../../graphql/queries";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { createComment, createLike, deleteLike } from "../../graphql/mutations";
-import { UserContext } from "../Contexts/UserProvider";
-import NavBar from "../Components/Navigation/NavBar";
-import Write from "../Components/Simple/Write";
+import React, { useContext, useEffect, useState } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import Words from '../Components/Simple/Words';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
+import Row from '../Components/Simple/Row';
+import { STYLES } from '../Style/Values';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listPosts } from '../../graphql/queries';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { createComment, createLike, deleteLike } from '../../graphql/mutations';
+import { UserContext } from '../Contexts/UserProvider';
+import Write from '../Components/Simple/Write';
 
 const primaryColor = '#66d6f8';
 

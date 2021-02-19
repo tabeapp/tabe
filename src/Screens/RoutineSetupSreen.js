@@ -1,14 +1,12 @@
-import React, { useContext, useState } from "react";
-import {TouchableOpacity, ScrollView, StyleSheet, View, SafeAreaView} from 'react-native';
-
-import { PRIMARY } from '../Style/Theme';
+import React, { useContext, useState } from 'react';
+import { ScrollView, View } from 'react-native';
 import NumericSelector from '../Components/Routine/NumericSelector';
-import Words from "../Components/Simple/Words";
-import WorkoutContext from "../Contexts/WorkoutContext";
-import RoutinesContext from "../Contexts/RoutinesProvider";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
-import Row from "../Components/Simple/Row";
+import Words from '../Components/Simple/Words';
+import WorkoutContext from '../Contexts/WorkoutContext';
+import RoutinesContext from '../Contexts/RoutinesProvider';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
+import Row from '../Components/Simple/Row';
 
 const primaryColor = '#66d6f8';
 

@@ -1,9 +1,8 @@
-import React from 'react';
-import { useContext, useReducer, useEffect }  from 'react';
-import { FULL_COPY } from "../Utils/UtilFunctions";
-import { DataStore } from "aws-amplify";
-import { UserContext } from "./UserProvider";
-import { Routine } from "../../models";
+import React, { useContext, useEffect, useReducer } from 'react';
+import { FULL_COPY } from '../Utils/UtilFunctions';
+import { DataStore } from 'aws-amplify';
+import { UserContext } from './UserProvider';
+import { Routine } from '../../models';
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re

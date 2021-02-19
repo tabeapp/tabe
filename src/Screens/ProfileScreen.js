@@ -1,22 +1,18 @@
-import { StyleSheet, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, {useEffect, useReducer, useState} from 'react';
-import NavBar from '../Components/Navigation/NavBar';
+import React, { useEffect, useReducer, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
-import WeightVisual from "../Utils/WeightVisual";
-import Words from "../Components/Simple/Words";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import SafeBorderNav from "../Components/Navigation/SafeBorderNav";
-import TopBar from "../Components/Navigation/TopBar";
-import Row from "../Components/Simple/Row";
-import { STYLES } from "../Style/Values";
-import { withAuthenticator } from "aws-amplify-react-native";
-import { API, graphqlOperation } from "aws-amplify";
-import { getFollowRelationship, listPostsBySpecificOwner } from "../../graphql/queries";
-import PostList from "../Components/Social/PostList";
-import { onCreatePost } from "../../graphql/subscriptions";
-import { Auth } from 'aws-amplify';
-import { createFollowRelationship, deleteFollowRelationship } from "../../graphql/mutations";
+import WeightVisual from '../Utils/WeightVisual';
+import Words from '../Components/Simple/Words';
+import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
+import TopBar from '../Components/Navigation/TopBar';
+import Row from '../Components/Simple/Row';
+import { STYLES } from '../Style/Values';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { getFollowRelationship, listPostsBySpecificOwner } from '../../graphql/queries';
+import PostList from '../Components/Social/PostList';
+import { onCreatePost } from '../../graphql/subscriptions';
+import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
 
 const liftMapping = {
     squat: 'orange',

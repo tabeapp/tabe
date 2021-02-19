@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useContext } from 'react';
-import {Modal, TouchableOpacity, View} from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Modal, TouchableOpacity } from 'react-native';
 import Words from '../Simple/Words';
 import { SafeAreaView } from 'react-navigation';
 import WorkoutContext from '../../Contexts/WorkoutContext';
-import { SEC_TO_TIME } from "../../Utils/UtilFunctions";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import ProgressCircle from "./ProgressCircle";
-import Row from "../Simple/Row";
+import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProgressCircle from './ProgressCircle';
+import Row from '../Simple/Row';
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})

@@ -1,13 +1,13 @@
-import React, { useContext } from "react";
-import { StyleSheet, Switch, TouchableOpacity, View } from "react-native";
-import NumericSelector from "./NumericSelector";
-import Words from "../Simple/Words";
-import SupersetEditor from "./SupersetEditor";
-import RoutinesContext from "../../Contexts/RoutinesProvider";
-import { FAILURE } from "../../Constants/Symbols";
-import Chooser from "../Simple/Chooser";
-import Row from "../Simple/Row";
-import { STYLES } from "../../Style/Values";
+import React, { useContext } from 'react';
+import { Switch, TouchableOpacity, View } from 'react-native';
+import NumericSelector from './NumericSelector';
+import Words from '../Simple/Words';
+import SupersetEditor from './SupersetEditor';
+import RoutinesContext from '../../Contexts/RoutinesProvider';
+import { FAILURE } from '../../Constants/Symbols';
+import Chooser from '../Simple/Chooser';
+import Row from '../Simple/Row';
+import { STYLES } from '../../Style/Values';
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)

@@ -1,5 +1,5 @@
-import { Alert, ScrollView, TouchableOpacity, StyleSheet, View } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import WorkoutEditor from '../Components/Routine/WorkoutEditor';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExInfo';
@@ -8,16 +8,16 @@ import ExerciseEditor from '../Components/Routine/ExerciseEditor';
 import RepSchemeEditor from '../Components/Routine/RepSchemeEditor';
 import RoutinesContext from '../Contexts/RoutinesProvider';
 import { FULL_COPY } from '../Utils/UtilFunctions';
-import Words from "../Components/Simple/Words";
-import Write from "../Components/Simple/Write";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
-import Row from "../Components/Simple/Row";
-import { STYLES } from "../Style/Values";
-import { REST_DAY } from "../Constants/Symbols";
-import { DataStore } from "aws-amplify";
-import { UserContext } from "../Contexts/UserProvider";
-import { Routine } from "../../models";
+import Words from '../Components/Simple/Words';
+import Write from '../Components/Simple/Write';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
+import Row from '../Components/Simple/Row';
+import { STYLES } from '../Style/Values';
+import { REST_DAY } from '../Constants/Symbols';
+import { DataStore } from 'aws-amplify';
+import { UserContext } from '../Contexts/UserProvider';
+import { Routine } from '../../models';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want

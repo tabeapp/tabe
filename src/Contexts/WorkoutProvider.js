@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useReducer, useEffect, useContext }  from 'react';
-import { FULL_COPY, ROUND_5 } from "../Utils/UtilFunctions";
+import { FULL_COPY, ROUND_5 } from '../Utils/UtilFunctions';
 import RoutinesContext from './RoutinesProvider';
-import { CURRENT, FAILURE, NEW_PR, REST_DAY } from "../Constants/Symbols";
-import { WARMUP_WEIGHTS } from "../Utils/WarmupCalc";
+import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
+import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
 
-import { API, Auth, Storage, graphqlOperation } from "aws-amplify";
-import { createPost, createPostAndTimeline, createPostMedia } from "../../graphql/mutations";
-import {v4 as uuidv4} from 'uuid';
+import { API, Auth, graphqlOperation, Storage } from 'aws-amplify';
+import { createPostAndTimeline, createPostMedia } from '../../graphql/mutations';
+import { v4 as uuidv4 } from 'uuid';
 
 export const WorkoutContext = React.createContext();
 

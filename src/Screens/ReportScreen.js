@@ -1,17 +1,14 @@
-import React, {useEffect, useState, useContext} from 'react';
-import { Image, View, SafeAreaView, TouchableOpacity } from 'react-native';
-
-import { PRIMARY } from '../Style/Theme';
+import React, { useContext, useEffect, useState } from 'react';
+import { Image, TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import WorkoutContext from '../Contexts/WorkoutContext';
 import Write from '../Components/Simple/Write';
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import TopBar from "../Components/Navigation/TopBar";
-import Row from "../Components/Simple/Row";
-import { STYLES } from "../Style/Values";
-import { NavigationActions, } from "react-navigation";
-import { CommonActions, StackActions } from '@react-navigation/native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import SafeBorder from '../Components/Navigation/SafeBorder';
+import TopBar from '../Components/Navigation/TopBar';
+import Row from '../Components/Simple/Row';
+import { STYLES } from '../Style/Values';
+import { CommonActions } from '@react-navigation/native';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const primaryColor = '#66d6f8';
 

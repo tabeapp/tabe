@@ -1,7 +1,7 @@
 import React from 'react';
-import { SafeAreaView } from "react-native";
-import { PRIMARY } from "../../Style/Theme";
-import NavBar from "./NavBar";
+import { SafeAreaView } from 'react-native';
+import { PRIMARY } from '../../Style/Theme';
+import NavBar from './NavBar';
 //not really sure what to call this but I use this a lot
 
 

@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
-import { StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import React, { useContext } from 'react';
+import { Switch, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from '../Simple/Words';
-import RoutinesContext from "../../Contexts/RoutinesProvider";
-import Chooser from "../Simple/Chooser";
-import Row from "../Simple/Row";
-import { STYLES } from "../../Style/Values";
+import RoutinesContext from '../../Contexts/RoutinesProvider';
+import Chooser from '../Simple/Chooser';
+import Row from '../Simple/Row';
+import { STYLES } from '../../Style/Values';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)

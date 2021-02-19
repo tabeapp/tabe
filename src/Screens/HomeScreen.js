@@ -1,14 +1,14 @@
-import { TextInput, TouchableOpacity, FlatList, Alert, SafeAreaView, StyleSheet, View } from "react-native";
-import React, {useState, useReducer, useEffect} from 'react';
-import Words from "../Components/Simple/Words";
-import SafeBorderNav from "../Components/Navigation/SafeBorderNav";
-import TopBar from "../Components/Navigation/TopBar";
-import { STYLES } from "../Style/Values";
-import Write from "../Components/Simple/Write";
-import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createPost, createPostAndTimeline } from "../../graphql/mutations";
-import { listPostsSortedByTimestamp, listTimelines } from "../../graphql/queries";
-import { onCreatePost, onCreateTimeline } from "../../graphql/subscriptions";
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useReducer, useState } from 'react';
+import Words from '../Components/Simple/Words';
+import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
+import TopBar from '../Components/Navigation/TopBar';
+import { STYLES } from '../Style/Values';
+import Write from '../Components/Simple/Write';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { createPostAndTimeline } from '../../graphql/mutations';
+import { listTimelines } from '../../graphql/queries';
+import { onCreateTimeline } from '../../graphql/subscriptions';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';

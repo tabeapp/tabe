@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
-import { View, Dimensions, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import Video from 'react-native-video';
-import Post from "../Components/Social/Post";
+import Post from '../Components/Social/Post';
 
 //https://www.youtube.com/watch?v=TGg9WNLUZPc
 //also not bad https://www.youtube.com/watch?v=nvB3ZhHGsOE

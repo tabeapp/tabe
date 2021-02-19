@@ -1,19 +1,12 @@
-import React, {useState, useReducer, useEffect} from 'react';
-import { FlatList, TouchableOpacity, StyleSheet, View } from 'react-native';
-import NavBar from '../Components/Navigation/NavBar';
-import { PRIMARY } from '../Style/Theme';
-import Words from "../Components/Simple/Words";
-import SafeBorder from "../Components/Navigation/SafeBorder";
-import SafeBorderNav from "../Components/Navigation/SafeBorderNav";
-import TopBar from "../Components/Navigation/TopBar";
-import { STYLES } from "../Style/Values";
-import { withAuthenticator } from "aws-amplify-react-native";
-import Write from "../Components/Simple/Write";
-import { API, Auth, graphqlOperation } from "aws-amplify";
-import { createPost } from "../../graphql/mutations";
-import { listPosts, listPostsSortedByTimestamp, searchPosts } from "../../graphql/queries";
-import { onCreatePost } from "../../graphql/subscriptions";
-import PostList from "../Components/Social/PostList";
+import React, { useEffect, useReducer, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
+import TopBar from '../Components/Navigation/TopBar';
+import { STYLES } from '../Style/Values';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { listPostsSortedByTimestamp } from '../../graphql/queries';
+import { onCreatePost } from '../../graphql/subscriptions';
+import PostList from '../Components/Social/PostList';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
