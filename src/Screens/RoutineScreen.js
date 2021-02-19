@@ -13,36 +13,11 @@ import TopBar from "../Components/TopBar";
 import { STYLES } from "../Style/Values";
 
 //this is for choosing a routine to edit, instead of jumping right in
+//crud operations on this level deserve server calls
 const RoutineScreen = props => {
-    //const [current, setCurrent] = useState('');
-    /*const [routines, setRoutines] = useState([]);
-
-    //the routines will be saved under @routines
-    //there may be multiple
-    //the current routine will be @currentroutine
-    useEffect(() => {
-        AsyncStorage.getItem('@routines').then(obj => {
-            if(obj === null)
-                setRoutines([]);
-            else{
-                const r = JSON.parse(obj);
-                setRoutines(r.routines);
-                setCurrent(r.current);
-            }
-        });
-
-    }, []);*/
-    const {routines,current} = useContext(RoutinesContext).routines;
+    //why is it like this
+    const {routines} = useContext(RoutinesContext);
     const {routinesDispatch} = useContext(RoutinesContext);
-
-
-    //get the context done rn, and just hold on to a list of routines in the state
-
-    //should i have another fucking context for this
-    //maybe i should, cuz it needs to reload before it sees new routines
-    //yes this is exactly it
-    //or ill say fuck it and have this be its own context
-    //optimize this later once you figure out how to have multiple contexts
 
     const deleteRoutine = k => {
         //should probably have a warning, lol
@@ -76,41 +51,45 @@ const RoutineScreen = props => {
             <View style={STYLES.body}>
                 <View style={{width: '100%', alignItems: 'center'}}>
                     {
-                        Object.entries(routines).map(([k,v]) =>
+                        routines &&
+                        routines.map(routine =>
                             <TouchableOpacity
-                                key={k}
+                                key={routine.id}
                                 onPress={() => {
                                     //set it in the context
-                                    routinesDispatch({path: 'editRoutine', value: FULL_COPY(v)});
+                                    routinesDispatch({path: 'editRoutine', value: FULL_COPY(routine.routine)});
                                     /*send it off to routine editor*/
                                     props.navigation.navigate('routineedit');
                                 }}
                                 style={{flexDirection: 'row', width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
                             >
                                 <Words style={{fontSize: 20}}>{
-                                    v.title
+                                    routine.title
                                 }</Words>
                                 <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                    deleteRoutine(k);//
+                                    deleteRoutine(routine.id);//
                                 }}>
                                     <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                    handleSetCurrent(k)
+                                    handleSetCurrent(routine.id)
                                 }}>
                                     <Words style={{fontSize:20}}>
                                         Current:
                                         {
-                                            k === current &&
+                                            routine.current &&
                                             <Ionicons color={'green'} size={30} name={'checkbox'}/>
                                         }
                                         {
-                                            k !== current &&
+                                            !routine.current &&
                                             <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
                                         }
                                     </Words>
                                 </TouchableOpacity>
+                                <Words>
+                                    {routine.id}
+                                </Words>
                             </TouchableOpacity>
                         )
                     }

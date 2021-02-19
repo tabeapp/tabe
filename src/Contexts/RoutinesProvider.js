@@ -20,7 +20,7 @@ import { Routine } from "../../models";
 const RoutinesProvider = props => {
     const initState = {
         current: '',
-        routines: {},
+        routines: [],
         editRoutine: {}
     };
 
@@ -31,23 +31,29 @@ const RoutinesProvider = props => {
     //BETTER IDEA, USE DATA STORE
     useEffect(() => {
         //load routine from the magical datastore
-        DataStore.query(Routine, r => r.userID('eq', username)).then(routines => {
-            console.log('routines', routines);
+        //||r.current('eq', 1)) will get only current
+        console.log(username);
+        //sometimes the username filter works, sometimes not
+        //maybe it needs subscription
+        DataStore.query(Routine)//, r => r.userID('eq', username))
+            .then(routines => {
+                //console.log('routines', JSON.stringify(routines[0]));
 
-            //temporary code to remove some dumb accidental entries
-            routines.forEach(routine => {
-                if(!routine.userID)
-                    DataStore.delete(Routine, r => r.id('eq', routine.id))
+                //temporary code to remove some dumb accidental entries
+                routines.forEach(routine => {
+                    if(!routine.userID)
+                        DataStore.delete(Routine, r => r.id('eq', routine.id))
+                });
+
+                //take the routines and set them to the format we need
+                routinesDispatch(() => ({
+                    //holy shit
+                    //not that we need it, but this now has
+                    //current, userid, title, routine obj
+                    routines: routines
+
+                }));
             });
-
-
-            //take the routines and set them to the format we need
-            routinesDispatch(() => ({
-                //holy shit
-                routines: routines.map(routine => JSON.parse(routine.routine))
-
-            }));
-        });
         /*AsyncStorage.getItem('@routines').then(obj => {
             //kinda weird, but this will just set the state to this load
             //it does work tho
@@ -211,11 +217,12 @@ const RoutinesProvider = props => {
         return next;
     };
 
-    const [routines, routinesDispatch] = useReducer(routinesReducer, initState);
+    const [data, routinesDispatch] = useReducer(routinesReducer, initState);
 
     return (
         <RoutinesContext.Provider value={{
-            routines: routines,
+            routines: data.routines,
+            editRoutine: data.editRoutine,
             routinesDispatch: routinesDispatch,
 
             generateRoutine: generateRoutine
