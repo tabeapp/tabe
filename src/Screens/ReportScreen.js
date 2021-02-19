@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
-import WorkoutContext from '../Contexts/WorkoutContext';
+import WorkoutContext from '../Contexts/WorkoutProvider';
 import Write from '../Components/Simple/Write';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';

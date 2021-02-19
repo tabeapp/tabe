@@ -683,6 +683,49 @@ export const schema = {
                 }
             ]
         },
+        "CurrentWorkout": {
+            "name": "CurrentWorkout",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "data": {
+                    "name": "data",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "CurrentWorkouts",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                }
+            ]
+        },
         "FollowRelationship": {
             "name": "FollowRelationship",
             "fields": {
@@ -847,5 +890,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "ac3a1cf249b0e3130fd7eb1748ed22aa"
+    "version": "be41cc2fc854b9c6d3f6af10809dba17"
 };

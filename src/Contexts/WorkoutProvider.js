@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useReducer } from 'react';
+import React, { useState, useContext, useEffect, useReducer } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FULL_COPY, ROUND_5 } from '../Utils/UtilFunctions';
 import RoutinesContext from './RoutinesProvider';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
 import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
 
-import { API, Auth, graphqlOperation, Storage } from 'aws-amplify';
+import { API, Auth, DataStore, graphqlOperation, Storage } from 'aws-amplify';
 import { createPostAndTimeline, createPostMedia } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
+import { CurrentWorkout, Routine } from '../../models';
+import { UserContext } from './UserProvider';
 
 export const WorkoutContext = React.createContext();
 
@@ -15,11 +17,19 @@ const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
     const initState = {};
 
+    const [workoutId, setWorkoutId] = useState('');
+
+    const {username} = useContext(UserContext);
     //is this legal
     const {current, routines} = useContext(RoutinesContext).routines;
     const {routinesDispatch} = useContext(RoutinesContext);
 
     useEffect(() => {
+        DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
+            .then(res => {
+                console.log(res);
+
+            });
         AsyncStorage.getItem('@workout').then(obj => {
             //do we need to call generateReport here?
             if(obj !== null)
@@ -517,14 +527,6 @@ const WorkoutProvider = props => {
     const saveWorkout = async workoutData => {
         //finally clear it
         await AsyncStorage.removeItem('@workout');
-        AsyncStorage.getItem('@workouts', (_, result) => {
-            let workouts = [];
-            if(result !== null)
-                workouts = JSON.parse(result);
-
-            workouts.push(workoutData);
-            AsyncStorage.setItem('@workouts', JSON.stringify(workouts));
-        });
 
         //make a post to aws db, this is the first i implemented
         //lets see if it works
@@ -644,9 +646,6 @@ const WorkoutProvider = props => {
             AsyncStorage.setItem('@workout', JSON.stringify(x))
                 .then(() => {})
                 .catch(e => console.log(e));
-            //AsyncStorage.setItem('@workout', JSON.stringify( x )).catch(e => {
-            //console.log(e);
-            //});
             return x;
         }
 
@@ -688,11 +687,9 @@ const WorkoutProvider = props => {
         //if(action.type === 'setItem')
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
-        //AsyncStorage.setItem('@workout', JSON.stringify( x ));
         AsyncStorage.setItem('@workout', JSON.stringify(x))
             .then(() => {})
             .catch(e => console.log(e));
-        //}
 
         return x;
     };

@@ -404,6 +404,35 @@ export const listRoutines = /* GraphQL */ `
     }
   }
 `;
+export const getCurrentWorkout = /* GraphQL */ `
+  query GetCurrentWorkout($id: ID!) {
+    getCurrentWorkout(id: $id) {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCurrentWorkouts = /* GraphQL */ `
+  query ListCurrentWorkouts(
+    $filter: ModelCurrentWorkoutFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCurrentWorkouts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        data
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getLike = /* GraphQL */ `
   query GetLike($id: ID!) {
     getLike(id: $id) {

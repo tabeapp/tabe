@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Words from '../Simple/Words';
-import WorkoutContext from '../../Contexts/WorkoutContext';
+import WorkoutContext from '../../Contexts/WorkoutProvider';
 import { Auth } from 'aws-amplify';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 

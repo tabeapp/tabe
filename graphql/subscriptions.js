@@ -838,6 +838,39 @@ export const onDeleteRoutine = /* GraphQL */ `
     }
   }
 `;
+export const onCreateCurrentWorkout = /* GraphQL */ `
+  subscription OnCreateCurrentWorkout {
+    onCreateCurrentWorkout {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCurrentWorkout = /* GraphQL */ `
+  subscription OnUpdateCurrentWorkout {
+    onUpdateCurrentWorkout {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCurrentWorkout = /* GraphQL */ `
+  subscription OnDeleteCurrentWorkout {
+    onDeleteCurrentWorkout {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateLike = /* GraphQL */ `
   subscription OnCreateLike {
     onCreateLike {

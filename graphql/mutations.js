@@ -820,6 +820,48 @@ export const deleteRoutine = /* GraphQL */ `
     }
   }
 `;
+export const createCurrentWorkout = /* GraphQL */ `
+  mutation CreateCurrentWorkout(
+    $input: CreateCurrentWorkoutInput!
+    $condition: ModelCurrentWorkoutConditionInput
+  ) {
+    createCurrentWorkout(input: $input, condition: $condition) {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCurrentWorkout = /* GraphQL */ `
+  mutation UpdateCurrentWorkout(
+    $input: UpdateCurrentWorkoutInput!
+    $condition: ModelCurrentWorkoutConditionInput
+  ) {
+    updateCurrentWorkout(input: $input, condition: $condition) {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCurrentWorkout = /* GraphQL */ `
+  mutation DeleteCurrentWorkout(
+    $input: DeleteCurrentWorkoutInput!
+    $condition: ModelCurrentWorkoutConditionInput
+  ) {
+    deleteCurrentWorkout(input: $input, condition: $condition) {
+      id
+      userID
+      data
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createLike = /* GraphQL */ `
   mutation CreateLike(
     $input: CreateLikeInput!

@@ -91,6 +91,18 @@ type Routine
   updatedAt: String!
 }
 
+#this is for saving the current state of the workout
+#in case you want to sync between devices or so
+#a user will update and clear a single one of these objects
+type CurrentWorkout
+@model
+@key(name: "byUser", fields: ["userID"])
+{
+  id: ID!
+  userID: ID!
+  data: String!
+}
+
 type Like
 @model
 @key(name: "byParent", fields: ["parentID"])

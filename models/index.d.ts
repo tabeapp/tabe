@@ -95,6 +95,14 @@ export declare class Routine {
   static copyOf(source: Routine, mutator: (draft: MutableModel<Routine>) => MutableModel<Routine> | void): Routine;
 }
 
+export declare class CurrentWorkout {
+  readonly id: string;
+  readonly userID: string;
+  readonly data: string;
+  constructor(init: ModelInit<CurrentWorkout>);
+  static copyOf(source: CurrentWorkout, mutator: (draft: MutableModel<CurrentWorkout>) => MutableModel<CurrentWorkout> | void): CurrentWorkout;
+}
+
 export declare class FollowRelationship {
   readonly id: string;
   readonly followeeId: string;

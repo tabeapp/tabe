@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import WeightVisual from '../../Utils/WeightVisual';
 import SetCircle from './SetCircle';
 import Words from '../Simple/Words';
-import WorkoutContext from '../../Contexts/WorkoutContext';
+import WorkoutContext from '../../Contexts/WorkoutProvider';
 import { CURRENT } from '../../Constants/Symbols';
 import { PRIMARY } from '../../Style/Theme';
 import Row from '../Simple/Row';

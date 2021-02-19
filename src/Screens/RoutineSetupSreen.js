@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import Words from '../Components/Simple/Words';
-import WorkoutContext from '../Contexts/WorkoutContext';
+import WorkoutContext from '../Contexts/WorkoutProvider';
 import RoutinesContext from '../Contexts/RoutinesProvider';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
