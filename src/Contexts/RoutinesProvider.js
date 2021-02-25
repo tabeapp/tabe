@@ -24,6 +24,7 @@ const RoutinesProvider = props => {
     const {username} = useContext(UserContext);
 
     //hopeful this wont mess anythign up
+    //for some reason, starting a workout call this thing twice
     const reload = async () => {
         const routines = await DataStore.query(Routine)//, r => r.userID('eq', username))
         console.log('routines', routines);

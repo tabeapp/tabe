@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useReducer } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FULL_COPY, ROUND_5 } from '../Utils/UtilFunctions';
 import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
@@ -63,7 +62,6 @@ const WorkoutProvider = props => {
             updated.routineID = data.routineId || '';
         }));
         setOriginal(result);
-        console.log(result);
     };
 
     //so i guess state is the previous state
@@ -128,7 +126,6 @@ const WorkoutProvider = props => {
         return x;
     };
 
-    const [workout, workoutDispatch] = useReducer(workoutReducer, initState);
 
     //step 1 this use effect should be all set
     useEffect(() => {
@@ -159,7 +156,9 @@ const WorkoutProvider = props => {
     //step 4, generating a workout
     const generateWorkout = () => {
         //comment this out to clear workout
-        if(JSON.stringify(workout) !== '{}')
+        console.log('generating workout', JSON.stringify(workout));
+        //for some reason workout can now be undefined
+        if(workout && JSON.stringify(workout) !== '{}')
             return;
 
         const current = getCurrent();
@@ -172,7 +171,7 @@ const WorkoutProvider = props => {
         }
 
         const routineId = current.id;
-        const r = FULL_COPY(current.routine);
+        const r = JSON.parse(current.routine);
 
         console.log(r)
         let day = r.days[r.currentDay % r.time];
@@ -274,24 +273,9 @@ const WorkoutProvider = props => {
             timer: 0,
             restStart: 0
         };
+        console.log('generated workout', workout);
         workoutDispatch(() => workout);
 
-        /*if(workoutId){
-            DataStore.save(new CurrentWorkout({
-                userID: username,
-                data: JSON.stringify(workout),
-                routineID: routineId
-            }))
-        }
-        else{
-            DataStore.query(CurrentWorkout, workoutId)
-                .then(original => {
-                    DataStore.save(CurrentWorkout.copyOf(original, updated => {
-                        updated.data = JSON.stringify(workout);
-                        updated.routineID = routineId;
-                    }))
-                })
-        }*/
     };
 
     const generateCustom = () => {
@@ -308,6 +292,7 @@ const WorkoutProvider = props => {
     }
 
     //can't avoid doing this
+    //jeez, it's almost as if this is more relevant to the routine and yhou should put it there TODO
     //step 3, right before workout
     const checkRest = () => {
         //if the current time is before the nextWorkout time, take a rest
@@ -422,12 +407,10 @@ const WorkoutProvider = props => {
     //only here cuz of the async storage
     const quitWorkout = () => {
         workoutDispatch(() => ({}));
-        AsyncStorage.removeItem('@workout');
     };
 
     const saveWorkout = async workoutData => {
         //finally clear it
-        await AsyncStorage.removeItem('@workout');
 
         //make a post to aws db, this is the first i implemented
         //lets see if it works
@@ -504,6 +487,7 @@ const WorkoutProvider = props => {
 
 
 
+    const [workout, workoutDispatch] = useReducer(workoutReducer, initState);
     return (
         <WorkoutContext.Provider value={{
             //during
