@@ -20,7 +20,7 @@ const repNumbers = {
 //this screen is used to input prs and bulid a custom routine based on another
 const RoutineSetupScreen = props => {
     const {generateRoutine} = useContext(RoutinesContext);
-    const {generateWorkout} = useContext(WorkoutContext);
+    const {createWorkout} = useContext(WorkoutContext);
 
     //the object will be sent
     let loadRoutine = props.route.params.routine;
@@ -46,7 +46,7 @@ const RoutineSetupScreen = props => {
         //generate a routine we're gonna do this in the contextprovider
         await generateRoutine(loadRoutine, maxEfforts);
 
-        generateWorkout();
+        createWorkout();
         //start the workout
         //navigate('workout')
         props.navigation.navigate('workout');

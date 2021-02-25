@@ -24,7 +24,7 @@ const iconMapping = {
 
 const NavBar = props => {
     const {routines} = useContext(RoutinesContext);
-    const {generateCustom, checkRest, generateWorkout} = useContext(WorkoutContext);
+    const {generateCustom, checkRest, createWorkout} = useContext(WorkoutContext);
 
     const currentPage = props.current;
     const handlePress = (r) => {
@@ -58,7 +58,7 @@ const NavBar = props => {
 
             if(!isRest){
                 //no it's possible it's already loaded
-                generateWorkout();
+                createWorkout();
                 props.navigation.navigate('workout');
             }
             else{
@@ -74,7 +74,7 @@ const NavBar = props => {
                         {
                             text: "Override",
                             onPress: () => {
-                                generateWorkout();
+                                createWorkout();
                                 props.navigation.navigate('workout');
                             },
                         }

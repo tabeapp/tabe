@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrentWorkout, Routine } from '../../models';
 import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
+import { generateWorkout } from '../Utils/GenerateWorkout';
 
 export const WorkoutContext = React.createContext();
 
@@ -154,7 +155,7 @@ const WorkoutProvider = props => {
     //heavy logic here, not much you can do with usereducer here
     //wonder if this could be a lambda function...
     //step 4, generating a workout
-    const generateWorkout = () => {
+    const createWorkout = async () => {
         //comment this out to clear workout
         console.log('generating workout', JSON.stringify(workout));
         //for some reason workout can now be undefined
@@ -173,109 +174,14 @@ const WorkoutProvider = props => {
         const routineId = current.id;
         const r = JSON.parse(current.routine);
 
-        console.log(r)
-        let day = r.days[r.currentDay % r.time];
-
-        while(day === REST_DAY){
-            r.currentDay++;
-            day = r.days[r.currentDay%r.time];
-        }
-
-        const exercises = r.workouts[day];
-
-        //just be careful about copying objects
-        const compiledExercises = [];
-        exercises.forEach(name => {
-            //wait til you hear about supersets
-            if(name.includes('/'))
-                return null;
-
-            const exInfo = r.info[name];
-            const setInfo = exInfo.setInfo;
-
-
-            let sets = [];
-            if(setInfo.type === 'Normal'){
-                sets = setInfo.sets.map(reps => ({
-                    reps: reps,
-                    progress: null,
-                    weight: exInfo.current
-                }));
-            }
-            else if(setInfo.type === 'Custom'){
-                //very complex, but it works
-                //selector is missing, I wonder why though
-                const custom = r.customSets[setInfo.scheme][setInfo.selector]
-
-                sets = custom.map(set => {
-                    let w;
-                    if(set['%'] === NEW_PR)
-                        //is this really the best place to store it?
-                        //no
-                        w = exInfo.current + 5;
-                    else
-                        w = ROUND_5(set['%'] / 100 * exInfo.current);
-
-                    return {
-                        reps: set.reps,
-                        progress : null,
-                        weight : w
-                    };
-                });
-
-            }
-            else if(setInfo.type === 'Sum'){
-                //TODO
-            }
-            else if(setInfo.type === 'Timed'){
-                //TODO
-            }
-
-            if(exInfo.amrap)
-                sets[sets.length-1].amrap = true;
-
-            //add a warmup as a separate exercise
-            if(exInfo.warmup){
-                //entirely based on first set weight
-                let warmupSets = WARMUP_WEIGHTS(name, sets[0].weight);
-
-                compiledExercises.push({
-                    name: name + '-Warmup',
-                    barbell: exInfo.barbell,
-                    sets: warmupSets,
-                    rest: 0//too much?
-                });
-            }
-
-            compiledExercises.push({
-                name: name,
-                barbell: exInfo.barbell,
-                sets: sets,
-                rest: exInfo.rest
-            });
-
-            //return;
-
-        });
-        compiledExercises[0].sets[0].progress = CURRENT;
+        const {routine, workout} = await generateWorkout(r);
 
         //this looks fine
-        updateRoutine(routineId, r);
+        updateRoutine(routineId, routine);
 
-        const workout = {
-            title: r.title + ' ' + day,
-            exercises: compiledExercises,
-            edit: false,
-            //very necessary for knowing which routine to progress
-            //hmmmm maybe there should be a mutuable routineid in workout...
-            routineId: routineId,
-            //are these even necessary
-            timer: 0,
-            restStart: 0
-        };
         console.log('generated workout', workout);
-        workoutDispatch(() => workout);
-
+        //hmmmm maybe there should be a mutuable routineid in workout...
+        workoutDispatch(() => ({...workout, routineId: routineId}));
     };
 
     const generateCustom = () => {
@@ -497,7 +403,7 @@ const WorkoutProvider = props => {
 
             //pre
             checkRest: checkRest,
-            generateWorkout: generateWorkout,
+            createWorkout: createWorkout,
             generateCustom: generateCustom,
 
             //after
