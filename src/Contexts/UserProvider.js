@@ -10,6 +10,7 @@ const UserProvider = props => {
     useEffect(() => {
         //hopefully this doesn't take long lol
         Auth.currentAuthenticatedUser().then(user => {
+            console.log(user.username);
             setUsername(user.username);
         })
     }, []);

@@ -132,6 +132,9 @@ const WorkoutProvider = props => {
 
     //step 1 this use effect should be all set
     useEffect(() => {
+        //kinda annoying but it wont work without the username
+        if(!username)
+            return;
         DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
             .then(res => {
                 console.log('current workout', res);
@@ -149,7 +152,7 @@ const WorkoutProvider = props => {
                     workoutDispatch(() => JSON.parse(res[0].data));
                 }
             });
-    }, []);
+    }, [username]);
 
     //heavy logic here, not much you can do with usereducer here
     //wonder if this could be a lambda function...
@@ -163,6 +166,7 @@ const WorkoutProvider = props => {
 
         //i'd think you return and not let this happen
         if(!current){
+            console.log('generating workout, current routine not found');
             generateCustom();
             return;
         }
