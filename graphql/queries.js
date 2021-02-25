@@ -410,6 +410,16 @@ export const getCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -426,6 +436,16 @@ export const listCurrentWorkouts = /* GraphQL */ `
         id
         userID
         data
+        routineID
+        routine {
+          id
+          userID
+          title
+          current
+          routine
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

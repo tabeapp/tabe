@@ -23,7 +23,7 @@ const iconMapping = {
 };
 
 const NavBar = props => {
-    const {current, routines} = useContext(RoutinesContext).routines;
+    const {routines} = useContext(RoutinesContext);
     const {generateCustom, checkRest, generateWorkout} = useContext(WorkoutContext);
 
     const currentPage = props.current;
@@ -51,7 +51,8 @@ const NavBar = props => {
 
     //need to fucking redo this whole thing too
     const routineStart = async () => {
-        if(routines[current]){
+        const currentR = routines.find(x => x.current === 1);
+        if(currentR){
             //if it's a rest day, ask for confirmation
             let isRest = checkRest();
 

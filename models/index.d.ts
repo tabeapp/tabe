@@ -99,6 +99,8 @@ export declare class CurrentWorkout {
   readonly id: string;
   readonly userID: string;
   readonly data: string;
+  readonly routineID: string;
+  readonly routine?: Routine;
   constructor(init: ModelInit<CurrentWorkout>);
   static copyOf(source: CurrentWorkout, mutator: (draft: MutableModel<CurrentWorkout>) => MutableModel<CurrentWorkout> | void): CurrentWorkout;
 }

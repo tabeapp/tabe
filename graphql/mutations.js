@@ -829,6 +829,16 @@ export const createCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -843,6 +853,16 @@ export const updateCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -857,6 +877,16 @@ export const deleteCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

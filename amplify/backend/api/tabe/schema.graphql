@@ -100,7 +100,9 @@ type CurrentWorkout
 {
   id: ID!
   userID: ID!
-  data: String!
+  data: AWSJSON!
+  routineID: ID!
+  routine: Routine @connection(fields: ["routineID"])
 }
 
 type Like

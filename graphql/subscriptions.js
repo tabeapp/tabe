@@ -844,6 +844,16 @@ export const onCreateCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -855,6 +865,16 @@ export const onUpdateCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -866,6 +886,16 @@ export const onDeleteCurrentWorkout = /* GraphQL */ `
       id
       userID
       data
+      routineID
+      routine {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

@@ -703,9 +703,29 @@ export const schema = {
                 "data": {
                     "name": "data",
                     "isArray": false,
-                    "type": "String",
+                    "type": "AWSJSON",
                     "isRequired": true,
                     "attributes": []
+                },
+                "routineID": {
+                    "name": "routineID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "routine": {
+                    "name": "routine",
+                    "isArray": false,
+                    "type": {
+                        "model": "Routine"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
                 }
             },
             "syncable": true,
@@ -890,5 +910,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "be41cc2fc854b9c6d3f6af10809dba17"
+    "version": "e2734a3e59fba7d7ac365fa8b60aa175"
 };
