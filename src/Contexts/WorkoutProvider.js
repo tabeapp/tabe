@@ -80,6 +80,7 @@ const WorkoutProvider = props => {
             //run action on state
             const x = invariantCheck(action(next));
             updateDataStore(x);
+            console.log(x);
 
             return x;
         }
@@ -124,6 +125,7 @@ const WorkoutProvider = props => {
 
         updateDataStore(x);
 
+        console.log(x);
         return x;
     };
 
@@ -157,9 +159,9 @@ const WorkoutProvider = props => {
     //step 4, generating a workout
     const createWorkout = async () => {
         //comment this out to clear workout
-        console.log('generating workout', JSON.stringify(workout));
+        console.log('generating workout', JSON.stringify(data));
         //for some reason workout can now be undefined
-        if(workout && JSON.stringify(workout) !== '{}')
+        if(data && JSON.stringify(data) !== '{}')
             return;
 
         const current = getCurrent();
@@ -222,7 +224,7 @@ const WorkoutProvider = props => {
     //this should be fine, but could be called generatepost
     const generateReport = () => {
         //just default for the report
-        if(!workout)
+        if(!data)
             return {
                 title: '',
                 summary: '',
@@ -230,12 +232,12 @@ const WorkoutProvider = props => {
             };
 
         let report = {};
-        report.title = workout.title;
+        report.title = data.title;
         //this seems to mess with graphQl?
         //report.time = new Date().getTime();//get current time;
 
         //now that we have workout-warmup, this is parsing incorrectly
-        report.exercises = workout.exercises.map(exercise => {
+        report.exercises = data.exercises.map(exercise => {
             if(exercise.name.includes('-Warmup'))
                 return {work: []}
 
@@ -300,10 +302,10 @@ const WorkoutProvider = props => {
 
         //this function needs cleanup, but this is basically how were gonna do it
         const current = routines.find(x => x.current === 1);
-        const {routine} = await analyzeWorkout(report, workout, current);
+        const {routine} = await analyzeWorkout(report, data, current);
 
         //and finally, save the thing
-        updateRoutine(workout.routineId, routine);
+        updateRoutine(data.routineId, routine);
         //routinesDispatch({
             //path: `routines.${workout.routine}`,
             //value: routine
@@ -393,11 +395,11 @@ const WorkoutProvider = props => {
 
 
 
-    const [workout, workoutDispatch] = useReducer(workoutReducer, initState);
+    const [data, workoutDispatch] = useReducer(workoutReducer, initState);
     return (
         <WorkoutContext.Provider value={{
             //during
-            workout: workout,
+            workout: data,//dont like this but workout seems to break it
             workoutDispatch: workoutDispatch,
             quitWorkout:quitWorkout,
 
