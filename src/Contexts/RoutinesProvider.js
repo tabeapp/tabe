@@ -3,6 +3,7 @@ import { FULL_COPY } from '../Utils/UtilFunctions';
 import { DataStore } from 'aws-amplify';
 import { UserContext } from './UserProvider';
 import { Routine } from '../../models';
+import { OpType } from '@aws-amplify/datastore';
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -22,6 +23,27 @@ const RoutinesProvider = props => {
 
     const {username} = useContext(UserContext);
 
+    //hopeful this wont mess anythign up
+    const reload = async () => {
+        const routines = await DataStore.query(Routine)//, r => r.userID('eq', username))
+        console.log('routines', routines);
+
+        //temporary code to remove some dumb accidental entries
+        routines.forEach(routine => {
+            if(!routine.userID)
+                DataStore.delete(Routine, r => r.id('eq', routine.id))
+        });
+
+        //take the routines and set them to the format we need
+        routinesDispatch(() => ({
+            //holy shit
+            //not that we need it, but this now has
+            //current, userid, title, routine obj
+            routines: routines
+
+        }));
+    }
+
     //initial load from storage
     //BETTER IDEA, USE DATA STORE
     useEffect(() => {
@@ -29,27 +51,15 @@ const RoutinesProvider = props => {
         //||r.current('eq', 1)) will get only current
         console.log('username', username);
         //sometimes the username filter works, sometimes not
-        //maybe it needs subscription
-        DataStore.query(Routine)//, r => r.userID('eq', username))
-            .then(routines => {
-                console.log('routines', routines);
 
-                //temporary code to remove some dumb accidental entries
-                routines.forEach(routine => {
-                    if(!routine.userID)
-                        DataStore.delete(Routine, r => r.id('eq', routine.id))
-                });
+        reload();
+        //maybe it needs subscription TODO yeah it does
+        const subscription = DataStore.observe(Routine).subscribe(msg => {
+            //just reload everything whenever something changes lol
+            reload();
+        });
 
-                //take the routines and set them to the format we need
-                routinesDispatch(() => ({
-                    //holy shit
-                    //not that we need it, but this now has
-                    //current, userid, title, routine obj
-                    routines: routines
-
-                }));
-            })
-            .catch(err => console.log(err));
+        return () => subscription.unsubscribe();
     }, []);
 
     //you generate a routine, so it makes sense to have this here
@@ -105,6 +115,7 @@ const RoutinesProvider = props => {
 
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
+    //maybe this should only be used for edit Routine
     const routinesReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
         //need deeper copy
@@ -158,12 +169,25 @@ const RoutinesProvider = props => {
 
     const [data, routinesDispatch] = useReducer(routinesReducer, initState);
 
+    const updateRoutine = async (routineId, routineData) => {
+        const original = await DataStore.query(Routine, routineId);
+        DataStore.save(Routine.copyOf(original, updated => {
+            updated.routine = JSON.stringify(routineData);
+        }));
+    };
+
+    const getCurrent = () => {
+        return data.routines.find(x => x.current === 1);
+    };
+
     return (
         <RoutinesContext.Provider value={{
             routines: data.routines,
             editRoutine: data.editRoutine,
             routinesDispatch: routinesDispatch,
 
+            getCurrent: getCurrent,
+            updateRoutine: updateRoutine,
             generateRoutine: generateRoutine
         }}>
             {props.children}

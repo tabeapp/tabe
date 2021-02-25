@@ -25,7 +25,7 @@ const WorkoutProvider = props => {
 
     const {username} = useContext(UserContext);
     //is this legal
-    const {routines, routinesDispatch} = useContext(RoutinesContext);
+    const {routines, updateRoutine, getCurrent} = useContext(RoutinesContext);
 
     //i guess like use effect?
     //this same logic shows up over and over again in the old code
@@ -57,7 +57,7 @@ const WorkoutProvider = props => {
         return next;
     };
 
-    const saveToDataStore = async data => {
+    const updateDataStore = async data => {
         const result = await DataStore.save(CurrentWorkout.copyOf(original, updated => {
             updated.data = JSON.stringify(data);
             updated.routineID = data.routineId || '';
@@ -80,7 +80,7 @@ const WorkoutProvider = props => {
         if(action.constructor === Function){
             //run action on state
             const x = invariantCheck(action(next));
-            saveToDataStore(x);
+            updateDataStore(x);
 
             return x;
         }
@@ -123,7 +123,7 @@ const WorkoutProvider = props => {
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
 
-        saveToDataStore(x);
+        updateDataStore(x);
 
         return x;
     };
@@ -134,7 +134,7 @@ const WorkoutProvider = props => {
     useEffect(() => {
         DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
             .then(res => {
-                console.log('workouts', res);
+                console.log('current workout', res);
                 if(!res[0]){
                     /*need to make new one*/
                     DataStore.save(new CurrentWorkout({
@@ -153,13 +153,13 @@ const WorkoutProvider = props => {
 
     //heavy logic here, not much you can do with usereducer here
     //wonder if this could be a lambda function...
-    //step 3, generating a workout
+    //step 4, generating a workout
     const generateWorkout = () => {
         //comment this out to clear workout
         if(JSON.stringify(workout) !== '{}')
             return;
 
-        const current = routines.find(x => x.current === 1);
+        const current = getCurrent();
 
         //i'd think you return and not let this happen
         if(!current){
@@ -257,12 +257,7 @@ const WorkoutProvider = props => {
         compiledExercises[0].sets[0].progress = CURRENT;
 
         //this looks fine
-        DataStore.query(Routine, routineId)
-            .then(original => {
-                DataStore.save(Routine.copyOf(original, updated => {
-                    updated.routine = JSON.stringify(r);
-                }))
-            });
+        updateRoutine(routineId, r);
 
         const workout = {
             title: r.title + ' ' + day,
@@ -309,32 +304,22 @@ const WorkoutProvider = props => {
     }
 
     //can't avoid doing this
+    //step 3, right before workout
     const checkRest = () => {
         //if the current time is before the nextWorkout time, take a rest
         const now = new Date().getTime();
         //even if this isn't initialized, it should work as it just returns the current day
-        const current = routines.find(x => x.current === 1);
+        const current = getCurrent();
         if(now < current.routine.nextWorkoutTime)
             return true;
 
         //if it's after, advance currentday until there's a workout
         //and return false
-        const r = FULL_COPY(current);
+        const r = JSON.parse(current.routine);
         while(r.days[r.currentDay%r.time] === REST_DAY)
             r.currentDay++;
 
-        /*routinesDispatch(prev => {
-            prev.routines[prev.current] = r;
-            return prev;
-        });*/
-
-        //this really should be a function in routine provider TODO
-        DataStore.query(Routine, current.id)
-            .then(original => {
-                DataStore.save(Routine.copyOf(original, updated => {
-                    updated.routine = JSON.stringify(r);
-                }))
-            });
+        updateRoutine(current.id, r);
 
         return false;
     };
@@ -423,10 +408,11 @@ const WorkoutProvider = props => {
         const {routine} = await analyzeWorkout(report, workout, current);
 
         //and finally, save the thing
-        routinesDispatch({
-            path: `routines.${workout.routine}`,
-            value: routine
-        });
+        updateRoutine(workout.routineId, routine);
+        //routinesDispatch({
+            //path: `routines.${workout.routine}`,
+            //value: routine
+        //});
     };
 
     //only here cuz of the async storage
