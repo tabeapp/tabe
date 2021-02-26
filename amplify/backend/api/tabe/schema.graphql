@@ -6,6 +6,20 @@ type User @model{
   posts: [Post] @connection(keyName: "byUser", fields: ["id"])
 }
 
+type UserLocation @model
+@key(name: "byUser", fields: ["userID"])
+{
+  userID: ID!
+  countryID: ID!
+  country: Location @connection(fields: ["countryID"])
+  stateID: ID!
+  state: Location @connection(fields: ["stateID"])
+  cityID: ID!
+  city: Location @connection(fields: ["cityID"])
+  gymID: ID!
+  gym: Location @connection(fields: ["gymID"])
+}
+
 type Post
 @model (subscriptions: {level: public})#, timestamps: {createdAt: "createdOn", updatedAt: "updatedOn"})
 @auth(rules:[

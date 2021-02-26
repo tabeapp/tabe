@@ -8,22 +8,6 @@ export const analyzeWorkout = async (report, workout, routine) => {
     ///----------------update user stats and get effort of workout ---------------
     //so first we look at the workout and break it up into efforts
     //efforts are linked to user, location, exercise, and weight
-    //finally, user info comes into play
-
-    //this is useless, we'll get max stats by looking at efforts by user
-    /*let userStats = await AsyncStorage.getItem('@userStats');
-    if(userStats === null)
-        userStats = {
-            'Bench': 0,
-            'Squat': 0,
-            'Deadlift': 0,
-            'Press': 0
-        };
-    else
-        userStats = JSON.parse(userStats);*/
-
-    //this is pretty cool, and will enable progress tracking
-    //just the max efforts per exercise, keep it simpler
     const workoutMaxes = {};
 
     console.log(report);
@@ -48,30 +32,6 @@ export const analyzeWorkout = async (report, workout, routine) => {
             });
         });
     }
-
-    /*const efforts = Object.entries(workoutMaxes).map([name, info] => new Effort({
-        ...info,//weight, reps, orm
-        exercise: name
-        //still need postid, userid, and locations
-        //so doing this in workout provider
-    }))*/
-
-    //again, gonna use efforts by user and created at for this
-    /*let statProgress = await AsyncStorage.getItem('@progress');
-    if(statProgress === null)
-        statProgress = [];
-    else
-        statProgress = JSON.parse(statProgress);
-
-    statProgress.push({
-        time: report.time,
-        stats: workoutMaxes
-    });
-    AsyncStorage.setItem('@progress', JSON.stringify(statProgress));
-
-    //console.log(statProgress[statProgress.length-1]);
-    AsyncStorage.setItem('@userStats', JSON.stringify(userStats));*/
-
     //----------------------------------------
 
     //the rest of this function involves progressing the routine
@@ -256,11 +216,5 @@ export const analyzeWorkout = async (report, workout, routine) => {
     return {
         efforts: workoutMaxes,
         routine: newRoutine
-    }
-
-    ///and finally, save the thing
-    //routinesDispatch({
-    //path: `routines.${workout.routine}`,
-    //value: newRoutine
-    //});
+    };
 }

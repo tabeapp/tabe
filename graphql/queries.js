@@ -75,6 +75,181 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getUserLocation = /* GraphQL */ `
+  query GetUserLocation($id: ID!) {
+    getUserLocation(id: $id) {
+      id
+      userID
+      countryID
+      country {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserLocations = /* GraphQL */ `
+  query ListUserLocations(
+    $filter: ModelUserLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        countryID
+        country {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getEffort = /* GraphQL */ `
   query GetEffort($id: ID!) {
     getEffort(id: $id) {

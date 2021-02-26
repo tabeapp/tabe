@@ -136,6 +136,309 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createUserLocation = /* GraphQL */ `
+  mutation CreateUserLocation(
+    $input: CreateUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    createUserLocation(input: $input, condition: $condition) {
+      id
+      userID
+      countryID
+      country {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserLocation = /* GraphQL */ `
+  mutation UpdateUserLocation(
+    $input: UpdateUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    updateUserLocation(input: $input, condition: $condition) {
+      id
+      userID
+      countryID
+      country {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserLocation = /* GraphQL */ `
+  mutation DeleteUserLocation(
+    $input: DeleteUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    deleteUserLocation(input: $input, condition: $condition) {
+      id
+      userID
+      countryID
+      country {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      stateID
+      state {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      cityID
+      city {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      gymID
+      gym {
+        id
+        name
+        superLocationID
+        superLocation {
+          id
+          name
+          superLocationID
+          superLocation {
+            id
+            name
+            superLocationID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const updatePost = /* GraphQL */ `
   mutation UpdatePost(
     $input: UpdatePostInput!

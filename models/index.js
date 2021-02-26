@@ -4,7 +4,7 @@ import { schema } from './schema';
 
 
 
-const { Post, PostMedia, User, Like, Comment, Effort, Location, Routine, CurrentWorkout, FollowRelationship, Timeline } = initSchema(schema);
+const { Post, PostMedia, User, Like, Comment, UserLocation, Location, Effort, Routine, CurrentWorkout, FollowRelationship, Timeline } = initSchema(schema);
 
 export {
   Post,
@@ -12,8 +12,9 @@ export {
   User,
   Like,
   Comment,
-  Effort,
+  UserLocation,
   Location,
+  Effort,
   Routine,
   CurrentWorkout,
   FollowRelationship,

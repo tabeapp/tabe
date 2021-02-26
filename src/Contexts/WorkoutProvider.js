@@ -256,7 +256,8 @@ const WorkoutProvider = props => {
         });
 
         //and finally, save the routine
-        updateRoutine(data.routineId, routine);
+        if(routine)
+            updateRoutine(data.routineId, routine);
     };
 
     //only here cuz of the async storage
