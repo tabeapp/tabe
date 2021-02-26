@@ -2,8 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const nearbyGyms = /* GraphQL */ `
-  query NearbyGyms($location: LocationInput!, $mi: Int) {
-    nearbyGyms(location: $location, mi: $mi) {
+  query NearbyGyms($location: LocationInput!, $km: Int) {
+    nearbyGyms(location: $location, km: $km) {
       items {
         id
         name
