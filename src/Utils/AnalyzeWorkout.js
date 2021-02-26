@@ -1,13 +1,17 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FULL_COPY, ROUND_5 } from './UtilFunctions';
+import { REPS_TO_REPS, ROUND_5 } from './UtilFunctions';
 import { FAILURE, REST_DAY } from '../Constants/Symbols';
 
+//this is one ridiculous refactoring
+//trying to make this whole thing a pure function
 export const analyzeWorkout = async (report, workout, routine) => {
-    //console.log(report);
 
     ///----------------update user stats and get effort of workout ---------------
+    //so first we look at the workout and break it up into efforts
+    //efforts are linked to user, location, exercise, and weight
     //finally, user info comes into play
-    let userStats = await AsyncStorage.getItem('@userStats');
+
+    //this is useless, we'll get max stats by looking at efforts by user
+    /*let userStats = await AsyncStorage.getItem('@userStats');
     if(userStats === null)
         userStats = {
             'Bench': 0,
@@ -16,48 +20,44 @@ export const analyzeWorkout = async (report, workout, routine) => {
             'Press': 0
         };
     else
-        userStats = JSON.parse(userStats);
+        userStats = JSON.parse(userStats);*/
 
     //this is pretty cool, and will enable progress tracking
+    //just the max efforts per exercise, keep it simpler
     const workoutMaxes = {};
+
+    console.log(report);
 
     if(report.exercises){
         report.exercises.forEach(ex => {
             const name = ex.name.split('-')[0];
-            //or do we want to track accessory PRs???
-            if(!(name in userStats))
-                return;
 
-            //calculate the largest 5rm for the day
-            let fiveRM = -1;
+            //calculate the largest 1rm for the day
+            let orm = -1;
 
             ex.work.forEach(info => {
                 //this has sets, weight, and reps
-                const repCount = info.reps > 10? 10 : info.reps
+                const calculatedOrm = REPS_TO_REPS(info.weight, info.reps, 1);
 
-                //just use the weight if there were 5 reps, otherwise formula
-                let calculated = repCount === 5?
-                    info.weight :
-                    6*(info.weight*(1+repCount/30))/7;
-
-                calculated = Math.floor(calculated);
-
-                if(calculated > fiveRM)
-                    fiveRM = calculated;
-
+                if(calculatedOrm > orm)
+                    workoutMaxes[name] = {
+                        weight: info.weight,
+                        reps: info.reps,
+                        orm: calculatedOrm,
+                    };
             });
-
-            //this would be a good place to detect PRs
-            //maybe this should be ran before showing the summary...
-            if(fiveRM > userStats[name])
-                userStats[name] = fiveRM;
-
-            //would be a good idea to save 5rm to some list, use later for graph
-            workoutMaxes[name] = fiveRM;
         });
     }
 
-    let statProgress = await AsyncStorage.getItem('@progress');
+    /*const efforts = Object.entries(workoutMaxes).map([name, info] => new Effort({
+        ...info,//weight, reps, orm
+        exercise: name
+        //still need postid, userid, and locations
+        //so doing this in workout provider
+    }))*/
+
+    //again, gonna use efforts by user and created at for this
+    /*let statProgress = await AsyncStorage.getItem('@progress');
     if(statProgress === null)
         statProgress = [];
     else
@@ -70,10 +70,18 @@ export const analyzeWorkout = async (report, workout, routine) => {
     AsyncStorage.setItem('@progress', JSON.stringify(statProgress));
 
     //console.log(statProgress[statProgress.length-1]);
-    AsyncStorage.setItem('@userStats', JSON.stringify(userStats));
+    AsyncStorage.setItem('@userStats', JSON.stringify(userStats));*/
 
     //----------------------------------------
 
+    //the rest of this function involves progressing the routine
+    //without a routine, just quit
+    //maybe all this should go to routineprovider?
+    //if no routine, just get the workout maxes
+    if(workout.routine === '')
+        return {
+            efforts: workoutMaxes
+        };
 
     //-------------------Increment linear progression-----------
     //also if you hit all the sets
@@ -82,13 +90,7 @@ export const analyzeWorkout = async (report, workout, routine) => {
 
     //so instead of current, we need to somehow indicate the routine the workout is based on
 
-    //the rest of this function involves progressing the routine
-    //without a routine, just quit
-    //maybe all this should go to routineprovider?
-    if(workout.routine === '')
-        return;
-
-    const newRoutine = FULL_COPY(routine.routine);
+    const newRoutine = JSON.parse(routine);
 
     console.log(newRoutine);
     console.log(workout);
@@ -252,12 +254,13 @@ export const analyzeWorkout = async (report, workout, routine) => {
     newRoutine.currentDay++;
 
     return {
+        efforts: workoutMaxes,
         routine: newRoutine
     }
 
     ///and finally, save the thing
     //routinesDispatch({
-        //path: `routines.${workout.routine}`,
-        //value: newRoutine
+    //path: `routines.${workout.routine}`,
+    //value: newRoutine
     //});
 }

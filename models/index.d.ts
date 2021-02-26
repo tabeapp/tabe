@@ -61,6 +61,8 @@ export declare class Effort {
   readonly userID: string;
   readonly exercise: string;
   readonly weight: number;
+  readonly reps: number;
+  readonly orm: number;
   readonly countryID: string;
   readonly country?: Location;
   readonly stateID: string;

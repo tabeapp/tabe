@@ -412,6 +412,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "reps": {
+                    "name": "reps",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "orm": {
+                    "name": "orm",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "countryID": {
                     "name": "countryID",
                     "isArray": false,
@@ -910,5 +924,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "e2734a3e59fba7d7ac365fa8b60aa175"
+    "version": "99d6ccfa3f23a67aeaba13c1b8219664"
 };

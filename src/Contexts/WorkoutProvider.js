@@ -7,7 +7,7 @@ import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
 import { API, Auth, DataStore, graphqlOperation, Storage } from 'aws-amplify';
 import { createPostAndTimeline, createPostMedia } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
-import { CurrentWorkout, Routine } from '../../models';
+import { CurrentWorkout, Effort, Routine } from '../../models';
 import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
@@ -229,18 +229,34 @@ const WorkoutProvider = props => {
 
     //this is the real meat and potatoes that handles this entire app
     //i guess put it here tomorrow, but you need to clear workout out of state & storage
-    const finalizeWorkout = async report => {
+    const finalizeWorkout = async (report, postID) => {
 
         //this function needs cleanup, but this is basically how were gonna do it
-        const current = routines.find(x => x.current === 1);
-        const {routine} = await analyzeWorkout(report, data, current);
+        const oldRoutine = routines.find(x => x.routineID === data.routineId).routine;
+        const {routine, efforts} = await analyzeWorkout(report, data, oldRoutine);
 
-        //and finally, save the thing
+        //take the efforts and turn them into actual efforts, upload them
+        const detailedEfforts = Object.keys(efforts).map(([name, info]) =>
+            new Effort({
+                ...info,
+                exercise: name,
+                userID: username,
+                postID: postID,
+                //countryID: ???,//need to get these from user, damn it
+                //stateID: ???,
+                //cityID: ???,
+                //gymID: ???,
+
+            })
+        );
+
+        //now how tf do you get rankings...
+        detailedEfforts.forEach(effort => {
+            DataStore.save(Effort, effort).then(res => console.log('effort saved', res));
+        });
+
+        //and finally, save the routine
         updateRoutine(data.routineId, routine);
-        //routinesDispatch({
-            //path: `routines.${workout.routine}`,
-            //value: routine
-        //});
     };
 
     //only here cuz of the async storage
@@ -248,7 +264,7 @@ const WorkoutProvider = props => {
         workoutDispatch(() => ({}));
     };
 
-    const saveWorkout = async workoutData => {
+    const saveWorkout = async (workoutData, report) => {
         //finally clear it
 
         //make a post to aws db, this is the first i implemented
@@ -279,6 +295,12 @@ const WorkoutProvider = props => {
         //should this be in the labmda function?
         //get the post id for later linking
         const postID = res.data.createPostAndTimeline.id;
+
+        //as it turns out, we really need this postID to build efforts
+        //so here we are
+        finalizeWorkout(report, postID);
+
+
         //upload the images to s3
 
 

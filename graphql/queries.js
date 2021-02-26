@@ -83,6 +83,8 @@ export const getEffort = /* GraphQL */ `
       userID
       exercise
       weight
+      reps
+      orm
       countryID
       country {
         id
@@ -189,6 +191,8 @@ export const listEfforts = /* GraphQL */ `
         userID
         exercise
         weight
+        reps
+        orm
         countryID
         country {
           id

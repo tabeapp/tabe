@@ -43,6 +43,8 @@ type Effort
   userID: ID!
   exercise: String!
   weight: Int!
+  reps: Int!
+  orm: Int!
   countryID: ID!
   country: Location @connection(fields: ["countryID"])
   stateID: ID!

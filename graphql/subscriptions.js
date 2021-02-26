@@ -342,6 +342,8 @@ export const onCreateEffort = /* GraphQL */ `
       userID
       exercise
       weight
+      reps
+      orm
       countryID
       country {
         id
@@ -443,6 +445,8 @@ export const onUpdateEffort = /* GraphQL */ `
       userID
       exercise
       weight
+      reps
+      orm
       countryID
       country {
         id
@@ -544,6 +548,8 @@ export const onDeleteEffort = /* GraphQL */ `
       userID
       exercise
       weight
+      reps
+      orm
       countryID
       country {
         id

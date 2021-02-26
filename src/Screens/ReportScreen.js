@@ -14,7 +14,7 @@ const primaryColor = '#66d6f8';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
-    const {workout, saveWorkout, createReport, finalizeWorkout} = useContext(WorkoutContext);
+    const {saveWorkout, createReport, finalizeWorkout} = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky
@@ -69,7 +69,7 @@ const ReportScreen = props => {
     const handleNext = () => {
         //idk what else to call this
         //but essentially increment progressing weights, look for prs, etc
-        finalizeWorkout(report);
+        //finalizeWorkout(report);
 
 
 
@@ -92,7 +92,7 @@ const ReportScreen = props => {
             data: JSON.stringify(report.exercises),
             media: media
 
-        });
+        }, report);
 
     };
 
