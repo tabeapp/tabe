@@ -7,7 +7,14 @@ import { Location, UserLocation } from '../../../models';
 import { DataStore } from 'aws-amplify';
 import Chooser from '../Simple/Chooser';
 
+const COUNTRY = 0;
+const STATE = 1;
+const CITY = 2;
+const GYM = 3;
+
 //i have absolutely no idea how to best do this
+//this is retarded, what if we just used user location to determine
+//country/state/city
 const LocationSelector = props => {
     //const location = [...useContext(UserContext).location];
     const [location, setLocation] = useState(['','','','']);
@@ -75,51 +82,79 @@ const LocationSelector = props => {
             .then(results => console.log(results) );
     }, [location])
 
+    const addLocationAtLevel = (level, name) => {
+        if(level === 0)
+            setCountries([...countries, name]);
+        else if(level === 1)
+            setStates([...states, name]);
+        else if(level === 2)
+            setCities([...cities, name]);
+        else if(level === 3)
+            setGyms([...gyms, name]);
 
-    return (
-        <View style={{height: 300}}>
-            <Row>
+        //also need to remember
+        if(level !== 0){
+            const superLocationID = location[level-1];
+            DataStore.save(new Location({
+                name: name,
+                superLocationID: superLocationID
+            }))
+        }
+    }
 
-                <Chooser
-                    style={{height: 100, width: 100}}
-                    itemStyle={{height: 100, width: 100}}
-                    selected={location[0]}
-                    onChange={(value) => {
-                        setLocation(prev => {
-                            const next = [...prev];
-                            next[0] = value;
-                            return next;
-                        })
-                    }}
-                    list={countries}
-                />
-                <TouchableOpacity onPress={() => {
-                    //lol this cannot be the best way to do this, im just lazy
-                    Alert.prompt(
-                        "Enter Country",
-                        "Enter New Country Name",
-                        [
-                            {
-                                text: 'Cancel',
-                                onPress: () => console.log('Cancel Pressed'),
-                                style: 'cancel'
-                            },
-                            {
-                                text: 'OK',
-                                onPress: name => setCountries([...countries, name])
-                            }
-                        ]
-                    )
-                }}>
-                    <Words>+</Words>
-                </TouchableOpacity>
-            </Row>
+
+    /*return (
+        <View style={{height: 500}}>
+            {
+                [countries, states, cities, gyms].map((l, index) =>
+                    <Row>
+                        <Chooser
+                            style={{height: 100, width: 100}}
+                            itemStyle={{height: 100, width: 100}}
+                            selected={location[index]}
+                            onChange={(value) => {
+                                setLocation(prev => {
+                                    const next = [...prev];
+                                    next[index] = value;
+                                    return next;
+                                })
+                            }}
+                            list={l}
+                        />
+                        <TouchableOpacity onPress={() => {
+                            //lol this cannot be the best way to do this, im just lazy
+                            Alert.prompt(
+                                "Enter Country",
+                                "Enter New Country Name",
+                                [
+                                    {
+                                        text: 'Cancel',
+                                        onPress: () => console.log('Cancel Pressed'),
+                                        style: 'cancel'
+                                    },
+                                    {
+                                        text: 'OK',
+                                        onPress: name => addLocationAtLevel(index, name)
+                                    }
+                                ]
+                            )
+                        }}>
+                            <Words>+</Words>
+                        </TouchableOpacity>
+                    </Row>
+                )
+
+            }
             <Row style={{height: 50}}>
                 {
                     location.map(l => <Words>{l}</Words>)
                 }
             </Row>
         </View>
+    );*/
+
+    return (
+        <View/>
     );
 };
 
