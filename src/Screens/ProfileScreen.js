@@ -14,6 +14,7 @@ import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
+import LocationSelector from '../Components/Social/LocationSelector';
 
 const liftMapping = {
     squat: 'orange',
@@ -46,6 +47,7 @@ const ProfileScreen = props => {
 
     //post loading bs part
     const currentUser = useContext(UserContext).username;
+    const {location} = useContext(UserContext);
 
     let userId = currentUser;
     if(props.route.params)
@@ -172,8 +174,12 @@ const ProfileScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'profile'}>
-            <TopBar title='Zyzz'/>
+            <TopBar title={userId}/>
             <View style={STYLES.body}>
+                {
+                    userId === currentUser &&
+                    <LocationSelector/>
+                }
                 <View>
                     {/*posts by user bs here*/}
                     <PostList

@@ -8,7 +8,7 @@ const UserProvider = props => {
     //is this legal
     const [username, setUsername] = useState('');
 
-    const [location, setLocation] = useState(['','','','']);
+    const [location, setLocation] = useState([null, null, null, null]);
 
     useEffect(() => {
         //hopefully this doesn't take long lol

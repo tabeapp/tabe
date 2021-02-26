@@ -534,6 +534,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySuperLocation",
+                        "fields": [
+                            "superLocationID"
+                        ]
+                    }
                 }
             ]
         },
@@ -1040,5 +1049,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "cba7c02c7d0d8b4368257f3c33f9d359"
+    "version": "2207b88fd057c6158526710b68c9ddb7"
 };

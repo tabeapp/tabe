@@ -73,6 +73,7 @@ type Effort
 type Location
 @model
 #just id for a key fine, right?
+@key(name: "bySuperLocation", fields: ["superLocationID"])
 {
   id: ID!
   name: String!
