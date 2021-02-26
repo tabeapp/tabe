@@ -6,6 +6,7 @@ import Words from '../Simple/Words';
 import { Location, UserLocation } from '../../../models';
 import { DataStore } from 'aws-amplify';
 import Geolocation from '@react-native-community/geolocation';
+import MapView from 'react-native-maps';
 
 import Chooser from '../Simple/Chooser';
 
@@ -173,17 +174,37 @@ const LocationSelector = props => {
         </View>
     );*/
 
+    const [coordinates, setCoordinates] = useState({latitude: 45, longitude: 70});
+
     useEffect(() => {
 
-        Geolocation.getCurrentPosition(info => console.log(info));
+        Geolocation.getCurrentPosition(info => {
+            setCoordinates({
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude
+            })
+        });
         //navigator.geolocation.getCurrentPosition(position => {
             //const location = JSON.stringify(position)
             //console.log(location);
         //})
     }, []);
 
+    const addGym = () => {
+        //see this for idea
+        //https://github.com/afshintalebi/react-native-map-picker/blob/master/src/LocationPicker.js
+
+    };
+
     return (
-        <View/>
+        <View>
+            <Words>{JSON.stringify(coordinates)}</Words>
+            <TouchableOpacity onPress={addGym}>
+                <Words>Add Gym</Words>
+            </TouchableOpacity>
+            <MapView
+                ></MapView>
+        </View>
     );
 };
 
