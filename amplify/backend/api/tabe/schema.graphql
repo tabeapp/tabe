@@ -20,6 +20,33 @@ type UserLocation @model
   gym: Location @connection(fields: ["gymID"])
 }
 
+#might rename these to be more generic later idk
+type Gym @model @searchable {
+  id: ID!
+  name: String!
+  location: Coordinates
+}
+
+type Coordinates {
+  lat: Float
+  lon: Float
+}
+
+input LocationInput{
+  lat: Float!
+  lon: Float!
+}
+
+type GymConnection {
+  items: [Gym]
+  total: Int
+  nextToken: String
+}
+
+type Query {
+  nearbyGyms(location: LocationInput!, km: Int): GymConnection
+}
+
 type Post
 @model (subscriptions: {level: public})#, timestamps: {createdAt: "createdOn", updatedAt: "updatedOn"})
 @auth(rules:[

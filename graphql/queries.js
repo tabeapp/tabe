@@ -1,6 +1,24 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const nearbyGyms = /* GraphQL */ `
+  query NearbyGyms($location: LocationInput!, $mi: Int) {
+    nearbyGyms(location: $location, mi: $mi) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        createdAt
+        updatedAt
+      }
+      total
+      nextToken
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -242,6 +260,41 @@ export const listUserLocations = /* GraphQL */ `
           }
           createdAt
           updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getGym = /* GraphQL */ `
+  query GetGym($id: ID!) {
+    getGym(id: $id) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listGyms = /* GraphQL */ `
+  query ListGyms(
+    $filter: ModelGymFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGyms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
         }
         createdAt
         updatedAt
@@ -717,6 +770,36 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
         updatedAt
       }
       nextToken
+    }
+  }
+`;
+export const searchGyms = /* GraphQL */ `
+  query SearchGyms(
+    $filter: SearchableGymFilterInput
+    $sort: SearchableGymSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchGyms(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
     }
   }
 `;

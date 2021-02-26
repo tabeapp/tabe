@@ -439,6 +439,57 @@ export const deleteUserLocation = /* GraphQL */ `
     }
   }
 `;
+export const createGym = /* GraphQL */ `
+  mutation CreateGym(
+    $input: CreateGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    createGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateGym = /* GraphQL */ `
+  mutation UpdateGym(
+    $input: UpdateGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    updateGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteGym = /* GraphQL */ `
+  mutation DeleteGym(
+    $input: DeleteGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    deleteGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const updatePost = /* GraphQL */ `
   mutation UpdatePost(
     $input: UpdatePostInput!

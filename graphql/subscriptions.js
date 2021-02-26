@@ -421,6 +421,48 @@ export const onDeleteUserLocation = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGym = /* GraphQL */ `
+  subscription OnCreateGym {
+    onCreateGym {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGym = /* GraphQL */ `
+  subscription OnUpdateGym {
+    onUpdateGym {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGym = /* GraphQL */ `
+  subscription OnDeleteGym {
+    onDeleteGym {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreatePost = /* GraphQL */ `
   subscription OnCreatePost {
     onCreatePost {

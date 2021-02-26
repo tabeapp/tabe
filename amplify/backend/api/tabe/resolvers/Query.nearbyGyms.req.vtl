@@ -1,0 +1,36 @@
+## Query.nearbyGyms.req.vtl
+## Objects of type Gym will be stored in the /gym index
+
+#set( $indexpath = "/gym/doc/_search" )
+#set( $distance = $util.defaultIfNull($ctx.args.km, 50) )
+{
+    "version": "2017-02-28",
+    "operation": "GET",
+    "path": "$indexPath.toLowerCase()",
+    "params": {
+        "body":{
+            #if( $context.args.nextToken )"search_after": ["$context.args.nextToken"], #end
+            "query": {
+                "bool": {
+                    "filter": {
+                        "geo_distance": {
+                            "distance" : "${distance}km",
+                            "distance_type": "arc",
+                            "coordinates" : $util.toJson($ctx.args.location)
+                        }
+                    }
+                }
+            }
+        },
+        "sort": [{
+            "_geo_distance": {
+                "location": $util.toJson($ctx.args.location),
+                "order", "asc",
+                "unit", "km",
+                "distance_type": "arc"
+            }
+        }]
+
+    }
+
+}
