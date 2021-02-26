@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {Picker, Modal, View, ScrollView, TouchableOpacity} from 'react-native';
+import {Alert, Picker, Modal, View, ScrollView, TouchableOpacity} from 'react-native';
 import Row from '../Simple/Row';
 import { UserContext } from '../../Contexts/UserProvider';
 import Words from '../Simple/Words';
@@ -9,11 +9,10 @@ import Chooser from '../Simple/Chooser';
 
 //i have absolutely no idea how to best do this
 const LocationSelector = props => {
-    const {location} = useContext(UserContext);
+    //const location = [...useContext(UserContext).location];
+    const [location, setLocation] = useState(['','','','']);
 
     const [earthId, setEarthId] = useState('');
-
-    const [countryModal, setCountryModal] = useState(false);
 
     const [countries, setCountries] = useState(['USA', 'France']);
     const [states, setStates] = useState([]);
@@ -77,24 +76,44 @@ const LocationSelector = props => {
     }, [location])
 
 
-    const chooseCountry = () => {
-        setCountryModal(true);
-
-    };
-
-
-
-
-
     return (
         <View style={{height: 300}}>
-            <Chooser
-                style={{height: 100, width: 100}}
-                itemStyle={{height: 100, width: 100}}
-                selected={'USA'}
-                onChange={() => {}}
-                list={countries}
-            />
+            <Row>
+
+                <Chooser
+                    style={{height: 100, width: 100}}
+                    itemStyle={{height: 100, width: 100}}
+                    selected={location[0]}
+                    onChange={(value) => {
+                        setLocation(prev => {
+                            const next = [...prev];
+                            next[0] = value;
+                            return next;
+                        })
+                    }}
+                    list={countries}
+                />
+                <TouchableOpacity onPress={() => {
+                    //lol this cannot be the best way to do this, im just lazy
+                    Alert.prompt(
+                        "Enter Country",
+                        "Enter New Country Name",
+                        [
+                            {
+                                text: 'Cancel',
+                                onPress: () => console.log('Cancel Pressed'),
+                                style: 'cancel'
+                            },
+                            {
+                                text: 'OK',
+                                onPress: name => setCountries([...countries, name])
+                            }
+                        ]
+                    )
+                }}>
+                    <Words>+</Words>
+                </TouchableOpacity>
+            </Row>
             <Row style={{height: 50}}>
                 {
                     location.map(l => <Words>{l}</Words>)
