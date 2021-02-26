@@ -5,6 +5,8 @@ import { UserContext } from '../../Contexts/UserProvider';
 import Words from '../Simple/Words';
 import { Location, UserLocation } from '../../../models';
 import { DataStore } from 'aws-amplify';
+import Geolocation from '@react-native-community/geolocation';
+
 import Chooser from '../Simple/Chooser';
 
 const COUNTRY = 0;
@@ -15,6 +17,24 @@ const GYM = 3;
 //i have absolutely no idea how to best do this
 //this is retarded, what if we just used user location to determine
 //country/state/city
+
+//ok so heres the plan
+//get user coordinates using react native packages
+//get list of closests gyms using this tutorial
+//https://gerard-sans.medium.com/finding-the-nearest-locations-around-you-using-aws-amplify-part-1-ee4d6a14eec9
+//allow user to choose a gym
+
+//also, let the user add their own gyms, (Locations)
+//they pick a long lat location using a map or whatever, then use google api to get country/state/city
+/*fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + myLat + ',' + myLon + '&key=' + myApiKey)
+    .then((response) => response.json())
+    .then((responseJson) => {
+        console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson));
+    })*/
+//if the city isn't already there, add it as a location
+//if the staet isn't already there, add it as a location
+//if the country isn't already there, add it as a lcoation
+//thus the gym gets linked to the country and state and city
 const LocationSelector = props => {
     //const location = [...useContext(UserContext).location];
     const [location, setLocation] = useState(['','','','']);
@@ -152,6 +172,15 @@ const LocationSelector = props => {
             </Row>
         </View>
     );*/
+
+    useEffect(() => {
+
+        Geolocation.getCurrentPosition(info => console.log(info));
+        //navigator.geolocation.getCurrentPosition(position => {
+            //const location = JSON.stringify(position)
+            //console.log(location);
+        //})
+    }, []);
 
     return (
         <View/>
