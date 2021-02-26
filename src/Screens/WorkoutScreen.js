@@ -12,9 +12,6 @@ import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 
-const primaryColor = '#66d6f8';
-
-//TODO how about actually adjusting the wieghts on the fly?
 const WorkoutScreen = props => {
     const {workout, workoutDispatch, quitWorkout} = useContext(WorkoutContext);
 

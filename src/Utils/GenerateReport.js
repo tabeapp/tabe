@@ -14,7 +14,7 @@ export const generateReport = (workout) => {
         }
     }
 
-    const report = {};
+    let report = {};
     report.title = workout.title;
     //this seems to mess with graphQl?
     //report.time = new Date().getTime();//get current time;
@@ -73,7 +73,9 @@ export const generateReport = (workout) => {
     x = x.substring(0, x.length-2);
     report.summary = x;
 
-    return report;
+    return {
+        report: report
+    };
 }
 
 

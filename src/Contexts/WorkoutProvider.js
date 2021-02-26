@@ -222,7 +222,6 @@ const WorkoutProvider = props => {
         return false;
     };
 
-    //this should be fine, but could be called generatepost
     const createReport = () => {
         const { report } = generateReport(data);
         return report;
