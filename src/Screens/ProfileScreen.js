@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
@@ -9,10 +9,11 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { getFollowRelationship, listPostsBySpecificOwner } from '../../graphql/queries';
+import { getFollowRelationship, listPosts } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
+import { UserContext } from '../Contexts/UserProvider';
 
 const liftMapping = {
     squat: 'orange',
@@ -44,15 +45,19 @@ const ProfileScreen = props => {
     const [userStats, setUserStats] = useState({});
 
     //post loading bs part
-    const {userId} = props.route.params;
+    const currentUser = useContext(UserContext).username;
+
+    let userId = currentUser;
+    if(props.route.params)
+        userId = props.route.params.userId;
 
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken = null) => {
-        const res = await API.graphql(graphqlOperation(listPostsBySpecificOwner, {
-            owner: userId,
+        const res = await API.graphql(graphqlOperation(listPosts, {
+            userID: userId,
             sortDirection: 'DESC',
             limit: 20,
             nextToken: nextToken
@@ -60,9 +65,9 @@ const ProfileScreen = props => {
         console.log(res);
         dispatch({
             type: type,
-            posts: res.data.listPostsBySpecificOwner.items
+            posts: res.data.listPosts.items
         })
-        setNextToken(res.data.listPostsBySpecificOwner.nextToken)
+        setNextToken(res.data.listPosts.nextToken)
         setIsLoading(false);
     };
     const getAdditionalPosts = () => {
@@ -70,7 +75,6 @@ const ProfileScreen = props => {
         getPosts(ADDITIONAL_QUERY, nextToken);
     };
 
-    const [currentUser, setCurrentUser] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
 
     const getIsFollowing = async ({followeeId, followerId}) => {
@@ -85,12 +89,12 @@ const ProfileScreen = props => {
     };
 
     useEffect(() => {
+        if(!currentUser || !userId)
+            return;
         const init = async () => {
-            const currentUser = await Auth.currentAuthenticatedUser();
-            setCurrentUser(currentUser);
 
             setIsFollowing(await getIsFollowing({
-                followeeId: userId, followerId: currentUser.username
+                followeeId: userId, followerId: currentUser
             }));
 
             getPosts(INITIAL_QUERY);
@@ -106,9 +110,9 @@ const ProfileScreen = props => {
             }
         });
         return () => subscription.unsubscribe();
-    }, [])
+    }, [currentUser, userId])
 
-    useEffect(() => {
+    /*useEffect(() => {
         //console.log('reloading progress ' + JSON.stringify(progress));
         AsyncStorage.getItem('@progress').then(val =>{
 
@@ -119,7 +123,7 @@ const ProfileScreen = props => {
         AsyncStorage.getItem('@userStats').then(val => {
             setUserStats(JSON.parse(val));
         });
-    }, []);
+    }, []);*/
 
     let timeStart = 0, timeEnd = 1, weightStart = 0, weightEnd = 1;
     if(progress[0]){
