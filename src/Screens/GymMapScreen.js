@@ -1,17 +1,14 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
-import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { listPostsSortedByTimestamp, nearbyGyms, searchGyms } from '../../graphql/queries';
-import { onCreatePost } from '../../graphql/subscriptions';
-import PostList from '../Components/Social/PostList';
+import { API, graphqlOperation } from 'aws-amplify';
+import { nearbyGyms,} from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
-import { SafeAreaView } from 'react-navigation';
+import Write from '../Components/Simple/Write';
 
 MapBoxGL.setAccessToken('pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ');
 
@@ -42,6 +39,10 @@ const GymMapScreen = props => {
     const [userCoordinates, setUserCoordinates] = useState([45, 70]);
     //this changes with view
     const [center, setCenter] = useState([ 45, 70]);
+
+    const [selectedGym, setSelectedGym] = useState(null);
+
+    const [newGym, setNewGym] = useState(null);
 
     //no subscription, just search whenever coords change
     useEffect(() => {
@@ -77,18 +78,45 @@ const GymMapScreen = props => {
 
     const pressOnGym = id => {
         console.log(id)
+        setSelectedGym(gyms[id]);
+        //yeah there probably should be a modal or something to see
 
     };
 
     const pressNewGym = feature => {
         const {coordinates} = feature.geometry;
+
+        //this is ok, this isn't a network request
+        //if you press on the map super close to an existing gym, just go to that gym
+        let closeGym = null;
+
+        Object.values(gyms).forEach(gym => {
+            //i know this .001 values aren't miles or kilometers, but hey they work
+            if((gym.location.lon - coordinates[0])**2 + (gym.location.lat - coordinates[1])**2 < .001**2)
+                closeGym = gym;
+        });
+
+        if(closeGym){
+            setSelectedGym(closeGym);
+            return;
+        }
+
         //lon, lat
         console.log(coordinates);
+
+        setNewGym({
+            name: 'New Gym',
+            location: {
+                lon: coordinates[1],
+                lat: coordinates[0]
+            }
+        })
+        //create gym draft
+        //we just need to get a  name, we have location{lon: lat}
 
     };
 
     const updateCenter = feature => {
-        console.log(feature);
 
         const bounds = feature.properties.visibleBounds;
         //there's gotta be somethign I can do with this
@@ -96,31 +124,58 @@ const GymMapScreen = props => {
         //only update if it's much different than the previous
         const nextCoords = feature.geometry.coordinates;
         //not perfect at all lol but one coordinates ~60 miles
-        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > .5**2){
-
-            console.log((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2);
-            console.log('updating center');
+        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > .5**2)
             setCenter(feature.geometry.coordinates);
-        }
-
     };
 
     return (
         <SafeBorder {...props} >
             <TopBar title='Gym Map'/>
-            <Modal visible={isLoading} transparent>
-                {/*kinda lazy loading indicator*/}
-                <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                    <Words>Loading...</Words>
-                </View>
-            </Modal>
+            {
+                selectedGym &&
+                <Modal transparent>
+                    <TouchableOpacity
+                        onPress={() => setSelectedGym(null)}
+                        style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}
+                    >
+                        <View style={{ backgroundColor: 'gray', width: '50%', height: '30%', alignItems: 'center'}}>
+                            <Words>{selectedGym.name}</Words>
+
+                            <Words>{/*some gym info*/JSON.stringify(selectedGym)}</Words>
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+            }
+            {
+                newGym &&
+                <Modal transparent>
+                    <TouchableOpacity
+                        onPress={() => setNewGym(null)}
+                        style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}
+                    >
+                        <View style={{ backgroundColor: 'gray', width: '50%', height: '30%', alignItems: 'center'}}>
+                            <Write
+                                style={{backgroundColor: 'black', height: 50, width: '100%'}}
+                                onChange={val => setNewGym({...newGym, name: val})}
+                                value={newGym.name}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </Modal>
+            }
+            {
+                /*kinda lazy loading indicator
+                <Modal visible={isLoading} transparent>
+                    <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
+                        <Words>Loading...</Words>
+                    </View>
+                </Modal>*/
+            }
             <View style={STYLES.body}>
                 <MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
                     styleURL={MapBoxGL.StyleURL.Dark}
                     showUserLocation={true}
-                    //centerCoordinate={userCoordinates}
-                    //zoomLevel={14}
                     onPress={pressNewGym}
                     onRegionDidChange={updateCenter}
                 >
