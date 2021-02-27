@@ -11,7 +11,13 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { Gym, UserLocation } from '../../models';
 import { UserContext } from '../Contexts/UserProvider';
-import { createGym, createRegion, createUserLocation, updateUserLocation } from '../../graphql/mutations';
+import {
+    createGym,
+    createRegion,
+    createUserLocation,
+    deleteUserLocation,
+    updateUserLocation,
+} from '../../graphql/mutations';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -243,32 +249,13 @@ const GymMapScreen = props => {
         //maybe have a way to check if the user has a gym in memory?
         //list, followed by create or update, could be an abstract method
 
-        const updateObj = async (findop, createop, updateop, searchKey, searchValue, newValue) => {
-            const find = await API.graphql(graphqlOperation(findop, {
-                filter: {
-                    [searchKey]: {
-                        eq: searchValue
-                    }
-                },
-                limit: 1
-            }));
-            if(find.data[findop].items.length === 0){
-                await API.graphql(graphqlOperation(createop, {
-                    input: {
-                        newValue
-                    }
-                }));
-            }
-            else{
-                await API.graphql(graphqlOperation(updateop), {
-                    input:{
-                        ...newValue,
-                        id: find.data[findop].items[0].id
-                    }
-                });
-            }
-        }
+        //that's fucking it
+        //while userlocation is a separate store, we're just gonna delete and make a new one
+        //thats because gymid is sorted on
+        //this is still cancer though
+        //could be a lambda potentially, dont want the user direclty modifyng userlocations
 
+        //get
         const userGym = await API.graphql(graphqlOperation(listUserLocations, {
             filter:{
                 userID: {
@@ -277,25 +264,22 @@ const GymMapScreen = props => {
             },
             limit: 1//should only be 1
         }));
-        if(userGym.data.listUserLocations.items.length === 0){
-
-            await API.graphql(graphqlOperation(createUserLocation, {
+        //delete
+        if(userGym.data.listUserLocations.items.length !== 0) {
+            await API.graphql(graphqlOperation(deleteUserLocation, {
                 input: {
                     userID: username,
-                    gymID: selectedGym.id
+                    gymID: userGym.data.listUserLocations.items[0].gymID
                 }
             }));
         }
-        else {
-            const idk = await API.graphql(graphqlOperation(updateUserLocation, {
-                input: {
-                    userID: username,
-                    gymID: selectedGym.id
-                }
-            }));
-            console.log(idk);
-
-        }
+        //create
+        await API.graphql(graphqlOperation(createUserLocation, {
+            input: {
+                userID: username,
+                gymID: selectedGym.id
+            }
+        }));
 
         setSelectedGym(null);
 
@@ -327,7 +311,7 @@ const GymMapScreen = props => {
                         onPress={() => setSelectedGym(null)}
                         style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}
                     >
-                        <View style={{ backgroundColor: 'gray', width: '50%', height: '30%', alignItems: 'center'}}>
+                        <View style={{ backgroundColor: 'gray', width: '50%', alignItems: 'center'}}>
                             <Words>{selectedGym.name}</Words>
 
                             <Words>{/*some gym infoJSON.stringify(selectedGym)*/}</Words>
