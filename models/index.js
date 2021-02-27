@@ -4,9 +4,10 @@ import { schema } from './schema';
 
 
 
-const { Post, PostMedia, User, Like, Comment, UserLocation, Location, Effort, Routine, CurrentWorkout, FollowRelationship, Timeline } = initSchema(schema);
+const { Gym, Post, PostMedia, User, Like, Comment, UserLocation, Location, Effort, Routine, CurrentWorkout, FollowRelationship, Timeline, GymConnection, Coordinates } = initSchema(schema);
 
 export {
+  Gym,
   Post,
   PostMedia,
   User,
@@ -18,5 +19,7 @@ export {
   Routine,
   CurrentWorkout,
   FollowRelationship,
-  Timeline
+  Timeline,
+  GymConnection,
+  Coordinates
 };

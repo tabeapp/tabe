@@ -2,7 +2,26 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+export declare class GymConnection {
+  readonly items?: (Gym | null)[];
+  readonly total?: number;
+  readonly nextToken?: string;
+  constructor(init: ModelInit<GymConnection>);
+}
 
+export declare class Coordinates {
+  readonly lat?: number;
+  readonly lon?: number;
+  constructor(init: ModelInit<Coordinates>);
+}
+
+export declare class Gym {
+  readonly id: string;
+  readonly name: string;
+  readonly location?: Coordinates;
+  constructor(init: ModelInit<Gym>);
+  static copyOf(source: Gym, mutator: (draft: MutableModel<Gym>) => MutableModel<Gym> | void): Gym;
+}
 
 export declare class Post {
   readonly id: string;

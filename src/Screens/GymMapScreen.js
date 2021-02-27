@@ -2,13 +2,14 @@ import React, { useEffect, useReducer, useState } from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, DataStore } from 'aws-amplify';
 import { nearbyGyms,} from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
+import { Gym } from '../../models';
 
 MapBoxGL.setAccessToken('pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ');
 
@@ -45,12 +46,13 @@ const GymMapScreen = props => {
     const [newGym, setNewGym] = useState(null);
 
     //no subscription, just search whenever coords change
-    useEffect(() => {
+
+    const loadGyms = () => {
         setIsLoading(true);
         API.graphql(graphqlOperation(nearbyGyms, {
             location: {
+                lon: center[0],
                 lat: center[1],
-                lon: center[0]
             },
             //grr idk what to do with this
             km: 20
@@ -60,8 +62,9 @@ const GymMapScreen = props => {
                 dispatch({type: ADD_GYMS, gyms: results.data.nearbyGyms.items});
                 setIsLoading(false);
             });
+    };
 
-    }, [center]);
+    useEffect(loadGyms, [center]);
 
     useEffect(() => {
         Geolocation.getCurrentPosition(info => {
@@ -107,8 +110,8 @@ const GymMapScreen = props => {
         setNewGym({
             name: 'New Gym',
             location: {
-                lon: coordinates[1],
-                lat: coordinates[0]
+                lon: coordinates[0],
+                lat: coordinates[1]
             }
         })
         //create gym draft
@@ -126,6 +129,17 @@ const GymMapScreen = props => {
         //not perfect at all lol but one coordinates ~60 miles
         if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > .5**2)
             setCenter(feature.geometry.coordinates);
+    };
+
+    //take the new gym and save it to db
+    const addNewGym = async () => {
+        const res = await DataStore.save(new Gym({
+            ...newGym
+        }));
+        console.log(res);
+        dispatch({type: ADD_GYMS, gyms: [res]});
+        setNewGym(null);
+
     };
 
     return (
@@ -153,19 +167,25 @@ const GymMapScreen = props => {
                         onPress={() => setNewGym(null)}
                         style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}
                     >
-                        <View style={{ backgroundColor: 'gray', width: '50%', height: '30%', alignItems: 'center'}}>
+                        <View style={{ backgroundColor: 'gray', width: '50%', alignItems: 'center'}}>
                             <Write
                                 style={{backgroundColor: 'black', height: 50, width: '100%'}}
                                 onChange={val => setNewGym({...newGym, name: val})}
                                 value={newGym.name}
                             />
+                            <TouchableOpacity
+                                onPress={addNewGym}
+                                style={{backgroundColor: 'green', height: 50, width: '100%'}}
+                            >
+                                <Words>Add New Gym</Words>
+                            </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
                 </Modal>
             }
             {
-                /*kinda lazy loading indicator
-                <Modal visible={isLoading} transparent>
+                /*isLoading &&
+                <Modal transparent>
                     <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
                         <Words>Loading...</Words>
                     </View>
@@ -190,7 +210,7 @@ const GymMapScreen = props => {
                     {
                         gyms&&
                         Object.values(gyms).map(gym =>
-                            <MapBoxGL.PointAnnotation id={gym.id} coordinate={[gym.location.lon, gym.location.lat]}>
+                            <MapBoxGL.PointAnnotation id={gym.id} key={gym.id} coordinate={[gym.location.lon, gym.location.lat]}>
                                 <TouchableOpacity onPress={() => pressOnGym(gym.id)}>
                                     <Words style={{backgroundColor: 'green'}}>{gym.name}</Words>
                                 </TouchableOpacity>

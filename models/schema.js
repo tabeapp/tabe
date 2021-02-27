@@ -1,5 +1,45 @@
 export const schema = {
     "models": {
+        "Gym": {
+            "name": "Gym",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "Coordinates"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Gyms",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "searchable",
+                    "properties": {}
+                }
+            ]
+        },
         "Post": {
             "name": "Post",
             "fields": {
@@ -1048,6 +1088,55 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {},
-    "version": "2207b88fd057c6158526710b68c9ddb7"
+    "nonModels": {
+        "GymConnection": {
+            "name": "GymConnection",
+            "fields": {
+                "items": {
+                    "name": "items",
+                    "isArray": true,
+                    "type": {
+                        "model": "Gym"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "total": {
+                    "name": "total",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "nextToken": {
+                    "name": "nextToken",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        },
+        "Coordinates": {
+            "name": "Coordinates",
+            "fields": {
+                "lat": {
+                    "name": "lat",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lon": {
+                    "name": "lon",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "e295954b23338a437fb6a1d207115e89"
 };
