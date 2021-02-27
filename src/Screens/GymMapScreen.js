@@ -3,7 +3,7 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, DataStore } from 'aws-amplify';
-import { listRegions, nearbyGyms } from '../../graphql/queries';
+import { listRegions, listUserLocations, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -11,7 +11,7 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { Gym, UserLocation } from '../../models';
 import { UserContext } from '../Contexts/UserProvider';
-import { createGym, createRegion } from '../../graphql/mutations';
+import { createGym, createRegion, createUserLocation, updateUserLocation } from '../../graphql/mutations';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -239,9 +239,68 @@ const GymMapScreen = props => {
     };
 
     const joinGym = async () => {
+        //cant do create, it'll just make a new one
+        //maybe have a way to check if the user has a gym in memory?
+        //list, followed by create or update, could be an abstract method
+
+        const updateObj = async (findop, createop, updateop, searchKey, searchValue, newValue) => {
+            const find = await API.graphql(graphqlOperation(findop, {
+                filter: {
+                    [searchKey]: {
+                        eq: searchValue
+                    }
+                },
+                limit: 1
+            }));
+            if(find.data[findop].items.length === 0){
+                await API.graphql(graphqlOperation(createop, {
+                    input: {
+                        newValue
+                    }
+                }));
+            }
+            else{
+                await API.graphql(graphqlOperation(updateop), {
+                    input:{
+                        ...newValue,
+                        id: find.data[findop].items[0].id
+                    }
+                });
+            }
+        }
+
+        const userGym = await API.graphql(graphqlOperation(listUserLocations, {
+            filter:{
+                userID: {
+                    eq: username
+                }
+            },
+            limit: 1//should only be 1
+        }));
+        if(userGym.data.listUserLocations.items.length === 0){
+
+            await API.graphql(graphqlOperation(createUserLocation, {
+                input: {
+                    userID: username,
+                    gymID: selectedGym.id
+                }
+            }));
+        }
+        else {
+            const idk = await API.graphql(graphqlOperation(updateUserLocation, {
+                input: {
+                    userID: username,
+                    gymID: selectedGym.id
+                }
+            }));
+            console.log(idk);
+
+        }
+
+        setSelectedGym(null);
 
         //so i take it the @key in userlocation doesnt mean anything?
-        const res = await DataStore.query(UserLocation, ul => ul.userID('eq', username));
+        /*const res = await DataStore.query(UserLocation, ul => ul.userID('eq', username));
         console.log(res);
         //need to make a new UL for the user, assign it to the
         if(!res[0]){
@@ -254,7 +313,7 @@ const GymMapScreen = props => {
             DataStore.save(UserLocation.copyOf(res[0], updated => {
                 updated.gymID = selectedGym.id;
             })).then(() => setSelectedGym(null))
-        }
+        }*/
 
     }
 

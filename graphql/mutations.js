@@ -52,7 +52,6 @@ export const createUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     createUserLocation(input: $input, condition: $condition) {
-      id
       userID
       gymID
       gym {
@@ -79,7 +78,6 @@ export const updateUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     updateUserLocation(input: $input, condition: $condition) {
-      id
       userID
       gymID
       gym {
@@ -106,7 +104,6 @@ export const deleteUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     deleteUserLocation(input: $input, condition: $condition) {
-      id
       userID
       gymID
       gym {

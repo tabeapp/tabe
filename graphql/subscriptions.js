@@ -40,7 +40,6 @@ export const onDeleteUser = /* GraphQL */ `
 export const onCreateUserLocation = /* GraphQL */ `
   subscription OnCreateUserLocation {
     onCreateUserLocation {
-      id
       userID
       gymID
       gym {
@@ -64,7 +63,6 @@ export const onCreateUserLocation = /* GraphQL */ `
 export const onUpdateUserLocation = /* GraphQL */ `
   subscription OnUpdateUserLocation {
     onUpdateUserLocation {
-      id
       userID
       gymID
       gym {
@@ -88,7 +86,6 @@ export const onUpdateUserLocation = /* GraphQL */ `
 export const onDeleteUserLocation = /* GraphQL */ `
   subscription OnDeleteUserLocation {
     onDeleteUserLocation {
-      id
       userID
       gymID
       gym {
