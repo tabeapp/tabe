@@ -39,17 +39,17 @@ const GymMapScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     //this doesn't change unless user actually moves
-    const [userCoordinates, setUserCoordinates] = useState({latitude: 45, longitude: 70});
+    const [userCoordinates, setUserCoordinates] = useState([45, 70]);
     //this changes with view
-    const [coordinates, setCoordinates] = useState({latitude: 45, longitude: 70});
+    const [center, setCenter] = useState([ 45, 70]);
 
     //no subscription, just search whenever coords change
     useEffect(() => {
         setIsLoading(true);
         API.graphql(graphqlOperation(nearbyGyms, {
             location: {
-                lat: coordinates.latitude,
-                lon: coordinates.longitude
+                lat: center[1],
+                lon: center[0]
             },
             km: 20
 
@@ -60,18 +60,18 @@ const GymMapScreen = props => {
                 setIsLoading(false);
             });
 
-    }, [coordinates]);
+    }, [center]);
 
     useEffect(() => {
         Geolocation.getCurrentPosition(info => {
-            setUserCoordinates({
-                latitude: info.coords.latitude,
-                longitude: info.coords.longitude
-            });
-            setCoordinates({
-                latitude: info.coords.latitude,
-                longitude: info.coords.longitude
-            });
+            setUserCoordinates([
+                info.coords.longitude,
+                info.coords.latitude
+            ]);
+            setCenter([
+                info.coords.longitude,
+                info.coords.latitude
+            ]);
         });
     }, []);
 
@@ -87,28 +87,38 @@ const GymMapScreen = props => {
 
     };
 
+    const updateCenter = feature => {
+        //only update if it's much different than the previous
+        setCenter(feature.geometry.coordinates);
+        console.log('updating center');
+
+    };
+
     return (
         <SafeBorder {...props} >
             <TopBar title='Gym Map'/>
-            <Modal visible={isLoading}>
+            <Modal visible={isLoading} transparent>
                 {/*kinda lazy loading indicator*/}
-                <View style={{ backgroundColor: 'rgba(129,129,129,.4)', width: '100%', height: '100%' }}/>
+                <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
+                    <Words>Loading...</Words>
+                </View>
             </Modal>
             <View style={STYLES.body}>
                 <MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
                     styleURL={MapBoxGL.StyleURL.Dark}
                     showUserLocation={true}
-                    centerCoordinate={[coordinates.longitude, coordinates.latitude]}
-                    zoomLevel={14}
+                    //centerCoordinate={userCoordinates}
+                    //zoomLevel={14}
                     onPress={pressNewGym}
+                    onRegionDidChange={updateCenter}
                 >
                     <MapBoxGL.Camera
-                        centerCoordinate={[coordinates.longitude, coordinates.latitude]}
+                        centerCoordinate={userCoordinates}
                         zoomLevel={14}
                         animationDuration={0}
                     />
-                    <MapBoxGL.PointAnnotation id={'me'} coordinate={[userCoordinates.longitude, userCoordinates.latitude]}>
+                    <MapBoxGL.PointAnnotation id={'me'} coordinate={userCoordinates}>
                         <View style={{height: 30, width: 30, backgroundColor: 'blue'}}/>
                     </MapBoxGL.PointAnnotation>
                     {
