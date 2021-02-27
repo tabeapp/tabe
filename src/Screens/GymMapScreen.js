@@ -3,7 +3,7 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, DataStore } from 'aws-amplify';
-import { nearbyGyms,} from '../../graphql/queries';
+import { listRegions, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -11,6 +11,7 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { Gym, UserLocation } from '../../models';
 import { UserContext } from '../Contexts/UserProvider';
+import { createGym, createRegion } from '../../graphql/mutations';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -108,15 +109,18 @@ const GymMapScreen = props => {
         }
 
         //lon, lat
-        console.log(coordinates);
         //tapping on map will now load info for it
         const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
         let response = await fetch(geocodeURL);
         let obj = await response.json();
-        console.log(obj.features);
 
         //these are the regions we may need to add
-        const regionInfo = {};
+        //this is actually super imporant, these are the default values if nothign is found
+        const regionInfo = {
+            country: {id: 'emptyCountry', name: 'Empty'},
+            state: {id: 'emptyState', name: 'Empty'},
+            city: {id: 'emptyCity', name: 'Empty'},
+        };
         // sometimes poi wont return any features, just use the same query but types=address, limit=1
         //reload but using place(city) instead of poi
         if (obj.features.length === 0) {
@@ -169,7 +173,6 @@ const GymMapScreen = props => {
             },
             regionInfo: regionInfo
         })
-
     };
 
     const updateCenter = feature => {
@@ -186,12 +189,50 @@ const GymMapScreen = props => {
 
     //take the new gym and save it to db
     const addNewGym = async () => {
-        //FUCK DATASTORE, AT LEAST GRAPQHL GIVES REAL ERROR MESSAGES RATHER THAN SOME SYNC BS
-        //const res = await DataStore.save(new Gym({
-        ////dooes this no work?
-        //...newGym
-        //}));
-        //console.log(res);
+        const regions = newGym.regionInfo;
+        console.log()
+        //newGym has everything we need
+        //name, location, regionInfo
+        //lets go through regionInfo and ensure regions exist
+        //for(const level in ['country', 'state', 'city']
+        for(const level in regions){
+            const {id, name} = regions[level];
+            console.log(id, name);
+            //could we combine these into one graphql request?
+            const result = await API.graphql(graphqlOperation(listRegions, {
+                filter:{
+                    id: {
+                        eq: id
+                    }
+                },
+                limit: 1//should only be 1
+            }));
+            console.log(result);
+
+            //otherwise the region already exists, we're good to use the region id
+            if(result.data.listRegions.items.length === 0){
+                const regionCreate = await API.graphql(graphqlOperation(createRegion, {
+                    input: {
+                        id: id,
+                        name: name
+                    }
+                }));
+                console.log(regionCreate);
+            }
+        }
+
+        //at this point we're good to use the region ids
+        const gymResult = await API.graphql(graphqlOperation(createGym, {
+            input: {
+                name: newGym.name,
+                location: newGym.location,
+                countryID: regions.country.id,
+                stateID: regions.state.id,
+                cityID: regions.city.id,
+            }
+        }));
+        console.log(gymResult);
+
         //dispatch({type: ADD_GYMS, gyms: [res]});
         setNewGym(null);
 
