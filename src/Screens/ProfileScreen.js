@@ -14,7 +14,7 @@ import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
-import LocationSelector from '../Components/Social/LocationSelector';
+import Geolocation from '@react-native-community/geolocation';
 
 const liftMapping = {
     squat: 'orange',
@@ -171,6 +171,21 @@ const ProfileScreen = props => {
             setIsFollowing(false);
     };
 
+    const [coordinates, setCoordinates] = useState({latitude: 45, longitude: 70});
+
+    useEffect(() => {
+        Geolocation.getCurrentPosition(info => {
+            setCoordinates({
+                latitude: info.coords.latitude,
+                longitude: info.coords.longitude
+            })
+        });
+    }, []);
+
+    const addGym = () => {
+        //https://github.com/afshintalebi/react-native-map-picker/blob/master/src/LocationPicker.js
+        props.navigation.navigate('gymmap');
+    };
 
     return (
         <SafeBorderNav {...props} screen={'profile'}>
@@ -178,7 +193,12 @@ const ProfileScreen = props => {
             <View style={STYLES.body}>
                 {
                     userId === currentUser &&
-                    <LocationSelector/>
+                    <View>
+                        <Words>{JSON.stringify(coordinates)}</Words>
+                        <TouchableOpacity style={{height: 50}} onPress={addGym}>
+                            <Words>Add Gym</Words>
+                        </TouchableOpacity>
+                    </View>
                 }
                 <View>
                     {/*posts by user bs here*/}

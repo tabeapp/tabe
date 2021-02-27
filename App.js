@@ -24,6 +24,7 @@ import awsconfig from './aws-exports';
 import { withAuthenticator } from "aws-amplify-react-native";
 import TutorialScreen from "./src/Screens/TutorialScreen";
 import UserProvider from "./src/Contexts/UserProvider";
+import GymMapScreen from './src/Screens/GymMapScreen';
 Amplify.configure({
     ...awsconfig,
     Analytics: {
@@ -55,6 +56,7 @@ const App = () => {
                             <Stack.Screen name="routine" component={RoutineScreen}/>
                             <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
                             <Stack.Screen name="profile" component={ProfileScreen}/>
+                            <Stack.Screen name="gymmap" component={GymMapScreen}/>
                         </Stack.Navigator>
                     </NavigationContainer>
 
