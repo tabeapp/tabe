@@ -12,6 +12,7 @@ import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
 import { generateReport } from '../Utils/GenerateReport';
+import { getUserLocation, listUserLocations } from '../../graphql/queries';
 
 export const WorkoutContext = React.createContext();
 
@@ -235,6 +236,24 @@ const WorkoutProvider = props => {
         const oldRoutine = routines.find(x => x.routineID === data.routineId).routine;
         const {routine, efforts} = await analyzeWorkout(report, data, oldRoutine);
 
+        const res = await API.graphql(graphqlOperation(getUserLocation, {
+            input: {
+                //this should work, right?
+                userID: username
+            }
+        }));
+        //res.data.getUserLocation.gymID, ....gym.countryId, cityID, stateID
+        //is what you're lookign for
+        const ul = res.data.getUserLocation;
+
+        if(!ul){
+            //allow the user to pick a location?
+            //basically just load gym map screen
+            //more on this later
+        }
+
+        //we're just gonna copy the countryid, cityid, stateid to the effort, tey're just strings
+
         //take the efforts and turn them into actual efforts, upload them
         const detailedEfforts = Object.keys(efforts).map(([name, info]) =>
             new Effort({
@@ -243,10 +262,10 @@ const WorkoutProvider = props => {
                 userID: username,
                 postID: postID,
                 //countryID: ???,//need to get these from user, damn it
-                //stateID: ???,
-                //cityID: ???,
-                //gymID: ???,
-
+                countryID: ul.gym.countryID,
+                stateID: ul.gym.stateID,
+                cityID: ul.gym.cityID,
+                gymID: ul.gymID
             })
         );
 

@@ -54,8 +54,8 @@ export const listUsers = /* GraphQL */ `
   }
 `;
 export const getUserLocation = /* GraphQL */ `
-  query GetUserLocation($userID: ID!, $gymID: ID!) {
-    getUserLocation(userID: $userID, gymID: $gymID) {
+  query GetUserLocation($userID: ID!) {
+    getUserLocation(userID: $userID) {
       userID
       gymID
       gym {
@@ -79,7 +79,6 @@ export const getUserLocation = /* GraphQL */ `
 export const listUserLocations = /* GraphQL */ `
   query ListUserLocations(
     $userID: ID
-    $gymID: ModelIDKeyConditionInput
     $filter: ModelUserLocationFilterInput
     $limit: Int
     $nextToken: String
@@ -87,7 +86,6 @@ export const listUserLocations = /* GraphQL */ `
   ) {
     listUserLocations(
       userID: $userID
-      gymID: $gymID
       filter: $filter
       limit: $limit
       nextToken: $nextToken

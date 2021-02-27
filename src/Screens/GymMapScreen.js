@@ -3,7 +3,7 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, DataStore } from 'aws-amplify';
-import { listRegions, listUserLocations, nearbyGyms } from '../../graphql/queries';
+import { getRegion, getUserLocation, listRegions, listUserLocations, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -205,13 +205,10 @@ const GymMapScreen = props => {
             const {id, name} = regions[level];
             console.log(id, name);
             //could we combine these into one graphql request?
-            const result = await API.graphql(graphqlOperation(listRegions, {
-                filter:{
-                    id: {
-                        eq: id
-                    }
+            const result = await API.graphql(graphqlOperation(getRegion, {
+                input:{
+                    id: id
                 },
-                limit: 1//should only be 1
             }));
             console.log(result);
 
@@ -256,20 +253,15 @@ const GymMapScreen = props => {
         //could be a lambda potentially, dont want the user direclty modifyng userlocations
 
         //get
-        const userGym = await API.graphql(graphqlOperation(listUserLocations, {
-            filter:{
-                userID: {
-                    eq: username
-                }
-            },
-            limit: 1//should only be 1
+        const userGym = await API.graphql(graphqlOperation(getUserLocation, {
+            userID: username
         }));
+        console.log(userGym);
         //delete
-        if(userGym.data.listUserLocations.items.length !== 0) {
+        if(userGym.data.getUserLocation){
             await API.graphql(graphqlOperation(deleteUserLocation, {
                 input: {
                     userID: username,
-                    gymID: userGym.data.listUserLocations.items[0].gymID
                 }
             }));
         }
@@ -282,24 +274,7 @@ const GymMapScreen = props => {
         }));
 
         setSelectedGym(null);
-
-        //so i take it the @key in userlocation doesnt mean anything?
-        /*const res = await DataStore.query(UserLocation, ul => ul.userID('eq', username));
-        console.log(res);
-        //need to make a new UL for the user, assign it to the
-        if(!res[0]){
-            DataStore.save(new UserLocation({
-                userID: username,
-                gymID: selectedGym.id
-            })).then(() => setSelectedGym(null))
-        }
-        else{
-            DataStore.save(UserLocation.copyOf(res[0], updated => {
-                updated.gymID = selectedGym.id;
-            })).then(() => setSelectedGym(null))
-        }*/
-
-    }
+    };
 
     return (
         <SafeBorder {...props} >

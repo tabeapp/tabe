@@ -6,7 +6,8 @@ type User @model{
 }
 
 type UserLocation @model
-@key(fields: ["userID", "gymID"])
+@key(fields: ["userID"])
+@key(name: "byGym", fields: ["gymID"])
 {
   userID: ID!
   gymID: ID!
