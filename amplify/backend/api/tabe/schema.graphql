@@ -18,6 +18,20 @@ type Gym @model @searchable {
   id: ID!
   name: String!
   location: Coordinates
+  countryID: ID!
+  stateID: ID!
+  cityID: ID!
+  #country: Region @connection(fields: ["countryID"])
+  #state: Region @connection(fields: ["stateID"])
+  #city: Region @connection(fields: ["cityID"])
+}
+
+#essentially this is groups of gyms
+#right now i dont care about dover belongs to nh belongs to usa
+#a gym will belong to dover, belong to nh, and belong to usa
+type Region @model {
+  id: ID!
+  name: String!
 }
 
 type Coordinates {
@@ -80,13 +94,13 @@ type Effort
   reps: Int!
   orm: Int!
   countryID: ID!
-  country: Location @connection(fields: ["countryID"])
+  country: Region @connection(fields: ["countryID"])
   stateID: ID!
-  state: Location @connection(fields: ["stateID"])
+  state: Region @connection(fields: ["stateID"])
   cityID: ID!
-  city: Location @connection(fields: ["cityID"])
+  city: Region @connection(fields: ["cityID"])
   gymID: ID!
-  gym: Location @connection(fields: ["gymID"])
+  gym: Gym @connection(fields: ["gymID"])
   createdAt: String!
 }
 

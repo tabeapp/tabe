@@ -50,6 +50,9 @@ export const onCreateUserLocation = /* GraphQL */ `
           lat
           lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }
@@ -71,6 +74,9 @@ export const onUpdateUserLocation = /* GraphQL */ `
           lat
           lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }
@@ -92,6 +98,9 @@ export const onDeleteUserLocation = /* GraphQL */ `
           lat
           lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }
@@ -109,6 +118,9 @@ export const onCreateGym = /* GraphQL */ `
         lat
         lon
       }
+      countryID
+      stateID
+      cityID
       createdAt
       updatedAt
     }
@@ -123,6 +135,9 @@ export const onUpdateGym = /* GraphQL */ `
         lat
         lon
       }
+      countryID
+      stateID
+      cityID
       createdAt
       updatedAt
     }
@@ -137,6 +152,39 @@ export const onDeleteGym = /* GraphQL */ `
         lat
         lon
       }
+      countryID
+      stateID
+      cityID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateRegion = /* GraphQL */ `
+  subscription OnCreateRegion {
+    onCreateRegion {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRegion = /* GraphQL */ `
+  subscription OnUpdateRegion {
+    onUpdateRegion {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRegion = /* GraphQL */ `
+  subscription OnDeleteRegion {
+    onDeleteRegion {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -324,21 +372,6 @@ export const onCreateEffort = /* GraphQL */ `
       country {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -346,21 +379,6 @@ export const onCreateEffort = /* GraphQL */ `
       state {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -368,21 +386,6 @@ export const onCreateEffort = /* GraphQL */ `
       city {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -390,21 +393,13 @@ export const onCreateEffort = /* GraphQL */ `
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }
@@ -427,21 +422,6 @@ export const onUpdateEffort = /* GraphQL */ `
       country {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -449,21 +429,6 @@ export const onUpdateEffort = /* GraphQL */ `
       state {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -471,21 +436,6 @@ export const onUpdateEffort = /* GraphQL */ `
       city {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -493,21 +443,13 @@ export const onUpdateEffort = /* GraphQL */ `
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }
@@ -530,21 +472,6 @@ export const onDeleteEffort = /* GraphQL */ `
       country {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -552,21 +479,6 @@ export const onDeleteEffort = /* GraphQL */ `
       state {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -574,21 +486,6 @@ export const onDeleteEffort = /* GraphQL */ `
       city {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }
@@ -596,21 +493,13 @@ export const onDeleteEffort = /* GraphQL */ `
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
+        countryID
+        stateID
+        cityID
         createdAt
         updatedAt
       }

@@ -90,7 +90,7 @@ const GymMapScreen = props => {
     };
 
     const pressNewGym = async feature => {
-        const {coordinates} = feature.geometry;
+        const { coordinates } = feature.geometry;
 
         //this is ok, this isn't a network request
         //if you press on the map super close to an existing gym, just go to that gym
@@ -98,11 +98,11 @@ const GymMapScreen = props => {
 
         Object.values(gyms).forEach(gym => {
             //i know this .001 values aren't miles or kilometers, but hey they work
-            if((gym.location.lon - coordinates[0])**2 + (gym.location.lat - coordinates[1])**2 < .001**2)
+            if ((gym.location.lon - coordinates[0]) ** 2 + (gym.location.lat - coordinates[1]) ** 2 < .001 ** 2)
                 closeGym = gym;
         });
 
-        if(closeGym){
+        if (closeGym) {
             setSelectedGym(closeGym);
             return;
         }
@@ -111,54 +111,64 @@ const GymMapScreen = props => {
         console.log(coordinates);
         //tapping on map will now load info for it
         const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
-        const response = await fetch(geocodeURL);
+        let response = await fetch(geocodeURL);
         let obj = await response.json();
         console.log(obj.features);
 
+        //these are the regions we may need to add
+        const regionInfo = {};
         // sometimes poi wont return any features, just use the same query but types=address, limit=1
-        //reload but using address instead of poi
-        if(obj.features.length === 0){
-            const geocodeAddressURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=address&access_token=${MAPBOX_ACCESS_TOKEN}`;
-            obj = await fetch(geocodeAddressURL).json();
+        //reload but using place(city) instead of poi
+        if (obj.features.length === 0) {
+            const geocodeCityURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=place&access_token=${MAPBOX_ACCESS_TOKEN}`;
+            response = await fetch(geocodeCityURL);
+            obj = await response.json();
+
+            //the only thing is that we need to get the city info not from context
+            if (obj.features.length !== 0)
+                regionInfo.city = { id: obj.features[0].id, name: obj.features[0].text };
         }
 
-        //this even works for planet fitness
-        let gymSuggestion = obj.features.find(feat =>
-            feat.properties.category &&
-            feat.properties.category.includes('gym')
-        );
-        //if nothing is found, the user may be adding a home gym just use the first feature
-        if(!gymSuggestion)
-            gymSuggestion = obj.features[0];
+        let gymName = 'New Gym Name';
+        let gymCenter = coordinates;
 
-        //at this point we should be all set to make a sugggestion to the user
-        console.log(gymSuggestion.text);
-        console.log(gymSuggestion.center);
-        console.log(JSON.stringify(gymSuggestion.context));
+        //this will allow for workouts even without country
+        if (obj.features.length !== 0) {
+            //this even works for planet fitness
+            let gymSuggestion = obj.features.find(feat =>
+                feat.properties.category &&
+                feat.properties.category.includes('gym')
+            );
 
-        /*
-            most importantly, feature.context will give super regions
-            feature.context[2] has objects id and text, text being the city
-            feature.context[4] has object id and text, text being the state
-            feature.context[5] has objects id and text, text bieng teh country
-            save these ids when saving the gym, we can filter on efforts later
+            //if no gym is found, the user may be adding a home gym
+            //dont use the center coordinates or text, let the user add something new
+            if (gymSuggestion) {
+                gymName = gymSuggestion.text;
+                gymCenter = gymSuggestion.center;
+            }
 
-            that's for the us at least
-            for more general use, scan the context for ids starting with place, that'll be city
-            scan the context for ids starting with region, that'll be "state"
-            scan the context for ids starting with country, thatt'll be country
+            //but for city and state and country, uuse gymSugestion or the first feature
+            (gymSuggestion || obj.features[0]).context.forEach(area => {
+                const { id, text } = area;
+                if (id.startsWith('place.'))
+                    regionInfo.city = { id, name: text };
+                else if (id.startsWith('region.'))
+                    regionInfo.state = { id, name: text };
+                else if (id.startsWith('country.'))
+                    regionInfo.country = { id, name: text };
+            });
+        }
 
-         */
+        console.log(regionInfo);
 
         setNewGym({
-            name: gymSuggestion.text,
+            name: gymName,
             location: {
-                lon: gymSuggestion.center[0],
-                lat: gymSuggestion.center[1]
-            }
+                lon: gymCenter[0],
+                lat: gymCenter[1]
+            },
+            regionInfo: regionInfo
         })
-        //create gym draft
-        //we just need to get a  name, we have location{lon: lat}
 
     };
 

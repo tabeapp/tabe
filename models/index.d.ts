@@ -19,6 +19,9 @@ export declare class Gym {
   readonly id: string;
   readonly name: string;
   readonly location?: Coordinates;
+  readonly countryID: string;
+  readonly stateID: string;
+  readonly cityID: string;
   constructor(init: ModelInit<Gym>);
   static copyOf(source: Gym, mutator: (draft: MutableModel<Gym>) => MutableModel<Gym> | void): Gym;
 }
@@ -30,6 +33,7 @@ export declare class Post {
   readonly title?: string;
   readonly description?: string;
   readonly data?: string;
+  readonly userID: string;
   readonly user?: User;
   readonly likes?: (Like | null)[];
   readonly comments?: (Comment | null)[];
@@ -51,7 +55,6 @@ export declare class User {
   readonly username: string;
   readonly email: string;
   readonly image?: string;
-  readonly posts?: (Post | null)[];
   constructor(init: ModelInit<User>);
   static copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
 }
@@ -83,6 +86,13 @@ export declare class UserLocation {
   static copyOf(source: UserLocation, mutator: (draft: MutableModel<UserLocation>) => MutableModel<UserLocation> | void): UserLocation;
 }
 
+export declare class Region {
+  readonly id: string;
+  readonly name: string;
+  constructor(init: ModelInit<Region>);
+  static copyOf(source: Region, mutator: (draft: MutableModel<Region>) => MutableModel<Region> | void): Region;
+}
+
 export declare class Effort {
   readonly id: string;
   readonly postID: string;
@@ -92,13 +102,13 @@ export declare class Effort {
   readonly reps: number;
   readonly orm: number;
   readonly countryID: string;
-  readonly country?: Location;
+  readonly country?: Region;
   readonly stateID: string;
-  readonly state?: Location;
+  readonly state?: Region;
   readonly cityID: string;
-  readonly city?: Location;
+  readonly city?: Region;
   readonly gymID: string;
-  readonly gym?: Location;
+  readonly gym?: Gym;
   readonly createdAt: string;
   constructor(init: ModelInit<Effort>);
   static copyOf(source: Effort, mutator: (draft: MutableModel<Effort>) => MutableModel<Effort> | void): Effort;

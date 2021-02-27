@@ -25,6 +25,27 @@ export const schema = {
                     },
                     "isRequired": false,
                     "attributes": []
+                },
+                "countryID": {
+                    "name": "countryID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "stateID": {
+                    "name": "stateID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "cityID": {
+                    "name": "cityID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -92,6 +113,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "user": {
                     "name": "user",
                     "isArray": false,
@@ -101,8 +129,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetName": "userID"
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
                     }
                 },
                 "likes": {
@@ -282,20 +310,6 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
-                },
-                "posts": {
-                    "name": "posts",
-                    "isArray": true,
-                    "type": {
-                        "model": "Post"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "user"
-                    }
                 }
             },
             "syncable": true,
@@ -470,6 +484,33 @@ export const schema = {
                 }
             ]
         },
+        "Region": {
+            "name": "Region",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Regions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                }
+            ]
+        },
         "Effort": {
             "name": "Effort",
             "fields": {
@@ -533,7 +574,7 @@ export const schema = {
                     "name": "country",
                     "isArray": false,
                     "type": {
-                        "model": "Location"
+                        "model": "Region"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -553,7 +594,7 @@ export const schema = {
                     "name": "state",
                     "isArray": false,
                     "type": {
-                        "model": "Location"
+                        "model": "Region"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -573,7 +614,7 @@ export const schema = {
                     "name": "city",
                     "isArray": false,
                     "type": {
-                        "model": "Location"
+                        "model": "Region"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -593,7 +634,7 @@ export const schema = {
                     "name": "gym",
                     "isArray": false,
                     "type": {
-                        "model": "Location"
+                        "model": "Gym"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -1078,5 +1119,5 @@ export const schema = {
             }
         }
     },
-    "version": "3e5056968b31e36f79de2cc45bc82cf1"
+    "version": "ddbf3702a3562613bacd7d00bdcf8afa"
 };
