@@ -12,7 +12,8 @@ import Write from '../Components/Simple/Write';
 import { Gym, UserLocation } from '../../models';
 import { UserContext } from '../Contexts/UserProvider';
 
-MapBoxGL.setAccessToken('pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ');
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
+MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const ADD_GYMS = 'ADD_GYMS';
 
@@ -88,7 +89,7 @@ const GymMapScreen = props => {
 
     };
 
-    const pressNewGym = feature => {
+    const pressNewGym = async feature => {
         const {coordinates} = feature.geometry;
 
         //this is ok, this isn't a network request
@@ -108,12 +109,52 @@ const GymMapScreen = props => {
 
         //lon, lat
         console.log(coordinates);
+        //tapping on map will now load info for it
+        const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
+        const response = await fetch(geocodeURL);
+        let obj = await response.json();
+        console.log(obj.features);
+
+        // sometimes poi wont return any features, just use the same query but types=address, limit=1
+        //reload but using address instead of poi
+        if(obj.features.length === 0){
+            const geocodeAddressURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=address&access_token=${MAPBOX_ACCESS_TOKEN}`;
+            obj = await fetch(geocodeAddressURL).json();
+        }
+
+        //this even works for planet fitness
+        let gymSuggestion = obj.features.find(feat =>
+            feat.properties.category &&
+            feat.properties.category.includes('gym')
+        );
+        //if nothing is found, the user may be adding a home gym just use the first feature
+        if(!gymSuggestion)
+            gymSuggestion = obj.features[0];
+
+        //at this point we should be all set to make a sugggestion to the user
+        console.log(gymSuggestion.text);
+        console.log(gymSuggestion.center);
+        console.log(JSON.stringify(gymSuggestion.context));
+
+        /*
+            most importantly, feature.context will give super regions
+            feature.context[2] has objects id and text, text being the city
+            feature.context[4] has object id and text, text being the state
+            feature.context[5] has objects id and text, text bieng teh country
+            save these ids when saving the gym, we can filter on efforts later
+
+            that's for the us at least
+            for more general use, scan the context for ids starting with place, that'll be city
+            scan the context for ids starting with region, that'll be "state"
+            scan the context for ids starting with country, thatt'll be country
+
+         */
 
         setNewGym({
-            name: 'New Gym',
+            name: gymSuggestion.text,
             location: {
-                lon: coordinates[0],
-                lat: coordinates[1]
+                lon: gymSuggestion.center[0],
+                lat: gymSuggestion.center[1]
             }
         })
         //create gym draft
@@ -135,11 +176,13 @@ const GymMapScreen = props => {
 
     //take the new gym and save it to db
     const addNewGym = async () => {
-        const res = await DataStore.save(new Gym({
-            ...newGym
-        }));
-        console.log(res);
-        dispatch({type: ADD_GYMS, gyms: [res]});
+        //FUCK DATASTORE, AT LEAST GRAPQHL GIVES REAL ERROR MESSAGES RATHER THAN SOME SYNC BS
+        //const res = await DataStore.save(new Gym({
+        ////dooes this no work?
+        //...newGym
+        //}));
+        //console.log(res);
+        //dispatch({type: ADD_GYMS, gyms: [res]});
         setNewGym(null);
 
     };

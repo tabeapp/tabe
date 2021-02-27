@@ -13,36 +13,6 @@ export const createUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -58,36 +28,6 @@ export const updateUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -103,36 +43,6 @@ export const deleteUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -288,19 +198,6 @@ export const updatePost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -360,19 +257,6 @@ export const deletePost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -1165,9 +1049,6 @@ export const updateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1230,9 +1111,6 @@ export const deleteTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1290,19 +1168,6 @@ export const createPost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -1380,9 +1245,6 @@ export const createTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1445,19 +1307,6 @@ export const createPostAndTimeline = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {

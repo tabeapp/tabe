@@ -3,7 +3,6 @@ type User @model{
   username: String!
   email: String!
   image: String
-  posts: [Post] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type UserLocation @model
@@ -200,3 +199,4 @@ type Mutation{
     {allow: private, provider: userPools},
   ])
 }
+

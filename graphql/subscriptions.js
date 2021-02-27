@@ -10,36 +10,6 @@ export const onCreateUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -52,36 +22,6 @@ export const onUpdateUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -94,36 +34,6 @@ export const onDeleteUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -258,19 +168,6 @@ export const onCreatePost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -327,19 +224,6 @@ export const onUpdatePost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -396,19 +280,6 @@ export const onDeletePost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -1139,9 +1010,6 @@ export const onCreateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1201,9 +1069,6 @@ export const onUpdateTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1263,9 +1128,6 @@ export const onDeleteTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {

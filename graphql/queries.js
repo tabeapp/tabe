@@ -28,36 +28,6 @@ export const getUser = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      posts {
-        items {
-          type
-          id
-          media {
-            nextToken
-          }
-          title
-          description
-          data
-          userID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
-          likes {
-            nextToken
-          }
-          comments {
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
     }
   }
 `;
@@ -75,19 +45,6 @@ export const listUsers = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       nextToken
     }
@@ -708,9 +665,6 @@ export const listPosts = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -766,19 +720,6 @@ export const getPost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          items {
-            type
-            id
-            title
-            description
-            data
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
       }
       likes {
         items {
@@ -850,9 +791,6 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -921,9 +859,6 @@ export const searchPosts = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
@@ -1022,9 +957,6 @@ export const getTimeline = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          posts {
-            nextToken
-          }
         }
         likes {
           items {
