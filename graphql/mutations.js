@@ -144,90 +144,13 @@ export const createUserLocation = /* GraphQL */ `
     createUserLocation(input: $input, condition: $condition) {
       id
       userID
-      countryID
-      country {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      stateID
-      state {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      cityID
-      city {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       gymID
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
         createdAt
         updatedAt
@@ -245,90 +168,13 @@ export const updateUserLocation = /* GraphQL */ `
     updateUserLocation(input: $input, condition: $condition) {
       id
       userID
-      countryID
-      country {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      stateID
-      state {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      cityID
-      city {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       gymID
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
         createdAt
         updatedAt
@@ -346,90 +192,13 @@ export const deleteUserLocation = /* GraphQL */ `
     deleteUserLocation(input: $input, condition: $condition) {
       id
       userID
-      countryID
-      country {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      stateID
-      state {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      cityID
-      city {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       gymID
       gym {
         id
         name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
+        location {
+          lat
+          lon
         }
         createdAt
         updatedAt

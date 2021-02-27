@@ -431,66 +431,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "countryID": {
-                    "name": "countryID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "country": {
-                    "name": "country",
-                    "isArray": false,
-                    "type": {
-                        "model": "Location"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
-                "stateID": {
-                    "name": "stateID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "state": {
-                    "name": "state",
-                    "isArray": false,
-                    "type": {
-                        "model": "Location"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
-                "cityID": {
-                    "name": "cityID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "city": {
-                    "name": "city",
-                    "isArray": false,
-                    "type": {
-                        "model": "Location"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
                 "gymID": {
                     "name": "gymID",
                     "isArray": false,
@@ -502,7 +442,7 @@ export const schema = {
                     "name": "gym",
                     "isArray": false,
                     "type": {
-                        "model": "Location"
+                        "model": "Gym"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -525,62 +465,6 @@ export const schema = {
                         "name": "byUser",
                         "fields": [
                             "userID"
-                        ]
-                    }
-                }
-            ]
-        },
-        "Location": {
-            "name": "Location",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "superLocationID": {
-                    "name": "superLocationID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "superLocation": {
-                    "name": "superLocation",
-                    "isArray": false,
-                    "type": {
-                        "model": "Location"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                }
-            },
-            "syncable": true,
-            "pluralName": "Locations",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "bySuperLocation",
-                        "fields": [
-                            "superLocationID"
                         ]
                     }
                 }
@@ -774,6 +658,62 @@ export const schema = {
                             "gymID",
                             "exercise",
                             "weight"
+                        ]
+                    }
+                }
+            ]
+        },
+        "Location": {
+            "name": "Location",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "superLocationID": {
+                    "name": "superLocationID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "superLocation": {
+                    "name": "superLocation",
+                    "isArray": false,
+                    "type": {
+                        "model": "Location"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
+                }
+            },
+            "syncable": true,
+            "pluralName": "Locations",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySuperLocation",
+                        "fields": [
+                            "superLocationID"
                         ]
                     }
                 }
@@ -1138,5 +1078,5 @@ export const schema = {
             }
         }
     },
-    "version": "e295954b23338a437fb6a1d207115e89"
+    "version": "3e5056968b31e36f79de2cc45bc82cf1"
 };

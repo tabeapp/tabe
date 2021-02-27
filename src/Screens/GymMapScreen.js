@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
@@ -9,7 +9,8 @@ import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
-import { Gym } from '../../models';
+import { Gym, UserLocation } from '../../models';
+import { UserContext } from '../Contexts/UserProvider';
 
 MapBoxGL.setAccessToken('pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ');
 
@@ -30,6 +31,7 @@ const reducer = (state, action) => {
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const GymMapScreen = props => {
+    const {username} = useContext(UserContext);
     //not doing this here lol
     const [gyms, dispatch] = useReducer(reducer, {});
 
@@ -142,6 +144,26 @@ const GymMapScreen = props => {
 
     };
 
+    const joinGym = async () => {
+
+        //so i take it the @key in userlocation doesnt mean anything?
+        const res = await DataStore.query(UserLocation, ul => ul.userID('eq', username));
+        console.log(res);
+        //need to make a new UL for the user, assign it to the
+        if(!res[0]){
+            DataStore.save(new UserLocation({
+                userID: username,
+                gymID: selectedGym.id
+            })).then(() => setSelectedGym(null))
+        }
+        else{
+            DataStore.save(UserLocation.copyOf(res[0], updated => {
+                updated.gymID = selectedGym.id;
+            })).then(() => setSelectedGym(null))
+        }
+
+    }
+
     return (
         <SafeBorder {...props} >
             <TopBar title='Gym Map'/>
@@ -155,7 +177,14 @@ const GymMapScreen = props => {
                         <View style={{ backgroundColor: 'gray', width: '50%', height: '30%', alignItems: 'center'}}>
                             <Words>{selectedGym.name}</Words>
 
-                            <Words>{/*some gym info*/JSON.stringify(selectedGym)}</Words>
+                            <Words>{/*some gym infoJSON.stringify(selectedGym)*/}</Words>
+
+                            <TouchableOpacity
+                                onPress={joinGym}
+                                style={{backgroundColor: 'green', height: 50, width: '100%'}}
+                            >
+                                <Words>Join This Gym</Words>
+                            </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
                 </Modal>

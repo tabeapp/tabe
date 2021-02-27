@@ -77,25 +77,10 @@ export declare class Comment {
 export declare class UserLocation {
   readonly id: string;
   readonly userID: string;
-  readonly countryID: string;
-  readonly country?: Location;
-  readonly stateID: string;
-  readonly state?: Location;
-  readonly cityID: string;
-  readonly city?: Location;
   readonly gymID: string;
-  readonly gym?: Location;
+  readonly gym?: Gym;
   constructor(init: ModelInit<UserLocation>);
   static copyOf(source: UserLocation, mutator: (draft: MutableModel<UserLocation>) => MutableModel<UserLocation> | void): UserLocation;
-}
-
-export declare class Location {
-  readonly id: string;
-  readonly name: string;
-  readonly superLocationID: string;
-  readonly superLocation?: Location;
-  constructor(init: ModelInit<Location>);
-  static copyOf(source: Location, mutator: (draft: MutableModel<Location>) => MutableModel<Location> | void): Location;
 }
 
 export declare class Effort {
@@ -117,6 +102,15 @@ export declare class Effort {
   readonly createdAt: string;
   constructor(init: ModelInit<Effort>);
   static copyOf(source: Effort, mutator: (draft: MutableModel<Effort>) => MutableModel<Effort> | void): Effort;
+}
+
+export declare class Location {
+  readonly id: string;
+  readonly name: string;
+  readonly superLocationID: string;
+  readonly superLocation?: Location;
+  constructor(init: ModelInit<Location>);
+  static copyOf(source: Location, mutator: (draft: MutableModel<Location>) => MutableModel<Location> | void): Location;
 }
 
 export declare class Routine {
