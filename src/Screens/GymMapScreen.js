@@ -51,8 +51,8 @@ const GymMapScreen = props => {
                 lat: center[1],
                 lon: center[0]
             },
+            //grr idk what to do with this
             km: 20
-
         }))
             .then(results => {
                 console.log(results);
@@ -88,9 +88,20 @@ const GymMapScreen = props => {
     };
 
     const updateCenter = feature => {
+        console.log(feature);
+
+        const bounds = feature.properties.visibleBounds;
+        //there's gotta be somethign I can do with this
+        const diagonal = (bounds[0][0] - bounds[1][0])**2 + (bounds[0][1] - bounds[1][1])**2;
         //only update if it's much different than the previous
-        setCenter(feature.geometry.coordinates);
-        console.log('updating center');
+        const nextCoords = feature.geometry.coordinates;
+        //not perfect at all lol but one coordinates ~60 miles
+        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > .5**2){
+
+            console.log((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2);
+            console.log('updating center');
+            setCenter(feature.geometry.coordinates);
+        }
 
     };
 
