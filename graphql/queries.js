@@ -544,6 +544,34 @@ export const listPostMedias = /* GraphQL */ `
     }
   }
 `;
+export const listRoutinesByUser = /* GraphQL */ `
+  query ListRoutinesByUser(
+    $userID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelRoutineFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRoutinesByUser(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listCurrentRoutinesByUser = /* GraphQL */ `
   query ListCurrentRoutinesByUser(
     $userID: ID

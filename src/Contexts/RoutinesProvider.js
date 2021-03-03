@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { FULL_COPY } from '../Utils/UtilFunctions';
-import { DataStore } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from './UserProvider';
 import { Routine } from '../../models';
 import { OpType } from '@aws-amplify/datastore';
+import { listRoutinesByUser } from '../../graphql/queries';
+import { updateRoutine } from '../../graphql/mutations';
+import { onChangeRoutine } from '../../graphql/subscriptions';
 
 //heirarchy: routine => workout => exercise => set => rep
 //ro, wo, ex, se, re
@@ -26,23 +29,15 @@ const RoutinesProvider = props => {
     //hopeful this wont mess anythign up
     //for some reason, starting a workout call this thing twice
     const reload = async () => {
-        const routines = await DataStore.query(Routine)//, r => r.userID('eq', username))
-        console.log('routines', routines);
-
-        //temporary code to remove some dumb accidental entries
-        routines.forEach(routine => {
-            if(!routine.userID)
-                DataStore.delete(Routine, r => r.id('eq', routine.id))
-        });
-
-        //take the routines and set them to the format we need
+        const routinesResult = await API.graphql(graphqlOperation(listRoutinesByUser, {
+            userID: username,
+            limit: 10
+        }))
+        console.log(routinesResult)
         routinesDispatch(() => ({
-            //holy shit
-            //not that we need it, but this now has
-            //current, userid, title, routine obj
-            routines: routines
+            routines: routinesResult.data.listRoutinesByUser.items
+        }))
 
-        }));
     }
 
     //initial load from storage
@@ -51,17 +46,35 @@ const RoutinesProvider = props => {
         //load routine from the magical datastore
         //||r.current('eq', 1)) will get only current
         console.log('username', username);
+        if(!username)
+            return;
         //sometimes the username filter works, sometimes not
 
         reload();
-        //maybe it needs subscription TODO yeah it does
-        const subscription = DataStore.observe(Routine).subscribe(msg => {
-            //just reload everything whenever something changes lol
-            reload();
-        });
+        //fuck it, a subscription IS the easiest way
 
-        return () => subscription.unsubscribe();
-    }, []);
+        //maybe it needs subscription TODO yeah it does
+        //no it doesn't
+        //the deal is, when we make an edit to the routinesProvider object,
+        //we should also send off a graphql updateroutine
+        //not the other way around
+        const sub = API.graphql(graphqlOperation(onChangeRoutine, {
+            userID: username
+        })).subscribe({
+            //just reload routines, it should be pretty small
+            next: (obj) => {
+                console.log(obj);
+                reload();
+            }
+        })
+        //const subscription = DataStore.observe(Routine).subscribe(msg => {
+            ////just reload everything whenever something changes lol
+            //reload();
+        //});
+        //idk what to do, we're gonna have to think carefully here
+
+        return () => sub.unsubscribe();
+    }, [username]);
 
     //you generate a routine, so it makes sense to have this here
     const generateRoutine = async (baseRoutine, efforts) => {
@@ -170,10 +183,13 @@ const RoutinesProvider = props => {
 
     const [data, routinesDispatch] = useReducer(routinesReducer, initState);
 
-    const updateRoutine = async (routineId, routineData) => {
-        const original = await DataStore.query(Routine, routineId);
-        DataStore.save(Routine.copyOf(original, updated => {
-            updated.routine = JSON.stringify(routineData);
+    const updateRoutineData = async (routineId, routineData) => {
+
+        await API.graphql(graphqlOperation(updateRoutine, {
+            input: {
+                id: routineId,
+                routine: JSON.stringify(routineData)
+            }
         }));
     };
 
@@ -188,7 +204,7 @@ const RoutinesProvider = props => {
             routinesDispatch: routinesDispatch,
 
             getCurrent: getCurrent,
-            updateRoutine: updateRoutine,
+            updateRoutineData: updateRoutineData,
             generateRoutine: generateRoutine
         }}>
             {props.children}

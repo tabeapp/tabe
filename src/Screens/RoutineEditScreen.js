@@ -15,9 +15,10 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { REST_DAY } from '../Constants/Symbols';
-import { DataStore } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
 import { Routine } from '../../models';
+import { createRoutine, updateRoutine } from '../../graphql/mutations';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -197,37 +198,28 @@ const RoutineEditScreen = props => {
                     });
 
                     //dont worry about routines dispatch, the subscription should update it
+                    //no that's a bad idea
+                    //send this to routines dispatch as a custom action
                     //existing
                     //if(id){
                     if(!id){
-                        DataStore.save(new Routine({
-                            routine: JSON.stringify(newRoutine),
-                            title: newRoutine.title,
-                            current: 0,
-                            userID: username
-                        }));
+                        API.graphql(graphqlOperation(createRoutine, {
+                            input: {
+                                routine: JSON.stringify(newRoutine),
+                                title: newRoutine.title,
+                                current: 0,
+                                userID: username
+                            }
+                        }))
                     }
                     else{
-
-                        DataStore.query(Routine, id).then(original => {
-                            if (original === undefined) {
-                                //need to save new routine to the user
-                                DataStore.save(new Routine({
-                                    routine: JSON.stringify(newRoutine),
-                                    title: newRoutine.title,
-                                    current: 0,
-                                    userID: username
-                                }))
-                            } else {
-                                //need to update new routine
-                                DataStore.save(
-                                    Routine.copyOf(original, updated => {
-                                        updated.routine = JSON.stringify(newRoutine)
-                                        updated.title = newRoutine.title
-                                    })
-                                );
+                        API.graphql(graphqlOperation(updateRoutine, {
+                            input: {
+                                id: id,
+                                routine: JSON.stringify(newRoutine),
+                                title: newRoutine.title,
                             }
-                        });
+                        }))
                     }
 
                     props.navigation.navigate('routine');

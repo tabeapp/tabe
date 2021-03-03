@@ -27,7 +27,7 @@ const WorkoutProvider = props => {
 
     const {username} = useContext(UserContext);
     //is this legal
-    const {routines, updateRoutine, getCurrent} = useContext(RoutinesContext);
+    const {routines, updateRoutineData, getCurrent} = useContext(RoutinesContext);
 
     //i guess like use effect?
     //this same logic shows up over and over again in the old code
@@ -181,7 +181,7 @@ const WorkoutProvider = props => {
         const {routine, workout} = await generateWorkout(r);
 
         //this looks fine
-        updateRoutine(routineId, routine);
+        updateRoutineData(routineId, routine);
 
         console.log('generated workout', workout);
         //hmmmm maybe there should be a mutuable routineid in workout...
@@ -218,7 +218,7 @@ const WorkoutProvider = props => {
         while(r.days[r.currentDay%r.time] === REST_DAY)
             r.currentDay++;
 
-        updateRoutine(current.id, r);
+        updateRoutineData(current.id, r);
 
         return false;
     };
@@ -278,7 +278,7 @@ const WorkoutProvider = props => {
 
         //and finally, save the routine
         if(routine)
-            updateRoutine(data.routineId, routine);
+            updateRoutineData(data.routineId, routine);
     };
 
     //only here cuz of the async storage

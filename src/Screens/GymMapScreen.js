@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { API, graphqlOperation, DataStore } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { getRegion, getUserLocation, listRegions, listUserLocations, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';

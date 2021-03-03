@@ -1,6 +1,19 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onChangeRoutine = /* GraphQL */ `
+  subscription OnChangeRoutine($userID: String!) {
+    onChangeRoutine(userID: $userID) {
+      id
+      userID
+      title
+      current
+      routine
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -662,45 +675,6 @@ export const onDeleteComment = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateRoutine = /* GraphQL */ `
-  subscription OnCreateRoutine {
-    onCreateRoutine {
-      id
-      userID
-      title
-      current
-      routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateRoutine = /* GraphQL */ `
-  subscription OnUpdateRoutine {
-    onUpdateRoutine {
-      id
-      userID
-      title
-      current
-      routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteRoutine = /* GraphQL */ `
-  subscription OnDeleteRoutine {
-    onDeleteRoutine {
-      id
-      userID
-      title
-      current
-      routine
       createdAt
       updatedAt
     }

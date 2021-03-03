@@ -130,8 +130,8 @@ type Comment
 }
 
 type Routine
-@model
-@key(name: "byUser", fields: ["userID"])
+@model(subscriptions: null)
+@key(name: "byUser", fields: ["userID"], queryField: "listRoutinesByUser")
 @key(name: "byUserAndCurrent", fields: ["userID", "current", "createdAt"], queryField: "listCurrentRoutinesByUser")
 {
   id: ID!
@@ -215,3 +215,6 @@ type Mutation{
   ])
 }
 
+type Subscription {
+  onChangeRoutine(userID: String!): Routine @aws_subscribe(mutations: ["createRoutine", "updateRoutine", "deleteRoutine"])
+}

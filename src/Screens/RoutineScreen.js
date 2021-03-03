@@ -6,42 +6,56 @@ import { BLANK_ROUTINE } from '../Constants/DefaultRoutineInfo';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { Routine } from '../../models';
-import { DataStore } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
 import { RoutinesContext } from '../Contexts/RoutinesProvider';
+import { deleteRoutine, updateRoutine } from '../../graphql/mutations';
 
 //this is for choosing a routine to edit, instead of jumping right in
 //crud operations on this level deserve server calls
 const RoutineScreen = props => {
     //why is it like this
-    const {username} = useContext(UserContext);
-    const {routines} = useContext(RoutinesContext);
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routines, routinesDispatch, getCurrent} = useContext(RoutinesContext);
 
-    const deleteRoutine = async id => {
-        //datastore actually makes this simple
-        const toDelete = await DataStore.query(Routine, id);
-        DataStore.delete(Routine, toDelete);
+    const removeRoutine = async id => {
+        //very confident this works, why wouldnt it
+        await API.graphql(graphqlOperation(deleteRoutine, {
+            input: {
+                id: id
+            }
+        }));
     };
 
     const handleSetCurrent = async id => {
         //would this be easier with graphql mutation?
         //no
         //this unfortutaely is the best way
-        //pull all the users routines and set them current zero except the one
-        const usersRoutines = await DataStore.query(Routine, r => r.userID('eq', username));
-        usersRoutines.forEach(routine => {
-            //only two secnarios that need to be updated
-            if(routine.current === 1 && routine.id !== id)
-                DataStore.save(Routine.copyOf(routine, updated => {
-                    updated.current = 0
-                }));
-            else if(routine.current === 0 && routine.id === id)
-                DataStore.save(Routine.copyOf(routine, updated => {
-                    updated.current = 1
-                }));
-        });
+
+        const oldCurrent = getCurrent();
+
+
+        //so we have routines available, which conviniently have ids
+        //while we could do a check to truly ensure only one routine is current
+        //it's easier to simply disable the old current and enable the new current
+        //that's just 2 mutuations
+        //cant test this until we have
+
+        await API.graphql(graphqlOperation(updateRoutine, {
+            input: {
+                id: id,
+                current: 1
+            }
+        }));
+
+        if(oldCurrent){
+            await API.graphql(graphqlOperation(updateRoutine, {
+                input: {
+                    id: oldCurrent.id,
+                    current: 0
+                }
+            }));
+        }
+
     };
 
     return (
@@ -70,7 +84,7 @@ const RoutineScreen = props => {
                                     routine.title
                                 }</Words>
                                 <TouchableOpacity style={{width: 50 }} onPress={() => {
-                                    deleteRoutine(routine.id);//
+                                    removeRoutine(routine.id);//
                                 }}>
                                     <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                                 </TouchableOpacity>
