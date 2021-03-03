@@ -267,7 +267,9 @@ const WorkoutProvider = props => {
                 cityID: ul.gym.cityID,
                 gymID: ul.gymID
             })
+
         );
+        //ensure this works
 
         //now how tf do you get rankings...
         detailedEfforts.forEach(effort => {

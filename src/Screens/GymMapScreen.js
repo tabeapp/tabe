@@ -196,7 +196,7 @@ const GymMapScreen = props => {
     //take the new gym and save it to db
     const addNewGym = async () => {
         const regions = newGym.regionInfo;
-        console.log()
+        console.log(regions);
         //newGym has everything we need
         //name, location, regionInfo
         //lets go through regionInfo and ensure regions exist
@@ -206,14 +206,12 @@ const GymMapScreen = props => {
             console.log(id, name);
             //could we combine these into one graphql request?
             const result = await API.graphql(graphqlOperation(getRegion, {
-                input:{
-                    id: id
-                },
+                id: id
             }));
             console.log(result);
 
             //otherwise the region already exists, we're good to use the region id
-            if(result.data.listRegions.items.length === 0){
+            if(result.data.getRegion === null){
                 const regionCreate = await API.graphql(graphqlOperation(createRegion, {
                     input: {
                         id: id,
@@ -236,7 +234,7 @@ const GymMapScreen = props => {
         }));
         console.log(gymResult);
 
-        //dispatch({type: ADD_GYMS, gyms: [res]});
+        dispatch({type: ADD_GYMS, gyms: [gymResult.data.createGym]});
         setNewGym(null);
 
     };
