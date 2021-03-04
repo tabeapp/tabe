@@ -575,7 +575,7 @@ export const listRoutinesByUser = /* GraphQL */ `
 export const listCurrentRoutinesByUser = /* GraphQL */ `
   query ListCurrentRoutinesByUser(
     $userID: ID
-    $currentCreatedAt: ModelRoutineByUserAndCurrentCompositeKeyConditionInput
+    $current: ModelIntKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelRoutineFilterInput
     $limit: Int
@@ -583,7 +583,7 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
   ) {
     listCurrentRoutinesByUser(
       userID: $userID
-      currentCreatedAt: $currentCreatedAt
+      current: $current
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

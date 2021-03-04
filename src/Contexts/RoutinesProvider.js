@@ -46,7 +46,7 @@ const RoutinesProvider = props => {
         //load routine from the magical datastore
         //||r.current('eq', 1)) will get only current
         console.log('username', username);
-        if(!username)
+        if(username === '')
             return;
         //sometimes the username filter works, sometimes not
 

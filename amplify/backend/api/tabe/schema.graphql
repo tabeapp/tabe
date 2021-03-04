@@ -132,7 +132,7 @@ type Comment
 type Routine
 @model(subscriptions: null)
 @key(name: "byUser", fields: ["userID"], queryField: "listRoutinesByUser")
-@key(name: "byUserAndCurrent", fields: ["userID", "current", "createdAt"], queryField: "listCurrentRoutinesByUser")
+@key(name: "byUserAndCurrent", fields: ["userID", "current"], queryField: "listCurrentRoutinesByUser")
 {
   id: ID!
   userID: ID!
