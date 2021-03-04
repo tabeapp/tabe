@@ -165,9 +165,6 @@ const createPost = /* GraphQL */ `
         image
         createdAt
         updatedAt
-        posts {
-          nextToken
-        }
       }
       createdAt
       updatedAt

@@ -17,6 +17,12 @@
     "apitabeGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apitabeGraphQLAPIEndpointOutput"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -82,8 +88,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-tabe-dev-153424-deployment",
-          "S3Key": "amplify-builds/createPostAndTimeline-6d7035484956416d7563-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

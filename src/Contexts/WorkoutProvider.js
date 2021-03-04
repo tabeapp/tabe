@@ -289,6 +289,7 @@ const WorkoutProvider = props => {
         if (routine)
             updateRoutineData(data.routineId, routine);
 
+        workoutDispatch(() => initState);
         saveEfforts(detailedEfforts);
     }
 
@@ -381,6 +382,7 @@ const WorkoutProvider = props => {
 
 
         //ugh, I guess this should call that labmda actually
+        //this isn't working
         const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
             title: workoutData.title,
             description: workoutData.description,
@@ -449,7 +451,6 @@ const WorkoutProvider = props => {
         //need to clear workout from state as well
         //and the report, it doesn't get cleared
         //does this not work?
-        workoutDispatch(() => initState);
     };
 
 
