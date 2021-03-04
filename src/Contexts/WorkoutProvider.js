@@ -28,7 +28,8 @@ const WorkoutProvider = props => {
     const initState = {};
 
     //current workout id, suuper useful
-    const [workoutId, setWorkoutId] = useState('');
+    //dont even need this, username shoudl be good
+    //const [workoutId, setWorkoutId] = useState('');
 
     const {username} = useContext(UserContext);
     //is this legal
@@ -67,7 +68,7 @@ const WorkoutProvider = props => {
     const updateDataStore = async data => {
         API.graphql(graphqlOperation(updateCurrentWorkout, {
             input: {
-                id:workoutId,
+                userID: username,
                 data: JSON.stringify(data),
                 routineID: data.routinesId || ''
             }
@@ -156,14 +157,14 @@ const WorkoutProvider = props => {
                     }
                 })).then(newResult => {
                     //this is a fn guess
-                    setWorkoutId(newResult.data.createCurrentWorkout.id);
+                    //setWorkoutId(newResult.data.createCurrentWorkout.id);
                     //console.log('new current workout', newResult);
                 })
 
             }
             else{
-                //console.log('current workout load', result);
-                setWorkoutId(result.data.getCurrentWorkout.id)
+                console.log('current workout load', result);
+                //setWorkoutId(result.data.getCurrentWorkout.id)
                 workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
             }
         })
