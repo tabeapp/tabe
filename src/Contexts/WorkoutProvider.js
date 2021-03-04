@@ -73,7 +73,7 @@ const WorkoutProvider = props => {
         return next;
     };
 
-    const updateDataStore = async data => {
+    const syncCurrentWorkout = async data => {
         API.graphql(graphqlOperation(updateCurrentWorkout, {
             input: {
                 userID: username,
@@ -86,7 +86,7 @@ const WorkoutProvider = props => {
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
     //guess it would make sense to save workout to disk every time, maybe YES
-    //step 2, make sure any change in workout reducer also syncs to datastore
+    //step 2, make sure any change in workout reducer also syncs to server
     //ok fuck it, workout reducer will only operate on the data part
     const workoutReducer = (state, action) => {
         //this is also great cuz it does the {...state} step right here
@@ -97,7 +97,7 @@ const WorkoutProvider = props => {
         if(action.constructor === Function){
             //run action on state
             const x = invariantCheck(action(next));
-            updateDataStore(x);
+            syncCurrentWorkout(x);
             console.log(x);
 
             return x;
@@ -141,7 +141,7 @@ const WorkoutProvider = props => {
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
 
-        updateDataStore(x);
+        syncCurrentWorkout(x);
 
         console.log(x);
         return x;
