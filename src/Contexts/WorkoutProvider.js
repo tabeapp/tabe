@@ -3,9 +3,9 @@ import { FULL_COPY } from '../Utils/UtilFunctions';
 import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
-import { API, Auth, DataStore, graphqlOperation, Storage } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
-    createCurrentWorkout,
+    createCurrentWorkout, createEffort,
     createPostAndTimeline,
     createPostMedia,
     updateCurrentWorkout,
@@ -16,7 +16,16 @@ import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
 import { generateReport } from '../Utils/GenerateReport';
-import { getCurrentWorkout, getUserLocation, listUserLocations } from '../../graphql/queries';
+import {
+    getCurrentWorkout,
+    getUserLocation,
+    listEffortsByExercise,
+    listEffortsByExerciseAndCity,
+    listEffortsByExerciseAndCountry, listEffortsByExerciseAndGym,
+    listEffortsByExerciseAndState,
+    listEffortsByExerciseAndUser,
+    listUserLocations,
+} from '../../graphql/queries';
 
 export const WorkoutContext = React.createContext();
 
@@ -243,7 +252,7 @@ const WorkoutProvider = props => {
 
         //this function needs cleanup, but this is basically how were gonna do it
         const oldRoutine = routines.find(x => x.routineID === data.routineId).routine;
-        const {routine, efforts} = await analyzeWorkout(report, data, oldRoutine);
+        const { routine, efforts } = await analyzeWorkout(report, data, oldRoutine);
 
         const res = await API.graphql(graphqlOperation(getUserLocation, {
             userID: username
@@ -252,7 +261,7 @@ const WorkoutProvider = props => {
         //is what you're lookign for
         const ul = res.data.getUserLocation;
 
-        if(!ul){
+        if (!ul) {
             //allow the user to pick a location?
             //basically just load gym map screen
             //more on this later
@@ -273,20 +282,88 @@ const WorkoutProvider = props => {
                 cityID: ul.gym.cityID,
                 gymID: ul.gymID
             })
-
         );
         //ensure this works
 
-        //now how tf do you get rankings...
-        detailedEfforts.forEach(effort => {
-
-            //no
-            //DataStore.save(Effort, effort).then(res => console.log('effort saved', res));
-        });
-
         //and finally, save the routine
-        if(routine)
+        if (routine)
             updateRoutineData(data.routineId, routine);
+
+        saveEfforts(detailedEfforts);
+    }
+
+    const saveEfforts = async efforts => {
+        if(efforts.length === 0)
+            return;
+
+        //this is a whole other function smh
+
+        //we need to wait for all the efforts to upload
+        //this or something similar to a map and a promise.all might also work
+        for(let i = 0; i < efforts.length; i++){
+            const effort = efforts[i];
+            await API.graphql(graphqlOperation(createEffort, {
+                input:{
+                    ...effort//will this work?
+                }
+            }));
+        }
+
+        //now how tf do you get rankings...
+        //at this point we can search for prs
+        //kinda obvious, but there are 6 levels of PRing
+        //personal, gym, city, state, country, and world
+        //if you don't pr in any of these, you don't pr in the following either
+        //these are 6 calls max
+        //honestly should be a fn lambda
+
+        //this is so fucking ugly, is there a better way?
+        //maybe a single graphql query to check all of these?
+        //would only be 60 items back tops
+        const operations = [listEffortsByExerciseAndUser, listEffortsByExerciseAndGym,
+            listEffortsByExerciseAndCity, listEffortsByExerciseAndState,
+            listEffortsByExerciseAndCountry];//, listEffortsByExercise];
+        const keys = ['userID', 'gymID', 'cityID', 'stateID', 'countryID'];
+        const values = [username, efforts[0].gymID, efforts[0].cityID, efforts[0].stateID, efforts[0].countryID];
+
+
+        //fuck me, is this really ideal?
+        for(let i = 0; i < efforts.length; i++) {
+            const effort = efforts[i];
+
+            for(let n = 0; n < operations.length; n++){
+
+                const result = await API.graphql(graphqlOperation(operations[n], {
+                    [keys[n]]: values[n],
+                    exercise: effort.exercise,
+                    limit: 10,
+                    sortDirection: 'DESC'
+                }));
+                console.log(result);
+
+                //this is so fucking complex
+                const rank = result.data[operations[n]].items.findIndex(ef=> ef.id === effort.id);
+
+                //not a pr on this level, fuck it
+                if(rank === -1)
+                    break;
+                else{
+                    //just gonna log it for now, idc
+                    //eventually add an award like how strava does
+                    console.log(`effort of ${effort.exercise} at ${effort.orm} ranked ${rank+1} in ${values[n]}`)
+                }
+            }
+
+            //can't avoid doing a global search I suppose
+            const global = await API.graphql(graphqlOperation(listEffortsByExercise, {
+                exercise: effort.exercise,
+                limit: 10,
+                sortDirection: 'DESC'
+            }));
+            const globalRank = global.data.listEffortsByExercise.items.findIndex(ef=> ef.id === effort.id);
+            if(globalRank !== -1)
+                console.log(`effort of ${effort.exercise} at ${effort.orm} ranked ${globalRank+1} in the world`);
+        }
     };
 
     //only here cuz of the async storage

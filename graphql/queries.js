@@ -1001,7 +1001,7 @@ export const listEffortsByExerciseAndGym = /* GraphQL */ `
 export const listEffortsByExerciseAndUser = /* GraphQL */ `
   query ListEffortsByExerciseAndUser(
     $userID: ID
-    $weight: ModelIntKeyConditionInput
+    $exerciseWeight: ModelEffortByUserCompositeKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelEffortFilterInput
     $limit: Int
@@ -1009,7 +1009,7 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
   ) {
     listEffortsByExerciseAndUser(
       userID: $userID
-      weight: $weight
+      exerciseWeight: $exerciseWeight
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit

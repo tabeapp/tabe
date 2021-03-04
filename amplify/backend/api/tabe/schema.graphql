@@ -86,7 +86,7 @@ type Effort
 @key(name: "byState", fields: ["stateID", "exercise", "weight"], queryField: "listEffortsByExerciseAndState")
 @key(name: "byCity", fields: ["cityID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCity")
 @key(name: "byGym", fields: ["gymID", "exercise", "weight"], queryField: "listEffortsByExerciseAndGym")
-@key(name: "byUser", fields: ["userID", "weight"], queryField: "listEffortsByExerciseAndUser")
+@key(name: "byUser", fields: ["userID", "exercise", "weight"], queryField: "listEffortsByExerciseAndUser")
 @key(name: "byExercise", fields: ["exercise", "weight"], queryField: "listEffortsByExercise")#global, basically
 {
   id: ID!
