@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect, useReducer } from 'react';
-import { FULL_COPY, ROUND_5 } from '../Utils/UtilFunctions';
+import React, { useContext, useEffect, useReducer } from 'react';
+import { FULL_COPY } from '../Utils/UtilFunctions';
 import { RoutinesContext } from './RoutinesProvider';
-import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
-import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
+import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
 import { API, Auth, DataStore, graphqlOperation, Storage } from 'aws-amplify';
 import {
@@ -12,7 +11,7 @@ import {
     updateCurrentWorkout,
 } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
-import { CurrentWorkout, Effort, Routine } from '../../models';
+import { Effort } from '../../models';
 import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
@@ -60,7 +59,7 @@ const WorkoutProvider = props => {
             }
         }
 
-        next.done = !found
+        next.done = !found;
 
         return next;
     };
@@ -72,7 +71,7 @@ const WorkoutProvider = props => {
                 data: JSON.stringify(data),
                 routineID: data.routinesId || ''
             }
-        }))
+        }));
     };
 
     //so i guess state is the previous state
@@ -155,11 +154,7 @@ const WorkoutProvider = props => {
                         data: '{}',
                         routineID: ''
                     }
-                })).then(newResult => {
-                    //this is a fn guess
-                    //setWorkoutId(newResult.data.createCurrentWorkout.id);
-                    //console.log('new current workout', newResult);
-                })
+                }));
 
             }
             else{
@@ -167,7 +162,7 @@ const WorkoutProvider = props => {
                 //setWorkoutId(result.data.getCurrentWorkout.id)
                 workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
             }
-        })
+        });
     }, [username]);
 
     //heavy logic here, not much you can do with usereducer here
@@ -213,7 +208,7 @@ const WorkoutProvider = props => {
             restStart: 0
 
         }));
-    }
+    };
 
     //can't avoid doing this
     //jeez, it's almost as if this is more relevant to the routine and yhou should put it there TODO
@@ -286,7 +281,7 @@ const WorkoutProvider = props => {
         detailedEfforts.forEach(effort => {
 
             //no
-            DataStore.save(Effort, effort).then(res => console.log('effort saved', res));
+            //DataStore.save(Effort, effort).then(res => console.log('effort saved', res));
         });
 
         //and finally, save the routine
@@ -305,7 +300,6 @@ const WorkoutProvider = props => {
         //make a post to aws db, this is the first i implemented
         //lets see if it works
         console.log(workoutData);
-        const currentUser = await Auth.currentAuthenticatedUser();
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
 
 
@@ -404,6 +398,6 @@ const WorkoutProvider = props => {
             {props.children}
         </WorkoutContext.Provider>
     );
-}
+};
 
 export default WorkoutProvider;
