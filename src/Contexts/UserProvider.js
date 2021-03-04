@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Auth, DataStore } from 'aws-amplify';
+import { API, Auth, DataStore, graphqlOperation } from 'aws-amplify';
 import { CurrentWorkout, UserLocation } from '../../models';
+import { getUserLocation } from '../../graphql/queries';
 
 export const UserContext = React.createContext();
 
@@ -22,17 +23,15 @@ const UserProvider = props => {
     useEffect(() => {
         if(!username)
             return;
-        DataStore.query(UserLocation, ul => ul.userID('eq', username))
-            .then(result => {
-                if(!result[0])
-                    return;
-                setLocation([
-                    result[0].data.countryID,
-                    result[0].data.stateID,
-                    result[0].data.cityID,
-                    result[0].data.gymID,
-                ]);
-            });
+        API.graphql(graphqlOperation(getUserLocation, {
+            userID: username
+        })).then(result => {
+            console.log('userlocaiton load', result);
+            const gym = result.data.getUserLocation.gym;
+            //maybe we need the region ids, but who cares
+            //just names for now
+            setLocation([gym.country.name, gym.state.name, gym.city.name, gym.name]);
+        })
     }, [username]);
 
     //let the user update location, and make their own for fun

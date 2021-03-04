@@ -22,9 +22,9 @@ type Gym @model @searchable {
   countryID: ID!
   stateID: ID!
   cityID: ID!
-  #country: Region @connection(fields: ["countryID"])
-  #state: Region @connection(fields: ["stateID"])
-  #city: Region @connection(fields: ["cityID"])
+  country: Region @connection(fields: ["countryID"])
+  state: Region @connection(fields: ["stateID"])
+  city: Region @connection(fields: ["cityID"])
 }
 
 #essentially this is groups of gyms
@@ -82,10 +82,12 @@ type Post
 type Effort
 @model
 #is this the best way to do it?
-@key(name: "byCountry", fields: ["countryID", "exercise", "weight"])
-@key(name: "byState", fields: ["stateID", "exercise", "weight"])
-@key(name: "byCity", fields: ["cityID", "exercise", "weight"])
-@key(name: "byGym", fields: ["gymID", "exercise", "weight"])
+@key(name: "byCountry", fields: ["countryID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCountry")
+@key(name: "byState", fields: ["stateID", "exercise", "weight"], queryField: "listEffortsByExerciseAndState")
+@key(name: "byCity", fields: ["cityID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCity")
+@key(name: "byGym", fields: ["gymID", "exercise", "weight"], queryField: "listEffortsByExerciseAndGym")
+@key(name: "byUser", fields: ["userID", "weight"], queryField: "listEffortsByExerciseAndUser")
+@key(name: "byExercise", fields: ["exercise", "weight"], queryField: "listEffortsByExercise")#global, basically
 {
   id: ID!
   postID: ID!

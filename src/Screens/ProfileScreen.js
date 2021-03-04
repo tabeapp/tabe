@@ -195,6 +195,11 @@ const ProfileScreen = props => {
                     userId === currentUser &&
                     <View>
                         <Words>{JSON.stringify(coordinates)}</Words>
+                        {
+                            location.map(l =>
+                                <Words>{l}</Words>
+                            )
+                        }
                         <TouchableOpacity style={{height: 50}} onPress={addGym}>
                             <Words>Add Gym</Words>
                         </TouchableOpacity>

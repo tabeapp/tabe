@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useReducer } from 'react';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from './UserProvider';
-import { Routine } from '../../models';
-import { OpType } from '@aws-amplify/datastore';
 import { listRoutinesByUser } from '../../graphql/queries';
 import { updateRoutine } from '../../graphql/mutations';
 import { onChangeRoutine } from '../../graphql/subscriptions';
@@ -43,8 +41,6 @@ const RoutinesProvider = props => {
     //initial load from storage
     //BETTER IDEA, USE DATA STORE
     useEffect(() => {
-        //load routine from the magical datastore
-        //||r.current('eq', 1)) will get only current
         console.log('username', username);
         if(username === '')
             return;
@@ -67,11 +63,6 @@ const RoutinesProvider = props => {
                 reload();
             }
         })
-        //const subscription = DataStore.observe(Routine).subscribe(msg => {
-            ////just reload everything whenever something changes lol
-            //reload();
-        //});
-        //idk what to do, we're gonna have to think carefully here
 
         return () => sub.unsubscribe();
     }, [username]);

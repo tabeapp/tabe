@@ -14,6 +14,24 @@ export const nearbyGyms = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -68,6 +86,24 @@ export const getUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -104,6 +140,24 @@ export const listUserLocations = /* GraphQL */ `
           countryID
           stateID
           cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -126,6 +180,24 @@ export const getGym = /* GraphQL */ `
       countryID
       stateID
       cityID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -148,6 +220,24 @@ export const listGyms = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -224,6 +314,24 @@ export const getEffort = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -279,6 +387,24 @@ export const listEfforts = /* GraphQL */ `
           countryID
           stateID
           cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
           createdAt
           updatedAt
         }
@@ -627,6 +753,24 @@ export const searchGyms = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

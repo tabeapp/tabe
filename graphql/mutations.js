@@ -64,6 +64,24 @@ export const createUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -90,6 +108,24 @@ export const updateUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -116,6 +152,24 @@ export const deleteUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -139,6 +193,24 @@ export const createGym = /* GraphQL */ `
       countryID
       stateID
       cityID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -159,6 +231,24 @@ export const updateGym = /* GraphQL */ `
       countryID
       stateID
       cityID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -179,6 +269,24 @@ export const deleteGym = /* GraphQL */ `
       countryID
       stateID
       cityID
+      country {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -386,6 +494,24 @@ export const createEffort = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -439,6 +565,24 @@ export const updateEffort = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -492,6 +636,24 @@ export const deleteEffort = /* GraphQL */ `
         countryID
         stateID
         cityID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
