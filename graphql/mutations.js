@@ -896,19 +896,9 @@ export const createCurrentWorkout = /* GraphQL */ `
     $condition: ModelCurrentWorkoutConditionInput
   ) {
     createCurrentWorkout(input: $input, condition: $condition) {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -920,19 +910,9 @@ export const updateCurrentWorkout = /* GraphQL */ `
     $condition: ModelCurrentWorkoutConditionInput
   ) {
     updateCurrentWorkout(input: $input, condition: $condition) {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -944,19 +924,9 @@ export const deleteCurrentWorkout = /* GraphQL */ `
     $condition: ModelCurrentWorkoutConditionInput
   ) {
     deleteCurrentWorkout(input: $input, condition: $condition) {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }

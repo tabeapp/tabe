@@ -564,21 +564,11 @@ export const listRoutines = /* GraphQL */ `
   }
 `;
 export const getCurrentWorkout = /* GraphQL */ `
-  query GetCurrentWorkout($id: ID!) {
-    getCurrentWorkout(id: $id) {
-      id
+  query GetCurrentWorkout($userID: ID!) {
+    getCurrentWorkout(userID: $userID) {
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -586,25 +576,23 @@ export const getCurrentWorkout = /* GraphQL */ `
 `;
 export const listCurrentWorkouts = /* GraphQL */ `
   query ListCurrentWorkouts(
+    $userID: ID
     $filter: ModelCurrentWorkoutFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listCurrentWorkouts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listCurrentWorkouts(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         userID
         data
         routineID
-        routine {
-          id
-          userID
-          title
-          current
-          routine
-          createdAt
-          updatedAt
-        }
         createdAt
         updatedAt
       }

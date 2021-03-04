@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API, Auth, DataStore, graphqlOperation } from 'aws-amplify';
-import { CurrentWorkout, UserLocation } from '../../models';
+import { API, Auth, graphqlOperation } from 'aws-amplify';
 import { getUserLocation } from '../../graphql/queries';
 
 export const UserContext = React.createContext();

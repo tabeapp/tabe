@@ -5,14 +5,19 @@ import { CURRENT, FAILURE, NEW_PR, REST_DAY } from '../Constants/Symbols';
 import { WARMUP_WEIGHTS } from '../Utils/WarmupCalc';
 
 import { API, Auth, DataStore, graphqlOperation, Storage } from 'aws-amplify';
-import { createPostAndTimeline, createPostMedia } from '../../graphql/mutations';
+import {
+    createCurrentWorkout,
+    createPostAndTimeline,
+    createPostMedia,
+    updateCurrentWorkout,
+} from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrentWorkout, Effort, Routine } from '../../models';
 import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
 import { generateReport } from '../Utils/GenerateReport';
-import { getUserLocation, listUserLocations } from '../../graphql/queries';
+import { getCurrentWorkout, getUserLocation, listUserLocations } from '../../graphql/queries';
 
 export const WorkoutContext = React.createContext();
 
@@ -22,8 +27,8 @@ const WorkoutProvider = props => {
     //this is just gonna be the workout, no editRoutine bs this tim
     const initState = {};
 
-    //const [workoutId, setWorkoutId] = useState('');
-    const [original, setOriginal] = useState({});
+    //current workout id, suuper useful
+    const [workoutId, setWorkoutId] = useState('');
 
     const {username} = useContext(UserContext);
     //is this legal
@@ -60,11 +65,13 @@ const WorkoutProvider = props => {
     };
 
     const updateDataStore = async data => {
-        const result = await DataStore.save(CurrentWorkout.copyOf(original, updated => {
-            updated.data = JSON.stringify(data);
-            updated.routineID = data.routineId || '';
-        }));
-        setOriginal(result);
+        API.graphql(graphqlOperation(updateCurrentWorkout, {
+            input: {
+                id:workoutId,
+                data: JSON.stringify(data),
+                routineID: data.routinesId || ''
+            }
+        }))
     };
 
     //so i guess state is the previous state
@@ -137,23 +144,29 @@ const WorkoutProvider = props => {
         //kinda annoying but it wont work without the username
         if(!username)
             return;
-        DataStore.query(CurrentWorkout, cw => cw.userID('eq', username))
-            .then(res => {
-                console.log('current workout', res);
-                if(!res[0]){
-                    /*need to make new one*/
-                    DataStore.save(new CurrentWorkout({
+        API.graphql(graphqlOperation(getCurrentWorkout, {
+            userID: username
+        })).then(result => {
+            if(!result.data.getCurrentWorkout){
+                API.graphql(graphqlOperation(createCurrentWorkout, {
+                    input: {
                         userID: username,
-                        data: JSON.stringify({}),
+                        data: '{}',
                         routineID: ''
-                    }))
-                        .then(setOriginal);
-                }
-                else{
-                    setOriginal(res[0]);
-                    workoutDispatch(() => JSON.parse(res[0].data));
-                }
-            });
+                    }
+                })).then(newResult => {
+                    //this is a fn guess
+                    setWorkoutId(newResult.data.createCurrentWorkout.id);
+                    //console.log('new current workout', newResult);
+                })
+
+            }
+            else{
+                //console.log('current workout load', result);
+                setWorkoutId(result.data.getCurrentWorkout.id)
+                workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
+            }
+        })
     }, [username]);
 
     //heavy logic here, not much you can do with usereducer here
@@ -237,10 +250,7 @@ const WorkoutProvider = props => {
         const {routine, efforts} = await analyzeWorkout(report, data, oldRoutine);
 
         const res = await API.graphql(graphqlOperation(getUserLocation, {
-            input: {
-                //this should work, right?
-                userID: username
-            }
+            userID: username
         }));
         //res.data.getUserLocation.gymID, ....gym.countryId, cityID, stateID
         //is what you're lookign for
@@ -273,6 +283,8 @@ const WorkoutProvider = props => {
 
         //now how tf do you get rankings...
         detailedEfforts.forEach(effort => {
+
+            //no
             DataStore.save(Effort, effort).then(res => console.log('effort saved', res));
         });
 

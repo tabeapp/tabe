@@ -845,19 +845,9 @@ export const onDeleteComment = /* GraphQL */ `
 export const onCreateCurrentWorkout = /* GraphQL */ `
   subscription OnCreateCurrentWorkout {
     onCreateCurrentWorkout {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -866,19 +856,9 @@ export const onCreateCurrentWorkout = /* GraphQL */ `
 export const onUpdateCurrentWorkout = /* GraphQL */ `
   subscription OnUpdateCurrentWorkout {
     onUpdateCurrentWorkout {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -887,19 +867,9 @@ export const onUpdateCurrentWorkout = /* GraphQL */ `
 export const onDeleteCurrentWorkout = /* GraphQL */ `
   subscription OnDeleteCurrentWorkout {
     onDeleteCurrentWorkout {
-      id
       userID
       data
       routineID
-      routine {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }

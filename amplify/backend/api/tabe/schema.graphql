@@ -150,13 +150,11 @@ type Routine
 #a user will update and clear a single one of these objects
 type CurrentWorkout
 @model
-@key(name: "byUser", fields: ["userID"])
+@key(fields: ["userID"])
 {
-  id: ID!
   userID: ID!
   data: AWSJSON!
   routineID: ID!
-  routine: Routine @connection(fields: ["routineID"])
 }
 
 type Like
