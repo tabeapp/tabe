@@ -670,6 +670,516 @@ export const listPostMedias = /* GraphQL */ `
     }
   }
 `;
+export const listEffortsByExerciseAndCountry = /* GraphQL */ `
+  query ListEffortsByExerciseAndCountry(
+    $countryID: ID
+    $exerciseWeight: ModelEffortByCountryCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExerciseAndCountry(
+      countryID: $countryID
+      exerciseWeight: $exerciseWeight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listEffortsByExerciseAndState = /* GraphQL */ `
+  query ListEffortsByExerciseAndState(
+    $stateID: ID
+    $exerciseWeight: ModelEffortByStateCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExerciseAndState(
+      stateID: $stateID
+      exerciseWeight: $exerciseWeight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listEffortsByExerciseAndCity = /* GraphQL */ `
+  query ListEffortsByExerciseAndCity(
+    $cityID: ID
+    $exerciseWeight: ModelEffortByCityCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExerciseAndCity(
+      cityID: $cityID
+      exerciseWeight: $exerciseWeight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listEffortsByExerciseAndGym = /* GraphQL */ `
+  query ListEffortsByExerciseAndGym(
+    $gymID: ID
+    $exerciseWeight: ModelEffortByGymCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExerciseAndGym(
+      gymID: $gymID
+      exerciseWeight: $exerciseWeight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listEffortsByExerciseAndUser = /* GraphQL */ `
+  query ListEffortsByExerciseAndUser(
+    $userID: ID
+    $weight: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExerciseAndUser(
+      userID: $userID
+      weight: $weight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listEffortsByExercise = /* GraphQL */ `
+  query ListEffortsByExercise(
+    $exercise: String
+    $weight: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEffortsByExercise(
+      exercise: $exercise
+      weight: $weight
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        countryID
+        country {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        stateID
+        state {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        cityID
+        city {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listRoutinesByUser = /* GraphQL */ `
   query ListRoutinesByUser(
     $userID: ID
