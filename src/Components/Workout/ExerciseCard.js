@@ -91,6 +91,9 @@ const ExerciseCard = (props) => {
             break;
     }
 
+
+    //this is fucking it, i'll just make my own keys
+
     return (
         <View style={STYLES.card} key={name}>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -104,14 +107,14 @@ const ExerciseCard = (props) => {
                     <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
                 }
 
+                {
+                    barbell&&
+                    <>
+                        <WeightVisual key={'b'} weight={currentWeight} reverse={true} />
+                        <MidLine key={'c'} completion={1}/>
+                    </>
+                }
                 <Row style={{ flex: 1, justifyContent: 'center'}}>
-                    {
-                        barbell&&
-                        <>
-                            <WeightVisual key={'b'} weight={currentWeight} reverse={true} />
-                            <MidLine key={'c'} completion={1}/>
-                        </>
-                    }
                     {
                         sets.map((set, index) => {
                             //this could probably be its own component
@@ -132,7 +135,7 @@ const ExerciseCard = (props) => {
                             if(amrap && (!progress || current))
                                 text = reps + '+';
 
-                            return <>
+                            return <React.Fragment key={index}>
                                 <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
                                     <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?primaryColor:twoColors[index][1]}}/>
                                     {
@@ -166,19 +169,20 @@ const ExerciseCard = (props) => {
                                     index !== sets.length-1&&
                                     <MidLine key={index+'-'} completion={completion}/>
                                 }
-                            </>
+                            </React.Fragment>
 
                         })
                     }
-                    {
-                        barbell&&
-                        <>
-                            <MidLine key={'x'} completion={1}/>
-                            <WeightVisual key={'y'} weight={currentWeight} reverse={false} />
-                        </>
-                    }
                 </Row>
                 {
+                    barbell&&
+                    <>
+                        <MidLine key={'x'} completion={1}/>
+                        <WeightVisual key={'y'} weight={currentWeight} reverse={false} />
+                    </>
+                }
+                {
+                    //the mod buttons arent causing key error
                     edit&&
                     <SetModButton key={'z'} type='+' exerciseN={props.exerciseN}/>
                 }
