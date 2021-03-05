@@ -380,6 +380,27 @@ export const onCreatePost = /* GraphQL */ `
         }
         nextToken
       }
+      efforts {
+        items {
+          id
+          postID
+          userID
+          exercise
+          weight
+          reps
+          orm
+          countryID
+          stateID
+          cityID
+          gymID
+          createdAt
+          trophies {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -432,6 +453,27 @@ export const onUpdatePost = /* GraphQL */ `
             nextToken
           }
           createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      efforts {
+        items {
+          id
+          postID
+          userID
+          exercise
+          weight
+          reps
+          orm
+          countryID
+          stateID
+          cityID
+          gymID
+          createdAt
+          trophies {
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -492,6 +534,27 @@ export const onDeletePost = /* GraphQL */ `
         }
         nextToken
       }
+      efforts {
+        items {
+          id
+          postID
+          userID
+          exercise
+          weight
+          reps
+          orm
+          countryID
+          stateID
+          cityID
+          gymID
+          createdAt
+          trophies {
+            nextToken
+          }
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -508,65 +571,22 @@ export const onCreateEffort = /* GraphQL */ `
       reps
       orm
       countryID
-      country {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       stateID
-      state {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       cityID
-      city {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -582,65 +602,22 @@ export const onUpdateEffort = /* GraphQL */ `
       reps
       orm
       countryID
-      country {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       stateID
-      state {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       cityID
-      city {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -656,65 +633,22 @@ export const onDeleteEffort = /* GraphQL */ `
       reps
       orm
       countryID
-      country {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       stateID
-      state {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       cityID
-      city {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -1102,6 +1036,24 @@ export const onCreateTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1161,6 +1113,24 @@ export const onUpdateTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1215,6 +1185,24 @@ export const onDeleteTimeline = /* GraphQL */ `
             userID
             postID
             content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
             createdAt
             updatedAt
           }

@@ -79,12 +79,14 @@ type Post
   user: User @connection(fields: ["userID"])
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
   comments: [Comment] @connection(keyName: "byParent", fields: ["id"])
+  efforts: [Effort] @connection(keyName: "byPost", fields: ["id"])
   createdAt: String!
 }
 
 type Effort
 @model
 #is this the best way to do it?
+@key(name: "byPost", fields: ["postID"])
 @key(name: "byCountry", fields: ["countryID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCountry")
 @key(name: "byState", fields: ["stateID", "exercise", "weight"], queryField: "listEffortsByExerciseAndState")
 @key(name: "byCity", fields: ["cityID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCity")
@@ -100,14 +102,11 @@ type Effort
   reps: Int!
   orm: Int!
   countryID: ID!
-  country: Region @connection(fields: ["countryID"])
   stateID: ID!
-  state: Region @connection(fields: ["stateID"])
   cityID: ID!
-  city: Region @connection(fields: ["cityID"])
   gymID: ID!
-  gym: Gym @connection(fields: ["gymID"])
   createdAt: String!
+  trophies: [Trophy] @connection(keyName: "byEffort", fields: ["id"])
 }
 
 #these are kinda like trophies

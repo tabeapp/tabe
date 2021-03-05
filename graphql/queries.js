@@ -300,65 +300,22 @@ export const getEffort = /* GraphQL */ `
       reps
       orm
       countryID
-      country {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       stateID
-      state {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       cityID
-      city {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-      }
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       createdAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -379,65 +336,22 @@ export const listEfforts = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -746,65 +660,22 @@ export const listEffortsByExerciseAndCountry = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -837,65 +708,22 @@ export const listEffortsByExerciseAndState = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -928,65 +756,22 @@ export const listEffortsByExerciseAndCity = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1019,65 +804,22 @@ export const listEffortsByExerciseAndGym = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1110,65 +852,22 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1201,65 +900,22 @@ export const listEffortsByExercise = /* GraphQL */ `
         reps
         orm
         countryID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         stateID
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         cityID
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         createdAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -1431,6 +1087,24 @@ export const listPosts = /* GraphQL */ `
           }
           nextToken
         }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1485,6 +1159,27 @@ export const getPost = /* GraphQL */ `
             nextToken
           }
           createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      efforts {
+        items {
+          id
+          postID
+          userID
+          exercise
+          weight
+          reps
+          orm
+          countryID
+          stateID
+          cityID
+          gymID
+          createdAt
+          trophies {
+            nextToken
+          }
           updatedAt
         }
         nextToken
@@ -1557,6 +1252,24 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
           }
           nextToken
         }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1620,6 +1333,24 @@ export const searchPosts = /* GraphQL */ `
             userID
             postID
             content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
             createdAt
             updatedAt
           }
@@ -1723,6 +1454,24 @@ export const getTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1773,6 +1522,9 @@ export const listTimelines = /* GraphQL */ `
             nextToken
           }
           comments {
+            nextToken
+          }
+          efforts {
             nextToken
           }
           createdAt
