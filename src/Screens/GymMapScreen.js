@@ -18,7 +18,7 @@ import {
     deleteUserLocation,
     updateUserLocation,
 } from '../../graphql/mutations';
-import { emptyRegion } from '../Constants/EmptyRegion';
+import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -203,7 +203,7 @@ const GymMapScreen = props => {
 
         //start with earth, reassign id as you go
         //we dont even need to make an earth region, it's just a superregion
-        let superRegionID = 'earth';
+        let superRegionID = GLOBAL_REGION_ID;
 
         //for(const level in regions){
         for(let i = 0; i < levels.length; i++){

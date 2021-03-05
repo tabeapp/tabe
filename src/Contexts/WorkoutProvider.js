@@ -7,7 +7,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
     createCurrentWorkout, createEffort,
     createPostAndTimeline,
-    createPostMedia,
+    createPostMedia, createTrophy,
     updateCurrentWorkout,
 } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,7 +26,7 @@ import {
     listEffortsByExerciseAndUser,
     listUserLocations,
 } from '../../graphql/queries';
-import { emptyRegion } from '../Constants/EmptyRegion';
+import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 
 export const WorkoutContext = React.createContext();
 
@@ -335,16 +335,36 @@ const WorkoutProvider = props => {
         //this is so fucking ugly, is there a better way?
         //maybe a single graphql query to check all of these?
         //would only be 60 items back tops
-        const operations = [listEffortsByExerciseAndUser, listEffortsByExerciseAndGym,
-            listEffortsByExerciseAndCity, listEffortsByExerciseAndState,
-            listEffortsByExerciseAndCountry];//, listEffortsByExercise];
-        const keys = ['userID', 'gymID', 'cityID', 'stateID', 'countryID'];
-        const values = [username, efforts[0].gymID, efforts[0].cityID, efforts[0].stateID, efforts[0].countryID];
+        const operations = [listEffortsByExerciseAndGym, listEffortsByExerciseAndCity,
+            listEffortsByExerciseAndState, listEffortsByExerciseAndCountry];
+        const keys = ['gymID', 'cityID', 'stateID', 'countryID'];
+        const values = [efforts[0].gymID, efforts[0].cityID, efforts[0].stateID, efforts[0].countryID];
 
 
         //fuck me, is this really ideal?
         for(let i = 0; i < uploadedEfforts.length; i++) {
             const effort = uploadedEfforts[i];
+
+            const personal = await API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
+                userID: username,
+                exercise: effort.exercise,
+                limit: 10,
+                sortDirection: 'DESC'
+            }));
+            const personalRank = personal.data.listEffortsByExerciseAndUser
+                .items.findIndex(ef => ef.id === effort.id);
+            if(personalRank !== -1) {
+                await API.graphql(graphqlOperation(createTrophy, {
+                    input: {
+                        effortID: effort.id,
+                        type: 'personal',
+                        targetID: username,
+                        rank: personalRank
+                    }
+                }))
+            }
+
+            //should trophies link to efforts or post?
 
             for(let n = 0; n < operations.length; n++){
 
@@ -364,12 +384,22 @@ const WorkoutProvider = props => {
                     .items.findIndex(ef=> ef.id === effort.id);
 
                 //not a pr on this level, fuck it
+                //todo its possible gym pr can be reached without the user making a pr
+                //check personal and gym followed by the rest
                 if(rank === -1)
                     break;
                 else{
                     //just gonna log it for now, idc
                     //eventually add an award like how strava does
                     console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${rank+1} in ${values[n]}`)
+                    await API.graphql(graphqlOperation(createTrophy, {
+                        input: {
+                            effortID: effort.id,
+                            type: n === 0 ? 'gym' : 'region',
+                            targetID: values[n],
+                            rank: rank
+                        }
+                    }))
                 }
             }
 
@@ -380,8 +410,18 @@ const WorkoutProvider = props => {
                 sortDirection: 'DESC'
             }));
             const globalRank = global.data.listEffortsByExercise.items.findIndex(ef=> ef.id === effort.id);
-            if(globalRank !== -1)
+            if(globalRank !== -1){
+
                 console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${globalRank+1} in the world`);
+                await API.graphql(graphqlOperation(createTrophy, {
+                    input: {
+                        effortID: effort.id,
+                        type: 'region',
+                        targetID: GLOBAL_REGION_ID,
+                        rank: globalRank
+                    }
+                }))
+            }
         }
     };
 
