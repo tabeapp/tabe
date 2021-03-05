@@ -30,8 +30,11 @@ type Gym @model @searchable {
 #essentially this is groups of gyms
 #right now i dont care about dover belongs to nh belongs to usa
 #a gym will belong to dover, belong to nh, and belong to usa
-type Region @model {
+type Region @model
+@key(name: "bySuperRegion", fields: ["superRegionID"])
+{
   id: ID!
+  superRegionID: ID!
   name: String!
 }
 
@@ -105,6 +108,23 @@ type Effort
   gymID: ID!
   gym: Gym @connection(fields: ["gymID"])
   createdAt: String!
+}
+
+#these are kinda like trophies
+#if you get a 3rd place trophy, you dont get it taken away when someone else gets 3rd
+#its like at the time of the effort, you got 3rd in whereever
+#I wonder if theres a way to scan all three by efforts
+
+#personal top 10 effort, at the time
+type Trophy
+@model
+@key(name: "byEffort", fields: ["effortID"])
+{
+  id: ID!
+  effortID: ID!
+  type: String!#user, gym, or region
+  targetID: ID!#the id of the user, gym, or region
+  rank: Int!
 }
 
 type Location

@@ -201,7 +201,15 @@ const GymMapScreen = props => {
         //name, location, regionInfo
         //lets go through regionInfo and ensure regions exist
         //for(const level in ['country', 'state', 'city']
-        for(const level in regions){
+        const levels = ['country', 'state', 'city'];
+
+        //start with earth, reassign id as you go
+        //we dont even need to make an earth region, it's just a superregion
+        let superRegionID = 'earth';
+
+        //for(const level in regions){
+        for(let i = 0; i < levels.length; i++){
+            const level = levels[i];
             const {id, name} = regions[level];
             console.log(id, name);
             //could we combine these into one graphql request?
@@ -210,16 +218,23 @@ const GymMapScreen = props => {
             }));
             console.log(result);
 
+            //if the country exists, assign its to the superregionid
+            //otherwise make the country, then assign the id to the superregion id
+            //but then again, we're using ids from mapbox so it doesn't matter if it exists or not
+
             //otherwise the region already exists, we're good to use the region id
             if(result.data.getRegion === null){
                 const regionCreate = await API.graphql(graphqlOperation(createRegion, {
                     input: {
                         id: id,
+                        superRegionID: superRegionID,
                         name: name
                     }
                 }));
                 console.log(regionCreate);
             }
+            //this might work
+            superRegionID = id;
         }
 
         //at this point we're good to use the region ids

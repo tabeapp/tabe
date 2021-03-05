@@ -26,6 +26,8 @@ const UserProvider = props => {
             userID: username
         })).then(result => {
             console.log('userlocaiton load', result);
+            if(!result.data.getUserLocation.gym.country)
+                return;
             const gym = result.data.getUserLocation.gym;
             //maybe we need the region ids, but who cares
             //just names for now
