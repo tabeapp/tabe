@@ -8,8 +8,6 @@ import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 
-const primaryColor = '#66d6f8';
-
 const routines = [
     {
         title: 'Starting Strength',

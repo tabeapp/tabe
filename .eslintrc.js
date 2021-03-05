@@ -8,6 +8,7 @@ module.exports = {
     "react/jsx-indent-props": ["warn", 4],
     "keyword-spacing": "off",
     "curly": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "space-infix-ops": "off"
   }
 };

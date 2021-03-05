@@ -3,20 +3,18 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getRegion, getUserLocation, listRegions, listUserLocations, nearbyGyms } from '../../graphql/queries';
+import { getRegion, getUserLocation, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
-import { Gym, UserLocation } from '../../models';
 import { UserContext } from '../Contexts/UserProvider';
 import {
     createGym,
     createRegion,
     createUserLocation,
     deleteUserLocation,
-    updateUserLocation,
 } from '../../graphql/mutations';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 

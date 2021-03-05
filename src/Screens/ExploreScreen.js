@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { listPostsSortedByTimestamp } from '../../graphql/queries';
 import { onCreatePost } from '../../graphql/subscriptions';
 import PostList from '../Components/Social/PostList';
@@ -29,11 +29,6 @@ const reducer = (state, action) => {
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const ExploreScreen = props => {
     //not doing this here lol
-    const signOut = () => {
-        Auth.signOut()
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
-    };
 
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
@@ -133,7 +128,6 @@ const ExploreScreen = props => {
 
 
 const drawerWidth = 340;
-const MAX_POST_CONTENT_LENGTH = 140;
 const styles = StyleSheet.create({
     drawer: {
         width: drawerWidth,

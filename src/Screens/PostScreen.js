@@ -12,8 +12,6 @@ import { createComment, createLike, deleteLike } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import Write from '../Components/Simple/Write';
 
-const primaryColor = '#66d6f8';
-
 //yes this is a copy of report screen
 const PostScreen = props => {
     const {postID} = props.route.params;

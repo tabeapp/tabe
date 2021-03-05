@@ -10,11 +10,9 @@ import { STYLES } from '../Style/Values';
 import { CommonActions } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const primaryColor = '#66d6f8';
-
 // lets go add media additions, using s3
 const ReportScreen = props => {
-    const {saveWorkout, createReport, finalizeWorkout} = useContext(WorkoutContext);
+    const {saveWorkout, createReport } = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky

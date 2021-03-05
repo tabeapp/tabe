@@ -17,7 +17,6 @@ import { STYLES } from '../Style/Values';
 import { REST_DAY } from '../Constants/Symbols';
 import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
-import { Routine } from '../../models';
 import { createRoutine, updateRoutine } from '../../graphql/mutations';
 
 //so this isn't for setting up the routine with weights,

@@ -35,17 +35,6 @@ const UserProvider = props => {
         })
     }, [username]);
 
-    //let the user update location, and make their own for fun
-    const updateLocation = (level, id) => {
-        setLocation(prev => {
-            const next = [...prev];
-            next[level] = id;
-            return id;
-        });
-
-
-    };
-
     return (
         <UserContext.Provider value={{
             username: username,

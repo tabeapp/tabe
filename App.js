@@ -4,27 +4,26 @@ import {NavigationContainer} from '@react-navigation/native';
 import {CardStyleInterpolators, createStackNavigator} from '@react-navigation/stack';
 //get custom icons eventually
 
-import HomeScreen from './src/Screens/HomeScreen';
-import ExploreScreen from './src/Screens/ExploreScreen';
-import RoutineEditScreen from './src/Screens/RoutineEditScreen';
-import ProfileScreen from './src/Screens/ProfileScreen';
-import WorkoutScreen from './src/Screens/WorkoutScreen';
-import ChooseRoutineScreen from './src/Screens/ChooseRoutineScreen';
-import RoutineSetupScreen from './src/Screens/RoutineSetupSreen';
-import ReportScreen from './src/Screens/ReportScreen';
-import PostScreen from './src/Screens/PostScreen';
-import RoutineScreen from './src/Screens/RoutineScreen';
+
 import RoutinesProvider from './src/Contexts/RoutinesProvider';
 import WorkoutProvider from './src/Contexts/WorkoutProvider';
 
 //this might help
 //https://medium.com/javascript-in-plain-english/the-ultimate-guide-for-integrate-aws-amplify-authentication-for-react-native-15a8eec10890
-import Amplify, {API, graphqlOperation} from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { withAuthenticator } from "aws-amplify-react-native";
-import TutorialScreen from "./src/Screens/TutorialScreen";
 import UserProvider from "./src/Contexts/UserProvider";
 import GymMapScreen from './src/Screens/GymMapScreen';
+import {
+    ChooseRoutineScreen,
+    ExploreScreen,
+    HomeScreen,
+    PostScreen, ProfileScreen, ReportScreen, RoutineEditScreen, RoutineScreen,
+    RoutineSetupScreen,
+    WorkoutScreen,
+} from './src/Screens';
+
 Amplify.configure({
     ...awsconfig,
     Analytics: {

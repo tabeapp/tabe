@@ -1,5 +1,4 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
 import WeightVisual from '../Utils/WeightVisual';
@@ -8,7 +7,7 @@ import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { getFollowRelationship, listPosts } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';

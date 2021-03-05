@@ -24,7 +24,6 @@ import {
     listEffortsByExerciseAndCountry, listEffortsByExerciseAndGym,
     listEffortsByExerciseAndState,
     listEffortsByExerciseAndUser,
-    listUserLocations,
 } from '../../graphql/queries';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 

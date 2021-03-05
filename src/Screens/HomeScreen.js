@@ -194,7 +194,6 @@ const HomeScreen = props => {
 };
 
 const drawerWidth = 340;
-const MAX_POST_CONTENT_LENGTH = 140;
 const styles = StyleSheet.create({
     drawer: {
         width: drawerWidth,

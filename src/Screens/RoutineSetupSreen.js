@@ -8,8 +8,6 @@ import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 
-const primaryColor = '#66d6f8';
-
 const repNumbers = {
     def: 1,
     min: 1,

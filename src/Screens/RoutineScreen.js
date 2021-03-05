@@ -7,7 +7,6 @@ import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { UserContext } from '../Contexts/UserProvider';
 import { RoutinesContext } from '../Contexts/RoutinesProvider';
 import { deleteRoutine, updateRoutine } from '../../graphql/mutations';
 
