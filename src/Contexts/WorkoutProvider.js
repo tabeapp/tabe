@@ -26,6 +26,7 @@ import {
     listEffortsByExerciseAndUser,
     listUserLocations,
 } from '../../graphql/queries';
+import { emptyRegion } from '../Constants/EmptyRegion';
 
 export const WorkoutContext = React.createContext();
 
@@ -251,7 +252,7 @@ const WorkoutProvider = props => {
     const finalizeWorkout = async (report, postID) => {
 
         //this function needs cleanup, but this is basically how were gonna do it
-        const oldRoutine = routines.find(x => x.routineID === data.routineId).routine;
+        const oldRoutine = routines.find(r => r.id === data.routineId).routine;
         const { routine, efforts } = await analyzeWorkout(report, data, oldRoutine);
 
         const res = await API.graphql(graphqlOperation(getUserLocation, {
@@ -259,7 +260,13 @@ const WorkoutProvider = props => {
         }));
         //res.data.getUserLocation.gymID, ....gym.countryId, cityID, stateID
         //is what you're lookign for
-        const ul = res.data.getUserLocation;
+        //const ul = res.data.getUserLocation;
+
+        //default
+        const ul = {
+            ...emptyRegion(),
+            ...res.data.getuserLocation
+        };
 
         if (!ul) {
             //allow the user to pick a location?
@@ -303,11 +310,13 @@ const WorkoutProvider = props => {
         //this or something similar to a map and a promise.all might also work
         for(let i = 0; i < efforts.length; i++){
             const effort = efforts[i];
-            await API.graphql(graphqlOperation(createEffort, {
+            const result = await API.graphql(graphqlOperation(createEffort, {
                 input:{
                     ...effort//will this work?
                 }
             }));
+            console.log('create effort result', result);
+            effort.id = result.data.createEffort.id;
         }
 
         //now how tf do you get rankings...
@@ -343,6 +352,8 @@ const WorkoutProvider = props => {
                 console.log(result);
 
                 //this is so fucking complex
+                //effort doesn't have an id, the effort object is from before uploading to aws
+                //you have to get the effort ids
                 const rank = result.data[operations[n]].items.findIndex(ef=> ef.id === effort.id);
 
                 //not a pr on this level, fuck it
@@ -382,7 +393,7 @@ const WorkoutProvider = props => {
 
 
         //ugh, I guess this should call that labmda actually
-        //this isn't working
+        //this isn't working start from here next time...
         const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
             title: workoutData.title,
             description: workoutData.description,

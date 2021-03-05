@@ -18,6 +18,7 @@ import {
     deleteUserLocation,
     updateUserLocation,
 } from '../../graphql/mutations';
+import { emptyRegion } from '../Constants/EmptyRegion';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -122,11 +123,8 @@ const GymMapScreen = props => {
 
         //these are the regions we may need to add
         //this is actually super imporant, these are the default values if nothign is found
-        const regionInfo = {
-            country: {id: 'emptyCountry', name: 'Empty'},
-            state: {id: 'emptyState', name: 'Empty'},
-            city: {id: 'emptyCity', name: 'Empty'},
-        };
+        const regionInfo = emptyRegion();
+
         // sometimes poi wont return any features, just use the same query but types=address, limit=1
         //reload but using place(city) instead of poi
         if (obj.features.length === 0) {
