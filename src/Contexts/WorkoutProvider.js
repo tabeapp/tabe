@@ -265,7 +265,7 @@ const WorkoutProvider = props => {
         //default
         const ul = {
             ...emptyRegion(),
-            ...res.data.getuserLocation
+            ...res.data.getUserLocation
         };
 
         if (!ul) {
@@ -273,20 +273,22 @@ const WorkoutProvider = props => {
             //basically just load gym map screen
             //more on this later
         }
+        console.log('userlocation', ul);
 
         //we're just gonna copy the countryid, cityid, stateid to the effort, tey're just strings
 
         //take the efforts and turn them into actual efforts, upload them
-        const detailedEfforts = Object.keys(efforts).map(([name, info]) =>
+        //console.log('sample effort', efforts[Object.keys(efforts)]);
+        const detailedEfforts = Object.entries(efforts).map(([name, info]) =>
             new Effort({
                 ...info,
                 exercise: name,
                 userID: username,
                 postID: postID,
                 //countryID: ???,//need to get these from user, damn it
-                countryID: ul.gym.countryID,
-                stateID: ul.gym.stateID,
-                cityID: ul.gym.cityID,
+                countryID: ul.country.id,
+                stateID: ul.state.id,
+                cityID: ul.city.id,
                 gymID: ul.gymID
             })
         );
@@ -306,17 +308,20 @@ const WorkoutProvider = props => {
 
         //this is a whole other function smh
 
+
+        const uploadedEfforts = [];
         //we need to wait for all the efforts to upload
         //this or something similar to a map and a promise.all might also work
         for(let i = 0; i < efforts.length; i++){
             const effort = efforts[i];
+            console.log('effort', effort);
             const result = await API.graphql(graphqlOperation(createEffort, {
                 input:{
                     ...effort//will this work?
                 }
             }));
             console.log('create effort result', result);
-            effort.id = result.data.createEffort.id;
+            uploadedEfforts.push(result.data.createEffort);
         }
 
         //now how tf do you get rankings...
@@ -338,8 +343,8 @@ const WorkoutProvider = props => {
 
 
         //fuck me, is this really ideal?
-        for(let i = 0; i < efforts.length; i++) {
-            const effort = efforts[i];
+        for(let i = 0; i < uploadedEfforts.length; i++) {
+            const effort = uploadedEfforts[i];
 
             for(let n = 0; n < operations.length; n++){
 
@@ -349,12 +354,14 @@ const WorkoutProvider = props => {
                     limit: 10,
                     sortDirection: 'DESC'
                 }));
-                console.log(result);
+                console.log('check rank result', result);
 
                 //this is so fucking complex
                 //effort doesn't have an id, the effort object is from before uploading to aws
                 //you have to get the effort ids
-                const rank = result.data[operations[n]].items.findIndex(ef=> ef.id === effort.id);
+                //there should only be one thing under data, just get that instead of what evah
+                const rank = result.data[Object.keys(result.data)[0]]
+                    .items.findIndex(ef=> ef.id === effort.id);
 
                 //not a pr on this level, fuck it
                 if(rank === -1)
@@ -362,7 +369,7 @@ const WorkoutProvider = props => {
                 else{
                     //just gonna log it for now, idc
                     //eventually add an award like how strava does
-                    console.log(`effort of ${effort.exercise} at ${effort.orm} ranked ${rank+1} in ${values[n]}`)
+                    console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${rank+1} in ${values[n]}`)
                 }
             }
 
@@ -374,7 +381,7 @@ const WorkoutProvider = props => {
             }));
             const globalRank = global.data.listEffortsByExercise.items.findIndex(ef=> ef.id === effort.id);
             if(globalRank !== -1)
-                console.log(`effort of ${effort.exercise} at ${effort.orm} ranked ${globalRank+1} in the world`);
+                console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${globalRank+1} in the world`);
         }
     };
 
