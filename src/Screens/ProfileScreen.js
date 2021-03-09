@@ -7,14 +7,20 @@ import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
-import { API, graphqlOperation } from 'aws-amplify';
-import { getFollowRelationship, listPosts } from '../../graphql/queries';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { getFollowRelationship, getUserImage, listPosts } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
-import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
+import {
+    createFollowRelationship,
+    createUserImage,
+    deleteFollowRelationship,
+} from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import Geolocation from '@react-native-community/geolocation';
 import { S3Image } from 'aws-amplify-react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
+import { v4 as uuidv4 } from 'uuid';
 
 const liftMapping = {
     squat: 'orange',
@@ -90,6 +96,8 @@ const ProfileScreen = props => {
 
     };
 
+    const [profileURI, setProfileURI] = useState('');
+
     useEffect(() => {
         if(!signedInUser || !profileUser)
             return;
@@ -103,6 +111,14 @@ const ProfileScreen = props => {
         };
         init();
 
+        //this just gets the profile image, super simple
+        API.graphql(graphqlOperation(getUserImage, {
+            userID: profileUser
+        })).then(result => {
+            if(result.data.getUserImage)
+                setProfileURI(result.data.getUserImage.uri);
+        });
+
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
             next: msg => {
                 const post = msg.value.data.onCreatePost;
@@ -113,19 +129,6 @@ const ProfileScreen = props => {
         });
         return () => subscription.unsubscribe();
     }, [signedInUser, profileUser])
-
-    /*useEffect(() => {
-        //console.log('reloading progress ' + JSON.stringify(progress));
-        AsyncStorage.getItem('@progress').then(val =>{
-
-            setProgress(JSON.parse(val));
-        });
-
-        //better hope this is present, lol
-        AsyncStorage.getItem('@userStats').then(val => {
-            setUserStats(JSON.parse(val));
-        });
-    }, []);*/
 
     let timeStart = 0, timeEnd = 1, weightStart = 0, weightEnd = 1;
     if(progress[0]){
@@ -188,7 +191,52 @@ const ProfileScreen = props => {
     };
 
     const chooseProfileImage = () => {
+        const options = {
+            maxWidth: 1080,//is this important?
+            maxHeight: 1080,
+            durationLimit: 60,
+            mediaType: 'photo'
+        }
 
+        launchImageLibrary(options, res => {
+            console.log({ res });
+
+            if(res.didCancel)
+                console.log('user cancelled');
+            else if(res.errorMessage)
+                console.log('error', res.errorMessage)
+            else{
+                //save uri and show image
+                console.log(res.uri);
+                //setMedia(res.uri);
+                //res.uri is what you want
+
+                uploadImage(res.uri)
+                    .then(key => {
+                        console.log('async worked correct key is', key);
+                        API.graphql(graphqlOperation(createUserImage, {
+                            input: {
+                                userID: signedInUser,
+                                uri: key
+                            }
+                        }))
+                            .then(result => {
+                                setProfileURI(result.data.createUserImage.uri);
+                            });
+                    });
+            }
+        });
+    };
+
+    //almost as if you should resuse this code elsewhere...
+    const uploadImage = async uri => {
+        const response = await fetch(uri);
+        const blob = await response.blob();
+        const urlParts = uri.split('.');
+        const extension = urlParts[urlParts.length - 1];
+        const key = `${uuidv4()}.${extension}`;
+        await Storage.put(key, blob);
+        return key;
     };
 
 
@@ -200,16 +248,19 @@ const ProfileScreen = props => {
             <TopBar title={profileUser}/>
             <View style={STYLES.body}>
                 {
-                    <Row>
+                    <Row style={{width: '100%', justifyContent: 'space-around'}}>
                         <TouchableOpacity
                             style={{height: 50, width: 50, backgroundColor: 'gray'}}
                             onPress={chooseProfileImage}
                         >
-                            {/*need an image here*/}
+                            {
+                                profileURI !== '' &&
+                                <S3Image key={profileURI} style={{width: 50, height: 50}} imgKey={profileURI}/>
+                            }
                         </TouchableOpacity>
 
-                        <View>
-                            <Words>{profileUser}</Words>
+                        <View style={{flex:1}}>
+                            <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
                             <Words>{location[3]}</Words>
                         </View>
                     </Row>

@@ -187,6 +187,45 @@ export const deleteUserLocation = /* GraphQL */ `
     }
   }
 `;
+export const createUserImage = /* GraphQL */ `
+  mutation CreateUserImage(
+    $input: CreateUserImageInput!
+    $condition: ModelUserImageConditionInput
+  ) {
+    createUserImage(input: $input, condition: $condition) {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserImage = /* GraphQL */ `
+  mutation UpdateUserImage(
+    $input: UpdateUserImageInput!
+    $condition: ModelUserImageConditionInput
+  ) {
+    updateUserImage(input: $input, condition: $condition) {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserImage = /* GraphQL */ `
+  mutation DeleteUserImage(
+    $input: DeleteUserImageInput!
+    $condition: ModelUserImageConditionInput
+  ) {
+    deleteUserImage(input: $input, condition: $condition) {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createGym = /* GraphQL */ `
   mutation CreateGym(
     $input: CreateGymInput!

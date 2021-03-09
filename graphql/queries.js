@@ -177,6 +177,41 @@ export const listUserLocations = /* GraphQL */ `
     }
   }
 `;
+export const getUserImage = /* GraphQL */ `
+  query GetUserImage($userID: ID!) {
+    getUserImage(userID: $userID) {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserImages = /* GraphQL */ `
+  query ListUserImages(
+    $userID: ID
+    $filter: ModelUserImageFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserImages(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getGym = /* GraphQL */ `
   query GetGym($id: ID!) {
     getGym(id: $id) {

@@ -182,6 +182,36 @@ export const onDeleteUserLocation = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserImage = /* GraphQL */ `
+  subscription OnCreateUserImage {
+    onCreateUserImage {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserImage = /* GraphQL */ `
+  subscription OnUpdateUserImage {
+    onUpdateUserImage {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserImage = /* GraphQL */ `
+  subscription OnDeleteUserImage {
+    onDeleteUserImage {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGym = /* GraphQL */ `
   subscription OnCreateGym {
     onCreateGym {

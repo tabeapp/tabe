@@ -14,6 +14,13 @@ type UserLocation @model
   gym: Gym @connection(fields: ["gymID"])
 }
 
+type UserImage @model
+@key(fields: ["userID"])
+{
+  userID: ID!
+  uri: String!
+}
+
 #might rename these to be more generic later idk
 type Gym @model @searchable {
   id: ID!
