@@ -34,7 +34,7 @@ export const STYLES = StyleSheet.create({
     },
     text: {
         fontFamily: FONT,
-        fontWeight: 'bold',
+        //fontWeight: 'bold',
         color: 'white'
     },
     body: {

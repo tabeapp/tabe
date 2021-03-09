@@ -46,12 +46,12 @@ const ProfileScreen = props => {
     const [userStats, setUserStats] = useState({});
 
     //post loading bs part
-    const currentUser = useContext(UserContext).username;
+    const signedInUser = useContext(UserContext).username;
     const {location} = useContext(UserContext);
 
-    let userId = currentUser;
+    let profileUser = signedInUser;
     if(props.route.params)
-        userId = props.route.params.userId;
+        profileUser = props.route.params.userId;
 
     const [posts, dispatch] = useReducer(reducer, []);
     const [nextToken, setNextToken] = useState(null);
@@ -59,7 +59,7 @@ const ProfileScreen = props => {
 
     const getPosts = async (type, nextToken = null) => {
         const res = await API.graphql(graphqlOperation(listPosts, {
-            userID: userId,
+            userID: profileUser,
             sortDirection: 'DESC',
             limit: 20,
             nextToken: nextToken
@@ -91,12 +91,12 @@ const ProfileScreen = props => {
     };
 
     useEffect(() => {
-        if(!currentUser || !userId)
+        if(!signedInUser || !profileUser)
             return;
         const init = async () => {
 
             setIsFollowing(await getIsFollowing({
-                followeeId: userId, followerId: currentUser
+                followeeId: profileUser, followerId: signedInUser
             }));
 
             getPosts(INITIAL_QUERY);
@@ -106,13 +106,13 @@ const ProfileScreen = props => {
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
             next: msg => {
                 const post = msg.value.data.onCreatePost;
-                if(post.owner !== userId)
+                if(post.owner !== profileUser)
                     return;
                 dispatch({type: SUBSCRIPTION, post: post});
             }
         });
         return () => subscription.unsubscribe();
-    }, [currentUser, userId])
+    }, [signedInUser, profileUser])
 
     /*useEffect(() => {
         //console.log('reloading progress ' + JSON.stringify(progress));
@@ -148,8 +148,8 @@ const ProfileScreen = props => {
 
     const follow = async () => {
         const input = {
-            followeeId: userId,
-            followerId: currentUser.username,
+            followeeId: profileUser,
+            followerId: signedInUser,
             timestamp: Date.now()
         };
         const res = await API.graphql(graphqlOperation(createFollowRelationship, {
@@ -161,8 +161,8 @@ const ProfileScreen = props => {
 
     const unfollow = async () => {
         const input = {
-            followeeId: userId,
-            followerId: currentUser.username,
+            followeeId: profileUser,
+            followerId: signedInUser
         };
         const res = await API.graphql(graphqlOperation(deleteFollowRelationship, {
             input: input
@@ -197,7 +197,7 @@ const ProfileScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'profile'}>
-            <TopBar title={userId}/>
+            <TopBar title={profileUser}/>
             <View style={STYLES.body}>
                 {
                     <Row>
@@ -209,14 +209,14 @@ const ProfileScreen = props => {
                         </TouchableOpacity>
 
                         <View>
-                            <Words>{userId}</Words>
+                            <Words>{profileUser}</Words>
                             <Words>{location[3]}</Words>
                         </View>
                     </Row>
 
                 }
                 {
-                    userId === currentUser &&
+                    profileUser === signedInUser &&
                     <View>
                         <TouchableOpacity style={{height: 50}} onPress={addGym}>
                             <Words>Add Gym</Words>
@@ -229,9 +229,9 @@ const ProfileScreen = props => {
                         isLoading={isLoading}
                         posts={posts}
                         getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={userId + ' Timeline'}
+                        listHeaderTitle={profileUser + ' Timeline'}
                         listHeaderTitleButton={
-                            (currentUser && userId !== currentUser.username) &&
+                            (profileUser !== signedInUser) &&
                             (isFollowing ?
                                 <TouchableOpacity
                                     style={{width: 100, height: 40, backgroundColor: PRIMARY}}
