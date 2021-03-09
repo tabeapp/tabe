@@ -14,6 +14,7 @@ import { onCreatePost } from '../../graphql/subscriptions';
 import { createFollowRelationship, deleteFollowRelationship } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import Geolocation from '@react-native-community/geolocation';
+import { S3Image } from 'aws-amplify-react-native';
 
 const liftMapping = {
     squat: 'orange',
@@ -186,19 +187,37 @@ const ProfileScreen = props => {
         props.navigation.navigate('gymmap');
     };
 
+    const chooseProfileImage = () => {
+
+    };
+
+
+    //next up, lets clean up the user profile
+    //we may eblae to get graphs and shit too
+
     return (
         <SafeBorderNav {...props} screen={'profile'}>
             <TopBar title={userId}/>
             <View style={STYLES.body}>
                 {
+                    <Row>
+                        <TouchableOpacity
+                            style={{height: 50, width: 50, backgroundColor: 'gray'}}
+                            onPress={chooseProfileImage}
+                        >
+                            {/*need an image here*/}
+                        </TouchableOpacity>
+
+                        <View>
+                            <Words>{userId}</Words>
+                            <Words>{location[3]}</Words>
+                        </View>
+                    </Row>
+
+                }
+                {
                     userId === currentUser &&
                     <View>
-                        <Words>{JSON.stringify(coordinates)}</Words>
-                        {
-                            location.map(l =>
-                                <Words>{l}</Words>
-                            )
-                        }
                         <TouchableOpacity style={{height: 50}} onPress={addGym}>
                             <Words>Add Gym</Words>
                         </TouchableOpacity>
