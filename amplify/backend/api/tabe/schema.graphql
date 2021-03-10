@@ -11,7 +11,8 @@ type UserRecord @model
 @key(name: "byState", fields: ["stateID", "exercise", "orm"], queryField: "listRecordsByExerciseAndState")
 @key(name: "byCity", fields: ["cityID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCity")
 @key(name: "byGym", fields: ["gymID", "exercise", "orm"], queryField: "listRecordsByExerciseAndGym")
-@key(name: "byUser", fields: ["userID"], queryField: "listRecordsByUser")
+@key(name: "byUser", fields: ["userID", "orm"], queryField: "listRecordsByUser")
+@key(name: "byExercise", fields: ["exercise", "orm"], queryField: "listRecordsByExercise")
 {
   userID: ID!
   effortID: ID!

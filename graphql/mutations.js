@@ -53,49 +53,13 @@ export const createUserRecord = /* GraphQL */ `
   ) {
     createUserRecord(input: $input, condition: $condition) {
       userID
-      userLocation {
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       effortID
       orm
       exercise
+      countryID
+      stateID
+      cityID
+      gymID
       createdAt
       updatedAt
     }
@@ -108,49 +72,13 @@ export const updateUserRecord = /* GraphQL */ `
   ) {
     updateUserRecord(input: $input, condition: $condition) {
       userID
-      userLocation {
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       effortID
       orm
       exercise
+      countryID
+      stateID
+      cityID
+      gymID
       createdAt
       updatedAt
     }
@@ -163,49 +91,13 @@ export const deleteUserRecord = /* GraphQL */ `
   ) {
     deleteUserRecord(input: $input, condition: $condition) {
       userID
-      userLocation {
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       effortID
       orm
       exercise
+      countryID
+      stateID
+      cityID
+      gymID
       createdAt
       updatedAt
     }
@@ -625,9 +517,6 @@ export const updatePost = /* GraphQL */ `
           weight
           reps
           orm
-          countryID
-          stateID
-          cityID
           gymID
           createdAt
           trophies {
@@ -711,9 +600,6 @@ export const deletePost = /* GraphQL */ `
           weight
           reps
           orm
-          countryID
-          stateID
-          cityID
           gymID
           createdAt
           trophies {
@@ -741,9 +627,6 @@ export const createEffort = /* GraphQL */ `
       weight
       reps
       orm
-      countryID
-      stateID
-      cityID
       gymID
       createdAt
       trophies {
@@ -775,9 +658,6 @@ export const updateEffort = /* GraphQL */ `
       weight
       reps
       orm
-      countryID
-      stateID
-      cityID
       gymID
       createdAt
       trophies {
@@ -809,9 +689,6 @@ export const deleteEffort = /* GraphQL */ `
       weight
       reps
       orm
-      countryID
-      stateID
-      cityID
       gymID
       createdAt
       trophies {
@@ -1329,9 +1206,6 @@ export const updateTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            countryID
-            stateID
-            cityID
             gymID
             createdAt
             updatedAt
@@ -1415,9 +1289,6 @@ export const deleteTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            countryID
-            stateID
-            cityID
             gymID
             createdAt
             updatedAt
@@ -1499,9 +1370,6 @@ export const createPost = /* GraphQL */ `
           weight
           reps
           orm
-          countryID
-          stateID
-          cityID
           gymID
           createdAt
           trophies {
@@ -1600,9 +1468,6 @@ export const createTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            countryID
-            stateID
-            cityID
             gymID
             createdAt
             updatedAt
@@ -1689,9 +1554,6 @@ export const createPostAndTimeline = /* GraphQL */ `
           weight
           reps
           orm
-          countryID
-          stateID
-          cityID
           gymID
           createdAt
           trophies {
