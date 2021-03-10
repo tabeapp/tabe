@@ -346,13 +346,18 @@ const WorkoutProvider = props => {
 
             const personal = await API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
                 userID: username,
-                exercise: effort.exercise,
+                exerciseWeight: {
+                    beginsWith: {
+                        exercise: effort.exercise
+                    }
+                },
                 limit: 10,
                 sortDirection: 'DESC'
             }));
             const personalRank = personal.data.listEffortsByExerciseAndUser
                 .items.findIndex(ef => ef.id === effort.id);
             if(personalRank !== -1) {
+                console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${personalRank+1} for user ${username}`);
                 await API.graphql(graphqlOperation(createTrophy, {
                     input: {
                         effortID: effort.id,
@@ -366,10 +371,15 @@ const WorkoutProvider = props => {
             //should trophies link to efforts or post?
 
             for(let n = 0; n < operations.length; n++){
+                console.log('checking for exercise from', effort);
 
                 const result = await API.graphql(graphqlOperation(operations[n], {
                     [keys[n]]: values[n],
-                    exercise: effort.exercise,
+                    exerciseWeight: {
+                        beginsWith: {
+                            exercise: effort.exercise
+                        }
+                    },
                     limit: 10,
                     sortDirection: 'DESC'
                 }));
