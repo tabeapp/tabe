@@ -386,6 +386,12 @@ export const onCreatePost = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -463,6 +469,12 @@ export const onUpdatePost = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -537,6 +549,12 @@ export const onDeletePost = /* GraphQL */ `
         username
         email
         image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }
@@ -1045,6 +1063,12 @@ export const onCreateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1122,6 +1146,12 @@ export const onUpdateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1196,6 +1226,12 @@ export const onDeleteTimeline = /* GraphQL */ `
           username
           email
           image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
           createdAt
           updatedAt
         }

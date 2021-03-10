@@ -58,11 +58,13 @@ const PostItem = ({ post, navigation }) => {
         >
             <Row>
                 <TouchableOpacity
-                    style={{height: 40, width: 40, borderRadius: 20, backgroundColor: 'blue'}}
+                    style={{height: 40, width: 40, borderRadius: 20, overflow: 'hidden'}}
                     onPress={() => {
                         navigation.navigate('profile', {userId: post.userID})
                     }}
-                />
+                >
+                    <S3Image key={post.userImage.uri} style={{width: 40, height: 40}} imgKey={post.userImage.uri}/>
+                </TouchableOpacity>
                 <View>
 
                     <Words>{post.userID}</Words>

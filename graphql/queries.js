@@ -1101,6 +1101,12 @@ export const listPosts = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1171,6 +1177,12 @@ export const getPost = /* GraphQL */ `
         username
         email
         image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }
@@ -1266,6 +1278,12 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1349,6 +1367,12 @@ export const searchPosts = /* GraphQL */ `
           username
           email
           image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
           createdAt
           updatedAt
         }
@@ -1468,6 +1492,12 @@ export const getTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1550,6 +1580,12 @@ export const listTimelines = /* GraphQL */ `
             username
             email
             image
+            createdAt
+            updatedAt
+          }
+          userImage {
+            userID
+            uri
             createdAt
             updatedAt
           }

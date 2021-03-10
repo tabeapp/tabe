@@ -293,6 +293,11 @@ const ProfileScreen = props => {
 
                 <ScrollView>
 
+                    <PostList
+                        isLoading={isLoading}
+                        posts={posts}
+                        getAdditionalPosts={getAdditionalPosts}
+                    />
                     <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Stats</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
                         Object.entries(records).map(([k,v]) =>
@@ -304,11 +309,6 @@ const ProfileScreen = props => {
                         )
                     }</View>
 
-                    <PostList
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
-                    />
                 </ScrollView>
             </View>
         </SafeBorderNav>

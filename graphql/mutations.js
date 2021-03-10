@@ -421,6 +421,12 @@ export const updatePost = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -498,6 +504,12 @@ export const deletePost = /* GraphQL */ `
         username
         email
         image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }
@@ -1116,6 +1128,12 @@ export const updateTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1196,6 +1214,12 @@ export const deleteTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1268,6 +1292,12 @@ export const createPost = /* GraphQL */ `
         username
         email
         image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }
@@ -1369,6 +1399,12 @@ export const createTimeline = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -1446,6 +1482,12 @@ export const createPostAndTimeline = /* GraphQL */ `
         username
         email
         image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }

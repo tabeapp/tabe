@@ -84,6 +84,7 @@ type Post
   data: String
   userID: ID!
   user: User @connection(fields: ["userID"])
+  userImage: UserImage @connection(fields: ["userID"])
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
   comments: [Comment] @connection(keyName: "byParent", fields: ["id"])
   efforts: [Effort] @connection(keyName: "byPost", fields: ["id"])
