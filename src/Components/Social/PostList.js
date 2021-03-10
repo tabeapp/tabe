@@ -53,7 +53,8 @@ const PostItem = ({ post, navigation }) => {
         return 0 + scales[scales.length - 1].charAt(0)
     }
 
-    const liked = true;
+    //this is cap
+    const liked = false;
     const icon = liked? 'heart': 'heart-outline';
 
     return (
@@ -109,28 +110,34 @@ const PostItem = ({ post, navigation }) => {
                     )
                 }
             </ScrollView>
-            <Row style={{justifyContent: 'space-between'}}>
-                <Words>{post.likes.items.length + ' gains'}</Words>
-                <Words>{post.comments.items.length + ' comments'}</Words>
-            </Row>
 
             <Row style={{height: 50}}>
                 <TouchableOpacity
-                    style={{flex: 1, alignItems: 'center'}}
+                    style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
                     onPress={() => {
                         //todo i swear to god there's gotta be something we can reuse here
                         //the like function
                     }}
                 >
-                    <Words><Ionicons size={30} color={PRIMARY} name={icon}/></Words>
+                    <Words style={{fontWeight: 'bold'}}>
+                        {post.likes.items.length}
+                    </Words>
+                    <Words>
+                        <Ionicons size={30} color={PRIMARY} name={icon}/>
+                    </Words>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{flex: 1, alignItems: 'center'}}
+                    style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
                     onPress={() => {
                         //the like function
                     }}
                 >
-                    <Words><Ionicons size={30} color={PRIMARY} name={'chatbox-outline'}/></Words>
+                    <Words>
+                        {post.comments.items.length}
+                    </Words>
+                    <Words>
+                        <Ionicons size={30} color={PRIMARY} name={'chatbox-outline'}/>
+                    </Words>
                 </TouchableOpacity>
             </Row>
 
