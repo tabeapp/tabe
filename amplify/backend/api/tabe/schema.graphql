@@ -7,12 +7,20 @@ type User @model{
 
 type UserRecord @model
 @key(fields: ["userID", "exercise"])
+@key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
+@key(name: "byState", fields: ["stateID", "exercise", "orm"], queryField: "listRecordsByExerciseAndState")
+@key(name: "byCity", fields: ["cityID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCity")
+@key(name: "byGym", fields: ["gymID", "exercise", "orm"], queryField: "listRecordsByExerciseAndGym")
+@key(name: "byUser", fields: ["userID"], queryField: "listRecordsByUser")
 {
   userID: ID!
-  userLocation: UserLocation @connection(fields: ["userID"])
   effortID: ID!
   orm: Int!
   exercise: String!
+  countryID: ID!#it's bs but these change
+  stateID: ID!
+  cityID: ID!
+  gymID: ID!
 }
 
 type UserLocation @model
@@ -100,18 +108,19 @@ type Post
   comments: [Comment] @connection(keyName: "byParent", fields: ["id"])
   efforts: [Effort] @connection(keyName: "byPost", fields: ["id"])
   createdAt: String!
+  trophies: [Trophy] @connection(keyName: "byPost", fields: ["id"])
 }
 
 type Effort
 @model
 #is this the best way to do it?
 @key(name: "byPost", fields: ["postID"])
-@key(name: "byCountry", fields: ["countryID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCountry")
-@key(name: "byState", fields: ["stateID", "exercise", "weight"], queryField: "listEffortsByExerciseAndState")
-@key(name: "byCity", fields: ["cityID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCity")
-@key(name: "byGym", fields: ["gymID", "exercise", "weight"], queryField: "listEffortsByExerciseAndGym")
+#@key(name: "byCountry", fields: ["countryID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCountry")
+#@key(name: "byState", fields: ["stateID", "exercise", "weight"], queryField: "listEffortsByExerciseAndState")
+#@key(name: "byCity", fields: ["cityID", "exercise", "weight"], queryField: "listEffortsByExerciseAndCity")
+#@key(name: "byGym", fields: ["gymID", "exercise", "weight"], queryField: "listEffortsByExerciseAndGym")
 @key(name: "byUser", fields: ["userID", "exercise", "weight"], queryField: "listEffortsByExerciseAndUser")
-@key(name: "byExercise", fields: ["exercise", "weight"], queryField: "listEffortsByExercise")#global, basically
+#@key(name: "byExercise", fields: ["exercise", "weight"], queryField: "listEffortsByExercise")#global, basically
 {
   id: ID!
   postID: ID!
@@ -120,12 +129,11 @@ type Effort
   weight: Int!
   reps: Int!
   orm: Int!
-  countryID: ID!
-  stateID: ID!
-  cityID: ID!
+  #countryID: ID!
+  #stateID: ID!
+  #cityID: ID!
   gymID: ID!
   createdAt: String!
-  trophies: [Trophy] @connection(keyName: "byEffort", fields: ["id"])
 }
 
 #these are kinda like trophies
@@ -136,10 +144,10 @@ type Effort
 #personal top 10 effort, at the time
 type Trophy
 @model
-@key(name: "byEffort", fields: ["effortID"])
+@key(name: "byPost", fields: ["postID"])
 {
   id: ID!
-  effortID: ID!
+  postID: ID!
   type: String!#user, gym, or region
   targetID: ID!#the id of the user, gym, or region
   rank: Int!
