@@ -74,6 +74,7 @@ type Post
 ])
 @key(name: "byUser", fields: ["userID"])
 @key(name: "SortByTimestamp", fields: ["type", "createdAt"], queryField: "listPostsSortedByTimestamp")
+@key(name: "SortByUserAndTimestamp", fields: ["userID", "createdAt"], queryField: "listPostsSortedByUserAndTimestamp")
 @searchable
 {
   type: String!#this is annoying but its the only way to get all sorted

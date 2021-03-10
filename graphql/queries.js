@@ -1330,6 +1330,100 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
     }
   }
 `;
+export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
+  query ListPostsSortedByUserAndTimestamp(
+    $userID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsSortedByUserAndTimestamp(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            countryID
+            stateID
+            cityID
+            gymID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const searchPosts = /* GraphQL */ `
   query SearchPosts(
     $filter: SearchablePostFilterInput

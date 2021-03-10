@@ -8,7 +8,7 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { getFollowRelationship, getUserImage, listEffortsByExerciseAndUser, listPosts } from '../../graphql/queries';
+import { getFollowRelationship, getUserImage, listEffortsByExerciseAndUser, listPostsSortedByUserAndTimestamp } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import {
@@ -60,7 +60,7 @@ const ProfileScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken = null) => {
-        const res = await API.graphql(graphqlOperation(listPosts, {
+        const res = await API.graphql(graphqlOperation(listPostsSortedByUserAndTimestamp, {
             userID: profileUser,
             sortDirection: 'DESC',
             limit: 20,
@@ -69,9 +69,9 @@ const ProfileScreen = props => {
         console.log(res);
         dispatch({
             type: type,
-            posts: res.data.listPosts.items
+            posts: res.data.listPostsSortedByUserAndTimestamp.items
         })
-        setNextToken(res.data.listPosts.nextToken)
+        setNextToken(res.data.listPostsSortedByUserAndTimestamp.nextToken)
         setIsLoading(false);
     };
     const getAdditionalPosts = () => {
@@ -247,30 +247,27 @@ const ProfileScreen = props => {
         <SafeBorderNav {...props} screen={'profile'}>
             <TopBar title={profileUser}/>
             <View style={STYLES.body}>
-                {
-                    <Row style={{padding: 10, justifyContent: 'space-around'}}>
-                        <View style={{padding: 10}}>
-                            <TouchableOpacity
-                                style={{borderRadius: 50, overflow: 'hidden'}}
-                                onPress={handleProfilePress}
-                            >
-                                {
-                                    profileURI !== '' ?
-                                        <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/> :
-                                        <View style={{width: 100, height: 100}}/>
-                                }
-                            </TouchableOpacity>
-                        </View>
+                <Row style={{padding: 10, justifyContent: 'space-around'}}>
+                    <View style={{padding: 10}}>
+                        <TouchableOpacity
+                            style={{borderRadius: 50, overflow: 'hidden'}}
+                            onPress={handleProfilePress}
+                        >
+                            {
+                                profileURI !== '' ?
+                                    <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/> :
+                                    <View style={{width: 100, height: 100}}/>
+                            }
+                        </TouchableOpacity>
+                    </View>
 
-                        <View style={{flex:1}}>
-                            <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
-                            <TouchableOpacity onPress={handleGymPress}>
-                                <Words>{location[3]}</Words>
-                            </TouchableOpacity>
-                        </View>
-                    </Row>
-
-                }
+                    <View style={{flex:1}}>
+                        <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
+                        <TouchableOpacity onPress={handleGymPress}>
+                            <Words>{location[3]}</Words>
+                        </TouchableOpacity>
+                    </View>
+                </Row>
                 {
                     (profileUser !== signedInUser) &&
                     (
@@ -293,11 +290,6 @@ const ProfileScreen = props => {
 
                 <ScrollView>
 
-                    <PostList
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
-                    />
                     <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Stats</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
                         Object.entries(records).map(([k,v]) =>
@@ -308,6 +300,12 @@ const ProfileScreen = props => {
                             </Row>
                         )
                     }</View>
+
+                    <PostList
+                        isLoading={isLoading}
+                        posts={posts}
+                        getAdditionalPosts={getAdditionalPosts}
+                    />
 
                 </ScrollView>
             </View>
