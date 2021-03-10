@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
 import WeightVisual from '../Utils/WeightVisual';
@@ -17,17 +17,16 @@ import {
     deleteFollowRelationship,
 } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
-import Geolocation from '@react-native-community/geolocation';
 import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 
 const liftMapping = {
-    squat: 'orange',
-    deadlift: 'red',
-    bench: 'green',
-    press: 'blue'
-}
+    Squat: 'orange',
+    Deadlift: 'red',
+    Bench: 'green',
+    Press: 'blue'
+};
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
@@ -48,7 +47,7 @@ const reducer = (state, action) => {
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
-    const [progress, setProgress] = useState([]);
+    const [progress, setProgress] = useState({});
     const [records, setRecords] = useState({
         Bench: 0,
         Squat: 0,
@@ -136,14 +135,27 @@ const ProfileScreen = props => {
                     }
                 },
                 sortDirection: "DESC",
-                limit: 1//just the PR
+                //unlimited to get the graph... maybe this should be its own screen?
+                //limit: 1//just the PR
             }))
                 .then(result => {
                     console.log('prs', result);
                     const items = result.data.listEffortsByExerciseAndUser.items;
-                    if(items.length !== 0){
-                        setRecords(prev => ({...prev,
+                    if(items.length !== 0) {
+                        setRecords(prev => ({
+                            ...prev,
                             [items[0].exercise]: items[0].orm
+                        }));
+
+                        const prog = items.map(effort => ({
+                            time: new Date(effort.createdAt).getTime(),
+                            weight: effort.orm
+                        }))
+
+                        //just looking for 1rm over time
+                        setProgress(prev => ({
+                            ...prev,
+                            [items[0].exercise]: prog
                         }));
                     }
                 });
@@ -163,19 +175,25 @@ const ProfileScreen = props => {
     }, [signedInUser, profileUser])
 
     let timeStart = 0, timeEnd = 1, weightStart = 0, weightEnd = 1;
-    if(progress[0]){
-        timeStart = progress.reduce((min, p) => p.time < min ? p.time : min, progress[0].time);
-        timeEnd = progress.reduce((max, p) => p.time > max ? p.time : max, progress[0].time);
 
-        //this ones too copmlex to reduce
-        progress.forEach(wo => {
-            Object.values(wo.stats).forEach(weight => {
-                if(weight > weightEnd)
-                    weightEnd = weight
+    //SURELY THERE'S SOME GRAPH LIBRARY FOR THIS SHIT
+    if(Object.keys(progress).length !== 0){
+        //initialze with first effort that appears
+        const effort = Object.values(progress)[0][0];
+        timeStart = effort.time;
+        timeEnd = effort.time;
+        weightEnd = effort.weight;
+
+        Object.values(progress).forEach(exerciseArray => {
+            exerciseArray.forEach(effort => {
+                if(effort.time < timeStart)
+                    timeStart = effort.time;
+                if(effort.time > timeEnd)
+                    timeEnd = effort.time;
+                if(effort.weight > weightEnd)
+                    weightEnd = effort.weight;
             })
-        });
-
-
+        })
     }
 
     console.log(timeEnd-timeStart);
@@ -320,43 +338,51 @@ const ProfileScreen = props => {
                     )
                 }
 
+                <ScrollView>
 
-                <View style={{alignItems: 'center'}}>{
-                    Object.entries(records).map(([k,v]) =>
-                        <View style={{height: 120}} key={k}>
+                    <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Graph</Words>
+                    {
+                        <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 0}}>{
+                            /*progress[0]&&
+                            progress.map(wo => {
+                                return Object.entries(wo.stats).map(([k,v]) => {
+                                    //lol should I make this a <canvas>
+                                    const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
+                                    const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
+                                    const color = liftMapping[k];
+                                    return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
+                                })
+                            })*/
+                            Object.entries(progress).map(([exercise, progress]) => {
+                                return progress.map(effort => {
+                                    const x = Math.round((effort.time-timeStart)/(timeEnd-timeStart)*100)+'%';
+                                    const y = Math.round((effort.weight-weightStart)/(weightEnd-weightStart)*100)+'%';
+                                    const color = liftMapping[exercise];
+                                    return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={effort.time+exercise}/>
+                                })
+                            })
+                        }</View>
+                    }
 
-                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Stats</Words>
+                    <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
+                        Object.entries(records).map(([k,v]) =>
+                            <Row key={k} style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <WeightVisual weight={v} reverse={true} />
-                                <Row style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Words style={{textAlign: 'center'}}>{k + '\n' + v}</Words>
-                                </Row>
+                                <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v}</Words>
                                 <WeightVisual weight={v}/>
-                            </View>
-                        </View>
+                            </Row>
+                        )
+                    }</View>
 
-                    )
-                }</View>
-                {/*
 
-                <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 1}}>{
-                    progress[0]&&
-                    progress.map(wo => {
-                        return Object.entries(wo.stats).map(([k,v]) => {
-                            //lol should I make this a <canvas>
-                            const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
-                            const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
-                            const color = liftMapping[k];
-                            return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
-                        })
-                    })
-                }</View>*/
-                }
 
-                <PostList
-                    isLoading={isLoading}
-                    posts={posts}
-                    getAdditionalPosts={getAdditionalPosts}
-                />
+                    <PostList
+                        isLoading={isLoading}
+                        posts={posts}
+                        getAdditionalPosts={getAdditionalPosts}
+                    />
+                </ScrollView>
             </View>
         </SafeBorderNav>
     );

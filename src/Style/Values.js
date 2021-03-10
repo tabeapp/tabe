@@ -39,7 +39,7 @@ export const STYLES = StyleSheet.create({
     },
     body: {
         flex: 1,
-        width: '100%',
+        //width: '100%',
         backgroundColor: 'black',
         alignItems: 'center',
         //borderStyle: 'solid',
