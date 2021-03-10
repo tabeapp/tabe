@@ -8,7 +8,7 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { getFollowRelationship, getUserImage, listPosts } from '../../graphql/queries';
+import { getFollowRelationship, getUserImage, listEffortsByExerciseAndUser, listPosts } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import {
@@ -49,7 +49,7 @@ const reducer = (state, action) => {
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [progress, setProgress] = useState([]);
-    const [userStats, setUserStats] = useState({});
+    const [records, setRecords] = useState({});
 
     //post loading bs part
     const signedInUser = useContext(UserContext).username;
@@ -98,6 +98,7 @@ const ProfileScreen = props => {
 
     const [profileURI, setProfileURI] = useState('');
 
+    //this does so much lol
     useEffect(() => {
         if(!signedInUser || !profileUser)
             return;
@@ -118,6 +119,28 @@ const ProfileScreen = props => {
             if(result.data.getUserImage)
                 setProfileURI(result.data.getUserImage.uri);
         });
+
+        const mainLifts = ['Squat', 'Bench', 'Press', 'Deadlift'];
+        //at last, we get to use user prs
+        mainLifts.forEach(exercise => {
+            API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
+                userID: profileUser,
+                exercise: exercise,
+                sortDirection: "DESC",
+                limit: 1//just the PR
+            }))
+                .then(result => {
+                    const items = result.data.listEffortsByExerciseAndUser.items;
+                    if(items.length !== 0){
+                        setRecords({...records,
+                            [items[0].exercise]: items[0].orm
+                        });
+                    }
+                });
+
+        });
+
+
 
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
             next: msg => {
@@ -185,12 +208,20 @@ const ProfileScreen = props => {
         });
     }, []);
 
-    const addGym = () => {
+    const handleGymPress = () => {
+        //i guess this should show the gym stats of the user if it's not the same
+        //or edit if it is
+        if(signedInUser === profileUser)
+            props.navigation.navigate('gymmap');
+        else{
+            //navigate to the gyms home page
+            //tbd...
+        }
+
         //https://github.com/afshintalebi/react-native-map-picker/blob/master/src/LocationPicker.js
-        props.navigation.navigate('gymmap');
     };
 
-    const chooseProfileImage = () => {
+    const handleProfilePress = () => {
         const options = {
             maxWidth: 1080,//is this important?
             maxHeight: 1080,
@@ -248,65 +279,51 @@ const ProfileScreen = props => {
             <TopBar title={profileUser}/>
             <View style={STYLES.body}>
                 {
-                    <Row style={{width: '100%', justifyContent: 'space-around'}}>
-                        <TouchableOpacity
-                            style={{height: 50, width: 50, backgroundColor: 'gray'}}
-                            onPress={chooseProfileImage}
-                        >
-                            {
-                                profileURI !== '' &&
-                                <S3Image key={profileURI} style={{width: 50, height: 50}} imgKey={profileURI}/>
-                            }
-                        </TouchableOpacity>
+                    <Row style={{padding: 10, justifyContent: 'space-around'}}>
+                        <View style={{padding: 10}}>
+                            <TouchableOpacity
+                                style={{borderRadius: 50, overflow: 'hidden'}}
+                                onPress={handleProfilePress}
+                            >
+                                {
+                                    profileURI !== '' &&
+                                    <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/>
+                                }
+                            </TouchableOpacity>
+                        </View>
 
                         <View style={{flex:1}}>
                             <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
-                            <Words>{location[3]}</Words>
+                            <TouchableOpacity onPress={handleGymPress}>
+                                <Words>{location[3]}</Words>
+                            </TouchableOpacity>
                         </View>
                     </Row>
 
                 }
                 {
-                    profileUser === signedInUser &&
-                    <View>
-                        <TouchableOpacity style={{height: 50}} onPress={addGym}>
-                            <Words>Add Gym</Words>
-                        </TouchableOpacity>
-                    </View>
-                }
-                <View>
-                    {/*posts by user bs here*/}
-                    <PostList
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
-                        listHeaderTitle={profileUser + ' Timeline'}
-                        listHeaderTitleButton={
-                            (profileUser !== signedInUser) &&
-                            (isFollowing ?
-                                <TouchableOpacity
-                                    style={{width: 100, height: 40, backgroundColor: PRIMARY}}
-                                    onPress={unfollow}
-                                >
-                                    <Words>Unfollow</Words>
-                                </TouchableOpacity>
+                    (profileUser !== signedInUser) &&
+                    (
+                        isFollowing ?
+                            <TouchableOpacity
+                                style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, borderColor: PRIMARY, borderWidth: 1}}
+                                onPress={unfollow}
+                            >
+                                <Words style={{fontWeight: 'bold'}}>Unfollow</Words>
+                            </TouchableOpacity>
                             :
-                                <TouchableOpacity
-                                    style={{width: 100, height: 40, backgroundColor: 'gray'}}
-                                    onPress={follow}
-                                >
-                                    <Words>Follow</Words>
-                                </TouchableOpacity>
-                            )
-                        }
-                    />
-
-                </View>
-
+                            <TouchableOpacity
+                                style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, backgroundColor: PRIMARY}}
+                                onPress={follow}
+                            >
+                                <Words style={{fontWeight: 'bold'}}>Follow</Words>
+                            </TouchableOpacity>
+                    )
+                }
 
 
                 <View style={styles.cardContainer}>{
-                    Object.entries(userStats).map(([k,v]) =>
+                    Object.entries(records).map(([k,v]) =>
                         <View style={{...STYLES.card, width: '100%', height: 120}} key={k}>
 
                             <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
@@ -321,6 +338,8 @@ const ProfileScreen = props => {
 
                     )
                 }</View>
+                {/*
+
                 <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 1}}>{
                     progress[0]&&
                     progress.map(wo => {
@@ -332,14 +351,21 @@ const ProfileScreen = props => {
                             return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
                         })
                     })
-                }</View>
+                }</View>*/
+                }
+
+                <PostList
+                    isLoading={isLoading}
+                    posts={posts}
+                    getAdditionalPosts={getAdditionalPosts}
+                />
             </View>
         </SafeBorderNav>
     );
 };
 
 const styles = StyleSheet.create({
-    cardContainer: {height: 500, width: '100%', alignItems: 'center', justifyContent: 'center', margin: 5},
+    cardContainer: {alignItems: 'center', justifyContent: 'center', margin: 5},
 });
 
 export default ProfileScreen;
