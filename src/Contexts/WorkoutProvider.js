@@ -9,6 +9,8 @@ import {
     createPostAndTimeline,
     createPostMedia, createTrophy,
     updateCurrentWorkout,
+    createUserRecord,
+    updateUserRecord
 } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { Effort } from '../../models';
@@ -24,6 +26,7 @@ import {
     listEffortsByExerciseAndCountry, listEffortsByExerciseAndGym,
     listEffortsByExerciseAndState,
     listEffortsByExerciseAndUser,
+    getUserRecord
 } from '../../graphql/queries';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 
@@ -366,6 +369,30 @@ const WorkoutProvider = props => {
                         rank: personalRank
                     }
                 }))
+                //new pr, save that shit
+                if(personalRank === 0){
+                    const input = {
+                        userID: username,
+                        exercise: effort.exercise,
+                        effortID: effort.id,
+                        orm: effort.orm,
+                    };
+
+                    //its bs that I have to check if it exists before hand
+                    const prExists = await API.graphql(graphqlOperation(getUserRecord, {
+                        userID: username,
+                        exercise: effort.exercise,
+                    }));
+                    if(!prExists.data.getUserRecord)
+                        API.graphql(graphqlOperation(createUserRecord, {
+                            input: input
+                        }))
+                    else
+                        API.graphql(graphqlOperation(updateUserRecord, {
+                            input: input
+                        }))
+
+                }
             }
 
             //should trophies link to efforts or post?

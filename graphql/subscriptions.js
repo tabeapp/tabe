@@ -50,6 +50,162 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserRecord = /* GraphQL */ `
+  subscription OnCreateUserRecord {
+    onCreateUserRecord {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserRecord = /* GraphQL */ `
+  subscription OnUpdateUserRecord {
+    onUpdateUserRecord {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserRecord = /* GraphQL */ `
+  subscription OnDeleteUserRecord {
+    onDeleteUserRecord {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUserLocation = /* GraphQL */ `
   subscription OnCreateUserLocation {
     onCreateUserLocation {

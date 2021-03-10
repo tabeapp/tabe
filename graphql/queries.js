@@ -74,6 +74,102 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getUserRecord = /* GraphQL */ `
+  query GetUserRecord($userID: ID!, $exercise: String!) {
+    getUserRecord(userID: $userID, exercise: $exercise) {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserRecords = /* GraphQL */ `
+  query ListUserRecords(
+    $userID: ID
+    $exercise: ModelStringKeyConditionInput
+    $filter: ModelUserRecordFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserRecords(
+      userID: $userID
+      exercise: $exercise
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        userLocation {
+          userID
+          gymID
+          gym {
+            id
+            name
+            countryID
+            stateID
+            cityID
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        effortID
+        orm
+        exercise
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUserLocation = /* GraphQL */ `
   query GetUserLocation($userID: ID!) {
     getUserLocation(userID: $userID) {

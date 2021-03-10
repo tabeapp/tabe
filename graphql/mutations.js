@@ -46,6 +46,171 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createUserRecord = /* GraphQL */ `
+  mutation CreateUserRecord(
+    $input: CreateUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    createUserRecord(input: $input, condition: $condition) {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserRecord = /* GraphQL */ `
+  mutation UpdateUserRecord(
+    $input: UpdateUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    updateUserRecord(input: $input, condition: $condition) {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserRecord = /* GraphQL */ `
+  mutation DeleteUserRecord(
+    $input: DeleteUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    deleteUserRecord(input: $input, condition: $condition) {
+      userID
+      userLocation {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      effortID
+      orm
+      exercise
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUserLocation = /* GraphQL */ `
   mutation CreateUserLocation(
     $input: CreateUserLocationInput!

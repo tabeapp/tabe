@@ -60,6 +60,7 @@ const ProfileScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken = null) => {
+        //todo just get the userRecord objects
         const res = await API.graphql(graphqlOperation(listPostsSortedByUserAndTimestamp, {
             userID: profileUser,
             sortDirection: 'DESC',

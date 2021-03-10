@@ -5,6 +5,16 @@ type User @model{
   image: String
 }
 
+type UserRecord @model
+@key(fields: ["userID", "exercise"])
+{
+  userID: ID!
+  userLocation: UserLocation @connection(fields: ["userID"])
+  effortID: ID!
+  orm: Int!
+  exercise: String!
+}
+
 type UserLocation @model
 @key(fields: ["userID"])
 @key(name: "byGym", fields: ["gymID"])
