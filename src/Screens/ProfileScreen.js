@@ -130,16 +130,21 @@ const ProfileScreen = props => {
         mainLifts.forEach(exercise => {
             API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
                 userID: profileUser,
-                exercise: exercise,
+                exerciseWeight: {
+                    beginsWith: {
+                        exercise: exercise
+                    }
+                },
                 sortDirection: "DESC",
                 limit: 1//just the PR
             }))
                 .then(result => {
+                    console.log('prs', result);
                     const items = result.data.listEffortsByExerciseAndUser.items;
                     if(items.length !== 0){
-                        setRecords({...records,
+                        setRecords(prev => ({...prev,
                             [items[0].exercise]: items[0].orm
-                        });
+                        }));
                     }
                 });
         });
