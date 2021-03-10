@@ -21,13 +21,6 @@ import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 
-const liftMapping = {
-    Squat: 'orange',
-    Deadlift: 'red',
-    Bench: 'green',
-    Press: 'blue'
-};
-
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
 const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
@@ -47,7 +40,6 @@ const reducer = (state, action) => {
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
-    const [progress, setProgress] = useState({});
     const [records, setRecords] = useState({
         Bench: 0,
         Squat: 0,
@@ -135,8 +127,7 @@ const ProfileScreen = props => {
                     }
                 },
                 sortDirection: "DESC",
-                //unlimited to get the graph... maybe this should be its own screen?
-                //limit: 1//just the PR
+                limit: 1//just the PR
             }))
                 .then(result => {
                     console.log('prs', result);
@@ -146,22 +137,9 @@ const ProfileScreen = props => {
                             ...prev,
                             [items[0].exercise]: items[0].orm
                         }));
-
-                        const prog = items.map(effort => ({
-                            time: new Date(effort.createdAt).getTime(),
-                            weight: effort.orm
-                        }))
-
-                        //just looking for 1rm over time
-                        setProgress(prev => ({
-                            ...prev,
-                            [items[0].exercise]: prog
-                        }));
                     }
                 });
         });
-
-
 
         const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
             next: msg => {
@@ -173,31 +151,6 @@ const ProfileScreen = props => {
         });
         return () => subscription.unsubscribe();
     }, [signedInUser, profileUser])
-
-    let timeStart = 0, timeEnd = 1, weightStart = 0, weightEnd = 1;
-
-    //SURELY THERE'S SOME GRAPH LIBRARY FOR THIS SHIT
-    if(Object.keys(progress).length !== 0){
-        //initialze with first effort that appears
-        const effort = Object.values(progress)[0][0];
-        timeStart = effort.time;
-        timeEnd = effort.time;
-        weightEnd = effort.weight;
-
-        Object.values(progress).forEach(exerciseArray => {
-            exerciseArray.forEach(effort => {
-                if(effort.time < timeStart)
-                    timeStart = effort.time;
-                if(effort.time > timeEnd)
-                    timeEnd = effort.time;
-                if(effort.weight > weightEnd)
-                    weightEnd = effort.weight;
-            })
-        })
-    }
-
-    console.log(timeEnd-timeStart);
-    console.log(weightEnd-weightStart);
 
     const follow = async () => {
         const input = {
@@ -340,30 +293,6 @@ const ProfileScreen = props => {
 
                 <ScrollView>
 
-                    <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Graph</Words>
-                    {
-                        <View style={{height: 100, width: '50%', padding: 5, borderColor: PRIMARY, borderWidth: 0}}>{
-                            /*progress[0]&&
-                            progress.map(wo => {
-                                return Object.entries(wo.stats).map(([k,v]) => {
-                                    //lol should I make this a <canvas>
-                                    const x = Math.round((wo.time-timeStart)/(timeEnd-timeStart)*100)+'%';
-                                    const y = Math.round((v-weightStart)/(weightEnd-weightStart)*100)+'%';
-                                    const color = liftMapping[k];
-                                    return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={wo.time+k}/>
-                                })
-                            })*/
-                            Object.entries(progress).map(([exercise, progress]) => {
-                                return progress.map(effort => {
-                                    const x = Math.round((effort.time-timeStart)/(timeEnd-timeStart)*100)+'%';
-                                    const y = Math.round((effort.weight-weightStart)/(weightEnd-weightStart)*100)+'%';
-                                    const color = liftMapping[exercise];
-                                    return <View style={{position: 'absolute', left: x, bottom: y, backgroundColor: color, height: 5, width:5}} key={effort.time+exercise}/>
-                                })
-                            })
-                        }</View>
-                    }
-
                     <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Stats</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
                         Object.entries(records).map(([k,v]) =>
@@ -374,8 +303,6 @@ const ProfileScreen = props => {
                             </Row>
                         )
                     }</View>
-
-
 
                     <PostList
                         isLoading={isLoading}
