@@ -392,6 +392,11 @@ const WorkoutProvider = props => {
                 exercise: effort.exercise,
                 effortID: effort.id,
                 orm: effort.orm,
+                //copy location info from user
+                gymID: efforts[0].gymID,
+                cityID: efforts[0].cityID,
+                stateID: efforts[0].stateID,
+                countryID: efforts[0].countryID
             };
 
             //its bs that I have to check if it exists before hand

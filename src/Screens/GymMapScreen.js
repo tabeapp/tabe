@@ -3,7 +3,7 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getRegion, getUserLocation, nearbyGyms } from '../../graphql/queries';
+import { getRegion, getUserLocation, listRecordsByUser, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -13,8 +13,8 @@ import { UserContext } from '../Contexts/UserProvider';
 import {
     createGym,
     createRegion,
-    createUserLocation,
-    deleteUserLocation,
+    createUserLocation, createUserRecord,
+    deleteUserLocation, deleteUserRecord,
 } from '../../graphql/mutations';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 
@@ -281,6 +281,38 @@ const GymMapScreen = props => {
                 gymID: selectedGym.id
             }
         }));
+
+        //also need to set all user records to this location
+        //i think you need to load, then delete and create because location is used as key
+
+        const records = await API.graphql(graphqlOperation(listRecordsByUser, {
+            userID: username
+        }));
+
+        for(let i = 0; i < records.data.listRecordsByUser.items.length; i++){
+            const record = records.data.listRecordsByUser.items[i]
+
+            //delete
+            await API.graphql(graphqlOperation(deleteUserRecord, {
+                input:{
+                    userID: record.username,
+                    exercise: record.exercise
+                }
+            }));
+
+            await API.graphql(graphqlOperation(createUserRecord, {
+                input: {
+                    userID: record.username,
+                    exercise: record.exercise,
+                    orm: record.orm,
+                    effortID: record.effortID,
+                    gymID: selectedGym.id,
+                    cityID: selectedGym.cityID,
+                    stateID: selectedGym.stateID,
+                    countryID: selectedGym.countryID,
+                }
+            }))
+        }
 
         setSelectedGym(null);
     };
