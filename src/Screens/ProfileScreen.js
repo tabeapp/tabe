@@ -49,7 +49,12 @@ const reducer = (state, action) => {
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [progress, setProgress] = useState([]);
-    const [records, setRecords] = useState({});
+    const [records, setRecords] = useState({
+        Bench: 0,
+        Squat: 0,
+        Press: 0,
+        Deadlift: 0
+    });
 
     //post loading bs part
     const signedInUser = useContext(UserContext).username;
@@ -137,7 +142,6 @@ const ProfileScreen = props => {
                         });
                     }
                 });
-
         });
 
 
@@ -196,17 +200,6 @@ const ProfileScreen = props => {
         if(!res.data.deleteFollowRelationship.errors)//is it errors or error?
             setIsFollowing(false);
     };
-
-    const [coordinates, setCoordinates] = useState({latitude: 45, longitude: 70});
-
-    useEffect(() => {
-        Geolocation.getCurrentPosition(info => {
-            setCoordinates({
-                latitude: info.coords.latitude,
-                longitude: info.coords.longitude
-            })
-        });
-    }, []);
 
     const handleGymPress = () => {
         //i guess this should show the gym stats of the user if it's not the same
@@ -286,8 +279,9 @@ const ProfileScreen = props => {
                                 onPress={handleProfilePress}
                             >
                                 {
-                                    profileURI !== '' &&
-                                    <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/>
+                                    profileURI !== '' ?
+                                        <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/> :
+                                        <View style={{width: 100, height: 100}}/>
                                 }
                             </TouchableOpacity>
                         </View>
@@ -322,15 +316,14 @@ const ProfileScreen = props => {
                 }
 
 
-                <View style={styles.cardContainer}>{
+                <View style={{alignItems: 'center'}}>{
                     Object.entries(records).map(([k,v]) =>
-                        <View style={{...STYLES.card, width: '100%', height: 120}} key={k}>
+                        <View style={{height: 120}} key={k}>
 
-                            <View style={{ height: 50, flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
                                 <WeightVisual weight={v} reverse={true} />
                                 <Row style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                    <Words>{k}</Words>
-                                    <Words>{v}</Words>
+                                    <Words style={{textAlign: 'center'}}>{k + '\n' + v}</Words>
                                 </Row>
                                 <WeightVisual weight={v}/>
                             </View>
