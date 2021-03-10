@@ -101,7 +101,6 @@ export const DEFAULT_EX_WORKOUT = ex => {
 };
 
 export const DEFAULT_EX_INFO = ex => {
-    //TODO you know, it would be a  good idea to test if it's a superset here
     if (ex.includes('/'))
     {return DEFAULT_SUPERSET_INFO(ex.split('/'));}
     //just in case someting like squat-b gets through
