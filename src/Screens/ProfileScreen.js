@@ -26,6 +26,7 @@ import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
@@ -180,10 +181,12 @@ const ProfileScreen = props => {
             setIsFollowing(false);
     };
 
+    const viewingSelf = signedInUser === profileUser;
+
     const handleGymPress = () => {
         //i guess this should show the gym stats of the user if it's not the same
         //or edit if it is
-        if(signedInUser === profileUser)
+        if(viewingSelf)
             props.navigation.navigate('gymmap');
         else{
             //navigate to the gyms home page
@@ -259,20 +262,26 @@ const ProfileScreen = props => {
                             {
                                 profileURI !== '' ?
                                     <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/> :
-                                    <View style={{width: 100, height: 100}}/>
+                                    <View style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}>
+                                        <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
+                                        <Words>Add image</Words>
+                                    </View>
                             }
                         </TouchableOpacity>
                     </View>
 
                     <View style={{flex:1}}>
                         <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
-                        <TouchableOpacity onPress={handleGymPress}>
-                            <Words>{location[3]}</Words>
-                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleGymPress}>{
+                            (viewingSelf && !location[3]) ?
+                                <Words>Set Gym</Words>
+                                :
+                                <Words>{location[3]}</Words>
+                        }</TouchableOpacity>
                     </View>
                 </Row>
                 {
-                    (profileUser !== signedInUser) &&
+                    !viewingSelf &&
                     (
                         isFollowing ?
                             <TouchableOpacity

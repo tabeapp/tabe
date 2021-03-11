@@ -314,6 +314,8 @@ const GymMapScreen = props => {
             }))
         }
 
+        props.navigation.goBack();
+
         setSelectedGym(null);
     };
 
