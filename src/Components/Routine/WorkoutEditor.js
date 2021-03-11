@@ -30,9 +30,26 @@ const WorkoutEditor = props => {
     //const routine = useContext(RoutinesContext).routines.editRoutine;
     const {routinesDispatch} = useContext(RoutinesContext);
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
-    const {name, deleteExercise, advanced} = props;//this is like a key btw
+    const {name, advanced} = props;//this is like a key btw
 
     const width = useWindowDimensions().width;
+
+    const deleteAnExercise = (k) => {
+        routinesDispatch(prev => {
+            delete prev.editRoutine.info[k];
+
+            let removal = k;
+            if(k.includes('/'))
+                removal = k.split('/');//that might do it, who knows
+
+            Object.keys(prev.editRoutine.workouts).forEach(w => {
+                prev.editRoutine.workouts[w] = prev.editRoutine.workouts[w]
+                    .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
+            });
+
+            return prev;
+        });
+    };
 
     //wtf is this 415 number supposed to be?
     return (
@@ -100,7 +117,7 @@ const WorkoutEditor = props => {
                         }
                         <TouchableOpacity onPress={() => {
                             //this should do the same thing as pressing the X on an exercise
-                            deleteExercise(ex);
+                            deleteAnExercise(ex);
                         }}>
                             <Words><Ionicons color={'gray'} name={'close'} size={30}/></Words>
                         </TouchableOpacity>

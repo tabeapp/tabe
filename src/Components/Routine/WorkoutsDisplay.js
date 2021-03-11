@@ -28,22 +28,6 @@ const WorkoutsDisplay = props => {
         return ex + suffix;
     };
 
-    const deleteAnExercise = (k) => {
-        routinesDispatch(prev => {
-            delete prev.editRoutine.info[k];
-
-            let removal = k;
-            if(k.includes('/'))
-                removal = k.split('/');//that might do it, who knows
-
-            Object.keys(prev.editRoutine.workouts).forEach(w => {
-                prev.editRoutine.workouts[w] = prev.editRoutine.workouts[w]
-                    .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
-            });
-
-            return prev;
-        });
-    };
 
     const duplicateWorkout = k => {
         if(!(k in workouts))
@@ -161,7 +145,6 @@ const WorkoutsDisplay = props => {
 
                         //maybe i should just have these in workout editor...
                         duplicateWorkout={duplicateWorkout}
-                        deleteExercise={deleteAnExercise}
                         addExercise={addExercise}
                     />
                 )
