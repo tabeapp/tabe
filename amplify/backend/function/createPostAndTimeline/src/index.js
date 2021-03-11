@@ -69,6 +69,7 @@ exports.handler = async (event, context, callback) => {
                 title: event.arguments.title,
                 description: event.arguments.description,
                 data: event.arguments.data,
+                gymID: event.arguments.gymID,
                 userID: event.identity.username,
             },
         },

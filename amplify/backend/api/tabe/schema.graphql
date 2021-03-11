@@ -103,6 +103,7 @@ type Post
   description: String
   data: String
   userID: ID!
+  gymID: ID!
   user: User @connection(fields: ["userID"])
   userImage: UserImage @connection(fields: ["userID"])
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
@@ -124,7 +125,6 @@ type Effort
   weight: Int!
   reps: Int!
   orm: Int!
-  gymID: ID!
   createdAt: String!
   trophies: [Trophy] @connection(keyName: "byEffort", fields: ["id"])
 }

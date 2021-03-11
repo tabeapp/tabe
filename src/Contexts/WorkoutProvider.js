@@ -21,11 +21,6 @@ import { generateReport } from '../Utils/GenerateReport';
 import {
     getCurrentWorkout,
     getUserLocation,
-    listEffortsByExercise,
-    listEffortsByExerciseAndCity,
-    listEffortsByExerciseAndCountry,
-    listEffortsByExerciseAndGym,
-    listEffortsByExerciseAndState,
     listEffortsByExerciseAndUser,
     getUserRecord,
     listRecordsByExerciseAndGym,
@@ -260,27 +255,8 @@ const WorkoutProvider = props => {
 
         //this function needs cleanup, but this is basically how were gonna do it
         const oldRoutine = routines.find(r => r.id === data.routineId).routine;
-        const { routine, efforts } = await analyzeWorkout(report, data, oldRoutine);
+        const { routine, efforts } = analyzeWorkout(report, data, oldRoutine);
 
-        const res = await API.graphql(graphqlOperation(getUserLocation, {
-            userID: username
-        }));
-        //res.data.getUserLocation.gymID, ....gym.countryId, cityID, stateID
-        //is what you're lookign for
-        //const ul = res.data.getUserLocation;
-
-        //default
-        const ul = {
-            ...emptyRegion(),
-            ...res.data.getUserLocation
-        };
-
-        if (!ul) {
-            //allow the user to pick a location?
-            //basically just load gym map screen
-            //more on this later
-        }
-        console.log('userlocation', ul);
 
         //we're just gonna copy the countryid, cityid, stateid to the effort, tey're just strings
 
@@ -292,11 +268,6 @@ const WorkoutProvider = props => {
                 exercise: name,
                 userID: username,
                 postID: postID,
-                //countryID: ???,//need to get these from user, damn it
-                countryID: ul.country.id,
-                stateID: ul.state.id,
-                cityID: ul.city.id,
-                gymID: ul.gymID
             })
         );
         //ensure this works
@@ -324,12 +295,17 @@ const WorkoutProvider = props => {
             console.log('effort', effort);
             const result = await API.graphql(graphqlOperation(createEffort, {
                 input:{
-                    ...effort//will this work?
+                    ...effort//will this work? no
                 }
             }));
             console.log('create effort result', result);
             uploadedEfforts.push(result.data.createEffort);
         }
+
+        const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
+            userID: username
+        }));
+        const ul = ulRes.data.getUserLocation;
 
         //now how tf do you get rankings...
         //at this point we can search for prs
@@ -349,7 +325,7 @@ const WorkoutProvider = props => {
             listRecordsByExerciseAndCountry,
         ];
         const keys = ['gymID', 'cityID', 'stateID', 'countryID'];
-        const values = [efforts[0].gymID, efforts[0].cityID, efforts[0].stateID, efforts[0].countryID];
+        const values = [ul.gymID, ul.gym.cityID, ul.gym.stateID, ul.gym.country];
 
 
         //fuck me, is this really ideal?
@@ -495,6 +471,9 @@ const WorkoutProvider = props => {
         console.log(workoutData);
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
 
+        const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
+            userID: username
+        }));
 
         //ugh, I guess this should call that labmda actually
         //this isn't working start from here next time...
@@ -502,17 +481,9 @@ const WorkoutProvider = props => {
             title: workoutData.title,
             description: workoutData.description,
             data: workoutData.data,
+            gymID: ulRes.data.getUserLocation.gymID || 'emptyGym'//this feels really dumb, like the gym shoudl be set in the lambda
         }));
         console.log('res: ' + JSON.stringify(res));
-        /*await API.graphql(graphqlOperation(createPost, {
-            input: {
-                type: 'workout',
-                title: workoutData.title,
-                description: workoutData.description,
-                data: workoutData.data,
-                userID: currentUser.username,
-            }
-        }))*/
         //once we have res, we should be able to use its id to upload images
         //to s3
         //should this be in the labmda function?

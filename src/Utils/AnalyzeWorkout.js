@@ -3,7 +3,7 @@ import { FAILURE, REST_DAY } from '../Constants/Symbols';
 
 //this is one ridiculous refactoring
 //trying to make this whole thing a pure function
-export const analyzeWorkout = async (report, workout, routine) => {
+export const analyzeWorkout = (report, workout, routine) => {
 
     ///----------------update user stats and get effort of workout ---------------
     //so first we look at the workout and break it up into efforts

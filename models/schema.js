@@ -46,6 +46,45 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
+                },
+                "country": {
+                    "name": "country",
+                    "isArray": false,
+                    "type": {
+                        "model": "Region"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
+                },
+                "state": {
+                    "name": "state",
+                    "isArray": false,
+                    "type": {
+                        "model": "Region"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
+                },
+                "city": {
+                    "name": "city",
+                    "isArray": false,
+                    "type": {
+                        "model": "Region"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
                 }
             },
             "syncable": true,
@@ -58,6 +97,49 @@ export const schema = {
                 {
                     "type": "searchable",
                     "properties": {}
+                }
+            ]
+        },
+        "Region": {
+            "name": "Region",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "superRegionID": {
+                    "name": "superRegionID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Regions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySuperRegion",
+                        "fields": [
+                            "superRegionID"
+                        ]
+                    }
                 }
             ]
         },
@@ -120,6 +202,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "gymID": {
+                    "name": "gymID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "user": {
                     "name": "user",
                     "isArray": false,
@@ -131,6 +220,19 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_ONE",
                         "associatedWith": "id"
+                    }
+                },
+                "userImage": {
+                    "name": "userImage",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserImage"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "userID"
                     }
                 },
                 "likes": {
@@ -152,6 +254,20 @@ export const schema = {
                     "isArray": true,
                     "type": {
                         "model": "Comment"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "postID"
+                    }
+                },
+                "efforts": {
+                    "name": "efforts",
+                    "isArray": true,
+                    "type": {
+                        "model": "Effort"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -198,6 +314,17 @@ export const schema = {
                             "createdAt"
                         ],
                         "queryField": "listPostsSortedByTimestamp"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "SortByUserAndTimestamp",
+                        "fields": [
+                            "userID",
+                            "createdAt"
+                        ],
+                        "queryField": "listPostsSortedByUserAndTimestamp"
                     }
                 },
                 {
@@ -321,6 +448,48 @@ export const schema = {
                 }
             ]
         },
+        "UserImage": {
+            "name": "UserImage",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "uri": {
+                    "name": "uri",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserImages",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                }
+            ]
+        },
         "Like": {
             "name": "Like",
             "fields": {
@@ -428,89 +597,6 @@ export const schema = {
                 }
             ]
         },
-        "UserLocation": {
-            "name": "UserLocation",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "gymID": {
-                    "name": "gymID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "gym": {
-                    "name": "gym",
-                    "isArray": false,
-                    "type": {
-                        "model": "Gym"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                }
-            },
-            "syncable": true,
-            "pluralName": "UserLocations",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID"
-                        ]
-                    }
-                }
-            ]
-        },
-        "Region": {
-            "name": "Region",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                }
-            },
-            "syncable": true,
-            "pluralName": "Regions",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                }
-            ]
-        },
         "Effort": {
             "name": "Effort",
             "fields": {
@@ -563,92 +649,26 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "countryID": {
-                    "name": "countryID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "country": {
-                    "name": "country",
-                    "isArray": false,
-                    "type": {
-                        "model": "Region"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
-                "stateID": {
-                    "name": "stateID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "state": {
-                    "name": "state",
-                    "isArray": false,
-                    "type": {
-                        "model": "Region"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
-                "cityID": {
-                    "name": "cityID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "city": {
-                    "name": "city",
-                    "isArray": false,
-                    "type": {
-                        "model": "Region"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
-                "gymID": {
-                    "name": "gymID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "gym": {
-                    "name": "gym",
-                    "isArray": false,
-                    "type": {
-                        "model": "Gym"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
                     "attributes": []
+                },
+                "trophies": {
+                    "name": "trophies",
+                    "isArray": true,
+                    "type": {
+                        "model": "Trophy"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "effortID"
+                    }
                 }
             },
             "syncable": true,
@@ -661,51 +681,28 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byCountry",
+                        "name": "byPost",
                         "fields": [
-                            "countryID",
-                            "exercise",
-                            "weight"
+                            "postID"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byState",
+                        "name": "byUser",
                         "fields": [
-                            "stateID",
+                            "userID",
                             "exercise",
                             "weight"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCity",
-                        "fields": [
-                            "cityID",
-                            "exercise",
-                            "weight"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byGym",
-                        "fields": [
-                            "gymID",
-                            "exercise",
-                            "weight"
-                        ]
+                        ],
+                        "queryField": "listEffortsByExerciseAndUser"
                     }
                 }
             ]
         },
-        "Location": {
-            "name": "Location",
+        "Trophy": {
+            "name": "Trophy",
             "fields": {
                 "id": {
                     "name": "id",
@@ -714,36 +711,37 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "superLocationID": {
-                    "name": "superLocationID",
+                "effortID": {
+                    "name": "effortID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
-                "superLocation": {
-                    "name": "superLocation",
+                "type": {
+                    "name": "type",
                     "isArray": false,
-                    "type": {
-                        "model": "Location"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "targetID": {
+                    "name": "targetID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "rank": {
+                    "name": "rank",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Locations",
+            "pluralName": "Trophies",
             "attributes": [
                 {
                     "type": "model",
@@ -752,9 +750,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "bySuperLocation",
+                        "name": "byEffort",
                         "fields": [
-                            "superLocationID"
+                            "effortID"
                         ]
                     }
                 }
@@ -818,7 +816,9 @@ export const schema = {
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {}
+                    "properties": {
+                        "subscriptions": null
+                    }
                 },
                 {
                     "type": "key",
@@ -826,7 +826,8 @@ export const schema = {
                         "name": "byUser",
                         "fields": [
                             "userID"
-                        ]
+                        ],
+                        "queryField": "listRoutinesByUser"
                     }
                 },
                 {
@@ -835,10 +836,284 @@ export const schema = {
                         "name": "byUserAndCurrent",
                         "fields": [
                             "userID",
-                            "current",
-                            "createdAt"
+                            "current"
                         ],
                         "queryField": "listCurrentRoutinesByUser"
+                    }
+                }
+            ]
+        },
+        "UserRecord": {
+            "name": "UserRecord",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "effortID": {
+                    "name": "effortID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "orm": {
+                    "name": "orm",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "exercise": {
+                    "name": "exercise",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "countryID": {
+                    "name": "countryID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "stateID": {
+                    "name": "stateID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "cityID": {
+                    "name": "cityID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "gymID": {
+                    "name": "gymID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserRecords",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "userID",
+                            "exercise"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCountry",
+                        "fields": [
+                            "countryID",
+                            "exercise",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByExerciseAndCountry"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byState",
+                        "fields": [
+                            "stateID",
+                            "exercise",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByExerciseAndState"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCity",
+                        "fields": [
+                            "cityID",
+                            "exercise",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByExerciseAndCity"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byGym",
+                        "fields": [
+                            "gymID",
+                            "exercise",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByExerciseAndGym"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByUser"
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byExercise",
+                        "fields": [
+                            "exercise",
+                            "orm"
+                        ],
+                        "queryField": "listRecordsByExercise"
+                    }
+                }
+            ]
+        },
+        "UserLocation": {
+            "name": "UserLocation",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userID": {
+                    "name": "userID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "gymID": {
+                    "name": "gymID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "gym": {
+                    "name": "gym",
+                    "isArray": false,
+                    "type": {
+                        "model": "Gym"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserLocations",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byGym",
+                        "fields": [
+                            "gymID"
+                        ]
+                    }
+                }
+            ]
+        },
+        "Location": {
+            "name": "Location",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "superLocationID": {
+                    "name": "superLocationID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "superLocation": {
+                    "name": "superLocation",
+                    "isArray": false,
+                    "type": {
+                        "model": "Location"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id"
+                    }
+                }
+            },
+            "syncable": true,
+            "pluralName": "Locations",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySuperLocation",
+                        "fields": [
+                            "superLocationID"
+                        ]
                     }
                 }
             ]
@@ -873,19 +1148,6 @@ export const schema = {
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
-                },
-                "routine": {
-                    "name": "routine",
-                    "isArray": false,
-                    "type": {
-                        "model": "Routine"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": "id"
-                    }
                 }
             },
             "syncable": true,
@@ -898,7 +1160,6 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUser",
                         "fields": [
                             "userID"
                         ]
@@ -1119,5 +1380,5 @@ export const schema = {
             }
         }
     },
-    "version": "ddbf3702a3562613bacd7d00bdcf8afa"
+    "version": "58ebf88d40682518835bdf14e5e7200d"
 };

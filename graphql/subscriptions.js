@@ -426,6 +426,7 @@ export const onCreatePost = /* GraphQL */ `
       description
       data
       userID
+      gymID
       user {
         id
         username
@@ -473,7 +474,6 @@ export const onCreatePost = /* GraphQL */ `
           weight
           reps
           orm
-          gymID
           createdAt
           trophies {
             nextToken
@@ -506,6 +506,7 @@ export const onUpdatePost = /* GraphQL */ `
       description
       data
       userID
+      gymID
       user {
         id
         username
@@ -553,7 +554,6 @@ export const onUpdatePost = /* GraphQL */ `
           weight
           reps
           orm
-          gymID
           createdAt
           trophies {
             nextToken
@@ -586,6 +586,7 @@ export const onDeletePost = /* GraphQL */ `
       description
       data
       userID
+      gymID
       user {
         id
         username
@@ -633,7 +634,6 @@ export const onDeletePost = /* GraphQL */ `
           weight
           reps
           orm
-          gymID
           createdAt
           trophies {
             nextToken
@@ -657,7 +657,6 @@ export const onCreateEffort = /* GraphQL */ `
       weight
       reps
       orm
-      gymID
       createdAt
       trophies {
         items {
@@ -685,7 +684,6 @@ export const onUpdateEffort = /* GraphQL */ `
       weight
       reps
       orm
-      gymID
       createdAt
       trophies {
         items {
@@ -713,7 +711,6 @@ export const onDeleteEffort = /* GraphQL */ `
       weight
       reps
       orm
-      gymID
       createdAt
       trophies {
         items {
@@ -1085,6 +1082,7 @@ export const onCreateTimeline = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1129,7 +1127,6 @@ export const onCreateTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1165,6 +1162,7 @@ export const onUpdateTimeline = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1209,7 +1207,6 @@ export const onUpdateTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1245,6 +1242,7 @@ export const onDeleteTimeline = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1289,7 +1287,6 @@ export const onDeleteTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }

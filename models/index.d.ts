@@ -22,8 +22,19 @@ export declare class Gym {
   readonly countryID: string;
   readonly stateID: string;
   readonly cityID: string;
+  readonly country?: Region;
+  readonly state?: Region;
+  readonly city?: Region;
   constructor(init: ModelInit<Gym>);
   static copyOf(source: Gym, mutator: (draft: MutableModel<Gym>) => MutableModel<Gym> | void): Gym;
+}
+
+export declare class Region {
+  readonly id: string;
+  readonly superRegionID: string;
+  readonly name: string;
+  constructor(init: ModelInit<Region>);
+  static copyOf(source: Region, mutator: (draft: MutableModel<Region>) => MutableModel<Region> | void): Region;
 }
 
 export declare class Post {
@@ -34,9 +45,12 @@ export declare class Post {
   readonly description?: string;
   readonly data?: string;
   readonly userID: string;
+  readonly gymID: string;
   readonly user?: User;
+  readonly userImage?: UserImage;
   readonly likes?: (Like | null)[];
   readonly comments?: (Comment | null)[];
+  readonly efforts?: (Effort | null)[];
   readonly createdAt: string;
   constructor(init: ModelInit<Post>);
   static copyOf(source: Post, mutator: (draft: MutableModel<Post>) => MutableModel<Post> | void): Post;
@@ -59,6 +73,14 @@ export declare class User {
   static copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
 }
 
+export declare class UserImage {
+  readonly id: string;
+  readonly userID: string;
+  readonly uri: string;
+  constructor(init: ModelInit<UserImage>);
+  static copyOf(source: UserImage, mutator: (draft: MutableModel<UserImage>) => MutableModel<UserImage> | void): UserImage;
+}
+
 export declare class Like {
   readonly id: string;
   readonly parentID: string;
@@ -77,22 +99,6 @@ export declare class Comment {
   static copyOf(source: Comment, mutator: (draft: MutableModel<Comment>) => MutableModel<Comment> | void): Comment;
 }
 
-export declare class UserLocation {
-  readonly id: string;
-  readonly userID: string;
-  readonly gymID: string;
-  readonly gym?: Gym;
-  constructor(init: ModelInit<UserLocation>);
-  static copyOf(source: UserLocation, mutator: (draft: MutableModel<UserLocation>) => MutableModel<UserLocation> | void): UserLocation;
-}
-
-export declare class Region {
-  readonly id: string;
-  readonly name: string;
-  constructor(init: ModelInit<Region>);
-  static copyOf(source: Region, mutator: (draft: MutableModel<Region>) => MutableModel<Region> | void): Region;
-}
-
 export declare class Effort {
   readonly id: string;
   readonly postID: string;
@@ -101,26 +107,20 @@ export declare class Effort {
   readonly weight: number;
   readonly reps: number;
   readonly orm: number;
-  readonly countryID: string;
-  readonly country?: Region;
-  readonly stateID: string;
-  readonly state?: Region;
-  readonly cityID: string;
-  readonly city?: Region;
-  readonly gymID: string;
-  readonly gym?: Gym;
   readonly createdAt: string;
+  readonly trophies?: (Trophy | null)[];
   constructor(init: ModelInit<Effort>);
   static copyOf(source: Effort, mutator: (draft: MutableModel<Effort>) => MutableModel<Effort> | void): Effort;
 }
 
-export declare class Location {
+export declare class Trophy {
   readonly id: string;
-  readonly name: string;
-  readonly superLocationID: string;
-  readonly superLocation?: Location;
-  constructor(init: ModelInit<Location>);
-  static copyOf(source: Location, mutator: (draft: MutableModel<Location>) => MutableModel<Location> | void): Location;
+  readonly effortID: string;
+  readonly type: string;
+  readonly targetID: string;
+  readonly rank: number;
+  constructor(init: ModelInit<Trophy>);
+  static copyOf(source: Trophy, mutator: (draft: MutableModel<Trophy>) => MutableModel<Trophy> | void): Trophy;
 }
 
 export declare class Routine {
@@ -135,12 +135,43 @@ export declare class Routine {
   static copyOf(source: Routine, mutator: (draft: MutableModel<Routine>) => MutableModel<Routine> | void): Routine;
 }
 
+export declare class UserRecord {
+  readonly id: string;
+  readonly userID: string;
+  readonly effortID: string;
+  readonly orm: number;
+  readonly exercise: string;
+  readonly countryID: string;
+  readonly stateID: string;
+  readonly cityID: string;
+  readonly gymID: string;
+  constructor(init: ModelInit<UserRecord>);
+  static copyOf(source: UserRecord, mutator: (draft: MutableModel<UserRecord>) => MutableModel<UserRecord> | void): UserRecord;
+}
+
+export declare class UserLocation {
+  readonly id: string;
+  readonly userID: string;
+  readonly gymID: string;
+  readonly gym?: Gym;
+  constructor(init: ModelInit<UserLocation>);
+  static copyOf(source: UserLocation, mutator: (draft: MutableModel<UserLocation>) => MutableModel<UserLocation> | void): UserLocation;
+}
+
+export declare class Location {
+  readonly id: string;
+  readonly name: string;
+  readonly superLocationID: string;
+  readonly superLocation?: Location;
+  constructor(init: ModelInit<Location>);
+  static copyOf(source: Location, mutator: (draft: MutableModel<Location>) => MutableModel<Location> | void): Location;
+}
+
 export declare class CurrentWorkout {
   readonly id: string;
   readonly userID: string;
   readonly data: string;
   readonly routineID: string;
-  readonly routine?: Routine;
   constructor(init: ModelInit<CurrentWorkout>);
   static copyOf(source: CurrentWorkout, mutator: (draft: MutableModel<CurrentWorkout>) => MutableModel<CurrentWorkout> | void): CurrentWorkout;
 }

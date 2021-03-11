@@ -383,7 +383,6 @@ export const getEffort = /* GraphQL */ `
       weight
       reps
       orm
-      gymID
       createdAt
       trophies {
         items {
@@ -416,7 +415,6 @@ export const listEfforts = /* GraphQL */ `
         weight
         reps
         orm
-        gymID
         createdAt
         trophies {
           items {
@@ -935,7 +933,6 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
         weight
         reps
         orm
-        gymID
         createdAt
         trophies {
           items {
@@ -1091,6 +1088,7 @@ export const listPosts = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1135,7 +1133,6 @@ export const listPosts = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1167,6 +1164,7 @@ export const getPost = /* GraphQL */ `
       description
       data
       userID
+      gymID
       user {
         id
         username
@@ -1214,7 +1212,6 @@ export const getPost = /* GraphQL */ `
           weight
           reps
           orm
-          gymID
           createdAt
           trophies {
             nextToken
@@ -1262,6 +1259,7 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1306,7 +1304,6 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1353,6 +1350,7 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1397,7 +1395,6 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1442,6 +1439,7 @@ export const searchPosts = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1486,7 +1484,6 @@ export const searchPosts = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1561,6 +1558,7 @@ export const getTimeline = /* GraphQL */ `
         description
         data
         userID
+        gymID
         user {
           id
           username
@@ -1605,7 +1603,6 @@ export const getTimeline = /* GraphQL */ `
             weight
             reps
             orm
-            gymID
             createdAt
             updatedAt
           }
@@ -1649,6 +1646,7 @@ export const listTimelines = /* GraphQL */ `
           description
           data
           userID
+          gymID
           user {
             id
             username
