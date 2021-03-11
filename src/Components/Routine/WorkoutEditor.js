@@ -29,7 +29,7 @@ const WorkoutEditor = props => {
     //const routine = useContext(RoutinesContext).routines.editRoutine;
     const {routinesDispatch} = useContext(RoutinesContext);
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
-    const {name, deleteExercise} = props;//this is like a key btw
+    const {name, deleteExercise, advanced} = props;//this is like a key btw
 
 
     //wtf is this 415 number supposed to be?
@@ -114,16 +114,21 @@ const WorkoutEditor = props => {
                 <Words style={{color: 'white', fontSize: 30}}>Add Exercise</Words>
             </TouchableOpacity>
 
-            <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                routinesDispatch(prev => {
-                    prev.editRoutine.workouts[name].push(['','']);
-                    return prev;
-                })
-            }} >
-                <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
-            </TouchableOpacity>
-            <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(props.name,ex)} close={() => setModal(false)}/>
+            {
+                advanced && <>
 
+                    <TouchableOpacity style={STYLES.textButton} onPress={() => {
+                        routinesDispatch(prev => {
+                            prev.editRoutine.workouts[name].push(['','']);
+                            return prev;
+                        })
+                    }} >
+                        <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
+                    </TouchableOpacity>
+                    <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(props.name,ex)} close={() => setModal(false)}/>
+                </>
+
+            }
 
         </View>);
 };

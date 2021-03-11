@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
     topButton: {
         alignItems: 'center',
-        width: 80,
+        width: 100,
         paddingHorizontal: 15
     },
 });

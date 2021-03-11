@@ -79,11 +79,10 @@ const RoutineCard = props => {
                 </TouchableOpacity>
             </View>
 
-            <View>
-                <TouchableOpacity onPress={removeRoutine}>
-                    <Words><Ionicons color={'gray'} size={30} name={'trash'}/></Words>
-                </TouchableOpacity>
-            </View>
+            {/*would like for this to be a triple button for options*/}
+            <TouchableOpacity onPress={removeRoutine}>
+                <Words><Ionicons color={'gray'} size={30} name={'trash'}/></Words>
+            </TouchableOpacity>
         </TouchableOpacity>
     );
 };

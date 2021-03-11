@@ -1,5 +1,5 @@
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import { Alert, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect, useState} from 'react';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import WorkoutEditor from '../Components/Routine/WorkoutEditor';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExInfo';
@@ -18,6 +18,7 @@ import { REST_DAY } from '../Constants/Symbols';
 import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
 import { createRoutine, updateRoutine } from '../../graphql/mutations';
+import { PRIMARY } from '../Style/Theme';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -54,6 +55,9 @@ const RoutineEditScreen = props => {
 
     //can i do this?
     const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = editRoutine;
+
+    //this will allow for a much MUCH cleaner edit experience
+    const [advanced, setAdvanced] = useState(false);
 
     const addExercise = (k,ex) => {
         //should this part be done before
@@ -171,61 +175,73 @@ const RoutineEditScreen = props => {
         });
     }, []);
 
+    const saveRoutine = () => {
+        //this is copied over, it's the save process
+        const newRoutine = FULL_COPY(editRoutine);
+        newRoutine.currentDay = currentDay || 0;
+        newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
+
+        Object.keys(newRoutine.info).forEach(ex => {
+            const x = newRoutine.info[ex].progress;
+            if(!x.countdown)
+                x.countdown = x.rate;
+
+            //i don't know why this isn't correctly handled by the exercise editor
+            const y = newRoutine.info[ex].setInfo;
+            if(y.type === 'Custom' && !y.selector)
+                y.selector = 0;
+        });
+
+        //dont worry about routines dispatch, the subscription should update it
+        //no that's a bad idea
+        //send this to routines dispatch as a custom action
+        //existing
+        //if(id){
+        if(!id){
+            API.graphql(graphqlOperation(createRoutine, {
+                input: {
+                    routine: JSON.stringify(newRoutine),
+                    title: newRoutine.title,
+                    current: 0,
+                    userID: username
+                }
+            }))
+        }
+        else{
+            API.graphql(graphqlOperation(updateRoutine, {
+                input: {
+                    id: id,
+                    routine: JSON.stringify(newRoutine),
+                    title: newRoutine.title,
+                }
+            }))
+        }
+
+        props.navigation.navigate('routine');
+    };
+
     return (
         <SafeBorder>
             <TopBar
-                leftText='Discard' title='Routine Editor' rightText='Save'
-                onPressLeft={() => {
-                    props.navigation.navigate('routine');
-                }}
+                leftText='Discard' title='Routine Editor'
+                onPressLeft={() =>
+                    props.navigation.navigate('routine')
+                }
+                rightText='Save'
                 //rewriting this part to save to aws
-                onPressRight={() => {
-                    //this is copied over, it's the save process
-                    const newRoutine = FULL_COPY(editRoutine);
-                    newRoutine.currentDay = currentDay || 0;
-                    newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
-
-                    Object.keys(newRoutine.info).forEach(ex => {
-                        const x = newRoutine.info[ex].progress;
-                        if(!x.countdown)
-                            x.countdown = x.rate;
-
-                        //i don't know why this isn't correctly handled by the exercise editor
-                        const y = newRoutine.info[ex].setInfo;
-                        if(y.type === 'Custom' && !y.selector)
-                            y.selector = 0;
-                    });
-
-                    //dont worry about routines dispatch, the subscription should update it
-                    //no that's a bad idea
-                    //send this to routines dispatch as a custom action
-                    //existing
-                    //if(id){
-                    if(!id){
-                        API.graphql(graphqlOperation(createRoutine, {
-                            input: {
-                                routine: JSON.stringify(newRoutine),
-                                title: newRoutine.title,
-                                current: 0,
-                                userID: username
-                            }
-                        }))
-                    }
-                    else{
-                        API.graphql(graphqlOperation(updateRoutine, {
-                            input: {
-                                id: id,
-                                routine: JSON.stringify(newRoutine),
-                                title: newRoutine.title,
-                            }
-                        }))
-                    }
-
-                    props.navigation.navigate('routine');
-                }}
+                onPressRight={saveRoutine}
             />
             <ScrollView style={STYLES.box}>
+                <Words>Advanced Editor</Words>
+                <Switch
+                    trackColor={{ false: "#222", true: PRIMARY }}
+                    thumbColor={'black'}
+                    ios_backgroundColor="#222"
+                    onValueChange={setAdvanced}
+                    value={advanced}
+                />
                 <Write
+                    style={{fontSize: 40, fontWeight: 'bold'}}
                     value={title}
                     onChange={v => rd('title', v)}
                 />
@@ -246,20 +262,25 @@ const RoutineEditScreen = props => {
 
                 {/*shoud this be towards the bottom
                         or towards the top as it applies to all exercises?*/}
-                <Words style={{fontSize: 20}}>Failure Behavior:</Words>
-                <View style={{flexDirection: 'row'}}>
-                    <Words style={{fontSize: 20}}>Deload</Words>
-                    <NumericSelector
-                        onChange={v => rd('failure.deloadPercent', v)}
-                        numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
-                    />
-                    <Words style={{fontSize: 20}}>% after</Words>
-                    <NumericSelector
-                        onChange={v => rd('failure.after', v)}
-                        numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
-                    />
-                    <Words style={{fontSize: 20}}>failed sets</Words>
-                </View>
+                {
+                    advanced &&
+                    <>
+                        <Words style={{fontSize: 20}}>Failure Behavior:</Words>
+                        <View style={{flexDirection: 'row'}}>
+                            <Words style={{fontSize: 20}}>Deload</Words>
+                            <NumericSelector
+                                onChange={v => rd('failure.deloadPercent', v)}
+                                numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
+                            />
+                            <Words style={{fontSize: 20}}>% after</Words>
+                            <NumericSelector
+                                onChange={v => rd('failure.after', v)}
+                                numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
+                            />
+                            <Words style={{fontSize: 20}}>failed sets</Words>
+                        </View>
+                    </>
+                }
 
                 <Words style={{fontSize: 40}}>Workouts</Words>
                 <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
@@ -267,6 +288,7 @@ const RoutineEditScreen = props => {
                         Object.entries(workouts).map(([k,v]) =>
                             <WorkoutEditor
                                 key={k} exercises={v} name={k}
+                                advanced={advanced}
                                 editSuperset={(val, exerciseIndex, supersetIndex) => {
                                     //exerciseindex is the superset order in the workout
                                     //superset index is the exercise order in the super set
@@ -313,6 +335,7 @@ const RoutineEditScreen = props => {
                     Object.entries(info).map(([k,v]) =>
                         <ExerciseEditor
                             key={k}
+                            advanced={advanced}
                             name={k} info={v}
                         />
                     )
@@ -320,7 +343,7 @@ const RoutineEditScreen = props => {
                 </ScrollView>
 
                 {
-                    customScheme &&
+                    advanced && customScheme &&
                     <>
                         <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
                         <Words>(workouts using this scheme will cycle through the following sets)</Words>
