@@ -26,6 +26,9 @@ const UserProvider = props => {
             userID: username
         })).then(result => {
             console.log('userlocaiton load', result);
+            //what if its null?
+            if(!result.data.getUserLocation)
+                return;
             if(!result.data.getUserLocation.gym.country)
                 return;
             const gym = result.data.getUserLocation.gym;

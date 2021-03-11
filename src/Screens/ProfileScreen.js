@@ -8,7 +8,13 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { getFollowRelationship, getUserImage, listEffortsByExerciseAndUser, listPostsSortedByUserAndTimestamp } from '../../graphql/queries';
+import {
+    getFollowRelationship,
+    getUserImage,
+    getUserRecord,
+    listEffortsByExerciseAndUser,
+    listPostsSortedByUserAndTimestamp,
+} from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import {
@@ -60,7 +66,6 @@ const ProfileScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken = null) => {
-        //todo just get the userRecord objects
         const res = await API.graphql(graphqlOperation(listPostsSortedByUserAndTimestamp, {
             userID: profileUser,
             sortDirection: 'DESC',
@@ -75,6 +80,7 @@ const ProfileScreen = props => {
         setNextToken(res.data.listPostsSortedByUserAndTimestamp.nextToken)
         setIsLoading(false);
     };
+
     const getAdditionalPosts = () => {
         if (nextToken === null) return; //Reached the last page
         getPosts(ADDITIONAL_QUERY, nextToken);
@@ -117,26 +123,22 @@ const ProfileScreen = props => {
                 setProfileURI(result.data.getUserImage.uri);
         });
 
+        //todo just get the userRecord objects
         const mainLifts = ['Squat', 'Bench', 'Press', 'Deadlift'];
         //at last, we get to use user prs
         mainLifts.forEach(exercise => {
-            API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
+            //shoudl work lol
+            API.graphql(graphqlOperation(getUserRecord, {
                 userID: profileUser,
-                exerciseWeight: {
-                    beginsWith: {
-                        exercise: exercise
-                    }
-                },
-                sortDirection: "DESC",
-                limit: 1//just the PR
+                exercise: exercise
             }))
                 .then(result => {
                     console.log('prs', result);
-                    const items = result.data.listEffortsByExerciseAndUser.items;
-                    if(items.length !== 0) {
+                    const record = result.data.getUserRecord;
+                    if(record){
                         setRecords(prev => ({
                             ...prev,
-                            [items[0].exercise]: items[0].orm
+                            [record.exercise]: record.orm
                         }));
                     }
                 });
