@@ -8,6 +8,7 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
+import { NextObjectKey } from '../../Utils/NextObjectKey';
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -24,7 +25,7 @@ const SupersetSelector = props => {
             <ExercisePicker visible={modal} handleSelection={props.onSelect} close={() => setModal(false)}/>
         </TouchableOpacity>
     );
-}
+};
 
 const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
@@ -45,10 +46,6 @@ const WorkoutEditor = props => {
 
         return ex + suffix;
     };
-    const newWorkoutCode = () => {
-        let code = Object.keys(workouts).sort().reverse()[0] || '@';
-        return String.fromCharCode(code.charCodeAt(0)+1);
-    };
 
     const duplicateWorkout = k => {
         if(!(k in workouts))
@@ -67,7 +64,7 @@ const WorkoutEditor = props => {
 
         routinesDispatch(prev => {
             //save to workouts
-            prev.editRoutine.workouts[newWorkoutCode()] = newWorkout;
+            prev.editRoutine.workouts[NextObjectKey(workouts)] = newWorkout;
 
             //save to info
             //todo make this an invariant in the routine dispatcher

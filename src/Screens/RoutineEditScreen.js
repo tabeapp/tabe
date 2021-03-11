@@ -19,6 +19,7 @@ import { createRoutine, updateRoutine } from '../../graphql/mutations';
 import { PRIMARY } from '../Style/Theme';
 import Flip from '../Components/Simple/Flip';
 import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
+import { NextObjectKey } from '../Utils/NextObjectKey';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -27,11 +28,6 @@ import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
 const RoutineEditScreen = props => {
     const {username} = useContext(UserContext);
     //this is used more than you'd think
-
-    const newSchemeCode = () => {
-        let code = Object.keys(customSets).sort().reverse()[0] || '@';
-        return String.fromCharCode(code.charCodeAt(0)+1);
-    };
 
     const {editRoutine} = useContext(RoutinesContext);
     //consider making an edit routine dispatch just for editRoutine, this is annoying
@@ -197,7 +193,7 @@ const RoutineEditScreen = props => {
                             <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
                                 <TouchableOpacity style={STYLES.textButton} onPress={() => {
                                     //this actually works
-                                    rd('customSets.' + newSchemeCode(), []);
+                                    rd('customSets.' + NextObjectKey(customSets), []);
                                     console.log(JSON.stringify(customSets))
                                 }}>
                                     <Words style={{fontSize: 30}}>Add Custom Scheme</Words>

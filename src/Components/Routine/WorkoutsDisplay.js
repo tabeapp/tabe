@@ -6,6 +6,7 @@ import { STYLES } from '../../Style/Values';
 import Words from '../Simple/Words';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import { NextObjectKey } from '../../Utils/NextObjectKey';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
@@ -13,11 +14,6 @@ const WorkoutsDisplay = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
 
     const {workouts, advanced} = props;
-
-    const newWorkoutCode = () => {
-        let code = Object.keys(workouts).sort().reverse()[0] || '@';
-        return String.fromCharCode(code.charCodeAt(0)+1);
-    };
 
     const width = useWindowDimensions().width;
     return (
@@ -57,7 +53,7 @@ const WorkoutsDisplay = props => {
                     //this actually works now
                     //trust me bro
                     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
-                    rd('workouts.' + newWorkoutCode(), []);
+                    rd('workouts.' + NextObjectKey(workouts), []);
                 }}>
                     <Words style={{fontSize: 30}}>Add Workout</Words>
                 </TouchableOpacity>
