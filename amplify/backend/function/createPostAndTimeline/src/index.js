@@ -12,7 +12,7 @@ global.fetch = require('node-fetch');
 let graphqlClient;
 
 exports.handler = async (event, context, callback) => {
-    console.log(event)
+    console.log('event', event)
     let env;
     let graphql_auth;
 
@@ -46,8 +46,6 @@ exports.handler = async (event, context, callback) => {
             }
         };
     }
-    console.log(env);
-    console.log(graphql_auth);
 
     if (!graphqlClient) {
         graphqlClient = new AWSAppSyncClient({
@@ -59,6 +57,20 @@ exports.handler = async (event, context, callback) => {
         });
     }
 
+    const getUserLocationResult = await graphqlClient.query({
+        query: gql(getUserLocation),
+        fetchPolicy: 'network-only',
+        variables: {
+            userID: event.identity.username
+        }
+    });
+
+    let gymID = 'emptyGym';
+    if(getUserLocationResult.data.getUserLocation)
+        gymID = getUserLocationResult.data.getUserLocation.gymID;
+
+
+    console.log('gymid from appsync', gymID);
 
     //post to the origin
     const postInput = {
@@ -69,7 +81,7 @@ exports.handler = async (event, context, callback) => {
                 title: event.arguments.title,
                 description: event.arguments.description,
                 data: event.arguments.data,
-                gymID: event.arguments.gymID,
+                gymID: gymID,
                 userID: event.identity.username,
             },
         },
@@ -119,6 +131,17 @@ const createTimelineForAUser = async ({follower, post}) => {
     console.log(res);
 }
 
+const getUserLocation = /* GraphQL */ `
+  query GetUserLocation($userID: ID!) {
+    getUserLocation(userID: $userID) {
+      userID
+      gymID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 const listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
     $followeeId: ID
@@ -159,6 +182,7 @@ const createPost = /* GraphQL */ `
       description
       data
       userID
+      gymID
       user {
         id
         username

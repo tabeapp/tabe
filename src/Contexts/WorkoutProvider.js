@@ -471,9 +471,16 @@ const WorkoutProvider = props => {
         console.log(workoutData);
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
 
-        const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
+        /*const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
             userID: username
         }));
+
+        let gymID = 'emptyGym';
+        if(ulRes.data.getUserLocation)
+            gymID = ulRes.data.getUserLocation.gymID;
+
+        console.log('gymID', gymID);*/
+
 
         //ugh, I guess this should call that labmda actually
         //this isn't working start from here next time...
@@ -481,8 +488,9 @@ const WorkoutProvider = props => {
             title: workoutData.title,
             description: workoutData.description,
             data: workoutData.data,
-            gymID: ulRes.data.getUserLocation.gymID || 'emptyGym'//this feels really dumb, like the gym shoudl be set in the lambda
+            //gymID: gymID
         }));
+
         console.log('res: ' + JSON.stringify(res));
         //once we have res, we should be able to use its id to upload images
         //to s3

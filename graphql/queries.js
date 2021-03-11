@@ -123,109 +123,6 @@ export const listUserRecords = /* GraphQL */ `
     }
   }
 `;
-export const getUserLocation = /* GraphQL */ `
-  query GetUserLocation($userID: ID!) {
-    getUserLocation(userID: $userID) {
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserLocations = /* GraphQL */ `
-  query ListUserLocations(
-    $userID: ID
-    $filter: ModelUserLocationFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listUserLocations(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getUserImage = /* GraphQL */ `
   query GetUserImage($userID: ID!) {
     getUserImage(userID: $userID) {
@@ -1061,6 +958,109 @@ export const searchGyms = /* GraphQL */ `
       }
       nextToken
       total
+    }
+  }
+`;
+export const getUserLocation = /* GraphQL */ `
+  query GetUserLocation($userID: ID!) {
+    getUserLocation(userID: $userID) {
+      userID
+      gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserLocations = /* GraphQL */ `
+  query ListUserLocations(
+    $userID: ID
+    $filter: ModelUserLocationFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserLocations(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
     }
   }
 `;

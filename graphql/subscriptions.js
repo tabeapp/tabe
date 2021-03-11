@@ -98,138 +98,6 @@ export const onDeleteUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const onCreateUserLocation = /* GraphQL */ `
-  subscription OnCreateUserLocation {
-    onCreateUserLocation {
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserLocation = /* GraphQL */ `
-  subscription OnUpdateUserLocation {
-    onUpdateUserLocation {
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserLocation = /* GraphQL */ `
-  subscription OnDeleteUserLocation {
-    onDeleteUserLocation {
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateUserImage = /* GraphQL */ `
   subscription OnCreateUserImage {
     onCreateUserImage {
@@ -1023,6 +891,138 @@ export const onDeletePostMedia = /* GraphQL */ `
       id
       postID
       uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUserLocation = /* GraphQL */ `
+  subscription OnCreateUserLocation {
+    onCreateUserLocation {
+      userID
+      gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserLocation = /* GraphQL */ `
+  subscription OnUpdateUserLocation {
+    onUpdateUserLocation {
+      userID
+      gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserLocation = /* GraphQL */ `
+  subscription OnDeleteUserLocation {
+    onDeleteUserLocation {
+      userID
+      gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

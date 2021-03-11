@@ -103,53 +103,6 @@ export const deleteUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const createUserLocation = /* GraphQL */ `
-  mutation CreateUserLocation(
-    $input: CreateUserLocationInput!
-    $condition: ModelUserLocationConditionInput
-  ) {
-    createUserLocation(input: $input, condition: $condition) {
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateUserLocation = /* GraphQL */ `
   mutation UpdateUserLocation(
     $input: UpdateUserLocationInput!
@@ -1295,6 +1248,53 @@ export const deleteTimeline = /* GraphQL */ `
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+export const createUserLocation = /* GraphQL */ `
+  mutation CreateUserLocation(
+    $input: CreateUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    createUserLocation(input: $input, condition: $condition) {
+      userID
+      gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
     }
   }
 `;

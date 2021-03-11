@@ -25,6 +25,11 @@ type UserRecord @model
 }
 
 type UserLocation @model
+@auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read]}
+])
 @key(fields: ["userID"])
 @key(name: "byGym", fields: ["gymID"])
 {
