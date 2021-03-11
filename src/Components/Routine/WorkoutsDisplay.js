@@ -5,6 +5,7 @@ import { Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 import { STYLES } from '../../Style/Values';
 import Words from '../Simple/Words';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
@@ -64,6 +65,8 @@ const WorkoutsDisplay = props => {
             prev.editRoutine.workouts[newWorkoutCode()] = newWorkout;
 
             //save to info
+            //todo make this an invariant in the routine dispatcher
+            //for every exercise in workouts, there should be a corresponding exerciseinfo
             newWorkout.forEach(ex => {
                 if(Array.isArray(ex))
                     prev.editRoutine.info[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex);
@@ -129,6 +132,7 @@ const WorkoutsDisplay = props => {
         }
     };
 
+    const width = useWindowDimensions().width;
     return (
 
         <ScrollView pagingEnabled style={STYLES.scroller} horizontal={true}>
@@ -162,7 +166,7 @@ const WorkoutsDisplay = props => {
                     />
                 )
             }
-            <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
+            <View style={{justifyContent: 'center', height: 200, width: width, backgroundColor: '#333'}}>
                 <TouchableOpacity style={STYLES.textButton} onPress={() => {
                     //append a new obj
                     //works, but ideally I'd like A B C instead of 1 2 3

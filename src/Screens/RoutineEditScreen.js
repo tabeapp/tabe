@@ -161,23 +161,27 @@ const RoutineEditScreen = props => {
                     </View>
                 }
 
-                <Words style={{fontSize: 40}}>Workouts</Words>
-                <WorkoutsDisplay workouts={workouts} info={info} advanced={advanced}/>
+                <View style={styles.section}>
+                    <Words style={{fontSize: 40}}>Workouts</Words>
+                    <WorkoutsDisplay workouts={workouts} info={info} advanced={advanced}/>
+                </View>
 
 
-                <Words style={{fontSize: 40}}>Exercises</Words>
-                <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
-                    //definitely the trickiest of all
-                    //editing exercises involves much of the state, so I've just added them
-                    Object.entries(info).map(([k,v]) =>
-                        <ExerciseEditor
-                            key={k}
-                            advanced={advanced}
-                            name={k} info={v}
-                        />
-                    )
-                }
-                </ScrollView>
+                <View style={styles.section}>
+                    <Words style={{fontSize: 40}}>Exercises</Words>
+                    <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
+                        //definitely the trickiest of all
+                        //editing exercises involves much of the state, so I've just added them
+                        Object.entries(info).map(([k,v]) =>
+                            <ExerciseEditor
+                                key={k}
+                                advanced={advanced}
+                                name={k} info={v}
+                            />
+                        )
+                    }
+                    </ScrollView>
+                </View>
 
                 {
                     advanced && customScheme &&

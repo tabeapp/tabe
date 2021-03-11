@@ -37,12 +37,12 @@ const WorkoutEditor = props => {
     //wtf is this 415 number supposed to be?
     return (
         <View style={{width: width, backgroundColor: '#333'}}>
-            <Row style={{backgroundColor: '#222'}}>
-                <Words style={{color:'white'}}>Workout {props.name}</Words>
+            <Row style={{backgroundColor: '#222', padding: 5}}>
+                <Words style={{fontSize: 30}}>Workout {name}</Words>
 
-                <View style={{flexDirection:'row'}}>
+                <Row>
 
-                    <TouchableOpacity onPress={() => props.duplicateWorkout(props.name)}>
+                    <TouchableOpacity onPress={() => props.duplicateWorkout(name)}>
                         <Words><Ionicons color={'gray'} size={30} name={'copy-outline'}/></Words>
                     </TouchableOpacity>
 
@@ -70,7 +70,7 @@ const WorkoutEditor = props => {
                     }}>
                         <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
                     </TouchableOpacity>
-                </View>
+                </Row>
             </Row>
             {
                 props.exercises.map((ex, index) =>{
@@ -127,7 +127,7 @@ const WorkoutEditor = props => {
                     }} >
                         <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
                     </TouchableOpacity>
-                    <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(props.name,ex)} close={() => setModal(false)}/>
+                    <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(name,ex)} close={() => setModal(false)}/>
                 </>
 
             }
