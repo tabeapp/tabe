@@ -1,8 +1,6 @@
-import { Alert, ScrollView, StyleSheet, Switch, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState} from 'react';
 import NumericSelector from '../Components/Routine/NumericSelector';
-import WorkoutEditor from '../Components/Routine/WorkoutEditor';
-import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../Constants/DefaultExInfo';
 import DaysEditor from '../Components/Routine/DaysEditor';
 import ExerciseEditor from '../Components/Routine/ExerciseEditor';
 import RepSchemeEditor from '../Components/Routine/RepSchemeEditor';
@@ -19,6 +17,8 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
 import { createRoutine, updateRoutine } from '../../graphql/mutations';
 import { PRIMARY } from '../Style/Theme';
+import Flip from '../Components/Simple/Flip';
+import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -27,20 +27,6 @@ import { PRIMARY } from '../Style/Theme';
 const RoutineEditScreen = props => {
     const {username} = useContext(UserContext);
     //this is used more than you'd think
-    const altExName = ex => {
-        let suffix = '-b';
-        //yes this is weird but it works
-        while((ex + suffix) in info)
-            suffix = '-' + String.fromCharCode(suffix.charCodeAt(1)+1)
-
-        return ex + suffix;
-    };
-
-    //used just twice lol
-    const newWorkoutCode = () => {
-        let code = Object.keys(workouts).sort().reverse()[0] || '@';
-        return String.fromCharCode(code.charCodeAt(0)+1);
-    };
 
     const newSchemeCode = () => {
         let code = Object.keys(customSets).sort().reverse()[0] || '@';
@@ -59,112 +45,6 @@ const RoutineEditScreen = props => {
     //this will allow for a much MUCH cleaner edit experience
     const [advanced, setAdvanced] = useState(false);
 
-    const addExercise = (k,ex) => {
-        //should this part be done before
-
-        //also need to add it to exerdcises so we can edit it later
-
-        //problem: what about adding lighter versions of exercises like in ppl?
-        //solution: alert the user and let them choose
-        if(ex in info){
-            //if no, just cancel addition and use the info already there
-            //if yes, just add 'Bench Press.b'
-            Alert.alert(
-                "Duplicate Exercise",
-                //maybe rephrase this
-                "This exercise already is in the routine, do you want to link to that one or make an alternative version?",
-                [
-                    {
-                        text: "Link",//just use the other one, don't need to add a new one to exercises
-                        onPress: () => routinesDispatch(prev => {
-                            prev.editRoutine.workouts[k].push(ex);
-                            return prev;
-                        }),
-                        style: "cancel"
-                    },
-                    {
-                        text: "Alternate",
-                        onPress: () => {
-                            const altName = altExName(ex);
-
-                            routinesDispatch(prev => {
-                                //does this work for supersets?
-                                prev.editRoutine.workouts[k].push(altName);
-                                //definitely not
-                                prev.editRoutine.info[altName] = DEFAULT_EX_INFO(ex);
-                                //we really need info to set itself automatically, wiht useffect
-                                return prev;
-                            });
-                        },
-                    }
-                ],
-                {cancelable: false}
-            )
-        }
-        else{
-            routinesDispatch(prev => {
-                //does this work for supersets?
-                prev.editRoutine.workouts[k].push(ex);
-                //definitely not
-                prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
-                //we really need info to set itself automatically, wiht useffect
-                return prev;
-            });
-        }
-    }
-
-    //k is the C in workout C or so
-    const duplicateWorkout = k => {
-        if(!(k in workouts))
-            return;
-
-        //make the copy
-        const newWorkout = workouts[k].map(ex => {
-            //fucking supersets
-            if(Array.isArray(ex))
-                //missed that little thing
-                return ex.map(altExName);
-
-            //need to find alt name
-            return altExName(ex);
-        });
-
-        routinesDispatch(prev => {
-            //save to workouts
-            prev.editRoutine.workouts[newWorkoutCode()] = newWorkout;
-
-            //save to info
-            newWorkout.forEach(ex => {
-                if(Array.isArray(ex))
-                    prev.editRoutine.info[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex);
-                else
-                    prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
-            })
-
-            return prev;
-        });
-    };
-
-    //you can move this to workout editor if you want
-    const deleteAnExercise = (k) => {
-        routinesDispatch(prev => {
-            delete prev.editRoutine.info[k];
-
-            let removal = k;
-            if(k.includes('/'))
-                removal = k.split('/');//that might do it, who knows
-
-            Object.keys(prev.editRoutine.workouts).forEach(w => {
-                prev.editRoutine.workouts[w] = prev.editRoutine.workouts[w]
-                    .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
-            });
-
-            return prev;
-        });
-    };
-
-    //this takes fucking forever
-    //you're not fucking me up though
     //why the fuck is this one fine while the others go crazy
     //useeffects still coming back to haunt me
     useEffect(() => {
@@ -220,6 +100,7 @@ const RoutineEditScreen = props => {
         props.navigation.navigate('routine');
     };
 
+
     return (
         <SafeBorder>
             <TopBar
@@ -233,11 +114,8 @@ const RoutineEditScreen = props => {
             />
             <ScrollView style={STYLES.box}>
                 <Words>Advanced Editor</Words>
-                <Switch
-                    trackColor={{ false: "#222", true: PRIMARY }}
-                    thumbColor={'black'}
-                    ios_backgroundColor="#222"
-                    onValueChange={setAdvanced}
+                <Flip
+                    onChange={setAdvanced}
                     value={advanced}
                 />
                 <Write
@@ -245,7 +123,7 @@ const RoutineEditScreen = props => {
                     value={title}
                     onChange={v => rd('title', v)}
                 />
-                <Row style={{justifyContent: 'space-between'}}>
+                <Row style={styles.section}>
                     <Words style={{fontSize: 20}}>Cycle length in days: </Words>
                     <NumericSelector
                         onChange={v =>
@@ -264,69 +142,28 @@ const RoutineEditScreen = props => {
                         or towards the top as it applies to all exercises?*/}
                 {
                     advanced &&
-                    <>
-                        <Words style={{fontSize: 20}}>Failure Behavior:</Words>
-                        <View style={{flexDirection: 'row'}}>
-                            <Words style={{fontSize: 20}}>Deload</Words>
+                    <View style={styles.section}>
+                        <Words style={{fontSize: 30}}>Failure Behavior:</Words>
+                        <View style={styles.slot}>
+                            <Words style={{fontSize: 20}}>Deload %</Words>
                             <NumericSelector
                                 onChange={v => rd('failure.deloadPercent', v)}
                                 numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
                             />
-                            <Words style={{fontSize: 20}}>% after</Words>
+                        </View>
+                        <View style={styles.slot}>
+                            <Words style={{fontSize: 20}}>after failed sets</Words>
                             <NumericSelector
                                 onChange={v => rd('failure.after', v)}
                                 numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
                             />
-                            <Words style={{fontSize: 20}}>failed sets</Words>
                         </View>
-                    </>
+                    </View>
                 }
 
                 <Words style={{fontSize: 40}}>Workouts</Words>
-                <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
-                    {
-                        Object.entries(workouts).map(([k,v]) =>
-                            <WorkoutEditor
-                                key={k} exercises={v} name={k}
-                                advanced={advanced}
-                                editSuperset={(val, exerciseIndex, supersetIndex) => {
-                                    //exerciseindex is the superset order in the workout
-                                    //superset index is the exercise order in the super set
+                <WorkoutsDisplay workouts={workouts} info={info} advanced={advanced}/>
 
-                                    //SUPASET TS TS TS TS
-
-                                    routinesDispatch(prev => {
-                                        let x = prev.editRoutine.workouts[k][exerciseIndex];
-                                        x[supersetIndex] = val;
-
-                                        if(x.every(i => i !== ''))
-                                            prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
-
-                                        return prev;
-                                    });
-
-                                }}
-
-                                //maybe i should just have these in workout editor...
-                                duplicateWorkout={duplicateWorkout}
-                                deleteExercise={deleteAnExercise}
-                                addExercise={addExercise}
-                            />
-                        )
-                    }
-                    <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
-                        <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                            //append a new obj
-                            //works, but ideally I'd like A B C instead of 1 2 3
-                            //too complex?
-                            //this actually works now
-                            //trust me bro
-                            rd('workouts.' + newWorkoutCode(), []);
-                        }}>
-                            <Words style={{fontSize: 30}}>Add Workout</Words>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
 
                 <Words style={{fontSize: 40}}>Exercises</Words>
                 <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
@@ -392,6 +229,16 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         //justifyContent: 'center',
     },
+    section: {
+        borderColor: PRIMARY,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+    },
+    slot: {
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row'
+    }
 });
 
 export default RoutineEditScreen;

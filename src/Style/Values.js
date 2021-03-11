@@ -50,5 +50,12 @@ export const STYLES = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: 'rgba(143,143,143,0.2)',
 
-    }
+    },
+    scroller: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: 'black',
+        borderStyle: 'solid',
+    },
+
 });

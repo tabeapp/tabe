@@ -68,12 +68,9 @@ const RoutineCard = props => {
                     <Words style={{fontSize:20}}>
                         Current:
                         {
-                            current &&
-                            <Ionicons color={PRIMARY} size={30} name={'checkbox'}/>
-                        }
-                        {
-                            !current &&
-                            <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
+                            current ?
+                                <Ionicons color={PRIMARY} size={30} name={'checkbox'}/> :
+                                <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
                         }
                     </Words>
                 </TouchableOpacity>

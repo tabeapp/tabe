@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -31,10 +32,11 @@ const WorkoutEditor = props => {
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
     const {name, deleteExercise, advanced} = props;//this is like a key btw
 
+    const width = useWindowDimensions().width;
 
     //wtf is this 415 number supposed to be?
     return (
-        <View style={{margin: 3, width: 406, backgroundColor: '#333'}}>
+        <View style={{width: width, backgroundColor: '#333'}}>
             <Row style={{backgroundColor: '#222'}}>
                 <Words style={{color:'white'}}>Workout {props.name}</Words>
 
