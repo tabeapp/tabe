@@ -1,6 +1,5 @@
-import { TouchableOpacity, View } from 'react-native';
+import { View, FlatList} from 'react-native';
 import React, { useContext } from 'react';
-import Words from '../Components/Simple/Words';
 import { BLANK_ROUTINE } from '../Constants/DefaultRoutineInfo';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
@@ -17,27 +16,22 @@ const RoutineScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'routine'}>
-            <TopBar title='Routines'/>
-            <View style={STYLES.body}>
-                <View style={{width: '100%', alignItems: 'center'}}>
-                    {
-                        routines &&
-                        routines.map(routine =>
-                            <RoutineCard {...props} routine={routine}/>
-                        )
-                    }
-                </View>
-                <TouchableOpacity  onPress={() => {
+            <TopBar
+                title='Routines'
+                rightText='+'
+                onPressRight={() => {
                     routinesDispatch({path: 'editRoutine', value: BLANK_ROUTINE()});
-
                     props.navigation.navigate('routineedit');
-                    //routine: emptyRoutine, // no this will be set in the context
-                    //saveRoutine: saveRoutine no this will be available in the context
-                    //})
-                }}>
-                    <Words style={{fontSize: 40}}>+</Words>
-                </TouchableOpacity>
-
+                }}
+            />
+            <View style={STYLES.body}>
+                <FlatList
+                    style={{width: '100%'}}
+                    data={routines}
+                    renderItem={({item}) =>
+                        <RoutineCard {...props} routine={item}/>
+                    }
+                />
             </View>
         </SafeBorderNav>
     );

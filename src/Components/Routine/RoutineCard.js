@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useContext } from 'react';
@@ -7,22 +7,21 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { deleteRoutine, updateRoutine } from '../../../graphql/mutations';
 import { PRIMARY } from '../../Style/Theme';
 
-
 const RoutineCard = props => {
     const {routinesDispatch, getCurrent} = useContext(RoutinesContext);
 
     const {id, title, current, routine} = props.routine;
 
-    const removeRoutine = async id => {
+    const removeRoutine = () => {
         //very confident this works, why wouldnt it
-        await API.graphql(graphqlOperation(deleteRoutine, {
+        API.graphql(graphqlOperation(deleteRoutine, {
             input: {
                 id: id
             }
         }));
     };
 
-    const handleSetCurrent = async id => {
+    const handleSetCurrent = async () => {
         const oldCurrent = getCurrent();
 
         //so we have routines available, which conviniently have ids
@@ -48,11 +47,8 @@ const RoutineCard = props => {
         }
     };
 
-
-    //const {routine} = props;
-    return (//routine =>
+    return (
         <TouchableOpacity
-            key={id}
             onPress={() => {
                 //set it in the context
                 //need to just throw in title and id so we can edit it
@@ -63,34 +59,33 @@ const RoutineCard = props => {
                 /*send it off to routine editor*/
                 props.navigation.navigate('routineedit');
             }}
-            style={{flexDirection: 'row', width: '95%', backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100}}
+            style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#222', padding: 10, margin: 4, borderRadius: 20, height: 100}}
         >
-            <Words style={{fontSize: 20}}>{
-                title
-            }</Words>
-            <TouchableOpacity style={{width: 50 }} onPress={() => {
-                removeRoutine(id);//
-            }}>
-                <Words><Ionicons color={'gray'} size={30} name={'close'}/></Words>
-            </TouchableOpacity>
+            <View>
+                <Words style={{fontSize: 40, fontWeight: 'bold'}}>{title}</Words>
 
-            <TouchableOpacity style={{width: 50 }} onPress={() => {
-                handleSetCurrent(id)
-            }}>
-                <Words style={{fontSize:20}}>
-                    Current:
-                    {
-                        current &&
-                        <Ionicons color={PRIMARY} size={30} name={'checkbox'}/>
-                    }
-                    {
-                        !current &&
-                        <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
-                    }
-                </Words>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={handleSetCurrent}>
+                    <Words style={{fontSize:20}}>
+                        Current:
+                        {
+                            current &&
+                            <Ionicons color={PRIMARY} size={30} name={'checkbox'}/>
+                        }
+                        {
+                            !current &&
+                            <Ionicons color={'gray'} size={30} name={'checkbox-outline'}/>
+                        }
+                    </Words>
+                </TouchableOpacity>
+            </View>
+
+            <View>
+                <TouchableOpacity onPress={removeRoutine}>
+                    <Words><Ionicons color={'gray'} size={30} name={'trash'}/></Words>
+                </TouchableOpacity>
+            </View>
         </TouchableOpacity>
-    )
+    );
 };
 
 export default RoutineCard;
