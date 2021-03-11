@@ -117,6 +117,11 @@ const RoutinesProvider = props => {
         });
     };
 
+    //in the case of routines, here we make sure exercise list matches what's in workouts
+    const invariantCheck = next => {
+
+        return next;
+    };
 
     //so i guess state is the previous state
     //and action will be whatever i want, huh?
@@ -129,7 +134,8 @@ const RoutinesProvider = props => {
         //so just edit the passed in object directly
         if(action.constructor === Function){
             //run action on state
-            return action(next);
+            const x = invariantCheck(action(next));
+            return x
         }
 
         //otherwise
@@ -169,7 +175,8 @@ const RoutinesProvider = props => {
         if(action.type){
         }
 
-        return next;
+        const x = invariantCheck(next);
+        return x;
     };
 
     const [data, routinesDispatch] = useReducer(routinesReducer, initState);

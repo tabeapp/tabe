@@ -127,10 +127,10 @@ const WorkoutEditor = props => {
                     }} >
                         <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
                     </TouchableOpacity>
-                    <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(name,ex)} close={() => setModal(false)}/>
                 </>
 
             }
+            <ExercisePicker visible={modal} handleSelection={(ex) => props.addExercise(name,ex)} close={() => setModal(false)}/>
 
         </View>);
 };
