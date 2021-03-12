@@ -5,6 +5,7 @@ import Words from '../Simple/Words';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { Auth } from 'aws-amplify';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
+import { PRIMARY } from '../../Style/Theme';
 
 const routes = [
     'home',
@@ -130,6 +131,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#222',
         justifyContent: 'space-around',
+        borderColor: PRIMARY,
+        borderTopWidth: 1,
         alignItems: 'center',
     },
 });

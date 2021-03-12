@@ -5,6 +5,7 @@ import Row from '../Components/Simple/Row';
 //adjustable?
 //this is based on rouge plates
 const denoms = [
+    //{weight: 55, style: {width: 15, height: 100, backgroundColor: 'red'}},
     {weight: 45, style: {width: 12, height: 100, backgroundColor: 'blue'}},
     {weight: 25, style: {width: 7, height: 100, backgroundColor: 'green'}},
     {weight: 10, style: {width: 5, height: 50, backgroundColor: 'white'}},
@@ -29,7 +30,7 @@ const WeightVisual = props => {
     return (<Row style={{display: 'flex'}}>
         {
             info.map((i,index) =>
-                <View key={index} style={{...i.style, borderStyle: 'solid', borderWidth: 1, borderColor: 'black'}} />
+                <View key={index} style={{...i.style, margin: 1}} />
             )
         }
     </Row>);

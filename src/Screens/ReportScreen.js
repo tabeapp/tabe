@@ -26,7 +26,6 @@ const ReportScreen = props => {
         let x = createReport();
         setReport(x);
         setTitle(x.title);
-        setDescription(x.summary);
     }, [/*workout*/]);
 
     const [title, setTitle] = useState(report.title);
@@ -94,15 +93,18 @@ const ReportScreen = props => {
 
     };
 
+    //ok this should pretty match "post screen"
+    //lets make some shared components
     return (
         <SafeBorder>
             <TopBar title='Workout Summary' rightText='Save' onPressRight={handleNext}/>
-            <View style={STYLES.card}>
+            <View>
                 <Row>
                     <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
                     <Words>Zyzz</Words>
                 </Row>
                 <Write
+                    placeholder={'Add notes'}
                     style={{fontSize: 20, height: 100}}
                     value={title}
                     onChange={setTitle}

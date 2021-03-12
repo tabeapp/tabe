@@ -78,10 +78,7 @@ const PostScreen = props => {
                     {post.description}
                 </Words>
                 <Words>
-                    {JSON.stringify(post.media.items.map(m => m.uri))}
-                </Words>
-                <Words>
-                    {JSON.stringify(post.data)}
+                    {JSON.stringify(post.media && post.media.items.map(m => m.uri))}
                 </Words>
                 {
                     //easier than adding dumb default properties

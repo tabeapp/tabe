@@ -12,7 +12,6 @@ import {
     getFollowRelationship,
     getUserImage,
     getUserRecord,
-    listEffortsByExerciseAndUser,
     listPostsSortedByUserAndTimestamp,
 } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
