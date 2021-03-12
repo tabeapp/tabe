@@ -29,6 +29,7 @@ import {
     listRecordsByExerciseAndCountry, listRecordsByExercise,
 } from '../../graphql/queries';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import { EraseData } from '../Utils/EraseData';
 
 export const WorkoutContext = React.createContext();
 
@@ -334,7 +335,7 @@ const WorkoutProvider = props => {
 
             const personal = await API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
                 userID: username,
-                exerciseWeight: {
+                exerciseOrm: {
                     beginsWith: {
                         exercise: effort.exercise
                     }
@@ -342,6 +343,7 @@ const WorkoutProvider = props => {
                 limit: 10,
                 sortDirection: 'DESC'
             }));
+            console.log('check rank result', personal);
             const personalRank = personal.data.listEffortsByExerciseAndUser
                 .items.findIndex(ef => ef.id === effort.id);
 
@@ -403,7 +405,7 @@ const WorkoutProvider = props => {
 
                 const result = await API.graphql(graphqlOperation(operations[n], {
                     [keys[n]]: values[n],
-                    exerciseWeight: {
+                    exerciseOrm: {
                         beginsWith: {
                             exercise: effort.exercise
                         }

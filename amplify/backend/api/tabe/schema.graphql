@@ -121,7 +121,7 @@ type Effort
 @model
 #is this the best way to do it?
 @key(name: "byPost", fields: ["postID"])
-@key(name: "byUser", fields: ["userID", "exercise", "weight"], queryField: "listEffortsByExerciseAndUser")
+@key(name: "byExerciseAndUser", fields: ["userID", "exercise", "orm"], queryField: "listEffortsByExerciseAndUser")
 {
   id: ID!
   postID: ID!
