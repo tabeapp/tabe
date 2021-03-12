@@ -325,7 +325,7 @@ const WorkoutProvider = props => {
             listRecordsByExerciseAndCountry,
         ];
         const keys = ['gymID', 'cityID', 'stateID', 'countryID'];
-        const values = [ul.gymID, ul.gym.cityID, ul.gym.stateID, ul.gym.country];
+        const values = [ul.gymID, ul.gym.cityID, ul.gym.stateID, ul.gym.countryID];
 
 
         //fuck me, is this really ideal?
@@ -350,6 +350,7 @@ const WorkoutProvider = props => {
                 continue;
 
             console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${personalRank+1} for user ${username}`);
+            //somethign down here is giving may not e working
             await API.graphql(graphqlOperation(createTrophy, {
                 input: {
                     effortID: effort.id,
@@ -369,10 +370,10 @@ const WorkoutProvider = props => {
                 effortID: effort.id,
                 orm: effort.orm,
                 //copy location info from user
-                gymID: efforts[0].gymID,
-                cityID: efforts[0].cityID,
-                stateID: efforts[0].stateID,
-                countryID: efforts[0].countryID
+                gymID: ul.gymID,
+                cityID: ul.gym.cityID,
+                stateID: ul.gym.stateID,
+                countryID: ul.gym.countryID
             };
 
             //its bs that I have to check if it exists before hand
@@ -380,14 +381,19 @@ const WorkoutProvider = props => {
                 userID: username,
                 exercise: effort.exercise,
             }));
+            console.log('userecord input', input)
+            console.log('userecord result', prExists.data.getUserRecord);
+            //i think thi sis broken
             if(!prExists.data.getUserRecord)
-                API.graphql(graphqlOperation(createUserRecord, {
+                await API.graphql(graphqlOperation(createUserRecord, {
                     input: input
                 }));
             else
-                API.graphql(graphqlOperation(updateUserRecord, {
+                await API.graphql(graphqlOperation(updateUserRecord, {
                     input: input
                 }));
+
+            console.log('user record should be created or updated');
 
 
             //should trophies link to efforts or post?
