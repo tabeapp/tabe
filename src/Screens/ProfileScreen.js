@@ -27,23 +27,6 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const SUBSCRIPTION = 'SUBSCRIPTION';
-const INITIAL_QUERY = 'INITIAL_QUERY';
-const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case INITIAL_QUERY:
-            return action.posts;
-        case ADDITIONAL_QUERY:
-            return [...state, ...action.posts]
-        case SUBSCRIPTION:
-            return [action.post, ...state]
-        default:
-            return state;
-    }
-};
-
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [records, setRecords] = useState({
@@ -60,31 +43,6 @@ const ProfileScreen = props => {
     let profileUser = signedInUser;
     if(props.route.params)
         profileUser = props.route.params.userId;
-
-    const [posts, dispatch] = useReducer(reducer, []);
-    const [nextToken, setNextToken] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    const getPosts = async (type, nextToken = null) => {
-        const res = await API.graphql(graphqlOperation(listPostsSortedByUserAndTimestamp, {
-            userID: profileUser,
-            sortDirection: 'DESC',
-            limit: 20,
-            nextToken: nextToken
-        }))
-        console.log(res);
-        dispatch({
-            type: type,
-            posts: res.data.listPostsSortedByUserAndTimestamp.items
-        })
-        setNextToken(res.data.listPostsSortedByUserAndTimestamp.nextToken)
-        setIsLoading(false);
-    };
-
-    const getAdditionalPosts = () => {
-        if (nextToken === null) return; //Reached the last page
-        getPosts(ADDITIONAL_QUERY, nextToken);
-    };
 
     const [isFollowing, setIsFollowing] = useState(false);
 
@@ -110,8 +68,6 @@ const ProfileScreen = props => {
             setIsFollowing(await getIsFollowing({
                 followeeId: profileUser, followerId: signedInUser
             }));
-
-            getPosts(INITIAL_QUERY);
         };
         init();
 
@@ -144,15 +100,6 @@ const ProfileScreen = props => {
                 });
         });
 
-        const subscription = API.graphql(graphqlOperation(onCreatePost)).subscribe({
-            next: msg => {
-                const post = msg.value.data.onCreatePost;
-                if(post.owner !== profileUser)
-                    return;
-                dispatch({type: SUBSCRIPTION, post: post});
-            }
-        });
-        return () => subscription.unsubscribe();
     }, [signedInUser, profileUser])
 
     const follow = async () => {
@@ -313,9 +260,13 @@ const ProfileScreen = props => {
                     }</View>
 
                     <PostList
-                        isLoading={isLoading}
-                        posts={posts}
-                        getAdditionalPosts={getAdditionalPosts}
+                        listOperation={listPostsSortedByUserAndTimestamp}
+                        sortKey={'userID'}
+                        sortValue={profileUser}
+                        subscriptionOperation={onCreatePost}
+                        subscriptionCriteria={post =>
+                            post.userID === profileUser
+                        }
                     />
 
                 </ScrollView>

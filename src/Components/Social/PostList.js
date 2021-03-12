@@ -1,10 +1,81 @@
-import React from 'react';
+import React, { useReducer, useEffect, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
 import Post from './Post';
+import { API, graphqlOperation } from 'aws-amplify';
+
+//going to move so that post list handles all the loading and shit
+//all we need to pass down is what kind of post list to load
+//global, timeline, or profile, or whatever may come next
+
+const SUBSCRIPTION = 'SUBSCRIPTION';
+const INITIAL_QUERY = 'INITIAL_QUERY';
+const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
+
+const reducer = (state, action) => {
+    switch(action.type){
+        case INITIAL_QUERY:
+            return action.posts;
+        case ADDITIONAL_QUERY:
+            return [...state, ...action.posts];
+        case SUBSCRIPTION:
+            return [action.post, ...state];
+        default:
+            return state;
+    };
+};
 
 const PostList = props => {
-    const {isLoading, posts, getAdditionalPosts, listHeaderTitleButton} = props;
+    //i wonder if its a good idea to pass around the grapqhl operations
+    //subscriber is gonna be pretty complex function as each post list has its own way of subscribin
+    const {listOperation, sortKey, sortValue, subscriptionOperation, subscriptionCriteria} = props;
+
+    const [posts, dispatch] = useReducer(reducer, []);
+
+    const [nextToken, setNextToken] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getPosts = async (type, nextToken=null) => {
+        console.log(sortKey, sortValue);
+        const res = await API.graphql(graphqlOperation(listOperation, {
+            [sortKey]: sortValue,
+            sortDirection: 'DESC',
+            limit: 20,
+            nextToken: nextToken
+        }));
+        console.log('new', res);
+        //so sorry
+        const list = Object.values(res.data)[0];
+        dispatch({ type: type, posts: list.items });
+        setNextToken(list.nextToken);
+        setIsLoading(false);
+    };
+
+    const getAdditionalPosts = () => {
+        if(nextToken === null) return;
+        getPosts(ADDITIONAL_QUERY, nextToken);
+    };
+
+
+    useEffect(() => {
+        //usually indicates not loaded yet
+        if(!sortValue)
+            return;
+
+        getPosts(INITIAL_QUERY);
+
+        const subscription = API.graphql(graphqlOperation(subscriptionOperation))
+            .subscribe({
+                next: msg => {
+                    const post = Object.values(msg.value.data)[0];
+                    if(!subscriptionCriteria(post))
+                        return;
+                    dispatch({type: SUBSCRIPTION, post: post});
+                }
+            });
+        return () => subscription.unsubscribe();
+    }, [sortValue]);
+
     return <View>
         {
             isLoading
@@ -12,12 +83,10 @@ const PostList = props => {
                 <Words>loading...</Words>
                 :
                 <ScrollView>
-                    <Words>{listHeaderTitleButton && listHeaderTitleButton}</Words>
                     {
                         posts.map(post => <Post
                             key={post.id}
                             post={post}
-                            navigation={props.navigation}
                         />)
                     }
                     <TouchableOpacity onPress={getAdditionalPosts}>
