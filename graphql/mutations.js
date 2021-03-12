@@ -424,6 +424,40 @@ export const updatePost = /* GraphQL */ `
       data
       userID
       gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       user {
         id
         username
@@ -507,6 +541,40 @@ export const deletePost = /* GraphQL */ `
       data
       userID
       gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       user {
         id
         username
@@ -1113,6 +1181,40 @@ export const updateTimeline = /* GraphQL */ `
         data
         userID
         gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         user {
           id
           username
@@ -1196,6 +1298,40 @@ export const deleteTimeline = /* GraphQL */ `
         data
         userID
         gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         user {
           id
           username
@@ -1321,6 +1457,40 @@ export const createPost = /* GraphQL */ `
       data
       userID
       gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       user {
         id
         username
@@ -1422,6 +1592,40 @@ export const createTimeline = /* GraphQL */ `
         data
         userID
         gymID
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+          }
+          createdAt
+          updatedAt
+        }
         user {
           id
           username
@@ -1505,6 +1709,40 @@ export const createPostAndTimeline = /* GraphQL */ `
       data
       userID
       gymID
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
       user {
         id
         username

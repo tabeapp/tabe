@@ -2,30 +2,16 @@ import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import { PRIMARY } from '../../Style/Theme';
 import Row from '../Simple/Row';
 import { S3Image } from 'aws-amplify-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PostHeader from './PostHeader';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
 
     const navigation = useNavigation();
-    const now = moment();
-
-    //wouldn't it be better to just show the time?
-    const calcTimestampDiff = (timestamp) => {
-        const scales = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
-
-        for (let i=0; i < scales.length; i++){
-            const scale = scales[i];
-            const diff = moment(now).diff(timestamp /** 1000*/, scale);
-            if( diff > 0) return diff + scale.charAt(0)
-        }
-
-        return 0 + scales[scales.length - 1].charAt(0)
-    }
 
     //this is cap
     const liked = false;
@@ -39,24 +25,7 @@ const Post = ({post}) => {
             }}
         >
             <View>
-                <Row style={{padding: 10, justifyContent: 'space-around'}}>
-                    <TouchableOpacity
-                        style={{height: 40, width: 40, borderRadius: 20, overflow: 'hidden'}}
-                        onPress={() => {
-                            navigation.navigate('profile', {userId: post.userID})
-                        }}
-                    >
-                        <S3Image key={post.userImage.uri} style={{width: 40, height: 40}} imgKey={post.userImage.uri}/>
-                    </TouchableOpacity>
-
-                    <View style={{flex:1}}>
-                        <Words style={{fontWeight: 'bold'}}>{post.userID}</Words>
-                        <TouchableOpacity>
-                            {/*<Words>{moment(post.createdAt).format('MMMM D YYYY, h:mma')}</Words>*/}
-                            <Words>{calcTimestampDiff(post.createdAt)}</Words>
-                        </TouchableOpacity>
-                    </View>
-                </Row>
+                <PostHeader post={post}/>
 
                 <Words style={{fontSize: 30}}>{post.title}</Words>
                 <Words>{post.description}</Words>

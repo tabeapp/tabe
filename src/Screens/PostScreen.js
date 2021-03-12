@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createComment, createLike, deleteLike } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import Write from '../Components/Simple/Write';
+import PostHeader from '../Components/Social/PostHeader';
 
 //yes this is a copy of report screen
 const PostScreen = props => {
@@ -67,10 +68,7 @@ const PostScreen = props => {
         <SafeBorder>
             <TopBar title='Workout Summary'/>
             <View style={STYLES.body}>
-                <Row>
-                    <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                    <Words>Zyzz</Words>
-                </Row>
+                <PostHeader post={post}/>
                 <Words style={{fontSize: 40}} >
                     {post.title}
                 </Words>
