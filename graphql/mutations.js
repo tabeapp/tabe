@@ -489,6 +489,13 @@ export const updatePost = /* GraphQL */ `
           postID
           content
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt
@@ -507,6 +514,15 @@ export const updatePost = /* GraphQL */ `
           orm
           createdAt
           trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           updatedAt
@@ -606,6 +622,13 @@ export const deletePost = /* GraphQL */ `
           postID
           content
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt
@@ -624,6 +647,15 @@ export const deletePost = /* GraphQL */ `
           orm
           createdAt
           trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           updatedAt
@@ -794,6 +826,13 @@ export const createLocation = /* GraphQL */ `
             id
             name
             superLocationID
+            superLocation {
+              id
+              name
+              superLocationID
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -829,6 +868,13 @@ export const updateLocation = /* GraphQL */ `
             id
             name
             superLocationID
+            superLocation {
+              id
+              name
+              superLocationID
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -864,6 +910,13 @@ export const deleteLocation = /* GraphQL */ `
             id
             name
             superLocationID
+            superLocation {
+              id
+              name
+              superLocationID
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -1245,6 +1298,9 @@ export const updateTimeline = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1260,6 +1316,9 @@ export const updateTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1362,6 +1421,9 @@ export const deleteTimeline = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1377,6 +1439,9 @@ export const deleteTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1522,6 +1587,13 @@ export const createPost = /* GraphQL */ `
           postID
           content
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt
@@ -1540,6 +1612,15 @@ export const createPost = /* GraphQL */ `
           orm
           createdAt
           trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           updatedAt
@@ -1656,6 +1737,9 @@ export const createTimeline = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1671,6 +1755,9 @@ export const createTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1774,6 +1861,13 @@ export const createPostAndTimeline = /* GraphQL */ `
           postID
           content
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt
@@ -1792,6 +1886,15 @@ export const createPostAndTimeline = /* GraphQL */ `
           orm
           createdAt
           trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           updatedAt

@@ -382,6 +382,13 @@ export const getLocation = /* GraphQL */ `
             id
             name
             superLocationID
+            superLocation {
+              id
+              name
+              superLocationID
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -415,6 +422,13 @@ export const listLocations = /* GraphQL */ `
             id
             name
             superLocationID
+            superLocation {
+              id
+              name
+              superLocationID
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -1153,6 +1167,9 @@ export const listPosts = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1168,6 +1185,9 @@ export const listPosts = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1264,6 +1284,13 @@ export const getPost = /* GraphQL */ `
           postID
           content
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt
@@ -1282,6 +1309,15 @@ export const getPost = /* GraphQL */ `
           orm
           createdAt
           trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           updatedAt
@@ -1392,6 +1428,9 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1407,6 +1446,9 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1517,6 +1559,9 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1532,6 +1577,9 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1640,6 +1688,9 @@ export const searchPosts = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1655,6 +1706,9 @@ export const searchPosts = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1793,6 +1847,9 @@ export const getTimeline = /* GraphQL */ `
             userID
             postID
             content
+            likes {
+              nextToken
+            }
             createdAt
             updatedAt
           }
@@ -1808,6 +1865,9 @@ export const getTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            trophies {
+              nextToken
+            }
             updatedAt
           }
           nextToken
@@ -1844,6 +1904,13 @@ export const listTimelines = /* GraphQL */ `
           type
           id
           media {
+            items {
+              id
+              postID
+              uri
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           title
@@ -1854,9 +1921,34 @@ export const listTimelines = /* GraphQL */ `
           gym {
             id
             name
+            location {
+              lat
+              lon
+            }
             countryID
             stateID
             cityID
+            country {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            state {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            city {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             createdAt
             updatedAt
           }
@@ -1875,12 +1967,38 @@ export const listTimelines = /* GraphQL */ `
             updatedAt
           }
           likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           comments {
+            items {
+              id
+              userID
+              postID
+              content
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           efforts {
+            items {
+              id
+              postID
+              userID
+              exercise
+              weight
+              reps
+              orm
+              createdAt
+              updatedAt
+            }
             nextToken
           }
           createdAt

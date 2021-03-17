@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Platform, KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Platform, KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
@@ -118,7 +118,7 @@ const PostScreen = props => {
             {
                 //easier than adding dumb default properties
                 loaded &&
-                <>
+                <ScrollView style={{flex: 1}}>
                     <PostHeader post={post}/>
                     <Words style={{fontSize: 40}} >
                         {post.title}
@@ -139,6 +139,18 @@ const PostScreen = props => {
                     </TouchableOpacity>
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
+                        Achievements
+                    </Words>
+                    {
+                        post.efforts.items.map(effort =>
+                            <View style={{padding: 5}}>
+                                <Words>{JSON.stringify(effort)}</Words>
+                            </View>
+
+                        )
+                    }
+
+                    <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Comments
                     </Words>
                     <View style={{width: '100%'}}>
@@ -153,26 +165,25 @@ const PostScreen = props => {
                         }
                     </View>
 
-                    <KeyboardAvoidingView
-                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                        style={{flex: 1}}
-                    >
-                        <Row
-                            style={{position: 'absolute', bottom: 0, width: '100%', borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1}}
-                        >
-                            <Write
-                                value={comment}
-                                onChange={setComment}
-                                style={{height: 40, fontSize: 20, backgroundColor: '#222', flex: 1}}
-                            />
-                            <TouchableOpacity style={{padding: 5}} onPress={commentOnPost}>
-                                <Words>Comment</Words>
-                            </TouchableOpacity>
-                        </Row>
-                    </KeyboardAvoidingView>
-                </>
 
+                </ScrollView>
             }
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+            >
+                <Row
+                    style={{width: '100%', borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1}}
+                >
+                    <Write
+                        value={comment}
+                        onChange={setComment}
+                        style={{height: 40, fontSize: 20, backgroundColor: '#222', flex: 1}}
+                    />
+                    <TouchableOpacity style={{justifyContent: 'center', padding: 5, backgroundColor: 'black'}} onPress={commentOnPost}>
+                        <Words>Comment</Words>
+                    </TouchableOpacity>
+                </Row>
+            </KeyboardAvoidingView>
         </SafeBorder>
     );
 };
