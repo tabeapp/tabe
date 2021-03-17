@@ -74,6 +74,44 @@ const PostScreen = props => {
             });
     };
 
+    const likePost = () => {
+        //the like function
+
+        if(liked){
+            //unlike
+            setLiked(false);
+
+            const likeID = post.likes.items.find(like =>
+                like.userID === username
+            ).id;
+
+            //this needs id
+            API.graphql(graphqlOperation(deleteLike, {
+                input: {
+                    id: likeID
+                }
+            }))
+                .then(res => {
+                    if(res.data.deleteLike.errors)
+                        setLiked(true);
+                })
+
+        } else{
+            // like
+            setLiked(true);
+            API.graphql(graphqlOperation(createLike, {
+                input: {
+                    parentID: postID,
+                    userID: username
+                }
+            }))
+                .then(res => {
+                    if (res.data.createLike.errors)//is it errors or error?
+                        setLiked(false)
+                })
+        }
+    }
+
     return (
         <SafeBorder>
             <TopBar title='Workout Summary'/>
@@ -88,54 +126,21 @@ const PostScreen = props => {
                     <Words style={{fontSize: 20}}>
                         {post.description}
                     </Words>
-                    <Words>
-                        {JSON.stringify(post.media && post.media.items.map(m => m.uri))}
+                    <TouchableOpacity
+                        style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
+                        onPress={likePost}
+                    >
+                        <Words style={{fontWeight: 'bold'}}>
+                            {post.likes.items.length}
+                        </Words>
+                        <Words>
+                            <Ionicons size={30} color={PRIMARY} name={icon}/>
+                        </Words>
+                    </TouchableOpacity>
+
+                    <Words style={{fontWeight: 'bold', fontSize: 40}}>
+                        Comments
                     </Words>
-                    <Row>
-                        <Words>Likes:{post.likes.items.length}</Words>
-                        <TouchableOpacity
-                            onPress={() => {
-                                //the like function
-
-                                if(liked){
-                                    //unlike
-                                    setLiked(false);
-
-                                    const likeID = post.likes.items.find(like =>
-                                        like.userID === username
-                                    ).id;
-
-                                    //this needs id
-                                    API.graphql(graphqlOperation(deleteLike, {
-                                        input: {
-                                            id: likeID
-                                        }
-                                    }))
-                                        .then(res => {
-                                            if(res.data.deleteLike.errors)
-                                                setLiked(true);
-                                        })
-
-                                } else{
-                                    // like
-                                    setLiked(true);
-                                    API.graphql(graphqlOperation(createLike, {
-                                        input: {
-                                            parentID: postID,
-                                            userID: username
-                                        }
-                                    }))
-                                        .then(res => {
-                                            if (res.data.createLike.errors)//is it errors or error?
-                                                setLiked(false)
-                                        })
-                                }
-                            }}
-                        >
-                            <Words><Ionicons name={icon}/></Words>
-                        </TouchableOpacity>
-                        <Words>Comments:{post.comments.items.length}</Words>
-                    </Row>
                     <View style={{width: '100%'}}>
                         {
                             post.comments.items.map(comment =>
