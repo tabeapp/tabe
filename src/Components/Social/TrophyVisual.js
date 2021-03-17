@@ -1,4 +1,3 @@
-import {View} from 'react-native';
 import Words from '../Simple/Words';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TrophyVisual = (props) => {
     const navigation = useNavigation();
-    const {trophy} = props;
+    const {trophy, exercise} = props;
 
     const {rank, type, targetID} = trophy;
 
@@ -26,13 +25,14 @@ const TrophyVisual = (props) => {
         color =  '#725626';
 
     const handlePress = () => {
+        //honestly, loading the users progress graph would be cool
         if(type === 'personal')
-            navigation.navigate('profile', { userId: targetID});
+            navigation.navigate('profile', {userId: targetID});
         else if(type === 'gym')
             //coming soon!
-            navigation.navigate('gym', { gymID: targetID});
+            navigation.navigate('leaderboard', {gymID: targetID, exercise: exercise});
         else if(type === 'region')
-            navigation.navigate('region', {regionID: targetID});
+            navigation.navigate('leaderboard', {regionID: targetID, exercise: exercise});
     };
 
     let wording;

@@ -23,6 +23,8 @@ import {
     RoutineSetupScreen,
     WorkoutScreen,
 } from './src/Screens';
+import GymScreen from './src/Screens/GymScreen';
+import LeaderboardScreen from './src/Screens/LeaderboardScreen';
 
 Amplify.configure({
     ...awsconfig,
@@ -56,6 +58,8 @@ const App = () => {
                             <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
                             <Stack.Screen name="profile" component={ProfileScreen}/>
                             <Stack.Screen name="gymmap" component={GymMapScreen}/>
+                            <Stack.Screen name="gym" component={GymScreen}/>
+                            <Stack.Screen name="leaderboard" component={LeaderboardScreen}/>
                         </Stack.Navigator>
                     </NavigationContainer>
 

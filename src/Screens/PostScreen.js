@@ -153,7 +153,7 @@ const PostScreen = props => {
                                 </Row>
                                 {
                                     effort.trophies.items.map(trophy =>
-                                        <TrophyVisual trophy={trophy}/>
+                                        <TrophyVisual trophy={trophy} exercise={effort.exercise}/>
                                     )
                                 }
                             </View>
