@@ -143,6 +143,27 @@ export const onCreateGym = /* GraphQL */ `
       country {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -150,6 +171,27 @@ export const onCreateGym = /* GraphQL */ `
       state {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -157,6 +199,27 @@ export const onCreateGym = /* GraphQL */ `
       city {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -181,6 +244,27 @@ export const onUpdateGym = /* GraphQL */ `
       country {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -188,6 +272,27 @@ export const onUpdateGym = /* GraphQL */ `
       state {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -195,6 +300,27 @@ export const onUpdateGym = /* GraphQL */ `
       city {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -219,6 +345,27 @@ export const onDeleteGym = /* GraphQL */ `
       country {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -226,6 +373,27 @@ export const onDeleteGym = /* GraphQL */ `
       state {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -233,6 +401,27 @@ export const onDeleteGym = /* GraphQL */ `
       city {
         id
         superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
         name
         createdAt
         updatedAt
@@ -247,6 +436,34 @@ export const onCreateRegion = /* GraphQL */ `
     onCreateRegion {
       id
       superRegionID
+      superRegion {
+        id
+        superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        name
+        createdAt
+        updatedAt
+      }
       name
       createdAt
       updatedAt
@@ -258,6 +475,34 @@ export const onUpdateRegion = /* GraphQL */ `
     onUpdateRegion {
       id
       superRegionID
+      superRegion {
+        id
+        superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        name
+        createdAt
+        updatedAt
+      }
       name
       createdAt
       updatedAt
@@ -269,6 +514,34 @@ export const onDeleteRegion = /* GraphQL */ `
     onDeleteRegion {
       id
       superRegionID
+      superRegion {
+        id
+        superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        name
+        createdAt
+        updatedAt
+      }
       name
       createdAt
       updatedAt
@@ -308,6 +581,20 @@ export const onCreatePost = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -315,6 +602,20 @@ export const onCreatePost = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -322,6 +623,20 @@ export const onCreatePost = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -438,6 +753,20 @@ export const onUpdatePost = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -445,6 +774,20 @@ export const onUpdatePost = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -452,6 +795,20 @@ export const onUpdatePost = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -568,6 +925,20 @@ export const onDeletePost = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -575,6 +946,20 @@ export const onDeletePost = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -582,6 +967,20 @@ export const onDeletePost = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1085,6 +1484,20 @@ export const onCreateUserLocation = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1092,6 +1505,20 @@ export const onCreateUserLocation = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1099,6 +1526,20 @@ export const onCreateUserLocation = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1129,6 +1570,20 @@ export const onUpdateUserLocation = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1136,6 +1591,20 @@ export const onUpdateUserLocation = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1143,6 +1612,20 @@ export const onUpdateUserLocation = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1173,6 +1656,20 @@ export const onDeleteUserLocation = /* GraphQL */ `
         country {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1180,6 +1677,20 @@ export const onDeleteUserLocation = /* GraphQL */ `
         state {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1187,6 +1698,20 @@ export const onDeleteUserLocation = /* GraphQL */ `
         city {
           id
           superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
           name
           createdAt
           updatedAt
@@ -1267,6 +1792,13 @@ export const onCreateTimeline = /* GraphQL */ `
           country {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1274,6 +1806,13 @@ export const onCreateTimeline = /* GraphQL */ `
           state {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1281,6 +1820,13 @@ export const onCreateTimeline = /* GraphQL */ `
           city {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1387,6 +1933,13 @@ export const onUpdateTimeline = /* GraphQL */ `
           country {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1394,6 +1947,13 @@ export const onUpdateTimeline = /* GraphQL */ `
           state {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1401,6 +1961,13 @@ export const onUpdateTimeline = /* GraphQL */ `
           city {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1507,6 +2074,13 @@ export const onDeleteTimeline = /* GraphQL */ `
           country {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1514,6 +2088,13 @@ export const onDeleteTimeline = /* GraphQL */ `
           state {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt
@@ -1521,6 +2102,13 @@ export const onDeleteTimeline = /* GraphQL */ `
           city {
             id
             superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
             name
             createdAt
             updatedAt

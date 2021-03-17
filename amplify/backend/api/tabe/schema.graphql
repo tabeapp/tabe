@@ -66,6 +66,7 @@ type Region @model
 {
   id: ID!
   superRegionID: ID!
+  superRegion: Region @connection(fields: ["superRegionID"])
   name: String!
 }
 
