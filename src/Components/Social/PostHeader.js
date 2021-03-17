@@ -23,6 +23,8 @@ const PostHeader = props => {
     };
     const navigation = useNavigation();
 
+    console.log('post showing', post);
+
     return(
         <Row style={{padding: 10, justifyContent: 'space-around'}}>
             <TouchableOpacity

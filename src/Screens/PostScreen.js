@@ -6,7 +6,7 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { listPosts } from '../../graphql/queries';
+import { getPost, listPosts } from '../../graphql/queries';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createComment, createLike, deleteLike } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
@@ -38,17 +38,13 @@ const PostScreen = props => {
 
     useEffect(() => {
         setLoaded(false);
-        API.graphql(graphqlOperation(listPosts, {
-            filter:{
-                id: {
-                    eq: postID
-                }
-            }
+        API.graphql(graphqlOperation(getPost, {
+            id: postID
         }))
             .then(res => {
                 console.log(res)
                 //should only be one?
-                const p = res.data.listPosts.items[0];
+                const p = res.data.getPost;
                 setPost(p);
                 //this is so dumb, should we have a username provider?
                 //console.log(JSON.stringify(res))
@@ -68,20 +64,20 @@ const PostScreen = props => {
         <SafeBorder>
             <TopBar title='Workout Summary'/>
             <View style={STYLES.body}>
-                <PostHeader post={post}/>
-                <Words style={{fontSize: 40}} >
-                    {post.title}
-                </Words>
-                <Words style={{fontSize: 20}}>
-                    {post.description}
-                </Words>
-                <Words>
-                    {JSON.stringify(post.media && post.media.items.map(m => m.uri))}
-                </Words>
                 {
                     //easier than adding dumb default properties
                     loaded &&
                     <>
+                        <PostHeader post={post}/>
+                        <Words style={{fontSize: 40}} >
+                            {post.title}
+                        </Words>
+                        <Words style={{fontSize: 20}}>
+                            {post.description}
+                        </Words>
+                        <Words>
+                            {JSON.stringify(post.media && post.media.items.map(m => m.uri))}
+                        </Words>
                         <Row>
                             <Words>Likes:{post.likes.items.length}</Words>
                             <TouchableOpacity
@@ -141,31 +137,6 @@ const PostScreen = props => {
 
                     </>
 
-                }
-
-                {
-                    /*workout && workout.exercises.map((ex, index) =>
-                        index === 0?
-                            //first one is biggest
-                            <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                <Words style={{fontSize: 40}}>{ex.name}</Words>
-                                {
-                                    ex.work.map((set,i) =>
-                                        <Words key={i} style={{fontSize:40}}>
-                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Words>)
-                                }
-                            </View>
-                            :
-                            <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
-                                <Words style={{fontSize: 20}}>{ex.name}</Words>
-                                {
-                                    ex.work.map(set => <Words style={{fontSize: 20}}>
-                                        {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                    </Words>)
-                                }
-                            </View>
-                    )*/
                 }
             </View>
             <View
