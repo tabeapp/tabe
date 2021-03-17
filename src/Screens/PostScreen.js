@@ -144,7 +144,7 @@ const PostScreen = props => {
                     </Words>
                     {
                         post.efforts.items.map(effort =>
-                            <View>
+                            <View key={effort.id}>
                                 <Row>
                                     <Words>{effort.exercise}</Words>
                                     <Words>{effort.reps}</Words>
@@ -153,7 +153,7 @@ const PostScreen = props => {
                                 </Row>
                                 {
                                     effort.trophies.items.map(trophy =>
-                                        <TrophyVisual trophy={trophy} exercise={effort.exercise}/>
+                                        <TrophyVisual key={trophy.id} trophy={trophy} exercise={effort.exercise}/>
                                     )
                                 }
                             </View>

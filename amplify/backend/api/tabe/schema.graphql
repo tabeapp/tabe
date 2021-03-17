@@ -46,7 +46,9 @@ type UserImage @model
 }
 
 #might rename these to be more generic later idk
-type Gym @model @searchable {
+type Gym @model @searchable
+@key(name: "byCity", fields: ["cityID"], queryField: "listGymsByCity")
+{
   id: ID!
   name: String!
   location: Coordinates
@@ -62,7 +64,7 @@ type Gym @model @searchable {
 #right now i dont care about dover belongs to nh belongs to usa
 #a gym will belong to dover, belong to nh, and belong to usa
 type Region @model
-@key(name: "bySuperRegion", fields: ["superRegionID"])
+@key(name: "bySuperRegion", fields: ["superRegionID"], queryField: "listRegionsBySuperRegions")
 {
   id: ID!
   superRegionID: ID!

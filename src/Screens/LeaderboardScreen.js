@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Modal, View } from 'react-native';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Words from '../Components/Simple/Words';
@@ -12,21 +13,22 @@ import {
 import BigWords from '../Components/Simple/BigWords';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
 import { PRIMARY } from '../Style/Theme';
-import Row from '../Components/Simple/Row';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import SubRegionPicker from '../Components/Social/SubRegionPicker';
 
 //maybe this should be a leader board screen?
 //and actual gym screen would be something different, more simliar to profile?
 const LeaderboardScreen = props => {
     const [exercise, setExercise] = useState(props.route.params.exercise);
+
+    //i have a feeling these should just be "targetID"
     const [gymID, setGymID] = useState(props.route.params.gymID);
     const [regionID, setRegionID] = useState(props.route.params.regionID);
 
-    const [loaded, setLoaded] = useState(false);
-
     const [title, setTitle] = useState('');
 
+    const globalRegion = {id: GLOBAL_REGION_ID, name: 'Earth'};
     const [records, setRecords] = useState([]);
 
     //this will be for searching through super regions and sub regions
@@ -87,13 +89,20 @@ const LeaderboardScreen = props => {
                 .then(res => {
                     const supRegions = [];
                     let run = res.data.getRegion;
+                    if(!run){
+                        setRegionTree([globalRegion]);
+                        return;
+                    }
+
+
                     setTitle(run.name);
+                    supRegions.unshift(run);
                     while(run.superRegion){
                         supRegions.unshift(run.superRegion)//should we only copy id and name?
                         run = run.superRegion;
                     }
 
-                    setRegionTree(supRegions);
+                    setRegionTree([globalRegion, ...supRegions]);
 
                 });
 
@@ -107,6 +116,7 @@ const LeaderboardScreen = props => {
                     setTitle(gym.name);
 
                     setRegionTree([
+                        globalRegion,
                         gym.country,
                         gym.state,
                         gym.city,
@@ -128,17 +138,42 @@ const LeaderboardScreen = props => {
 
     const [modal, setModal] = useState(false);
 
+    //this is for choosing a city when you have a state selected or so
+    const [subModal, setSubModal] = useState(false);
+
+    const handleSubRegionSelection = id => {
+        //either set region or set gym
+        if (id === GLOBAL_REGION_ID || id.includes('.')){
+            setGymID(null);
+            setRegionID(id);
+        }
+        else{
+            setRegionID(null);
+            setGymID(id);
+        }
+    };
+
     return (
         <SafeBorder>
             <TopBar title='Leaderboard'/>
-            <Words>{JSON.stringify(regionTree)}</Words>
-            <Row>{
-                regionTree.map(reg =>
-                    <TouchableOpacity onPress={() => setRegionID(reg.id)}>
-                        <Words>{reg.name}</Words>
-                    </TouchableOpacity>
-                )
-            }</Row>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', borderColor: PRIMARY, borderBottomWidth: 1}}>
+                {
+                    regionTree.map(reg =>
+                        <TouchableOpacity
+                            style={{borderColor: PRIMARY, borderRightWidth: 1}}
+                            onPress={() => {
+                                setGymID(null);
+                                setRegionID(reg.id)
+                            }}
+                        >
+                            <Words style={{fontSize: 20}}>{reg.name}</Words>
+                        </TouchableOpacity>
+                    )
+                }
+                <TouchableOpacity style={{width: 50}} onPress={() => setSubModal(true)}>
+                    <Words>...</Words>
+                </TouchableOpacity>
+            </View>
             <BigWords>{title}</BigWords>
 
             <TouchableOpacity
@@ -154,7 +189,14 @@ const LeaderboardScreen = props => {
                     <Words>{JSON.stringify(record)}</Words>
                 )
             }
+
             <ExercisePicker visible={modal} handleSelection={setExercise} close={() => setModal(false)}/>
+            <SubRegionPicker
+                regionID={regionID}
+                visible={subModal}
+                handleSelection={handleSubRegionSelection}
+                close={() => setSubModal(false)}
+            />
         </SafeBorder>
     );
 };

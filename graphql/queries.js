@@ -1015,6 +1015,148 @@ export const listRecordsByExercise = /* GraphQL */ `
     }
   }
 `;
+export const listGymsByCity = /* GraphQL */ `
+  query ListGymsByCity(
+    $cityID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelGymFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGymsByCity(
+      cityID: $cityID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        country {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const listRegionsBySuperRegions = /* GraphQL */ `
+  query ListRegionsBySuperRegions(
+    $superRegionID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelRegionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRegionsBySuperRegions(
+      superRegionID: $superRegionID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        superRegionID
+        superRegion {
+          id
+          superRegionID
+          superRegion {
+            id
+            superRegionID
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            name
+            createdAt
+            updatedAt
+          }
+          name
+          createdAt
+          updatedAt
+        }
+        name
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const listEffortsByExerciseAndUser = /* GraphQL */ `
   query ListEffortsByExerciseAndUser(
     $userID: ID
