@@ -4,6 +4,7 @@ import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
 import Words from '../Simple/Words';
 
 //make it possible to cancel
+//i think exercise picker should be able to clsoe itself
 const ExercisePicker = props => {
     //just remember to fix this in CustomExerciseCard, just pass onSelect = {addExercise}
     //props.visible
