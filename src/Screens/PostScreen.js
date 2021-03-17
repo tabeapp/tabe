@@ -13,6 +13,7 @@ import { UserContext } from '../Contexts/UserProvider';
 import Write from '../Components/Simple/Write';
 import PostHeader from '../Components/Social/PostHeader';
 import { PRIMARY } from '../Style/Theme';
+import TrophyVisual from '../Components/Social/TrophyVisual';
 
 //yes this is a copy of report screen
 const PostScreen = props => {
@@ -143,8 +144,18 @@ const PostScreen = props => {
                     </Words>
                     {
                         post.efforts.items.map(effort =>
-                            <View style={{padding: 5}}>
-                                <Words>{JSON.stringify(effort)}</Words>
+                            <View>
+                                <Row>
+                                    <Words>{effort.exercise}</Words>
+                                    <Words>{effort.reps}</Words>
+                                    <Words>{effort.weight}</Words>
+                                    <Words>{effort.orm}</Words>
+                                </Row>
+                                {
+                                    effort.trophies.items.map(trophy =>
+                                        <TrophyVisual trophy={trophy}/>
+                                    )
+                                }
                             </View>
 
                         )
