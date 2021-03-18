@@ -16,6 +16,7 @@ import { PRIMARY } from '../Style/Theme';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 import SubRegionPicker from '../Components/Social/SubRegionPicker';
+import LeaderboardPosition from '../Components/Social/LeaderboardPosition';
 
 //maybe this should be a leader board screen?
 //and actual gym screen would be something different, more simliar to profile?
@@ -160,6 +161,7 @@ const LeaderboardScreen = props => {
                 {
                     regionTree.map(reg =>
                         <TouchableOpacity
+                            key={reg.id}
                             style={{borderColor: PRIMARY, borderRightWidth: 1}}
                             onPress={() => {
                                 setGymID(null);
@@ -186,8 +188,8 @@ const LeaderboardScreen = props => {
             {
                 //you know, these would ideally link to posts
                 records &&
-                records.map(record =>
-                    <Words>{JSON.stringify(record)}</Words>
+                records.map((record, index) =>
+                    <LeaderboardPosition key={record.id} record={record} rank={index}/>
                 )
             }
 

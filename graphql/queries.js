@@ -120,6 +120,12 @@ export const getUserRecord = /* GraphQL */ `
   query GetUserRecord($userID: ID!, $exercise: String!) {
     getUserRecord(userID: $userID, exercise: $exercise) {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise
@@ -151,6 +157,12 @@ export const listUserRecords = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -836,6 +848,12 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -869,6 +887,12 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -902,6 +926,12 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -935,6 +965,12 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -968,6 +1004,12 @@ export const listRecordsByUser = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise
@@ -1001,6 +1043,12 @@ export const listRecordsByExercise = /* GraphQL */ `
     ) {
       items {
         userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         postID
         orm
         exercise

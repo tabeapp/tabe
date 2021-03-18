@@ -16,6 +16,8 @@ type UserRecord @model
 @key(name: "byExercise", fields: ["exercise", "orm"], queryField: "listRecordsByExercise")
 {
   userID: ID!
+  #seems random, but actually is nice for showing records
+  userImage: UserImage @connection(fields: ["userID"])
   postID: ID! #useful for seeing detail of records
   orm: Int!
   exercise: String!

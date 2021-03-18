@@ -54,6 +54,12 @@ export const onCreateUserRecord = /* GraphQL */ `
   subscription OnCreateUserRecord {
     onCreateUserRecord {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise
@@ -70,6 +76,12 @@ export const onUpdateUserRecord = /* GraphQL */ `
   subscription OnUpdateUserRecord {
     onUpdateUserRecord {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise
@@ -86,6 +98,12 @@ export const onDeleteUserRecord = /* GraphQL */ `
   subscription OnDeleteUserRecord {
     onDeleteUserRecord {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise

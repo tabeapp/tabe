@@ -53,6 +53,12 @@ export const createUserRecord = /* GraphQL */ `
   ) {
     createUserRecord(input: $input, condition: $condition) {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise
@@ -72,6 +78,12 @@ export const updateUserRecord = /* GraphQL */ `
   ) {
     updateUserRecord(input: $input, condition: $condition) {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise
@@ -91,6 +103,12 @@ export const deleteUserRecord = /* GraphQL */ `
   ) {
     deleteUserRecord(input: $input, condition: $condition) {
       userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       postID
       orm
       exercise

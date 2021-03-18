@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Row from '../Simple/Row';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import TrophyIcon from '../../Utils/TrophyIcon';
 
 //this is acutally pretty complex logic regarding the color of the trophy,
 // as well as determining where to navigate to (gym vs personal vs region)
@@ -16,13 +16,6 @@ const TrophyVisual = (props) => {
 
     //gold, silver, bronze
     //should I have diamond too?
-    let color = '#453519';
-    if(rank === 0)
-        color =  '#d9a952';
-    else if(rank === 1)
-        color =  '#9d9d9d';
-    else if(rank === 2)
-        color =  '#725626';
 
     const handlePress = () => {
         //honestly, loading the users progress graph would be cool
@@ -49,7 +42,7 @@ const TrophyVisual = (props) => {
     return (
         <TouchableOpacity onPress={handlePress} style={{height: 40}}>
             <Row>
-                <Words><Ionicons name={'trophy'} color={color}/></Words>
+                <Words><TrophyIcon rank={rank}/></Words>
                 <Words>{wording}</Words>
             </Row>
         </TouchableOpacity>
