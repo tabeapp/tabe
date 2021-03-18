@@ -183,7 +183,7 @@ const PostScreen = props => {
                 behavior={Platform.OS === 'ios' ? 'position' : 'height'}
             >
                 <Row
-                    style={{width: '100%', borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1}}
+                    style={{width: '100%', borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1, borderRadius: 40}}
                 >
                     <Write
                         value={comment}

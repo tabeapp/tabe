@@ -6,6 +6,7 @@ import { STYLES } from '../Style/Values';
 import { listPostsSortedByTimestamp } from '../../graphql/queries';
 import { onCreatePost } from '../../graphql/subscriptions';
 import PostList from '../Components/Social/PostList';
+import { graphqlOperation } from 'aws-amplify';
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const ExploreScreen = props => {
@@ -18,7 +19,7 @@ const ExploreScreen = props => {
                     listOperation={listPostsSortedByTimestamp}
                     sortKey={'type'}
                     sortValue={'post'}
-                    subscriptionOperation={onCreatePost}
+                    subscriptionOperation={graphqlOperation(onCreatePost)}
                     subscriptionCriteria={() => true}
                 />
             </View>

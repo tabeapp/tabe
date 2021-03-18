@@ -16,10 +16,6 @@ exports.handler = async (event, context, callback) => {
     let env;
     let graphql_auth;
 
-    //if(event.arguments.content.length > 140) {
-        //callback('content length is over 140', null);
-    //}
-
     if ('AWS_EXECUTION_ENV' in process.env && process.env.AWS_EXECUTION_ENV.startsWith('AWS_Lambda_')) {
         //for cloud env
         env = process.env;
@@ -92,7 +88,7 @@ exports.handler = async (event, context, callback) => {
 
     // list followers
     const queryInput = {
-        followeeId: event.identity.username,
+        followeeID: event.identity.username,
         limit: 100000,
     }
     console.log(queryInput)
@@ -107,8 +103,8 @@ exports.handler = async (event, context, callback) => {
 
     //post to timeline
     //only add yourself if you're not already added
-    if(!followers.some(follower => follower.followerId === post.userID )){
-        followers.push({ followerId: post.userID });
+    if(!followers.some(follower => follower.followerID === post.userID )){
+        followers.push({ followerID: post.userID });
     }
     //is this scalable...
     const results = await Promise.all(followers.map((follower)=> createTimelineForAUser({follower: follower, post: post})));
@@ -122,8 +118,8 @@ const createTimelineForAUser = async ({follower, post}) => {
         mutation: gql(createTimeline),
         variables: {
             input: {
-                userId: follower.followerId,
-                postId: post.id,
+                userID: follower.followerID,
+                postID: post.id,
             },
         },
     }
@@ -144,24 +140,24 @@ const getUserLocation = /* GraphQL */ `
 
 const listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
-    $followeeId: ID
-    $followerId: ModelIDKeyConditionInput
+    $followeeID: ID
+    $followerID: ModelIDKeyConditionInput
     $filter: ModelFollowRelationshipFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listFollowRelationships(
-      followeeId: $followeeId
-      followerId: $followerId
+      followeeID: $followeeID
+      followerID: $followerID
       filter: $filter
       limit: $limit
       nextToken: $nextToken
       sortDirection: $sortDirection
     ) {
       items {
-        followeeId
-        followerId
+        followeeID
+        followerID
         createdAt
         updatedAt
       }
@@ -203,8 +199,8 @@ const createTimeline = /* GraphQL */ `
     $condition: ModelTimelineConditionInput
   ) {
     createTimeline(input: $input, condition: $condition) {
-      userId
-      postId
+      userID
+      postID
       createdAt
       updatedAt
       post {

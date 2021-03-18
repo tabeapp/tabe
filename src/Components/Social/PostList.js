@@ -28,7 +28,9 @@ const reducer = (state, action) => {
 const PostList = props => {
     //i wonder if its a good idea to pass around the grapqhl operations
     //subscriber is gonna be pretty complex function as each post list has its own way of subscribin
-    const {listOperation, sortKey, sortValue, subscriptionOperation, subscriptionCriteria} = props;
+    //so thanks to the unique ness of subscription operations,
+    // the parent has to send in seomething we can use in API.graphql(...)
+    const {listOperation, sortKey, sortValue, filledSubscriptionOperation, subscriptionCriteria} = props;
 
     const [posts, dispatch] = useReducer(reducer, []);
 
@@ -64,7 +66,7 @@ const PostList = props => {
 
         getPosts(INITIAL_QUERY);
 
-        const subscription = API.graphql(graphqlOperation(subscriptionOperation))
+        const subscription = API.graphql(filledSubscriptionOperation)
             .subscribe({
                 next: msg => {
                     const post = Object.values(msg.value.data)[0];

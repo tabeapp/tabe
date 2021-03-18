@@ -7,6 +7,7 @@ import { listTimelines } from '../../graphql/queries';
 import { onCreateTimeline } from '../../graphql/subscriptions';
 import PostList from '../Components/Social/PostList';
 import { UserContext } from '../Contexts/UserProvider';
+import { graphqlOperation } from 'aws-amplify';
 
 const HomeScreen = props => {
     const {username} = useContext(UserContext);
@@ -19,9 +20,11 @@ const HomeScreen = props => {
                     username &&
                     <PostList
                         listOperation={listTimelines}
-                        sortKey='userID'
+                        sortKey={'userID'}
                         sortValue={username}
-                        subscriptionOperation={onCreateTimeline}
+                        filledSubscriptionOperation={graphqlOperation(onCreateTimeline, {
+                            userID: username
+                        })}
                         subscriptionCriteria={() => true}//this isn't ideal, oncreate timelines takes a userid
                     />
                 }
