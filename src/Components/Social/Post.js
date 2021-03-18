@@ -35,11 +35,11 @@ const Post = ({post}) => {
                         {
                             post.data &&
                             JSON.parse(post.data).map(exercise =>
-                                <View style={{borderTopWidth: 1, borderColor: '#222'}}>
+                                <View key={exercise.name} style={{borderTopWidth: 1, borderColor: '#222'}}>
                                     <Words style={{fontSize: 20}}>{exercise.name}</Words>
                                     <View style={{alignItems: 'center'}}>{
-                                        exercise.work.map(set =>
-                                            <Words>{set.reps + 'x' + set.weight}</Words>
+                                        exercise.work.map((set,i) =>
+                                            <Words key={i}>{set.reps + 'x' + set.weight}</Words>
                                         )
                                     }</View>
                                 </View>

@@ -35,6 +35,7 @@ Amplify.configure({
 
 const Stack = createStackNavigator();
 
+//consider using headershown and just editing it
 const App = () => {
 
     return (
@@ -45,7 +46,7 @@ const App = () => {
 
                     <NavigationContainer>
                         <Stack.Navigator initialRouteName="profile" screenOptions={{headerShown:false,
-                            cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
+                            //cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
                         }}>
                             <Stack.Screen name="home" component={HomeScreen}/>
                             <Stack.Screen name="post" component={PostScreen}/>
