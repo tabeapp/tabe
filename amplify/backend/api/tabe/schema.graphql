@@ -226,6 +226,8 @@ type PostMedia
   uri: String!
 }
 
+#i really don't like Id, i prefer ID
+#redoing these soon
 type FollowRelationship
 @model
 @auth(rules: [

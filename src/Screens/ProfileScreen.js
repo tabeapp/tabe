@@ -1,9 +1,8 @@
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
-import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
@@ -62,7 +61,7 @@ const ProfileScreen = props => {
     };
 
     const [profileURI, setProfileURI] = useState('');
-    const [gymName, setGymName] = useState('');
+    const [gym, setGym] = useState({name: '', id: ''});
 
     //this does so much lol
     useEffect(() => {
@@ -89,7 +88,7 @@ const ProfileScreen = props => {
             userID: profileUser
         })).then(result => {
             if(result.data.getUserLocation)
-                setGymName(result.data.getUserLocation.gym.name);
+                setGym(result.data.getUserLocation.gym);
         })
 
         //todo just get the userRecord objects
@@ -149,6 +148,7 @@ const ProfileScreen = props => {
         else{
             //navigate to the gyms home page
             //tbd...
+            props.navigation.navigate('leaderboard', {gymID: gym.id, exercise: 'Squat'});
         }
 
         //https://github.com/afshintalebi/react-native-map-picker/blob/master/src/LocationPicker.js
@@ -243,7 +243,7 @@ const ProfileScreen = props => {
                             (viewingSelf && !location[3]) ?
                                 <Words>Set Gym</Words>
                                 :
-                                <Words>{gymName}</Words>
+                                <Words>{gym.name}</Words>
                         }</TouchableOpacity>
                     </View>
                 </Row>

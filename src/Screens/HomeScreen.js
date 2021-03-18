@@ -1,32 +1,12 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useReducer, useState } from 'react';
-import Words from '../Components/Simple/Words';
+import { StyleSheet, View } from 'react-native';
+import React, { useContext } from 'react';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import Write from '../Components/Simple/Write';
-import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { createPostAndTimeline } from '../../graphql/mutations';
 import { listTimelines } from '../../graphql/queries';
 import { onCreateTimeline } from '../../graphql/subscriptions';
-
-const SUBSCRIPTION = 'SUBSCRIPTION';
-const INITIAL_QUERY = 'INITIAL_QUERY';
-const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
-
-
-const reducer = (state, action) => {
-    switch(action.type){
-        case INITIAL_QUERY:
-            return action.posts;
-        case ADDITIONAL_QUERY:
-            return [...state, ...action.posts];
-        case SUBSCRIPTION:
-            return [action.post, ...state];
-        default:
-            return state;
-    }
-};
+import PostList from '../Components/Social/PostList';
+import { UserContext } from '../Contexts/UserProvider';
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const HomeScreen = props => {
@@ -42,111 +22,30 @@ const HomeScreen = props => {
     //getPosts().then(v => setPosts(v))
     //})
 
-    const [value, setValue] = useState('eyyyy');
 
-    const onPost = async () => {
-
-        const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
-            content: value
-        }));
-        console.log(res);
-        setValue('')
-    };
-
-    //not doing this here lol
-    const signOut = () => {
-        Auth.signOut()
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
-    };
-
-    const [posts, dispatch] = useReducer(reducer, []);
-    const [nextToken, setNextToken] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState(null);
+    const {username} = useContext(UserContext);
 
     //fetch the shits
-    const getPosts = async (type, currentUser, nextToken=null) => {
-        const res = await API.graphql(graphqlOperation(listTimelines, {
-            userId: currentUser.username,
-            sortDirection: 'DESC',
-            limit: 20,
-            nextToken: nextToken
-        }))
-        console.log(res);
-        dispatch({
-            type: type,
-            posts: Object.values(res.data.listTimelines.items).map(i => i.post)
-        });
-        setNextToken(res.data.listTimelines.nextToken);
-        setIsLoading(false);
-    };
 
-    const getAdditionalPosts = () => {
-        if(nextToken === null)
-            return;
-        getPosts(ADDITIONAL_QUERY, nextToken);
-    };
-
-    useEffect(() => {
-        console.log('init')
-        const init = async () => {
-            const currentUser = await Auth.currentAuthenticatedUser();
-            setCurrentUser(currentUser);
-            getPosts(INITIAL_QUERY, currentUser);
-        }
-        init();
-    }, [])
 
     //set up and break down everything
-    useEffect(() => {
-        console.log(currentUser);
-        if(!currentUser)
-            return;
-        console.log('make subscription')
-        const subscription = API.graphql(graphqlOperation(onCreateTimeline, {
-            userId: currentUser.username
-        }))
-            .subscribe({
-                next: msg => {
-                    console.log('timeline subscription fired');
-                    console.log(msg);
-                    dispatch({type:SUBSCRIPTION, post: msg.value.data.onCreateTimeline.post});
-
-                }
-            })
-        return () => subscription.unsubscribe();
-
-    }, [currentUser]);
-
     return (
         <SafeBorderNav {...props} screen={'home'}>
             <TopBar title='Feed'/>
             <View style={STYLES.body}>
-                <Write
-                    style={{padding: 20, height: 40, borderColor: 'red', borderWidth: 1}}
-                    value={value}
-                    onChange={v => {
-                        //arbitrary limit lol
-                        if(v.length <= 140)
-                            setValue(v)
-                    }}
+                <PostList
+                    listOperation={listTimelines}
+                    sortKey='userId'
+                    sortValue={username}
+                    subscriptionOperation={onCreateTimeline}
+                    subscriptionCriteria={() => true}//this isn't ideal, oncreate timelines takes a userid
+
                 />
-                <TouchableOpacity style={{padding: 20, backgroundColor: 'blue'}} onPress={onPost} >
-                    <Words>Post</Words>
-                </TouchableOpacity>
-                <Words/>
-                <Words/>
-                <Words/>
-                <Words/>
-                <TouchableOpacity style={{backgroundColor: 'red'}} onPress={signOut} >
-                    <Words>Sign out</Words>
-                </TouchableOpacity>
-                <View>
                     {
                         /*
                         I'm going to rethink how i handle following and followers soon
                         just gonna use a global feed for now
+    const {listOperation, sortKey, sortValue, subscriptionOperation, subscriptionCriteria} = props;
                         <PostList
                             navigation={props.navigation}
                             isLoading={isLoading}
@@ -157,7 +56,6 @@ const HomeScreen = props => {
                         */
                     }
 
-                </View>
             </View>
         </SafeBorderNav>
     );

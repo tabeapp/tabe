@@ -1,6 +1,6 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { listEfforts, listPosts, listTrophys, listUserRecords } from '../../graphql/queries';
-import { deleteEffort, deletePost, deleteTrophy, deleteUserRecord } from '../../graphql/mutations';
+import { listEfforts, listPosts, listTimelines, listTrophys, listUserRecords } from '../../graphql/queries';
+import { deleteEffort, deletePost, deleteTimeline, deleteTrophy, deleteUserRecord } from '../../graphql/mutations';
 
 //kinda lazy way of clearing entire tables
 //just throw it into a useeffect whenever you need to
@@ -14,7 +14,7 @@ export const EraseData = async () => {
     const deleteTrios = [
         trophyOps,
         effortOps,
-        postOps
+        postOps,
     ];
 
     deleteTrios.forEach(trio => {
@@ -32,6 +32,7 @@ export const EraseData = async () => {
             });
     })
 
+
     API.graphql(graphqlOperation(listUserRecords))
         .then(result => {
             result.data.listUserRecords.items.forEach(item => {
@@ -43,5 +44,18 @@ export const EraseData = async () => {
                 }));
             });
         });
+
+    API.graphql(graphqlOperation(listTimelines))
+        .then(result => {
+            result.data.listTimelines.items.forEach(item => {
+                API.graphql(graphqlOperation(deleteTimeline, {
+                    input: {
+                        userId: item.userId,
+                        createdAt: item.createdAt
+                    }
+                }));
+            });
+        });
+
 
 };

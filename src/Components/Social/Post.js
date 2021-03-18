@@ -48,6 +48,7 @@ const Post = ({post}) => {
                     </View>
                     {
                         //so we'd see all the images uploaded with the thing
+                        post.media&&
                         post.media.items.map(({uri}) =>
                             //<Words>{uri}</Words>
                             <S3Image key={uri} style={{width: 50, height: 50}} imgKey={uri}/>
