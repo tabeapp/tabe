@@ -226,33 +226,31 @@ type PostMedia
   uri: String!
 }
 
-#i really don't like Id, i prefer ID
 #redoing these soon
 type FollowRelationship
 @model
 @auth(rules: [
-  {allow: owner, ownerField:"followerId", provider: userPools, operations:[read, create]}
+  {allow: owner, ownerField:"followerID", provider: userPools, operations:[read, create]}
   {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read]}
 ])
-@key(fields: ["followeeId", "followerId"])
+@key(fields: ["followeeID", "followerID"])
 {
-  followeeId: ID!
-  followerId: ID!
-  createdAt: String!
+  followeeID: ID!
+  followerID: ID!
 }
 
 type Timeline
 @model
 @auth(rules: [
-  {allow: owner, ownerField: "userId", provider: userPools, operations: [read, create]},
+  {allow: owner, ownerField: "userID", provider: userPools, operations: [read, create]},
   {allow: private, provider: iam, operations:[create]}
 ])
-@key(fields: ["userId", "createdAt"])
+@key(fields: ["userID", "createdAt"])
 {
-  userId: ID!
-  postId: ID!
-  post: Post @connection(fields: ["postId"])
+  userID: ID!
+  postID: ID!
+  post: Post @connection(fields: ["postID"])
   createdAt: String!
 }
 
