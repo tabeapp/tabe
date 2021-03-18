@@ -347,7 +347,6 @@ const WorkoutProvider = props => {
             const personalRank = personal.data.listEffortsByExerciseAndUser
                 .items.findIndex(ef => ef.id === effort.id);
 
-            //todo rewrite this wholw fucking thing
             if(personalRank === -1)
                 continue;
 
@@ -369,7 +368,7 @@ const WorkoutProvider = props => {
             const input = {
                 userID: username,
                 exercise: effort.exercise,
-                //effortID: effort.id,
+                orm: effort.orm,
                 postID: postID,
                 //copy location info from user
                 gymID: ul.gymID,
@@ -419,8 +418,11 @@ const WorkoutProvider = props => {
                 //effort doesn't have an id, the effort object is from before uploading to aws
                 //you have to get the effort ids
                 //there should only be one thing under data, just get that instead of what evah
+                //is checking by post id really the best idea?
+                //why is this function so fucking long?
+                //why isn't it a lambda?
                 const rank = result.data[Object.keys(result.data)[0]]
-                    .items.findIndex(re => re.effortID === effort.id);
+                    .items.findIndex(re => re.postID === postID);
 
                 //not a pr on this level, fuck it
                 //check personal and gym followed by the rest
@@ -448,7 +450,7 @@ const WorkoutProvider = props => {
                 sortDirection: 'DESC'
             }));
             const globalRank = global.data.listRecordsByExercise.items
-                .findIndex(re => re.effortID === effort.id);
+                .findIndex(re => re.postID === postID);
 
             if(globalRank === -1)
                 continue;
