@@ -8,7 +8,7 @@ import NavBar from './NavBar';
 const SafeBorderNav = props => {
     return <>
         <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
-        <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>{
+        <SafeAreaView style={{backgroundColor: 'black', flex: 1}}>{
             props.children
         }
             <NavBar current={props.screen}/>

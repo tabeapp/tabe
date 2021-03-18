@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { PRIMARY } from '../Style/Theme';
 import WeightVisual from '../Utils/WeightVisual';
@@ -10,7 +10,7 @@ import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
     getFollowRelationship,
-    getUserImage,
+    getUserImage, getUserLocation,
     getUserRecord,
     listPostsSortedByUserAndTimestamp,
 } from '../../graphql/queries';
@@ -26,6 +26,8 @@ import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import NavBar from '../Components/Navigation/NavBar';
+import SafeBorder from '../Components/Navigation/SafeBorder';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -38,6 +40,8 @@ const ProfileScreen = props => {
 
     //post loading bs part
     const signedInUser = useContext(UserContext).username;
+
+    //this is useful, but only when viewing yourself
     const {location} = useContext(UserContext);
 
     let profileUser = signedInUser;
@@ -58,6 +62,7 @@ const ProfileScreen = props => {
     };
 
     const [profileURI, setProfileURI] = useState('');
+    const [gymName, setGymName] = useState('');
 
     //this does so much lol
     useEffect(() => {
@@ -78,6 +83,14 @@ const ProfileScreen = props => {
             if(result.data.getUserImage)
                 setProfileURI(result.data.getUserImage.uri);
         });
+
+        //jsut get gym name
+        API.graphql(graphqlOperation(getUserLocation, {
+            userID: profileUser
+        })).then(result => {
+            if(result.data.getUserLocation)
+                setGymName(result.data.getUserLocation.gym.name);
+        })
 
         //todo just get the userRecord objects
         const mainLifts = ['Squat', 'Bench', 'Press', 'Deadlift'];
@@ -106,7 +119,6 @@ const ProfileScreen = props => {
         const input = {
             followeeId: profileUser,
             followerId: signedInUser,
-            timestamp: Date.now()
         };
         const res = await API.graphql(graphqlOperation(createFollowRelationship, {
             input: input
@@ -196,8 +208,16 @@ const ProfileScreen = props => {
     //we may eblae to get graphs and shit too
 
     return (
-        <SafeBorderNav {...props} screen={'profile'}>
-            <TopBar title={profileUser}/>
+        <SafeBorder {...props} screen={'profile'}>
+            {
+                viewingSelf ?
+                    <TopBar
+                        title={profileUser}
+                        rightText='Settings'
+                        onPressRight={() => props.navigation.navigate('settings')}
+                    />:
+                    <TopBar title={profileUser}/>
+            }
             <View style={STYLES.body}>
                 <Row style={{padding: 10, justifyContent: 'space-around'}}>
                     <View style={{padding: 10}}>
@@ -219,10 +239,11 @@ const ProfileScreen = props => {
                     <View style={{flex:1}}>
                         <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
                         <TouchableOpacity onPress={handleGymPress}>{
+                            //no, you can't use location, you need to load the users location
                             (viewingSelf && !location[3]) ?
                                 <Words>Set Gym</Words>
                                 :
-                                <Words>{location[3]}</Words>
+                                <Words>{gymName}</Words>
                         }</TouchableOpacity>
                     </View>
                 </Row>
@@ -271,12 +292,12 @@ const ProfileScreen = props => {
 
                 </ScrollView>
             </View>
-        </SafeBorderNav>
+            {
+                viewingSelf &&
+                <NavBar current={'profile'}/>
+            }
+        </SafeBorder>
     );
 };
-
-const styles = StyleSheet.create({
-    cardContainer: {alignItems: 'center', justifyContent: 'center', margin: 5},
-});
 
 export default ProfileScreen;

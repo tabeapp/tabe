@@ -25,6 +25,7 @@ import {
 } from './src/Screens';
 import GymScreen from './src/Screens/GymScreen';
 import LeaderboardScreen from './src/Screens/LeaderboardScreen';
+import SettingsScreen from './src/Screens/SettingsScreen';
 
 Amplify.configure({
     ...awsconfig,
@@ -56,6 +57,7 @@ const App = () => {
                             <Stack.Screen name="routine" component={RoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
                             <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
                             <Stack.Screen name="profile" component={ProfileScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
+                            <Stack.Screen name="settings" component={SettingsScreen}/>
                             <Stack.Screen name="gymmap" component={GymMapScreen}/>
                             <Stack.Screen name="gym" component={GymScreen}/>
                             <Stack.Screen name="leaderboard" component={LeaderboardScreen}/>
