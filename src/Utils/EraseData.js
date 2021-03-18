@@ -1,9 +1,10 @@
 import { API, graphqlOperation } from 'aws-amplify';
-import { listEfforts, listPosts, listTrophys } from '../../graphql/queries';
-import { deleteEffort, deletePost, deleteTrophy } from '../../graphql/mutations';
+import { listEfforts, listPosts, listTrophys, listUserRecords } from '../../graphql/queries';
+import { deleteEffort, deletePost, deleteTrophy, deleteUserRecord } from '../../graphql/mutations';
 
-//kinda lazy way of clearing what data I need to
+//kinda lazy way of clearing entire tables
 //just throw it into a useeffect whenever you need to
+//erases trophies, efforts, posts, and userrecords
 export const EraseData = async () => {
 
     const trophyOps = [listTrophys, 'listTrophys', deleteTrophy];
@@ -30,5 +31,17 @@ export const EraseData = async () => {
                 })
             });
     })
+
+    API.graphql(graphqlOperation(listUserRecords))
+        .then(result => {
+            result.data.listUserRecords.items.forEach(item => {
+                API.graphql(graphqlOperation(deleteUserRecord, {
+                    input: {
+                        userID: item.userID,
+                        exercise: item.exercise
+                    }
+                }));
+            });
+        });
 
 };

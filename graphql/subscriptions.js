@@ -54,7 +54,7 @@ export const onCreateUserRecord = /* GraphQL */ `
   subscription OnCreateUserRecord {
     onCreateUserRecord {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID
@@ -70,7 +70,7 @@ export const onUpdateUserRecord = /* GraphQL */ `
   subscription OnUpdateUserRecord {
     onUpdateUserRecord {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID
@@ -86,7 +86,7 @@ export const onDeleteUserRecord = /* GraphQL */ `
   subscription OnDeleteUserRecord {
     onDeleteUserRecord {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID

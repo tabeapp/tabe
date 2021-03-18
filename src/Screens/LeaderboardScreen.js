@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Modal, View } from 'react-native';
+import { View } from 'react-native';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Words from '../Components/Simple/Words';
@@ -184,6 +184,7 @@ const LeaderboardScreen = props => {
             </TouchableOpacity>
 
             {
+                //you know, these would ideally link to posts
                 records &&
                 records.map(record =>
                     <Words>{JSON.stringify(record)}</Words>

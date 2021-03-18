@@ -53,7 +53,7 @@ export const createUserRecord = /* GraphQL */ `
   ) {
     createUserRecord(input: $input, condition: $condition) {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID
@@ -72,7 +72,7 @@ export const updateUserRecord = /* GraphQL */ `
   ) {
     updateUserRecord(input: $input, condition: $condition) {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID
@@ -91,7 +91,7 @@ export const deleteUserRecord = /* GraphQL */ `
   ) {
     deleteUserRecord(input: $input, condition: $condition) {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID

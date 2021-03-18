@@ -5,6 +5,7 @@ type User @model{
   image: String
 }
 
+
 type UserRecord @model
 @key(fields: ["userID", "exercise"])
 @key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
@@ -15,7 +16,7 @@ type UserRecord @model
 @key(name: "byExercise", fields: ["exercise", "orm"], queryField: "listRecordsByExercise")
 {
   userID: ID!
-  effortID: ID!
+  postID: ID! #useful for seeing detail of records
   orm: Int!
   exercise: String!
   countryID: ID!#it's bs but these change

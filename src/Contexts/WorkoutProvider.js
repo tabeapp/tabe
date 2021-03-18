@@ -278,10 +278,10 @@ const WorkoutProvider = props => {
             updateRoutineData(data.routineId, routine);
 
         workoutDispatch(() => initState);
-        saveEfforts(detailedEfforts);
+        saveEfforts(detailedEfforts, postID);
     }
 
-    const saveEfforts = async efforts => {
+    const saveEfforts = async (efforts, postID) => {
         if(efforts.length === 0)
             return;
 
@@ -369,8 +369,8 @@ const WorkoutProvider = props => {
             const input = {
                 userID: username,
                 exercise: effort.exercise,
-                effortID: effort.id,
-                orm: effort.orm,
+                //effortID: effort.id,
+                postID: postID,
                 //copy location info from user
                 gymID: ul.gymID,
                 cityID: ul.gym.cityID,

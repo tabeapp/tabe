@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
-import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
 import Words from '../Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listGymsByCity, listRegionsBySuperRegions } from '../../../graphql/queries';

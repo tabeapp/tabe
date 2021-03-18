@@ -120,7 +120,7 @@ export const getUserRecord = /* GraphQL */ `
   query GetUserRecord($userID: ID!, $exercise: String!) {
     getUserRecord(userID: $userID, exercise: $exercise) {
       userID
-      effortID
+      postID
       orm
       exercise
       countryID
@@ -151,7 +151,7 @@ export const listUserRecords = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -836,7 +836,7 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -869,7 +869,7 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -902,7 +902,7 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -935,7 +935,7 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -968,7 +968,7 @@ export const listRecordsByUser = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
@@ -1001,7 +1001,7 @@ export const listRecordsByExercise = /* GraphQL */ `
     ) {
       items {
         userID
-        effortID
+        postID
         orm
         exercise
         countryID
