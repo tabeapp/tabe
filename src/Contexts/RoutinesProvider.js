@@ -181,11 +181,11 @@ const RoutinesProvider = props => {
 
     const [data, routinesDispatch] = useReducer(routinesReducer, initState);
 
-    const updateRoutineData = async (routineId, routineData) => {
+    const updateRoutineData = async (routineID, routineData) => {
 
         await API.graphql(graphqlOperation(updateRoutine, {
             input: {
-                id: routineId,
+                id: routineID,
                 routine: JSON.stringify(routineData)
             }
         }));

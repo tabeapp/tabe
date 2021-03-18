@@ -41,7 +41,6 @@ const WorkoutProvider = props => {
 
     //current workout id, suuper useful
     //dont even need this, username shoudl be good
-    //const [workoutId, setWorkoutId] = useState('');
 
     const {username} = useContext(UserContext);
     //is this legal
@@ -82,7 +81,7 @@ const WorkoutProvider = props => {
             input: {
                 userID: username,
                 data: JSON.stringify(data),
-                routineID: data.routinesId || ''
+                routineID: data.routinesID || ''
             }
         }));
     };
@@ -172,7 +171,6 @@ const WorkoutProvider = props => {
             }
             else{
                 console.log('current workout load', result);
-                //setWorkoutId(result.data.getCurrentWorkout.id)
                 workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
             }
         });
@@ -197,17 +195,17 @@ const WorkoutProvider = props => {
             return;
         }
 
-        const routineId = current.id;
+        const routineID = current.id;
         const r = JSON.parse(current.routine);
 
         const {routine, workout} = await generateWorkout(r);
 
         //this looks fine
-        updateRoutineData(routineId, routine);
+        updateRoutineData(routineID, routine);
 
         console.log('generated workout', workout);
         //hmmmm maybe there should be a mutuable routineid in workout...
-        workoutDispatch(() => ({...workout, routineId: routineId}));
+        workoutDispatch(() => ({...workout, routineID: routineID}));
     };
 
     const generateCustom = () => {
@@ -215,7 +213,7 @@ const WorkoutProvider = props => {
             title: '',
             exercises: [],
             edit: true,
-            routineId: '',
+            routineID: '',
             //necessary?
             timer: 0,
             restStart: 0
@@ -255,7 +253,7 @@ const WorkoutProvider = props => {
     const finalizeWorkout = async (report, postID) => {
 
         //this function needs cleanup, but this is basically how were gonna do it
-        const oldRoutine = routines.find(r => r.id === data.routineId).routine;
+        const oldRoutine = routines.find(r => r.id === data.routineID).routine;
         const { routine, efforts } = analyzeWorkout(report, data, oldRoutine);
 
 
@@ -275,7 +273,7 @@ const WorkoutProvider = props => {
 
         //and finally, save the routine
         if (routine)
-            updateRoutineData(data.routineId, routine);
+            updateRoutineData(data.routineID, routine);
 
         workoutDispatch(() => initState);
         saveEfforts(detailedEfforts, postID);

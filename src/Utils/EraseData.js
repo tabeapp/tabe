@@ -64,7 +64,7 @@ export const EraseData = async () => {
             result.data.listTimelines.items.forEach(item => {
                 API.graphql(graphqlOperation(deleteTimeline, {
                     input: {
-                        userId: item.userId,
+                        userID: item.userID,
                         createdAt: item.createdAt
                     }
                 }));
@@ -76,8 +76,8 @@ export const EraseData = async () => {
             result.data.listFollowRelationships.items.forEach(item => {
                 API.graphql(graphqlOperation(deleteFollowRelationship, {
                     input: {
-                        followerId: item.followerId,
-                        followeeId: item.followeeId,
+                        followerID: item.followerID,
+                        followeeID: item.followeeID,
                     }
                 }));
             });

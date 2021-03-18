@@ -28,7 +28,7 @@ const LeaderboardPosition = props => {
                 <Words><TrophyIcon rank={rank}/></Words>
                 <TouchableOpacity
                     style={{flexDirection: 'row', alignItems: 'center'}}
-                    onPress={() => navigation.navigate('profile', {userId: record.userID}) }
+                    onPress={() => navigation.navigate('profile', {userID: record.userID}) }
                 >
                     <View
                         style={{height: 40, width: 40, borderRadius: 20, overflow: 'hidden'}}

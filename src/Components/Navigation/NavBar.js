@@ -36,7 +36,7 @@ const NavBar = props => {
         if (r === 'workout')
             navigation.navigate(r);
         else if (r === 'profile'){
-            navigation.replace(r, {userId: username})
+            navigation.replace(r, {userID: username})
         }
 
         else

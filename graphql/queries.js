@@ -2339,10 +2339,10 @@ export const searchPosts = /* GraphQL */ `
   }
 `;
 export const getFollowRelationship = /* GraphQL */ `
-  query GetFollowRelationship($followeeId: ID!, $followerId: ID!) {
-    getFollowRelationship(followeeId: $followeeId, followerId: $followerId) {
-      followeeId
-      followerId
+  query GetFollowRelationship($followeeID: ID!, $followerID: ID!) {
+    getFollowRelationship(followeeID: $followeeID, followerID: $followerID) {
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -2350,24 +2350,24 @@ export const getFollowRelationship = /* GraphQL */ `
 `;
 export const listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
-    $followeeId: ID
-    $followerId: ModelIDKeyConditionInput
+    $followeeID: ID
+    $followerID: ModelIDKeyConditionInput
     $filter: ModelFollowRelationshipFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listFollowRelationships(
-      followeeId: $followeeId
-      followerId: $followerId
+      followeeID: $followeeID
+      followerID: $followerID
       filter: $filter
       limit: $limit
       nextToken: $nextToken
       sortDirection: $sortDirection
     ) {
       items {
-        followeeId
-        followerId
+        followeeID
+        followerID
         createdAt
         updatedAt
       }
@@ -2376,10 +2376,10 @@ export const listFollowRelationships = /* GraphQL */ `
   }
 `;
 export const getTimeline = /* GraphQL */ `
-  query GetTimeline($userId: ID!, $createdAt: String!) {
-    getTimeline(userId: $userId, createdAt: $createdAt) {
-      userId
-      postId
+  query GetTimeline($userID: ID!, $createdAt: String!) {
+    getTimeline(userID: $userID, createdAt: $createdAt) {
+      userID
+      postID
       createdAt
       updatedAt
       post {
@@ -2518,7 +2518,7 @@ export const getTimeline = /* GraphQL */ `
 `;
 export const listTimelines = /* GraphQL */ `
   query ListTimelines(
-    $userId: ID
+    $userID: ID
     $createdAt: ModelStringKeyConditionInput
     $filter: ModelTimelineFilterInput
     $limit: Int
@@ -2526,7 +2526,7 @@ export const listTimelines = /* GraphQL */ `
     $sortDirection: ModelSortDirection
   ) {
     listTimelines(
-      userId: $userId
+      userID: $userID
       createdAt: $createdAt
       filter: $filter
       limit: $limit
@@ -2534,8 +2534,8 @@ export const listTimelines = /* GraphQL */ `
       sortDirection: $sortDirection
     ) {
       items {
-        userId
-        postId
+        userID
+        postID
         createdAt
         updatedAt
         post {

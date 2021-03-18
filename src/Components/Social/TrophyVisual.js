@@ -20,7 +20,7 @@ const TrophyVisual = (props) => {
     const handlePress = () => {
         //honestly, loading the users progress graph would be cool
         if(type === 'personal')
-            navigation.navigate('profile', {userId: targetID});
+            navigation.navigate('profile', {userID: targetID});
         else if(type === 'gym')
             //coming soon!
             navigation.navigate('leaderboard', {gymID: targetID, exercise: exercise});

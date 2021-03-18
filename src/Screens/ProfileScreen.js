@@ -45,15 +45,15 @@ const ProfileScreen = props => {
 
     let profileUser = signedInUser;
     if(props.route.params)
-        profileUser = props.route.params.userId;
+        profileUser = props.route.params.userID;
 
     const [isFollowing, setIsFollowing] = useState(false);
 
-    const getIsFollowing = async ({followeeId, followerId}) => {
+    const getIsFollowing = async ({followeeID, followerID}) => {
 
         const res = await API.graphql(graphqlOperation(getFollowRelationship, {
-            followeeId: followeeId,
-            followerId: followerId
+            followeeID: followeeID,
+            followerID: followerID
         }))
         console.log(res);
         return res.data.getFollowRelationship !== null;
@@ -70,7 +70,7 @@ const ProfileScreen = props => {
         const init = async () => {
 
             setIsFollowing(await getIsFollowing({
-                followeeId: profileUser, followerId: signedInUser
+                followeeID: profileUser, followerID: signedInUser
             }));
         };
         init();
@@ -116,8 +116,8 @@ const ProfileScreen = props => {
 
     const follow = async () => {
         const input = {
-            followeeId: profileUser,
-            followerId: signedInUser,
+            followeeID: profileUser,
+            followerID: signedInUser,
         };
         const res = await API.graphql(graphqlOperation(createFollowRelationship, {
             input: input
@@ -128,8 +128,8 @@ const ProfileScreen = props => {
 
     const unfollow = async () => {
         const input = {
-            followeeId: profileUser,
-            followerId: signedInUser
+            followeeID: profileUser,
+            followerID: signedInUser
         };
         const res = await API.graphql(graphqlOperation(deleteFollowRelationship, {
             input: input

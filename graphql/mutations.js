@@ -1645,8 +1645,8 @@ export const updateFollowRelationship = /* GraphQL */ `
     $condition: ModelFollowRelationshipConditionInput
   ) {
     updateFollowRelationship(input: $input, condition: $condition) {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -1658,8 +1658,8 @@ export const deleteFollowRelationship = /* GraphQL */ `
     $condition: ModelFollowRelationshipConditionInput
   ) {
     deleteFollowRelationship(input: $input, condition: $condition) {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -1671,8 +1671,8 @@ export const updateTimeline = /* GraphQL */ `
     $condition: ModelTimelineConditionInput
   ) {
     updateTimeline(input: $input, condition: $condition) {
-      userId
-      postId
+      userID
+      postID
       createdAt
       updatedAt
       post {
@@ -1815,8 +1815,8 @@ export const deleteTimeline = /* GraphQL */ `
     $condition: ModelTimelineConditionInput
   ) {
     deleteTimeline(input: $input, condition: $condition) {
-      userId
-      postId
+      userID
+      postID
       createdAt
       updatedAt
       post {
@@ -2223,8 +2223,8 @@ export const createFollowRelationship = /* GraphQL */ `
     $condition: ModelFollowRelationshipConditionInput
   ) {
     createFollowRelationship(input: $input, condition: $condition) {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -2236,8 +2236,8 @@ export const createTimeline = /* GraphQL */ `
     $condition: ModelTimelineConditionInput
   ) {
     createTimeline(input: $input, condition: $condition) {
-      userId
-      postId
+      userID
+      postID
       createdAt
       updatedAt
       post {

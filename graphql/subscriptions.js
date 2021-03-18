@@ -1745,8 +1745,8 @@ export const onDeleteUserLocation = /* GraphQL */ `
 export const onCreateFollowRelationship = /* GraphQL */ `
   subscription OnCreateFollowRelationship {
     onCreateFollowRelationship {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -1755,8 +1755,8 @@ export const onCreateFollowRelationship = /* GraphQL */ `
 export const onUpdateFollowRelationship = /* GraphQL */ `
   subscription OnUpdateFollowRelationship {
     onUpdateFollowRelationship {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
@@ -1765,18 +1765,18 @@ export const onUpdateFollowRelationship = /* GraphQL */ `
 export const onDeleteFollowRelationship = /* GraphQL */ `
   subscription OnDeleteFollowRelationship {
     onDeleteFollowRelationship {
-      followeeId
-      followerId
+      followeeID
+      followerID
       createdAt
       updatedAt
     }
   }
 `;
 export const onCreateTimeline = /* GraphQL */ `
-  subscription OnCreateTimeline($userId: String) {
-    onCreateTimeline(userId: $userId) {
-      userId
-      postId
+  subscription OnCreateTimeline($userID: String) {
+    onCreateTimeline(userID: $userID) {
+      userID
+      postID
       createdAt
       updatedAt
       post {
@@ -1914,10 +1914,10 @@ export const onCreateTimeline = /* GraphQL */ `
   }
 `;
 export const onUpdateTimeline = /* GraphQL */ `
-  subscription OnUpdateTimeline($userId: String) {
-    onUpdateTimeline(userId: $userId) {
-      userId
-      postId
+  subscription OnUpdateTimeline($userID: String) {
+    onUpdateTimeline(userID: $userID) {
+      userID
+      postID
       createdAt
       updatedAt
       post {
@@ -2055,10 +2055,10 @@ export const onUpdateTimeline = /* GraphQL */ `
   }
 `;
 export const onDeleteTimeline = /* GraphQL */ `
-  subscription OnDeleteTimeline($userId: String) {
-    onDeleteTimeline(userId: $userId) {
-      userId
-      postId
+  subscription OnDeleteTimeline($userID: String) {
+    onDeleteTimeline(userID: $userID) {
+      userID
+      postID
       createdAt
       updatedAt
       post {

@@ -35,7 +35,7 @@ const HomeScreen = props => {
             <View style={STYLES.body}>
                 <PostList
                     listOperation={listTimelines}
-                    sortKey='userId'
+                    sortKey='userID'
                     sortValue={username}
                     subscriptionOperation={onCreateTimeline}
                     subscriptionCriteria={() => true}//this isn't ideal, oncreate timelines takes a userid
