@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Words from '../Simple/Words';
-import { WorkoutContext } from '../../Contexts/WorkoutProvider';
-import { Auth } from 'aws-amplify';
-import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { PRIMARY } from '../../Style/Theme';
+import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../../Contexts/UserProvider';
+import WorkoutButton from './WorkoutButton';
 
 const routes = [
     'home',
@@ -24,8 +24,9 @@ const iconMapping = {
 };
 
 const NavBar = props => {
-    const {routines} = useContext(RoutinesContext);
-    const {generateCustom, checkRest, createWorkout} = useContext(WorkoutContext);
+    const {username} = useContext(UserContext);
+
+    const navigation = useNavigation();
 
     const currentPage = props.current;
     const handlePress = (r) => {
@@ -33,60 +34,13 @@ const NavBar = props => {
             return;
 
         if (r === 'workout')
-            props.navigation.navigate(r);
+            navigation.navigate(r);
         else if (r === 'profile'){
-            Auth.currentAuthenticatedUser().then(user => {
-                props.navigation.replace(r, {userId: user.username})
-            });
+            navigation.replace(r, {userId: username})
         }
 
         else
-            props.navigation.replace(r);
-    };
-
-    const customStart = () => {
-        //set up
-        generateCustom();
-        props.navigation.navigate('workout');
-    };
-
-    //need to fucking redo this whole thing too
-    const routineStart = async () => {
-        const currentR = routines.find(x => x.current === 1);
-        if(currentR){
-            //if it's a rest day, ask for confirmation
-            let isRest = checkRest();
-
-            if(!isRest){
-                //no it's possible it's already loaded
-                createWorkout();
-                props.navigation.navigate('workout');
-            }
-            else{
-                Alert.alert(
-                    "Recovery Day",
-                    "Are you sure you want to skip recovery?",
-                    [
-                        {
-                            text: "Cancel",//don't do the workout
-                            onPress: () => {},
-                            style: "cancel"
-                        },
-                        {
-                            text: "Override",
-                            onPress: () => {
-                                createWorkout();
-                                props.navigation.navigate('workout');
-                            },
-                        }
-                    ],
-                    {cancelable: false}
-                )
-
-            }
-        }else{
-            props.navigation.navigate('chooseroutine');
-        }
+            navigation.replace(r);
     };
 
     return (<View style={styles.navBar}>{
@@ -96,11 +50,7 @@ const NavBar = props => {
                 icon += '-outline'
 
             if (r === 'workout') {
-                return (<TouchableOpacity style={styles.workoutButton} key={r} onPress={routineStart} onLongPress={customStart}>
-                    <Words>
-                        <Ionicons name={icon} color={'white'} size={50} />
-                    </Words>
-                </TouchableOpacity>);
+                return <WorkoutButton key={r}/>
             }
 
             return (<TouchableOpacity style={styles.button} key={r} onPress={() => handlePress(r)}>
@@ -111,20 +61,6 @@ const NavBar = props => {
     }</View>);
 };
 const styles = StyleSheet.create({
-    //kinda squishes the other buttons, but whatever
-    workoutButton:{
-        backgroundColor: 'red',
-        height: 80,
-        width: 80,
-        bottom: 10,
-        //this
-        marginHorizontal: -10,
-        borderRadius: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: 'white',
-        borderWidth: 2,
-    },
     navBar: {
         height: 60,
         width: '100%',

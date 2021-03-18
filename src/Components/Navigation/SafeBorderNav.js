@@ -11,7 +11,7 @@ const SafeBorderNav = props => {
         <SafeAreaView style={{backgroundColor: '#222', flex: 1}}>{
             props.children
         }
-            <NavBar current={props.screen} navigation={props.navigation}/>
+            <NavBar current={props.screen}/>
         </SafeAreaView>
     </>
 };

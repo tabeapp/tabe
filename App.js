@@ -45,19 +45,17 @@ const App = () => {
                 <WorkoutProvider>
 
                     <NavigationContainer>
-                        <Stack.Navigator initialRouteName="profile" screenOptions={{headerShown:false,
-                            //cardStyleInterpolator: CardStyleInterpolators.forNoAnimation,
-                        }}>
-                            <Stack.Screen name="home" component={HomeScreen}/>
+                        <Stack.Navigator initialRouteName="profile" screenOptions={{headerShown:false}}>
+                            <Stack.Screen name="home" component={HomeScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
                             <Stack.Screen name="post" component={PostScreen}/>
-                            <Stack.Screen name="explore" component={ExploreScreen}/>
+                            <Stack.Screen name="explore" component={ExploreScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
                             <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
                             <Stack.Screen name="report" component={ReportScreen}/>
-                            <Stack.Screen name="routine" component={RoutineScreen}/>
+                            <Stack.Screen name="routine" component={RoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
                             <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
-                            <Stack.Screen name="profile" component={ProfileScreen}/>
+                            <Stack.Screen name="profile" component={ProfileScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
                             <Stack.Screen name="gymmap" component={GymMapScreen}/>
                             <Stack.Screen name="gym" component={GymScreen}/>
                             <Stack.Screen name="leaderboard" component={LeaderboardScreen}/>
