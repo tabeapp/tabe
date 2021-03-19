@@ -2,7 +2,8 @@ import { CURRENT } from '../Constants/Symbols';
 
 //this runs before posting any data, get the workout info ready
 //might want to merge in the other one too
-export const generateReport = (workout) => {
+//rename this or just call the one in the lambad
+/*export const generateReport = (workout) => {
     //just default for the report
     if(!workout) {
         return {
@@ -77,6 +78,6 @@ export const generateReport = (workout) => {
         report: report
     };
 }
-
+*/
 
 

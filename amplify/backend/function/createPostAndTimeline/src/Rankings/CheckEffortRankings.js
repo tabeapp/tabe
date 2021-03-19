@@ -1,15 +1,15 @@
-import {
+const {
     getUserRecord,
     listEffortsByExerciseAndUser, listRecordsByExercise,
     listRecordsByExerciseAndCity, listRecordsByExerciseAndCountry,
     listRecordsByExerciseAndGym, listRecordsByExerciseAndState,
-} from '../graphql/queries';
-import { createTrophy, createUserRecord, updateUserRecord } from '../graphql/mutations';
-import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
-import { checkRegionRanking } from './CheckRegionRanking';
+} = require('../graphql/queries');
+const { createTrophy, createUserRecord, updateUserRecord } = require('../graphql/mutations');
+const { GLOBAL_REGION_ID } = require('../Constants/RegionConstants');
+const { checkRegionRanking } = require('./CheckRegionRanking');
 const gql = require('graphql-tag');
 
-export const checkEffortRankings = async (graphqlClient, effort, userLocation, userID, postID) => {
+exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID, postID) => {
 
     const personal = await graphqlClient.query({
         query: gql(listEffortsByExerciseAndUser),

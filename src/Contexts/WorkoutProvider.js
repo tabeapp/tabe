@@ -17,7 +17,6 @@ import { Effort } from '../../models';
 import { UserContext } from './UserProvider';
 import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
-import { generateReport } from '../Utils/GenerateReport';
 import {
     getCurrentWorkout,
     getUserLocation,
@@ -29,7 +28,8 @@ import {
     listRecordsByExerciseAndCountry, listRecordsByExercise,
 } from '../../graphql/queries';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
-import { EraseData } from '../Utils/EraseData';
+//ehhhh not sure how i feel about this import
+import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 
 export const WorkoutContext = React.createContext();
 
@@ -470,12 +470,12 @@ const WorkoutProvider = props => {
         workoutDispatch(() => ({}));
     };
 
-    const saveWorkout = async (workoutData, report) => {
+    const saveWorkout = async (workoutData) => {
         //finally clear it
 
         //make a post to aws db, this is the first i implemented
         //lets see if it works
-        console.log(workoutData);
+        //console.log(workoutData);
         //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
 
         /*const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
@@ -491,23 +491,17 @@ const WorkoutProvider = props => {
 
         //ugh, I guess this should call that labmda actually
         //this isn't working start from here next time...
-        const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
-            title: workoutData.title,
-            description: workoutData.description,
-            data: workoutData.data,
-            //gymID: gymID
-        }));
 
-        console.log('res: ' + JSON.stringify(res));
+        //console.log('res: ' + JSON.stringify(res));
         //once we have res, we should be able to use its id to upload images
         //to s3
         //should this be in the labmda function?
         //get the post id for later linking
-        const postID = res.data.createPostAndTimeline.id;
+        //const postID = res.data.createPostAndTimeline.id;
 
         //as it turns out, we really need this postID to build efforts
         //so here we are
-        finalizeWorkout(report, postID);
+        //finalizeWorkout(report, postID);
 
 
         //upload the images to s3
@@ -522,6 +516,20 @@ const WorkoutProvider = props => {
             const key = `${uuidv4()}.${extension}`;
             s3Urls.push(key);
         }
+
+        //there's the slightest slightest chance this works
+        //todo start here next time
+        const res = await API.graphql(graphqlOperation(createPostAndTimeline, {
+
+            title: workoutData.title,
+            description: workoutData.description,
+            workoutData: JSON.stringify(data),
+            imageUrls: JSON.stringify(s3Urls)
+
+            //gymID: gymID
+        }));
+
+        workoutDispatch(() => initState);
 
 
         //upoad
@@ -566,14 +574,14 @@ const WorkoutProvider = props => {
 
         //now s3 urls are ready
         //lets save some postmedias
-        s3Urls.forEach(key => {
+        /*s3Urls.forEach(key => {
             API.graphql(graphqlOperation(createPostMedia, {
                 input: {
                     postID: postID,
                     uri: key
                 }
             }));
-        });
+        });*/
 
         //need to clear workout from state as well
         //and the report, it doesn't get cleared

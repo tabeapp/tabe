@@ -1,7 +1,7 @@
-import { createTimeline } from '../graphql/mutations';
+const { createTimeline } = require('../graphql/mutations');
 const gql = require('graphql-tag');
 
-export const createTimelineForAUser = async (graphqlClient, follower, postID) => {
+exports.createTimelineForAUser = async (graphqlClient, follower, postID) => {
     const timelineInput = {
         mutation: gql(createTimeline),
         variables: {

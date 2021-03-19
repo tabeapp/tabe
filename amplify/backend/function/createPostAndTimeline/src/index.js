@@ -9,15 +9,16 @@ const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
 
-import { createPost } from './graphql/mutations';
-import { getUserLocation } from './graphql/queries';
 
-import { uploadImages } from './ImageUpload';
-import { analyzeRoutine } from './AnalyzeRoutine';
-import { generateReport } from './AnalyzeRoutine/GenerateReport';
-import { analyzeWorkoutEfforts } from './AnalyzeRoutine/AnalyzeWorkoutEfforts';
-import { createTimelines } from './CreateTimelines';
-import { analyzeEffortsRecordsTrophies } from './Rankings';
+const { createPost } = require('./graphql/mutations');
+const { getUserLocation } = require('./graphql/queries');
+
+const { uploadImages } = require('./ImageUpload');
+const { analyzeRoutine } = require('./AnalyzeRoutine');
+const { generateReport } = require('./AnalyzeRoutine/GenerateReport');
+const { analyzeWorkoutEfforts } = require('./AnalyzeRoutine/AnalyzeWorkoutEfforts');
+const { createTimelines } = require('./CreateTimelines');
+const { analyzeEffortsRecordsTrophies } = require('./Rankings');
 
 let graphqlClient;
 

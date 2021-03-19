@@ -1,8 +1,8 @@
-import { CURRENT } from '../Constants/Symbols';
+const { CURRENT } = require('../Constants/Symbols');
 
 //this runs before posting any data, get the workout info ready
 //might want to merge in the other one too
-export const generateReport = (workout) => {
+exports.generateReport = (workout) => {
     //just default for the report
     if(!workout) {
         return {

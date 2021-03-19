@@ -1,7 +1,7 @@
-import { createPostMedia } from '../graphql/mutations';
+const { createPostMedia } = require('../graphql/mutations');
 const gql = require('graphql-tag');
 
-export const uploadImages = async (graphqlClient, postID, imageUrls) => {
+exports.uploadImages = async (graphqlClient, postID, imageUrls) => {
     await Promise.all(imageUrls.map(async key => {
         const postMediaInput = {
             mutation: gql(createPostMedia),

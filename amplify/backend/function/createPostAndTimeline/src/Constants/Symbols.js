@@ -1,7 +1,7 @@
 //used as marker of current set
-export const CURRENT = 'c';
+exports.CURRENT = 'c';
 
 //reps to failure
-export const FAILURE = 'F';
+exports.FAILURE = 'F';
 
-export const REST_DAY = 'R';
+exports.REST_DAY = 'R';

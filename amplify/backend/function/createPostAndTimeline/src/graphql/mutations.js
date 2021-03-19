@@ -1,5 +1,5 @@
 
-export const createUserRecord = /* GraphQL */ `
+exports.createUserRecord = /* GraphQL */ `
   mutation CreateUserRecord(
     $input: CreateUserRecordInput!
     $condition: ModelUserRecordConditionInput
@@ -24,7 +24,7 @@ export const createUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const updateUserRecord = /* GraphQL */ `
+exports.updateUserRecord = /* GraphQL */ `
   mutation UpdateUserRecord(
     $input: UpdateUserRecordInput!
     $condition: ModelUserRecordConditionInput
@@ -49,7 +49,7 @@ export const updateUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const createEffort = /* GraphQL */ `
+exports.createEffort = /* GraphQL */ `
   mutation CreateEffort(
     $input: CreateEffortInput!
     $condition: ModelEffortConditionInput
@@ -79,7 +79,7 @@ export const createEffort = /* GraphQL */ `
     }
   }
 `;
-export const createTrophy = /* GraphQL */ `
+exports.createTrophy = /* GraphQL */ `
   mutation CreateTrophy(
     $input: CreateTrophyInput!
     $condition: ModelTrophyConditionInput
@@ -95,7 +95,7 @@ export const createTrophy = /* GraphQL */ `
     }
   }
 `;
-export const updateRoutine = /* GraphQL */ `
+exports.updateRoutine = /* GraphQL */ `
   mutation UpdateRoutine(
     $input: UpdateRoutineInput!
     $condition: ModelRoutineConditionInput
@@ -111,7 +111,7 @@ export const updateRoutine = /* GraphQL */ `
     }
   }
 `;
-export const updateCurrentWorkout = /* GraphQL */ `
+exports.updateCurrentWorkout = /* GraphQL */ `
   mutation UpdateCurrentWorkout(
     $input: UpdateCurrentWorkoutInput!
     $condition: ModelCurrentWorkoutConditionInput
@@ -125,7 +125,7 @@ export const updateCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const createPostMedia = /* GraphQL */ `
+exports.createPostMedia = /* GraphQL */ `
   mutation CreatePostMedia(
     $input: CreatePostMediaInput!
     $condition: ModelPostMediaConditionInput
@@ -139,7 +139,7 @@ export const createPostMedia = /* GraphQL */ `
     }
   }
 `;
-export const createPost = /* GraphQL */ `
+exports.createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
     $condition: ModelPostConditionInput
@@ -314,7 +314,7 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const createTimeline = /* GraphQL */ `
+exports.createTimeline = /* GraphQL */ `
   mutation CreateTimeline(
     $input: CreateTimelineInput!
     $condition: ModelTimelineConditionInput

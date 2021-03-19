@@ -1,10 +1,11 @@
-
-export const ROUND_5 = num => {
+const ROUND_5 = num => {
     return Math.round(num/5)*5;
 };
 
+exports.ROUND_5 = ROUND_5;
+
 //this could save some weird math elsewehere
-export const REPS_TO_REPS = (weight, fromReps, toReps) => {
+exports.REPS_TO_REPS = (weight, fromReps, toReps) => {
     if(fromReps === toReps)
         return weight;
     else{

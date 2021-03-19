@@ -1,8 +1,8 @@
-import { createEffort } from '../graphql/mutations';
-import { checkEffortRankings } from './CheckEffortRankings';
+const { createEffort } = require('../graphql/mutations');
+const { checkEffortRankings } = require('./CheckEffortRankings');
 const gql = require('graphql-tag');
 
-export const analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, userID, userLocation) => {
+exports.analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, userID, userLocation) => {
     //efforts isn't identical to what it is in saveEfforts
     if(Object.keys(efforts).length === 0)
         return;

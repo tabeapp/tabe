@@ -1,8 +1,8 @@
-import { listFollowRelationships } from '../../../graphql/queries';
-import { createTimelineForAUser } from './CreateTimelineForAUser';
+const { listFollowRelationships } = require('../../../graphql/queries');
+const { createTimelineForAUser } = require('./CreateTimelineForAUser');
 const gql = require('graphql-tag');
 
-export const createTimelines = async (graphqlClient, postID, userID) => {
+exports.createTimelines = async (graphqlClient, postID, userID) => {
     const queryInput = {
         followeeID: userID,
         limit: 100000,

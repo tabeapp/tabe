@@ -1,6 +1,6 @@
-import { REPS_TO_REPS } from '../Utils/UtilFunctions';
+const { REPS_TO_REPS } = require('../Utils/UtilFunctions');
 
-export const analyzeWorkoutEfforts = report => {
+exports.analyzeWorkoutEfforts = report => {
     const workoutMaxes = {};
 
     console.log(report);

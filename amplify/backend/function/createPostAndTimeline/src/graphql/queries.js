@@ -1,7 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUserRecord = /* GraphQL */ `
+exports.getUserRecord = /* GraphQL */ `
   query GetUserRecord($userID: ID!, $exercise: String!) {
     getUserRecord(userID: $userID, exercise: $exercise) {
       userID
@@ -23,7 +23,7 @@ export const getUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const getRoutine = /* GraphQL */ `
+exports.getRoutine = /* GraphQL */ `
   query GetRoutine($id: ID!) {
     getRoutine(id: $id) {
       id
@@ -36,7 +36,7 @@ export const getRoutine = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndCountry = /* GraphQL */ `
+exports.listRecordsByExerciseAndCountry = /* GraphQL */ `
   query ListRecordsByExerciseAndCountry(
     $countryID: ID
     $exerciseOrm: ModelUserRecordByCountryCompositeKeyConditionInput
@@ -75,7 +75,7 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndState = /* GraphQL */ `
+exports.listRecordsByExerciseAndState = /* GraphQL */ `
   query ListRecordsByExerciseAndState(
     $stateID: ID
     $exerciseOrm: ModelUserRecordByStateCompositeKeyConditionInput
@@ -114,7 +114,7 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndCity = /* GraphQL */ `
+exports.listRecordsByExerciseAndCity = /* GraphQL */ `
   query ListRecordsByExerciseAndCity(
     $cityID: ID
     $exerciseOrm: ModelUserRecordByCityCompositeKeyConditionInput
@@ -153,7 +153,7 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndGym = /* GraphQL */ `
+exports.listRecordsByExerciseAndGym = /* GraphQL */ `
   query ListRecordsByExerciseAndGym(
     $gymID: ID
     $exerciseOrm: ModelUserRecordByGymCompositeKeyConditionInput
@@ -192,7 +192,7 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExercise = /* GraphQL */ `
+exports.listRecordsByExercise = /* GraphQL */ `
   query ListRecordsByExercise(
     $exercise: String
     $orm: ModelIntKeyConditionInput
@@ -231,7 +231,7 @@ export const listRecordsByExercise = /* GraphQL */ `
     }
   }
 `;
-export const listEffortsByExerciseAndUser = /* GraphQL */ `
+exports.listEffortsByExerciseAndUser = /* GraphQL */ `
   query ListEffortsByExerciseAndUser(
     $userID: ID
     $exerciseOrm: ModelEffortByExerciseAndUserCompositeKeyConditionInput
@@ -275,7 +275,7 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
     }
   }
 `;
-export const getUserLocation = /* GraphQL */ `
+exports.getUserLocation = /* GraphQL */ `
   query GetUserLocation($userID: ID!) {
     getUserLocation(userID: $userID) {
       userID
@@ -361,7 +361,7 @@ export const getUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const listFollowRelationships = /* GraphQL */ `
+exports.listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
     $followeeID: ID
     $followerID: ModelIDKeyConditionInput

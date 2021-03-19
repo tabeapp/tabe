@@ -1,9 +1,9 @@
-import { getRoutine } from '../graphql/queries';
-import { updateRoutine } from '../graphql/mutations';
-import { analyzeWorkoutRoutine } from './AnalyzeWorkoutRoutine';
+const { getRoutine } = require('../graphql/queries');
+const { updateRoutine } = require('../graphql/mutations');
+const { analyzeWorkoutRoutine } = require('./AnalyzeWorkoutRoutine');
 const gql = require('graphql-tag');
 
-export const analyzeRoutine = async (graphqlClient, workoutData, report, efforts) => {
+exports.analyzeRoutine = async (graphqlClient, workoutData, report, efforts) => {
     const getOldRoutineResult = await graphqlClient.query({
         query: gql(getRoutine),
         fetchPolicy: 'network-only',

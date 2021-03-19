@@ -1,2 +1,2 @@
 
-export const GLOBAL_REGION_ID = 'earth';
+exports.GLOBAL_REGION_ID = 'earth';

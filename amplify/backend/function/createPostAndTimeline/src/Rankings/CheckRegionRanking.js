@@ -1,8 +1,8 @@
-import { listRecordsByExercise } from '../graphql/queries';
-import { createTrophy } from '../graphql/mutations';
+const { listRecordsByExercise } = require('../graphql/queries');
+const { createTrophy } = require('../graphql/mutations');
 const gql = require('graphql-tag');
 
-export const checkRegionRanking = async (graphqlClient, effort, postID, operation, key, value, type) => {
+exports.checkRegionRanking = async (graphqlClient, effort, postID, operation, key, value, type) => {
     const listInput = {
         limit: 10,
         sortDirection: 'DESC'

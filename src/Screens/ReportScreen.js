@@ -23,6 +23,8 @@ const ReportScreen = props => {
     });
     //bruh
     useEffect(() => {
+        //maybe just like a report preview?
+        //this report thing is mostly handles by the lambda
         let x = createReport();
         setReport(x);
         setTitle(workout.title);
@@ -30,7 +32,7 @@ const ReportScreen = props => {
 
     const [title, setTitle] = useState('');
 
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState('add description');
 
     const [media, setMedia] = useState([]);
 
@@ -86,10 +88,10 @@ const ReportScreen = props => {
         saveWorkout({
             title: title,
             description: description,
-            data: JSON.stringify(report.exercises),
+            //data: JSON.stringify(report.exercises),
             media: media
 
-        }, report);
+        });
 
     };
 
