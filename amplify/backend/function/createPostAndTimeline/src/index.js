@@ -11,6 +11,8 @@ global.fetch = require('node-fetch');
 
 let graphqlClient;
 
+//ths now handles everything involved with uploading a post
+//theres a lot to it
 exports.handler = async (event, context, callback) => {
     console.log('event', event)
     let env;

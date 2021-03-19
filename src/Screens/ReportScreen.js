@@ -12,7 +12,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
-    const {saveWorkout, createReport } = useContext(WorkoutContext);
+    const {saveWorkout, createReport, workout } = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky
@@ -25,12 +25,12 @@ const ReportScreen = props => {
     useEffect(() => {
         let x = createReport();
         setReport(x);
-        setTitle(x.title);
+        setTitle(workout.title);
     }, [/*workout*/]);
 
-    const [title, setTitle] = useState(report.title);
+    const [title, setTitle] = useState('');
 
-    const [description, setDescription] = useState(report ? report.summary : '');
+    const [description, setDescription] = useState('');
 
     const [media, setMedia] = useState([]);
 

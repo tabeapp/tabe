@@ -259,6 +259,7 @@ type Mutation{
     title: String!
     description: String!
     data: String!
+    #more shit
   ): Post
   @function(name: "createPostAndTimeline-${env}")
   @auth(rules:[

@@ -368,7 +368,6 @@ const WorkoutProvider = props => {
                 exercise: effort.exercise,
                 orm: effort.orm,
                 postID: postID,
-                //copy location info from user
                 gymID: ul.gymID,
                 cityID: ul.gym.cityID,
                 stateID: ul.gym.stateID,
@@ -529,6 +528,7 @@ const WorkoutProvider = props => {
                 const urlParts = workoutData.media[i].split('.');
                 const extension = urlParts[urlParts.length-1];
                 const key = `${uuidv4()}.${extension}`;
+                //this line definitely doesn't go into lambda
                 await Storage.put(key, blob);
                 console.log('putted');
                 s3Urls.push(key);
