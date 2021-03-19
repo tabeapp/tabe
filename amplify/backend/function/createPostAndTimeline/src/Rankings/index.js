@@ -27,6 +27,8 @@ exports.analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, u
         uploadedEfforts.push(effortResult.data.createEffort);
     }
 
+    //this isn't causing an error
+    console.log(uploadedEfforts);
     await Promise.all(uploadedEfforts.map(async effort => {
         await checkEffortRankings(graphqlClient, effort, userLocation, userID, postID);
     }));

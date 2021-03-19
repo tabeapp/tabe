@@ -20,6 +20,7 @@ exports.generateReport = (workout) => {
     //report.time = new Date().getTime();//get current time;
 
     //now that we have workout-warmup, this is parsing incorrectly
+    console.log(workout);
     report.exercises = workout.exercises.map(exercise => {
         if(exercise.name.includes('-Warmup'))
             return {work: []}

@@ -69,7 +69,7 @@ exports.handler = async (event, context, callback) => {
 
     const userID = event.identity.username;
 
-    const workoutData = event.arguments.workoutData;
+    const workoutData = JSON.parse(event.arguments.workoutData);
 
     //generate report is fine
     const report = generateReport(workoutData);

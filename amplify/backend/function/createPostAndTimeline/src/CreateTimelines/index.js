@@ -14,6 +14,7 @@ exports.createTimelines = async (graphqlClient, postID, userID) => {
         variables: queryInput,
     });
 
+    console.log(listFollowRelationshipsResult.data.listFollowRelationships);
     const followers = listFollowRelationshipsResult.data.listFollowRelationships.items;
 
     if(!followers.some(follower => follower.followerID === userID )){
@@ -21,6 +22,10 @@ exports.createTimelines = async (graphqlClient, postID, userID) => {
     }
 
     //do we really need to await?
+    //could be this guy, if listFollowRelationships fails
+    //then again, it would just be []
+    //so not this
+    console.log(followers);
     await Promise.all(followers.map(follower =>
         createTimelineForAUser(graphqlClient, follower, postID)
     ));
