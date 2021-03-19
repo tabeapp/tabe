@@ -8,6 +8,9 @@ type User @model{
 
 type UserRecord @model
 @key(fields: ["userID", "exercise"])
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read, update, create]}
+])
 @key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
 @key(name: "byState", fields: ["stateID", "exercise", "orm"], queryField: "listRecordsByExerciseAndState")
 @key(name: "byCity", fields: ["cityID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCity")
@@ -50,6 +53,9 @@ type UserImage @model
 
 #might rename these to be more generic later idk
 type Gym @model @searchable
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read]}
+])
 @key(name: "byCity", fields: ["cityID"], queryField: "listGymsByCity")
 {
   id: ID!
@@ -67,6 +73,9 @@ type Gym @model @searchable
 #right now i dont care about dover belongs to nh belongs to usa
 #a gym will belong to dover, belong to nh, and belong to usa
 type Region @model
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read]}
+])
 @key(name: "bySuperRegion", fields: ["superRegionID"], queryField: "listRegionsBySuperRegions")
 {
   id: ID!
@@ -126,6 +135,9 @@ type Post
 
 type Effort
 @model
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read, create]}
+])
 #is this the best way to do it?
 @key(name: "byPost", fields: ["postID"])
 @key(name: "byExerciseAndUser", fields: ["userID", "exercise", "orm"], queryField: "listEffortsByExerciseAndUser")
@@ -149,6 +161,9 @@ type Effort
 #personal top 10 effort, at the time
 type Trophy
 @model
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read, create]}
+])
 @key(name: "byEffort", fields: ["effortID"])
 {
   id: ID!
@@ -184,6 +199,9 @@ type Comment
 
 type Routine
 @model(subscriptions: null)
+@auth(rules: [
+  {allow: private, provider: iam, operations: [read, update]}
+])
 @key(name: "byUser", fields: ["userID"], queryField: "listRoutinesByUser")
 @key(name: "byUserAndCurrent", fields: ["userID", "current"], queryField: "listCurrentRoutinesByUser")
 {
@@ -201,6 +219,9 @@ type Routine
 #a user will update and clear a single one of these objects
 type CurrentWorkout
 @model
+@auth(rules: [
+  {allow: private, provider: iam, operations: [update]}
+])
 @key(fields: ["userID"])
 {
   userID: ID!
@@ -219,6 +240,9 @@ type Like
 
 type PostMedia
 @model
+@auth(rules: [
+  {allow: private, provider: iam, operations: [create]}
+])
 @key(name: "byPost", fields: ["postID"])
 {
   id: ID!
