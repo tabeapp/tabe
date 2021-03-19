@@ -9,12 +9,20 @@ const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
 
+import { createPost } from './graphql/mutations';
+import { getUserLocation } from './graphql/queries';
+
+import { uploadImages } from './ImageUpload';
+import { analyzeRoutine } from './AnalyzeRoutine';
+import { generateReport } from './AnalyzeRoutine/GenerateReport';
+import { analyzeWorkoutEfforts } from './AnalyzeRoutine/AnalyzeWorkoutEfforts';
+import { createTimelines } from './CreateTimelines';
+import { analyzeEffortsRecordsTrophies } from './Rankings';
+
 let graphqlClient;
 
-//ths now handles everything involved with uploading a post
-//theres a lot to it
 exports.handler = async (event, context, callback) => {
-    console.log('event', event)
+
     let env;
     let graphql_auth;
 
@@ -55,174 +63,56 @@ exports.handler = async (event, context, callback) => {
         });
     }
 
+    //update routine in here somewhere, don't forget
+    //event.arguments.workoutData will be used
+
+    const userID = event.identity.username;
+
+    const workoutData = event.arguments.workoutData;
+
+    //generate report is fine
+    const report = generateReport(workoutData);
+
+    //analyze workotu needs to be split into routine and effort functions
+    const efforts = analyzeWorkoutEfforts(report);
+
+
     const getUserLocationResult = await graphqlClient.query({
         query: gql(getUserLocation),
         fetchPolicy: 'network-only',
         variables: {
-            userID: event.identity.username
+            userID: userID
         }
     });
 
-    let gymID = 'emptyGym';
-    if(getUserLocationResult.data.getUserLocation)
-        gymID = getUserLocationResult.data.getUserLocation.gymID;
+    const userLocation = getUserLocationResult.data.getUserLocation;
 
-
-    console.log('gymid from appsync', gymID);
-
-    //post to the origin
     const postInput = {
-        mutation: gql(createPost),
+        mutuation: gql(createPost),
         variables: {
             input: {
                 type: 'post',
                 title: event.arguments.title,
                 description: event.arguments.description,
-                data: event.arguments.data,
-                gymID: gymID,
-                userID: event.identity.username,
-            },
-        },
-    };
-    const res = await graphqlClient.mutate(postInput);
-    console.log(res);
-    const post = res.data.createPost;
-
-    // list followers
-    const queryInput = {
-        followeeID: event.identity.username,
-        limit: 100000,
-    }
-    console.log(queryInput)
-    const listFollowRelationshipsResult = await graphqlClient.query({
-        query: gql(listFollowRelationships),
-        fetchPolicy: 'network-only',
-        variables: queryInput,
-    });
-    console.log(listFollowRelationshipsResult);
-    const followers = listFollowRelationshipsResult.data.listFollowRelationships.items;
-    console.log(followers);
-
-    //post to timeline
-    //only add yourself if you're not already added
-    if(!followers.some(follower => follower.followerID === post.userID )){
-        followers.push({ followerID: post.userID });
-    }
-    //is this scalable...
-    const results = await Promise.all(followers.map((follower)=> createTimelineForAUser({follower: follower, post: post})));
-    console.log(results)
-
-    return post;
-};
-
-const createTimelineForAUser = async ({follower, post}) => {
-    const timelineInput = {
-        mutation: gql(createTimeline),
-        variables: {
-            input: {
-                userID: follower.followerID,
-                postID: post.id,
-            },
-        },
-    }
-    const res = await graphqlClient.mutate(timelineInput);
-    console.log(res);
-}
-
-const getUserLocation = /* GraphQL */ `
-  query GetUserLocation($userID: ID!) {
-    getUserLocation(userID: $userID) {
-      userID
-      gymID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const listFollowRelationships = /* GraphQL */ `
-  query ListFollowRelationships(
-    $followeeID: ID
-    $followerID: ModelIDKeyConditionInput
-    $filter: ModelFollowRelationshipFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listFollowRelationships(
-      followeeID: $followeeID
-      followerID: $followerID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        followeeID
-        followerID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-
-const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    createPost(input: $input, condition: $condition) {
-      type
-      id
-      title
-      description
-      data
-      userID
-      gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const createTimeline = /* GraphQL */ `
-  mutation CreateTimeline(
-    $input: CreateTimelineInput!
-    $condition: ModelTimelineConditionInput
-  ) {
-    createTimeline(input: $input, condition: $condition) {
-      userID
-      postID
-      createdAt
-      updatedAt
-      post {
-        type
-        id
-        title
-        description
-        data
-        userID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
+                data: JSON.stringify(event.arguments.report.exercises),
+                gymID: userLocation.gymID,
+                userID: userID
+            }
         }
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
+    };
+
+    const postRes = await graphqlClient.mutate(postInput);
+
+    //this is the most important variable
+    const postID = postRes.data.createPost.post.id;
+
+    //we now split into 3 independent processing paths
+    await Promise.all([
+        () => analyzeRoutine(graphqlClient, workoutData, report, efforts),
+        () => createTimelines(graphqlClient, postID, userID),
+        () => uploadImages(graphqlClient, postID, event.arguments.imageUrls),
+        () => analyzeEffortsRecordsTrophies(graphqlClient, postID, efforts, userID, userLocation),
+    ]);
+
+    return postID;
+};
