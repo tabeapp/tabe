@@ -5,24 +5,22 @@ exports.analyzeWorkoutEfforts = report => {
 
     console.log(report);
 
-    if(report.exercises){
-        report.exercises.forEach(ex => {
-            const name = ex.name.split('-')[0];
+    report.forEach(ex => {
+        const name = ex.name.split('-')[0];
 
-            let orm = -1;
+        let orm = -1;
 
-            ex.work.forEach(info => {
-                const calculatedOrm = REPS_TO_REPS(info.weight, info.reps, 1);
+        ex.work.forEach(info => {
+            const calculatedOrm = REPS_TO_REPS(info.weight, info.reps, 1);
 
-                if(calculatedOrm > orm)
-                    workoutMaxes[name] = {
-                        weight: info.weight,
-                        reps: info.reps,
-                        orm: calculatedOrm,
-                    };
-            });
+            if(calculatedOrm > orm)
+                workoutMaxes[name] = {
+                    weight: info.weight,
+                    reps: info.reps,
+                    orm: calculatedOrm,
+                };
         });
-    }
+    });
 
     return workoutMaxes;
 }

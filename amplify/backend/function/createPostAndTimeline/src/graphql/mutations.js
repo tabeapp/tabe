@@ -238,14 +238,6 @@ exports.createPost = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
       userImage {
         userID
         uri
@@ -394,14 +386,6 @@ exports.createTimeline = /* GraphQL */ `
             createdAt
             updatedAt
           }
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          image
           createdAt
           updatedAt
         }

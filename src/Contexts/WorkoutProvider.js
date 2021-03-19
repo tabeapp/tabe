@@ -244,7 +244,7 @@ const WorkoutProvider = props => {
     };
 
     const createReport = () => {
-        const { report } = generateReport(data);
+        const report = generateReport(data);
         return report;
     };
 
@@ -528,6 +528,8 @@ const WorkoutProvider = props => {
 
             //gymID: gymID
         }));
+
+        console.log('lambda done, ', res);
 
         workoutDispatch(() => initState);
 

@@ -4,6 +4,7 @@ const gql = require('graphql-tag');
 
 exports.analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, userID, userLocation) => {
     //efforts isn't identical to what it is in saveEfforts
+    console.log('analyzing efforts', efforts);
     if(Object.keys(efforts).length === 0)
         return;
 

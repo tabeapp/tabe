@@ -16,11 +16,7 @@ const ReportScreen = props => {
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky
-    const [report, setReport] = useState({
-        title: '',
-        summary: '',
-        exercises: []
-    });
+    const [report, setReport] = useState([]);
     //bruh
     useEffect(() => {
         //maybe just like a report preview?
@@ -88,7 +84,7 @@ const ReportScreen = props => {
         saveWorkout({
             title: title,
             description: description,
-            //data: JSON.stringify(report.exercises),
+            //data: JSON.stringify(report.e.xercises),
             media: media
 
         });
@@ -116,7 +112,7 @@ const ReportScreen = props => {
                     onChange={setDescription}
                 />
                 {
-                    report && report.exercises.map((ex, index) =>
+                    report && report.map((ex, index) =>
                         index === 0 ?
                             //first one is biggest
                             <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
@@ -133,6 +129,7 @@ const ReportScreen = props => {
                                 <Words style={{fontSize: 20}}>{ex.name}</Words>
                                 {
                                     ex.work.map((set,i) =>
+
                                         <Words key={i} style={{fontSize: 20}}>
                                             {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
                                         </Words>)

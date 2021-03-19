@@ -71,11 +71,17 @@ exports.handler = async (event, context, callback) => {
 
     const workoutData = JSON.parse(event.arguments.workoutData);
 
+
+    console.log('workoutData', workoutData);
     //generate report is fine
     const report = generateReport(workoutData);
 
+    console.log('report', report);
+
     //analyze workotu needs to be split into routine and effort functions
     const efforts = analyzeWorkoutEfforts(report);
+
+    console.log('efforts', efforts);
 
 
     const getUserLocationResult = await graphqlClient.query({
@@ -95,7 +101,7 @@ exports.handler = async (event, context, callback) => {
                 type: 'post',
                 title: event.arguments.title,
                 description: event.arguments.description,
-                data: JSON.stringify(report.exercises),
+                data: JSON.stringify(report),
                 gymID: userLocation.gymID,
                 userID: userID
             }
@@ -107,13 +113,16 @@ exports.handler = async (event, context, callback) => {
     //this is the most important variable
     const postID = postRes.data.createPost.id;
 
-    //we now split into 3 independent processing paths
-    await Promise.all([
-        () => analyzeRoutine(graphqlClient, workoutData, report, efforts),
-        () => createTimelines(graphqlClient, postID, userID),
-        () => uploadImages(graphqlClient, postID, JSON.parse(event.arguments.imageUrls)),
-        () => analyzeEffortsRecordsTrophies(graphqlClient, postID, efforts, userID, userLocation),
-    ]);
+    //we now split into 4 independent processing paths
+    console.log('analyzing routine');
+    await analyzeRoutine(graphqlClient, workoutData, report, efforts);
+    console.log('creating timelines');
+    await createTimelines(graphqlClient, postID, userID);
+    console.log('uplading images');
+    await uploadImages(graphqlClient, postID, JSON.parse(event.arguments.imageUrls));
+    console.log('analyzing efforts for records and trophies');
+    await analyzeEffortsRecordsTrophies(graphqlClient, postID, efforts, userID, userLocation);
+    console.log('done')
 
     return postRes.data.createPost;
 };

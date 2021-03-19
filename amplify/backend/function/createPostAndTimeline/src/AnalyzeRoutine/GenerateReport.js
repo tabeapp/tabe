@@ -4,24 +4,14 @@ const { CURRENT } = require('../Constants/Symbols');
 //might want to merge in the other one too
 exports.generateReport = (workout) => {
     //just default for the report
-    if(!workout) {
-        return {
-            report: {
-                title: '',
-                summary: '',
-                exercises: []
-            }
-        }
-    }
+    if(!workout)
+        return [];
 
-    let report = {};
-    report.title = workout.title;
-    //this seems to mess with graphQl?
-    //report.time = new Date().getTime();//get current time;
+    let exercises;
 
     //now that we have workout-warmup, this is parsing incorrectly
     console.log(workout);
-    report.exercises = workout.exercises.map(exercise => {
+    exercises = workout.exercises.map(exercise => {
         if(exercise.name.includes('-Warmup'))
             return {work: []}
 
@@ -62,22 +52,10 @@ exports.generateReport = (workout) => {
         return exReport;
     });
 
-    report.exercises = report.exercises.filter(ex => ex.work.length);
+    exercises = exercises.filter(ex => ex.work.length);
 
-    let x = '';
-    report.exercises.forEach(ex => {
-        x += ex.name + ' ';
-        ex.work.forEach(info => {
-            x += info.sets + 'x' + info.reps + '@' + info.weight + ', ';
-        });
-    });
-    x = x.substring(0, x.length-2);
-    report.summary = x;
-
-    return {
-        report: report
-    };
-}
+    return exercises;
+};
 
 
 
