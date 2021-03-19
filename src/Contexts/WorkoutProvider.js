@@ -513,7 +513,32 @@ const WorkoutProvider = props => {
         //upload the images to s3
 
 
+        //get the urls ready in this way, then send them to teh
+        // lambda then upload them whenever
         const s3Urls = [];
+        for(let i = 0; i < workoutData.media.length; i++){
+            const urlParts = workoutData.media[i].split('.');
+            const extension = urlParts[urlParts.length-1];
+            const key = `${uuidv4()}.${extension}`;
+            s3Urls.push(key);
+        }
+
+
+        //upoad
+        for(let i = 0; i < workoutData.media.length; i++){
+            try{
+                const response = await fetch(workoutData.media[i]);
+                const blob = await response.blob();
+                await Storage.put(s3Urls[i], blob);
+            }
+            catch(e){}
+
+        }
+
+
+
+
+        /*const s3Urls = [];
         //there's a way to do this with await promise.all but its so fn complicated
         for(let i = 0; i < workoutData.media.length; i++){
             //suppose this could be a function of its own
@@ -537,7 +562,7 @@ const WorkoutProvider = props => {
                 console.log(e);
 
             }
-        }
+        }*/
 
         //now s3 urls are ready
         //lets save some postmedias
