@@ -258,7 +258,8 @@ type Mutation{
   createPostAndTimeline(
     title: String!
     description: String!
-    data: String!
+    workoutData: String!
+    imageUrls: String!
     #more shit
   ): Post
   @function(name: "createPostAndTimeline-${env}")

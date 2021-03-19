@@ -94,7 +94,7 @@ exports.handler = async (event, context, callback) => {
                 type: 'post',
                 title: event.arguments.title,
                 description: event.arguments.description,
-                data: JSON.stringify(event.arguments.report.exercises),
+                data: JSON.stringify(report.exercises),
                 gymID: userLocation.gymID,
                 userID: userID
             }
@@ -104,15 +104,15 @@ exports.handler = async (event, context, callback) => {
     const postRes = await graphqlClient.mutate(postInput);
 
     //this is the most important variable
-    const postID = postRes.data.createPost.post.id;
+    const postID = postRes.data.createPost.id;
 
     //we now split into 3 independent processing paths
     await Promise.all([
         () => analyzeRoutine(graphqlClient, workoutData, report, efforts),
         () => createTimelines(graphqlClient, postID, userID),
-        () => uploadImages(graphqlClient, postID, event.arguments.imageUrls),
+        () => uploadImages(graphqlClient, postID, JSON.parse(event.arguments.imageUrls)),
         () => analyzeEffortsRecordsTrophies(graphqlClient, postID, efforts, userID, userLocation),
     ]);
 
-    return postID;
+    return postRes.data.createPost;
 };
