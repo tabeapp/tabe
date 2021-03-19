@@ -1,4 +1,4 @@
-import { REPS_TO_REPS } from '../../Utils/UtilFunctions';
+import { REPS_TO_REPS } from '../Utils/UtilFunctions';
 
 export const analyzeWorkoutEfforts = report => {
     const workoutMaxes = {};

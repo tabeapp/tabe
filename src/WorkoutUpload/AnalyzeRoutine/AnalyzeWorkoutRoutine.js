@@ -1,5 +1,5 @@
-import { FAILURE, REST_DAY } from '../../Constants/Symbols';
-import { ROUND_5 } from '../../Utils/UtilFunctions';
+import { FAILURE, REST_DAY } from '../Constants/Symbols';
+import { ROUND_5 } from '../Utils/UtilFunctions';
 
 export const analyzeWorkoutRoutine = (workout, report, efforts, routine) => {
     if(!routine)

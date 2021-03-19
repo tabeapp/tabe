@@ -5,7 +5,8 @@ import {
     listRecordsByExerciseAndGym, listRecordsByExerciseAndState,
 } from '../graphql/queries';
 import { createTrophy, createUserRecord, updateUserRecord } from '../graphql/mutations';
-import { GLOBAL_REGION_ID } from '../../Constants/RegionConstants';
+import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import { checkRegionRanking } from './CheckRegionRanking';
 const gql = require('graphql-tag');
 
 export const checkEffortRankings = async (graphqlClient, effort, userLocation, userID, postID) => {

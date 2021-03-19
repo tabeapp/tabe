@@ -5,33 +5,16 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 
-
-import { analyzeRoutine } from './AnalyzeRoutine';
-
 const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
 
-import { uploadImages } from './ImageUpload';
-import {
-    createEffort,
-    createPost,
-    createPostMedia,
-    createTimeline,
-    createTrophy, createUserRecord,
-    updateRoutine, updateUserRecord,
-} from './graphql/mutations';
-import {
-    getRoutine,
-    getUserLocation, getUserRecord, listEffortsByExerciseAndUser,
-    listFollowRelationships, listRecordsByExercise, listRecordsByExerciseAndCity, listRecordsByExerciseAndCountry,
-    listRecordsByExerciseAndGym, listRecordsByExerciseAndState,
-} from './graphql/queries';
+import { createPost } from './graphql/mutations';
+import { getUserLocation } from './graphql/queries';
 
-import { generateReport } from '../Utils/GenerateReport';
-import { REPS_TO_REPS, ROUND_5 } from '../Utils/UtilFunctions';
-import { FAILURE, REST_DAY } from '../Constants/Symbols';
-import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import { uploadImages } from './ImageUpload';
+import { analyzeRoutine } from './AnalyzeRoutine';
+import { generateReport } from './AnalyzeRoutine/GenerateReport';
 import { analyzeWorkoutEfforts } from './AnalyzeRoutine/AnalyzeWorkoutEfforts';
 import { createTimelines } from './CreateTimelines';
 import { analyzeEffortsRecordsTrophies } from './Rankings';
