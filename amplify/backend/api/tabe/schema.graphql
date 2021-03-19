@@ -1,11 +1,3 @@
-type User @model{
-  id: ID!
-  username: String!
-  email: String!
-  image: String
-}
-
-
 type UserRecord @model
 @key(fields: ["userID", "exercise"])
 @auth(rules: [
@@ -46,6 +38,11 @@ type UserLocation @model
 }
 
 type UserImage @model
+@auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, update, create]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read]}
+])
 @key(fields: ["userID"])
 {
   userID: ID!
@@ -128,7 +125,6 @@ type Post
   userID: ID!
   gymID: ID!
   gym: Gym @connection(fields: ["gymID"])
-  user: User @connection(fields: ["userID"])
   userImage: UserImage @connection(fields: ["userID"])
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
   comments: [Comment] @connection(keyName: "byParent", fields: ["id"])
@@ -139,6 +135,7 @@ type Post
 type Effort
 @model
 @auth(rules: [
+  {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, create]}
 ])
 #is this the best way to do it?
@@ -176,22 +173,14 @@ type Trophy
   rank: Int!
 }
 
-type Location
-@model
-#just id for a key fine, right?
-@key(name: "bySuperLocation", fields: ["superLocationID"])
-{
-  id: ID!
-  name: String!
-  superLocationID: ID!
-  superLocation: Location @connection(fields: ["superLocationID"])
-}
-
-
 type Comment
 @model
 @key(name: "byParent", fields: ["postID"])
-#@auth(rules: [{ allow: private, provider: iam, operations: [read, update, delete] }])
+@auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read]}
+])
 {
   id: ID!
   userID: ID!
@@ -237,6 +226,11 @@ type CurrentWorkout
 
 type Like
 @model
+@auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create, delete]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read]}
+])
 @key(name: "byParent", fields: ["parentID"])
 {
   id: ID!
@@ -247,7 +241,8 @@ type Like
 type PostMedia
 @model
 @auth(rules: [
-  {allow: private, provider: iam, operations: [create]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [create, read]}
 ])
 @key(name: "byPost", fields: ["postID"])
 {

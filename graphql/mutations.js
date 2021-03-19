@@ -1,51 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      username
-      email
-      image
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      username
-      email
-      image
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      username
-      email
-      image
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const deleteUserRecord = /* GraphQL */ `
   mutation DeleteUserRecord(
     $input: DeleteUserRecordInput!
@@ -53,12 +8,6 @@ export const deleteUserRecord = /* GraphQL */ `
   ) {
     deleteUserRecord(input: $input, condition: $condition) {
       userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
       postID
       orm
       exercise
@@ -68,6 +17,12 @@ export const deleteUserRecord = /* GraphQL */ `
       gymID
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -249,32 +204,6 @@ export const deleteUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const createUserImage = /* GraphQL */ `
-  mutation CreateUserImage(
-    $input: CreateUserImageInput!
-    $condition: ModelUserImageConditionInput
-  ) {
-    createUserImage(input: $input, condition: $condition) {
-      userID
-      uri
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUserImage = /* GraphQL */ `
-  mutation UpdateUserImage(
-    $input: UpdateUserImageInput!
-    $condition: ModelUserImageConditionInput
-  ) {
-    updateUserImage(input: $input, condition: $condition) {
-      userID
-      uri
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const deleteUserImage = /* GraphQL */ `
   mutation DeleteUserImage(
     $input: DeleteUserImageInput!
@@ -380,68 +309,19 @@ export const updatePost = /* GraphQL */ `
     updatePost(input: $input, condition: $condition) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
       userID
       gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       userImage {
         userID
         uri
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       gym {
         id
         name
@@ -541,6 +421,47 @@ export const updatePost = /* GraphQL */ `
             }
             nextToken
           }
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -555,68 +476,19 @@ export const deletePost = /* GraphQL */ `
     deletePost(input: $input, condition: $condition) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
       userID
       gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       userImage {
         userID
         uri
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       gym {
         id
         name
@@ -716,6 +588,47 @@ export const deletePost = /* GraphQL */ `
             }
             nextToken
           }
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
         }
         nextToken
       }
@@ -814,157 +727,6 @@ export const deleteTrophy = /* GraphQL */ `
     }
   }
 `;
-export const createLocation = /* GraphQL */ `
-  mutation CreateLocation(
-    $input: CreateLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    createLocation(input: $input, condition: $condition) {
-      id
-      name
-      superLocationID
-      superLocation {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            superLocation {
-              id
-              name
-              superLocationID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateLocation = /* GraphQL */ `
-  mutation UpdateLocation(
-    $input: UpdateLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    updateLocation(input: $input, condition: $condition) {
-      id
-      name
-      superLocationID
-      superLocation {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            superLocation {
-              id
-              name
-              superLocationID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteLocation = /* GraphQL */ `
-  mutation DeleteLocation(
-    $input: DeleteLocationInput!
-    $condition: ModelLocationConditionInput
-  ) {
-    deleteLocation(input: $input, condition: $condition) {
-      id
-      name
-      superLocationID
-      superLocation {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            superLocation {
-              id
-              name
-              superLocationID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
-  ) {
-    createComment(input: $input, condition: $condition) {
-      id
-      userID
-      postID
-      content
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateComment = /* GraphQL */ `
   mutation UpdateComment(
     $input: UpdateCommentInput!
@@ -975,6 +737,8 @@ export const updateComment = /* GraphQL */ `
       userID
       postID
       content
+      createdAt
+      updatedAt
       likes {
         items {
           id
@@ -985,8 +749,6 @@ export const updateComment = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1000,6 +762,8 @@ export const deleteComment = /* GraphQL */ `
       userID
       postID
       content
+      createdAt
+      updatedAt
       likes {
         items {
           id
@@ -1010,8 +774,6 @@ export const deleteComment = /* GraphQL */ `
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1059,40 +821,12 @@ export const deleteCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const createLike = /* GraphQL */ `
-  mutation CreateLike(
-    $input: CreateLikeInput!
-    $condition: ModelLikeConditionInput
-  ) {
-    createLike(input: $input, condition: $condition) {
-      id
-      parentID
-      userID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateLike = /* GraphQL */ `
   mutation UpdateLike(
     $input: UpdateLikeInput!
     $condition: ModelLikeConditionInput
   ) {
     updateLike(input: $input, condition: $condition) {
-      id
-      parentID
-      userID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteLike = /* GraphQL */ `
-  mutation DeleteLike(
-    $input: DeleteLikeInput!
-    $condition: ModelLikeConditionInput
-  ) {
-    deleteLike(input: $input, condition: $condition) {
       id
       parentID
       userID
@@ -1168,61 +902,19 @@ export const updateTimeline = /* GraphQL */ `
       post {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -1292,6 +984,40 @@ export const updateTimeline = /* GraphQL */ `
             trophies {
               nextToken
             }
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1312,61 +1038,19 @@ export const deleteTimeline = /* GraphQL */ `
       post {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -1439,6 +1123,40 @@ export const deleteTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
       }
     }
   }
@@ -1450,12 +1168,6 @@ export const createUserRecord = /* GraphQL */ `
   ) {
     createUserRecord(input: $input, condition: $condition) {
       userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
       postID
       orm
       exercise
@@ -1465,6 +1177,12 @@ export const createUserRecord = /* GraphQL */ `
       gymID
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -1475,12 +1193,6 @@ export const updateUserRecord = /* GraphQL */ `
   ) {
     updateUserRecord(input: $input, condition: $condition) {
       userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
       postID
       orm
       exercise
@@ -1490,6 +1202,12 @@ export const updateUserRecord = /* GraphQL */ `
       gymID
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -1579,6 +1297,32 @@ export const createUserLocation = /* GraphQL */ `
           }
         }
       }
+    }
+  }
+`;
+export const createUserImage = /* GraphQL */ `
+  mutation CreateUserImage(
+    $input: CreateUserImageInput!
+    $condition: ModelUserImageConditionInput
+  ) {
+    createUserImage(input: $input, condition: $condition) {
+      userID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserImage = /* GraphQL */ `
+  mutation UpdateUserImage(
+    $input: UpdateUserImageInput!
+    $condition: ModelUserImageConditionInput
+  ) {
+    updateUserImage(input: $input, condition: $condition) {
+      userID
+      uri
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1944,68 +1688,19 @@ export const createPost = /* GraphQL */ `
     createPost(input: $input, condition: $condition) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
       userID
       gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       userImage {
         userID
         uri
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       gym {
         id
         name
@@ -2108,6 +1803,47 @@ export const createPost = /* GraphQL */ `
         }
         nextToken
       }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -2157,6 +1893,31 @@ export const createTrophy = /* GraphQL */ `
     }
   }
 `;
+export const createComment = /* GraphQL */ `
+  mutation CreateComment(
+    $input: CreateCommentInput!
+    $condition: ModelCommentConditionInput
+  ) {
+    createComment(input: $input, condition: $condition) {
+      id
+      userID
+      postID
+      content
+      createdAt
+      updatedAt
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
 export const createRoutine = /* GraphQL */ `
   mutation CreateRoutine(
     $input: CreateRoutineInput!
@@ -2203,6 +1964,34 @@ export const updateCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
+export const createLike = /* GraphQL */ `
+  mutation CreateLike(
+    $input: CreateLikeInput!
+    $condition: ModelLikeConditionInput
+  ) {
+    createLike(input: $input, condition: $condition) {
+      id
+      parentID
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLike = /* GraphQL */ `
+  mutation DeleteLike(
+    $input: DeleteLikeInput!
+    $condition: ModelLikeConditionInput
+  ) {
+    deleteLike(input: $input, condition: $condition) {
+      id
+      parentID
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPostMedia = /* GraphQL */ `
   mutation CreatePostMedia(
     $input: CreatePostMediaInput!
@@ -2243,61 +2032,19 @@ export const createTimeline = /* GraphQL */ `
       post {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -2370,6 +2117,40 @@ export const createTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
       }
     }
   }
@@ -2389,68 +2170,19 @@ export const createPostAndTimeline = /* GraphQL */ `
     ) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
       userID
       gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       userImage {
         userID
         uri
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       gym {
         id
         name
@@ -2550,6 +2282,47 @@ export const createPostAndTimeline = /* GraphQL */ `
             }
             nextToken
           }
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
         }
         nextToken
       }

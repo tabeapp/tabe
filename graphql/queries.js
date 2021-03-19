@@ -85,269 +85,10 @@ export const nearbyGyms = /* GraphQL */ `
     }
   }
 `;
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      username
-      email
-      image
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUserImage = /* GraphQL */ `
-  query GetUserImage($userID: ID!) {
-    getUserImage(userID: $userID) {
-      userID
-      uri
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserImages = /* GraphQL */ `
-  query ListUserImages(
-    $userID: ID
-    $filter: ModelUserImageFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listUserImages(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getLocation = /* GraphQL */ `
-  query GetLocation($id: ID!) {
-    getLocation(id: $id) {
-      id
-      name
-      superLocationID
-      superLocation {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            superLocation {
-              id
-              name
-              superLocationID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listLocations = /* GraphQL */ `
-  query ListLocations(
-    $filter: ModelLocationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        superLocationID
-        superLocation {
-          id
-          name
-          superLocationID
-          superLocation {
-            id
-            name
-            superLocationID
-            superLocation {
-              id
-              name
-              superLocationID
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
-      id
-      userID
-      postID
-      content
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userID
-        postID
-        content
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getLike = /* GraphQL */ `
-  query GetLike($id: ID!) {
-    getLike(id: $id) {
-      id
-      parentID
-      userID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listLikes = /* GraphQL */ `
-  query ListLikes(
-    $filter: ModelLikeFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        parentID
-        userID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPostMedia = /* GraphQL */ `
-  query GetPostMedia($id: ID!) {
-    getPostMedia(id: $id) {
-      id
-      postID
-      uri
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPostMedias = /* GraphQL */ `
-  query ListPostMedias(
-    $filter: ModelPostMediaFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPostMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        postID
-        uri
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getUserRecord = /* GraphQL */ `
   query GetUserRecord($userID: ID!, $exercise: String!) {
     getUserRecord(userID: $userID, exercise: $exercise) {
       userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
       postID
       orm
       exercise
@@ -357,6 +98,12 @@ export const getUserRecord = /* GraphQL */ `
       gymID
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -379,12 +126,6 @@ export const listUserRecords = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -394,6 +135,12 @@ export const listUserRecords = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -418,12 +165,6 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -433,6 +174,12 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -457,12 +204,6 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -472,6 +213,12 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -496,12 +243,6 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -511,6 +252,12 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -535,12 +282,6 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -550,6 +291,12 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -574,12 +321,6 @@ export const listRecordsByUser = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -589,6 +330,12 @@ export const listRecordsByUser = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -613,12 +360,6 @@ export const listRecordsByExercise = /* GraphQL */ `
     ) {
       items {
         userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
         postID
         orm
         exercise
@@ -628,6 +369,12 @@ export const listRecordsByExercise = /* GraphQL */ `
         gymID
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -796,6 +543,41 @@ export const listUserLocations = /* GraphQL */ `
         }
       }
       nextToken
+    }
+  }
+`;
+export const listUserImages = /* GraphQL */ `
+  query ListUserImages(
+    $userID: ID
+    $filter: ModelUserImageFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserImages(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserImage = /* GraphQL */ `
+  query GetUserImage($userID: ID!) {
+    getUserImage(userID: $userID) {
+      userID
+      uri
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1313,61 +1095,19 @@ export const listPosts = /* GraphQL */ `
       items {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -1440,6 +1180,40 @@ export const listPosts = /* GraphQL */ `
           }
           nextToken
         }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -1450,68 +1224,19 @@ export const getPost = /* GraphQL */ `
     getPost(id: $id) {
       type
       id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       title
       description
       data
       userID
       gymID
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
+      createdAt
+      updatedAt
       userImage {
         userID
         uri
         createdAt
         updatedAt
       }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
       gym {
         id
         name
@@ -1614,6 +1339,47 @@ export const getPost = /* GraphQL */ `
         }
         nextToken
       }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          createdAt
+          updatedAt
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1637,61 +1403,19 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
       items {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -1761,6 +1485,40 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
             trophies {
               nextToken
             }
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1789,61 +1547,19 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
       items {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -1913,6 +1629,40 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             trophies {
               nextToken
             }
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -1939,61 +1689,19 @@ export const searchPosts = /* GraphQL */ `
       items {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -2063,6 +1771,40 @@ export const searchPosts = /* GraphQL */ `
             trophies {
               nextToken
             }
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
           }
           nextToken
         }
@@ -2210,6 +1952,57 @@ export const listTrophys = /* GraphQL */ `
     }
   }
 `;
+export const getComment = /* GraphQL */ `
+  query GetComment($id: ID!) {
+    getComment(id: $id) {
+      id
+      userID
+      postID
+      content
+      createdAt
+      updatedAt
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listComments = /* GraphQL */ `
+  query ListComments(
+    $filter: ModelCommentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        postID
+        content
+        createdAt
+        updatedAt
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const getRoutine = /* GraphQL */ `
   query GetRoutine($id: ID!) {
     getRoutine(id: $id) {
@@ -2338,6 +2131,64 @@ export const listCurrentWorkouts = /* GraphQL */ `
     }
   }
 `;
+export const getLike = /* GraphQL */ `
+  query GetLike($id: ID!) {
+    getLike(id: $id) {
+      id
+      parentID
+      userID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLikes = /* GraphQL */ `
+  query ListLikes(
+    $filter: ModelLikeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        parentID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPostMedia = /* GraphQL */ `
+  query GetPostMedia($id: ID!) {
+    getPostMedia(id: $id) {
+      id
+      postID
+      uri
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPostMedias = /* GraphQL */ `
+  query ListPostMedias(
+    $filter: ModelPostMediaFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostMedias(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        postID
+        uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getFollowRelationship = /* GraphQL */ `
   query GetFollowRelationship($followeeID: ID!, $followerID: ID!) {
     getFollowRelationship(followeeID: $followeeID, followerID: $followerID) {
@@ -2385,61 +2236,19 @@ export const getTimeline = /* GraphQL */ `
       post {
         type
         id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
         title
         description
         data
         userID
         gymID
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
+        createdAt
+        updatedAt
         userImage {
           userID
           uri
           createdAt
           updatedAt
         }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
         gym {
           id
           name
@@ -2512,6 +2321,40 @@ export const getTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            createdAt
+            updatedAt
+            likes {
+              nextToken
+            }
+          }
+          nextToken
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
       }
     }
   }
@@ -2541,58 +2384,19 @@ export const listTimelines = /* GraphQL */ `
         post {
           type
           id
-          media {
-            items {
-              id
-              postID
-              uri
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
           title
           description
           data
           userID
           gymID
-          user {
-            id
-            username
-            email
-            image
-            createdAt
-            updatedAt
-          }
+          createdAt
+          updatedAt
           userImage {
             userID
             uri
             createdAt
             updatedAt
           }
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          comments {
-            items {
-              id
-              userID
-              postID
-              content
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
           gym {
             id
             name
@@ -2636,6 +2440,37 @@ export const listTimelines = /* GraphQL */ `
               weight
               reps
               orm
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            items {
+              id
+              userID
+              postID
+              content
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          media {
+            items {
+              id
+              postID
+              uri
               createdAt
               updatedAt
             }
