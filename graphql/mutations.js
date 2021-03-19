@@ -2378,12 +2378,14 @@ export const createPostAndTimeline = /* GraphQL */ `
   mutation CreatePostAndTimeline(
     $title: String!
     $description: String!
-    $data: String!
+    $workoutData: String!
+    $imageUrls: String!
   ) {
     createPostAndTimeline(
       title: $title
       description: $description
-      data: $data
+      workoutData: $workoutData
+      imageUrls: $imageUrls
     ) {
       type
       id
