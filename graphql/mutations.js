@@ -46,56 +46,6 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createUserRecord = /* GraphQL */ `
-  mutation CreateUserRecord(
-    $input: CreateUserRecordInput!
-    $condition: ModelUserRecordConditionInput
-  ) {
-    createUserRecord(input: $input, condition: $condition) {
-      userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-      postID
-      orm
-      exercise
-      countryID
-      stateID
-      cityID
-      gymID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUserRecord = /* GraphQL */ `
-  mutation UpdateUserRecord(
-    $input: UpdateUserRecordInput!
-    $condition: ModelUserRecordConditionInput
-  ) {
-    updateUserRecord(input: $input, condition: $condition) {
-      userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-      postID
-      orm
-      exercise
-      countryID
-      stateID
-      cityID
-      gymID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const deleteUserRecord = /* GraphQL */ `
   mutation DeleteUserRecord(
     $input: DeleteUserRecordInput!
@@ -129,6 +79,8 @@ export const updateUserLocation = /* GraphQL */ `
     updateUserLocation(input: $input, condition: $condition) {
       userID
       gymID
+      createdAt
+      updatedAt
       gym {
         id
         name
@@ -139,12 +91,20 @@ export const updateUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        createdAt
+        updatedAt
         country {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -152,20 +112,20 @@ export const updateUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         state {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -173,20 +133,20 @@ export const updateUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         city {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -194,19 +154,9 @@ export const updateUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
-        createdAt
-        updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -218,6 +168,8 @@ export const deleteUserLocation = /* GraphQL */ `
     deleteUserLocation(input: $input, condition: $condition) {
       userID
       gymID
+      createdAt
+      updatedAt
       gym {
         id
         name
@@ -228,12 +180,20 @@ export const deleteUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        createdAt
+        updatedAt
         country {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -241,20 +201,20 @@ export const deleteUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         state {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -262,20 +222,20 @@ export const deleteUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         city {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -283,19 +243,9 @@ export const deleteUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
-        createdAt
-        updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -338,360 +288,6 @@ export const deleteUserImage = /* GraphQL */ `
     }
   }
 `;
-export const createGym = /* GraphQL */ `
-  mutation CreateGym(
-    $input: CreateGymInput!
-    $condition: ModelGymConditionInput
-  ) {
-    createGym(input: $input, condition: $condition) {
-      id
-      name
-      location {
-        lat
-        lon
-      }
-      countryID
-      stateID
-      cityID
-      country {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      state {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      city {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateGym = /* GraphQL */ `
-  mutation UpdateGym(
-    $input: UpdateGymInput!
-    $condition: ModelGymConditionInput
-  ) {
-    updateGym(input: $input, condition: $condition) {
-      id
-      name
-      location {
-        lat
-        lon
-      }
-      countryID
-      stateID
-      cityID
-      country {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      state {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      city {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteGym = /* GraphQL */ `
-  mutation DeleteGym(
-    $input: DeleteGymInput!
-    $condition: ModelGymConditionInput
-  ) {
-    deleteGym(input: $input, condition: $condition) {
-      id
-      name
-      location {
-        lat
-        lon
-      }
-      countryID
-      stateID
-      cityID
-      country {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      state {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      city {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createRegion = /* GraphQL */ `
-  mutation CreateRegion(
-    $input: CreateRegionInput!
-    $condition: ModelRegionConditionInput
-  ) {
-    createRegion(input: $input, condition: $condition) {
-      id
-      superRegionID
-      superRegion {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      name
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateRegion = /* GraphQL */ `
   mutation UpdateRegion(
     $input: UpdateRegionInput!
@@ -700,15 +296,27 @@ export const updateRegion = /* GraphQL */ `
     updateRegion(input: $input, condition: $condition) {
       id
       superRegionID
+      name
+      createdAt
+      updatedAt
       superRegion {
         id
         superRegionID
+        name
+        createdAt
+        updatedAt
         superRegion {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -716,21 +324,9 @@ export const updateRegion = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
-        name
-        createdAt
-        updatedAt
       }
-      name
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -742,15 +338,27 @@ export const deleteRegion = /* GraphQL */ `
     deleteRegion(input: $input, condition: $condition) {
       id
       superRegionID
+      name
+      createdAt
+      updatedAt
       superRegion {
         id
         superRegionID
+        name
+        createdAt
+        updatedAt
         superRegion {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -758,21 +366,9 @@ export const deleteRegion = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
-        name
-        createdAt
-        updatedAt
       }
-      name
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -799,82 +395,6 @@ export const updatePost = /* GraphQL */ `
       data
       userID
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       user {
         id
         username
@@ -920,6 +440,84 @@ export const updatePost = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
       efforts {
         items {
           id
@@ -930,6 +528,7 @@ export const updatePost = /* GraphQL */ `
           reps
           orm
           createdAt
+          updatedAt
           trophies {
             items {
               id
@@ -942,12 +541,9 @@ export const updatePost = /* GraphQL */ `
             }
             nextToken
           }
-          updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -974,82 +570,6 @@ export const deletePost = /* GraphQL */ `
       data
       userID
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       user {
         id
         username
@@ -1095,6 +615,84 @@ export const deletePost = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
       efforts {
         items {
           id
@@ -1105,6 +703,7 @@ export const deletePost = /* GraphQL */ `
           reps
           orm
           createdAt
+          updatedAt
           trophies {
             items {
               id
@@ -1117,42 +716,9 @@ export const deletePost = /* GraphQL */ `
             }
             nextToken
           }
-          updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createEffort = /* GraphQL */ `
-  mutation CreateEffort(
-    $input: CreateEffortInput!
-    $condition: ModelEffortConditionInput
-  ) {
-    createEffort(input: $input, condition: $condition) {
-      id
-      postID
-      userID
-      exercise
-      weight
-      reps
-      orm
-      createdAt
-      trophies {
-        items {
-          id
-          effortID
-          type
-          targetID
-          rank
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
     }
   }
 `;
@@ -1170,6 +736,7 @@ export const updateEffort = /* GraphQL */ `
       reps
       orm
       createdAt
+      updatedAt
       trophies {
         items {
           id
@@ -1182,7 +749,6 @@ export const updateEffort = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
     }
   }
 `;
@@ -1200,6 +766,7 @@ export const deleteEffort = /* GraphQL */ `
       reps
       orm
       createdAt
+      updatedAt
       trophies {
         items {
           id
@@ -1212,23 +779,6 @@ export const deleteEffort = /* GraphQL */ `
         }
         nextToken
       }
-      updatedAt
-    }
-  }
-`;
-export const createTrophy = /* GraphQL */ `
-  mutation CreateTrophy(
-    $input: CreateTrophyInput!
-    $condition: ModelTrophyConditionInput
-  ) {
-    createTrophy(input: $input, condition: $condition) {
-      id
-      effortID
-      type
-      targetID
-      rank
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1465,38 +1015,6 @@ export const deleteComment = /* GraphQL */ `
     }
   }
 `;
-export const createRoutine = /* GraphQL */ `
-  mutation CreateRoutine(
-    $input: CreateRoutineInput!
-    $condition: ModelRoutineConditionInput
-  ) {
-    createRoutine(input: $input, condition: $condition) {
-      id
-      userID
-      title
-      current
-      routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateRoutine = /* GraphQL */ `
-  mutation UpdateRoutine(
-    $input: UpdateRoutineInput!
-    $condition: ModelRoutineConditionInput
-  ) {
-    updateRoutine(input: $input, condition: $condition) {
-      id
-      userID
-      title
-      current
-      routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const deleteRoutine = /* GraphQL */ `
   mutation DeleteRoutine(
     $input: DeleteRoutineInput!
@@ -1519,20 +1037,6 @@ export const createCurrentWorkout = /* GraphQL */ `
     $condition: ModelCurrentWorkoutConditionInput
   ) {
     createCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateCurrentWorkout = /* GraphQL */ `
-  mutation UpdateCurrentWorkout(
-    $input: UpdateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    updateCurrentWorkout(input: $input, condition: $condition) {
       userID
       data
       routineID
@@ -1592,20 +1096,6 @@ export const deleteLike = /* GraphQL */ `
       id
       parentID
       userID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createPostMedia = /* GraphQL */ `
-  mutation CreatePostMedia(
-    $input: CreatePostMediaInput!
-    $condition: ModelPostMediaConditionInput
-  ) {
-    createPostMedia(input: $input, condition: $condition) {
-      id
-      postID
-      uri
       createdAt
       updatedAt
     }
@@ -1693,61 +1183,6 @@ export const updateTimeline = /* GraphQL */ `
         data
         userID
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         user {
           id
           username
@@ -1786,6 +1221,63 @@ export const updateTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
         efforts {
           items {
             id
@@ -1796,15 +1288,13 @@ export const updateTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            updatedAt
             trophies {
               nextToken
             }
-            updatedAt
           }
           nextToken
         }
-        createdAt
-        updatedAt
       }
     }
   }
@@ -1837,61 +1327,6 @@ export const deleteTimeline = /* GraphQL */ `
         data
         userID
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         user {
           id
           username
@@ -1930,6 +1365,63 @@ export const deleteTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
         efforts {
           items {
             id
@@ -1940,16 +1432,64 @@ export const deleteTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            updatedAt
             trophies {
               nextToken
             }
-            updatedAt
           }
           nextToken
         }
+      }
+    }
+  }
+`;
+export const createUserRecord = /* GraphQL */ `
+  mutation CreateUserRecord(
+    $input: CreateUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    createUserRecord(input: $input, condition: $condition) {
+      userID
+      userImage {
+        userID
+        uri
         createdAt
         updatedAt
       }
+      postID
+      orm
+      exercise
+      countryID
+      stateID
+      cityID
+      gymID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserRecord = /* GraphQL */ `
+  mutation UpdateUserRecord(
+    $input: UpdateUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    updateUserRecord(input: $input, condition: $condition) {
+      userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+      postID
+      orm
+      exercise
+      countryID
+      stateID
+      cityID
+      gymID
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1961,6 +1501,8 @@ export const createUserLocation = /* GraphQL */ `
     createUserLocation(input: $input, condition: $condition) {
       userID
       gymID
+      createdAt
+      updatedAt
       gym {
         id
         name
@@ -1971,12 +1513,20 @@ export const createUserLocation = /* GraphQL */ `
         countryID
         stateID
         cityID
+        createdAt
+        updatedAt
         country {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -1984,20 +1534,20 @@ export const createUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         state {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -2005,20 +1555,20 @@ export const createUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         city {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -2026,19 +1576,363 @@ export const createUserLocation = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
+        }
+      }
+    }
+  }
+`;
+export const createGym = /* GraphQL */ `
+  mutation CreateGym(
+    $input: CreateGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    createGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      countryID
+      stateID
+      cityID
+      createdAt
+      updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
           name
           createdAt
           updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
         }
+      }
+      state {
+        id
+        superRegionID
+        name
         createdAt
         updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
       }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const updateGym = /* GraphQL */ `
+  mutation UpdateGym(
+    $input: UpdateGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    updateGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      countryID
+      stateID
+      cityID
       createdAt
       updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      state {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const deleteGym = /* GraphQL */ `
+  mutation DeleteGym(
+    $input: DeleteGymInput!
+    $condition: ModelGymConditionInput
+  ) {
+    deleteGym(input: $input, condition: $condition) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      countryID
+      stateID
+      cityID
+      createdAt
+      updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      state {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const createRegion = /* GraphQL */ `
+  mutation CreateRegion(
+    $input: CreateRegionInput!
+    $condition: ModelRegionConditionInput
+  ) {
+    createRegion(input: $input, condition: $condition) {
+      id
+      superRegionID
+      name
+      createdAt
+      updatedAt
+      superRegion {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -2065,82 +1959,6 @@ export const createPost = /* GraphQL */ `
       data
       userID
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       user {
         id
         username
@@ -2186,6 +2004,84 @@ export const createPost = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
       efforts {
         items {
           id
@@ -2196,6 +2092,7 @@ export const createPost = /* GraphQL */ `
           reps
           orm
           createdAt
+          updatedAt
           trophies {
             items {
               id
@@ -2208,10 +2105,113 @@ export const createPost = /* GraphQL */ `
             }
             nextToken
           }
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createEffort = /* GraphQL */ `
+  mutation CreateEffort(
+    $input: CreateEffortInput!
+    $condition: ModelEffortConditionInput
+  ) {
+    createEffort(input: $input, condition: $condition) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      reps
+      orm
+      createdAt
+      updatedAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
           updatedAt
         }
         nextToken
       }
+    }
+  }
+`;
+export const createTrophy = /* GraphQL */ `
+  mutation CreateTrophy(
+    $input: CreateTrophyInput!
+    $condition: ModelTrophyConditionInput
+  ) {
+    createTrophy(input: $input, condition: $condition) {
+      id
+      effortID
+      type
+      targetID
+      rank
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createRoutine = /* GraphQL */ `
+  mutation CreateRoutine(
+    $input: CreateRoutineInput!
+    $condition: ModelRoutineConditionInput
+  ) {
+    createRoutine(input: $input, condition: $condition) {
+      id
+      userID
+      title
+      current
+      routine
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateRoutine = /* GraphQL */ `
+  mutation UpdateRoutine(
+    $input: UpdateRoutineInput!
+    $condition: ModelRoutineConditionInput
+  ) {
+    updateRoutine(input: $input, condition: $condition) {
+      id
+      userID
+      title
+      current
+      routine
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCurrentWorkout = /* GraphQL */ `
+  mutation UpdateCurrentWorkout(
+    $input: UpdateCurrentWorkoutInput!
+    $condition: ModelCurrentWorkoutConditionInput
+  ) {
+    updateCurrentWorkout(input: $input, condition: $condition) {
+      userID
+      data
+      routineID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPostMedia = /* GraphQL */ `
+  mutation CreatePostMedia(
+    $input: CreatePostMediaInput!
+    $condition: ModelPostMediaConditionInput
+  ) {
+    createPostMedia(input: $input, condition: $condition) {
+      id
+      postID
+      uri
       createdAt
       updatedAt
     }
@@ -2258,61 +2258,6 @@ export const createTimeline = /* GraphQL */ `
         data
         userID
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         user {
           id
           username
@@ -2351,6 +2296,63 @@ export const createTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
         efforts {
           items {
             id
@@ -2361,15 +2363,13 @@ export const createTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            updatedAt
             trophies {
               nextToken
             }
-            updatedAt
           }
           nextToken
         }
-        createdAt
-        updatedAt
       }
     }
   }
@@ -2404,82 +2404,6 @@ export const createPostAndTimeline = /* GraphQL */ `
       data
       userID
       gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
       user {
         id
         username
@@ -2525,6 +2449,84 @@ export const createPostAndTimeline = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
       efforts {
         items {
           id
@@ -2535,6 +2537,7 @@ export const createPostAndTimeline = /* GraphQL */ `
           reps
           orm
           createdAt
+          updatedAt
           trophies {
             items {
               id
@@ -2547,12 +2550,9 @@ export const createPostAndTimeline = /* GraphQL */ `
             }
             nextToken
           }
-          updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;

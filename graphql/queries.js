@@ -14,12 +14,20 @@ export const nearbyGyms = /* GraphQL */ `
         countryID
         stateID
         cityID
+        createdAt
+        updatedAt
         country {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -27,20 +35,20 @@ export const nearbyGyms = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         state {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -48,20 +56,20 @@ export const nearbyGyms = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         city {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -69,16 +77,8 @@ export const nearbyGyms = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
-        createdAt
-        updatedAt
       }
       total
       nextToken
@@ -116,67 +116,6 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getUserRecord = /* GraphQL */ `
-  query GetUserRecord($userID: ID!, $exercise: String!) {
-    getUserRecord(userID: $userID, exercise: $exercise) {
-      userID
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-      postID
-      orm
-      exercise
-      countryID
-      stateID
-      cityID
-      gymID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserRecords = /* GraphQL */ `
-  query ListUserRecords(
-    $userID: ID
-    $exercise: ModelStringKeyConditionInput
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listUserRecords(
-      userID: $userID
-      exercise: $exercise
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getUserImage = /* GraphQL */ `
   query GetUserImage($userID: ID!) {
     getUserImage(userID: $userID) {
@@ -205,366 +144,6 @@ export const listUserImages = /* GraphQL */ `
       items {
         userID
         uri
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getGym = /* GraphQL */ `
-  query GetGym($id: ID!) {
-    getGym(id: $id) {
-      id
-      name
-      location {
-        lat
-        lon
-      }
-      countryID
-      stateID
-      cityID
-      country {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      state {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      city {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listGyms = /* GraphQL */ `
-  query ListGyms(
-    $filter: ModelGymFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listGyms(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getRegion = /* GraphQL */ `
-  query GetRegion($id: ID!) {
-    getRegion(id: $id) {
-      id
-      superRegionID
-      superRegion {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      name
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listRegions = /* GraphQL */ `
-  query ListRegions(
-    $filter: ModelRegionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRegions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        superRegionID
-        superRegion {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        name
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getEffort = /* GraphQL */ `
-  query GetEffort($id: ID!) {
-    getEffort(id: $id) {
-      id
-      postID
-      userID
-      exercise
-      weight
-      reps
-      orm
-      createdAt
-      trophies {
-        items {
-          id
-          effortID
-          type
-          targetID
-          rank
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const listEfforts = /* GraphQL */ `
-  query ListEfforts(
-    $filter: ModelEffortFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listEfforts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        postID
-        userID
-        exercise
-        weight
-        reps
-        orm
-        createdAt
-        trophies {
-          items {
-            id
-            effortID
-            type
-            targetID
-            rank
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getTrophy = /* GraphQL */ `
-  query GetTrophy($id: ID!) {
-    getTrophy(id: $id) {
-      id
-      effortID
-      type
-      targetID
-      rank
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listTrophys = /* GraphQL */ `
-  query ListTrophys(
-    $filter: ModelTrophyFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTrophys(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        effortID
-        type
-        targetID
-        rank
         createdAt
         updatedAt
       }
@@ -701,76 +280,6 @@ export const listComments = /* GraphQL */ `
     }
   }
 `;
-export const getRoutine = /* GraphQL */ `
-  query GetRoutine($id: ID!) {
-    getRoutine(id: $id) {
-      id
-      userID
-      title
-      current
-      routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listRoutines = /* GraphQL */ `
-  query ListRoutines(
-    $filter: ModelRoutineFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRoutines(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userID
-        title
-        current
-        routine
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getCurrentWorkout = /* GraphQL */ `
-  query GetCurrentWorkout($userID: ID!) {
-    getCurrentWorkout(userID: $userID) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listCurrentWorkouts = /* GraphQL */ `
-  query ListCurrentWorkouts(
-    $userID: ID
-    $filter: ModelCurrentWorkoutFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listCurrentWorkouts(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        data
-        routineID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getLike = /* GraphQL */ `
   query GetLike($id: ID!) {
     getLike(id: $id) {
@@ -822,6 +331,67 @@ export const listPostMedias = /* GraphQL */ `
         id
         postID
         uri
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserRecord = /* GraphQL */ `
+  query GetUserRecord($userID: ID!, $exercise: String!) {
+    getUserRecord(userID: $userID, exercise: $exercise) {
+      userID
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+      postID
+      orm
+      exercise
+      countryID
+      stateID
+      cityID
+      gymID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserRecords = /* GraphQL */ `
+  query ListUserRecords(
+    $userID: ID
+    $exercise: ModelStringKeyConditionInput
+    $filter: ModelUserRecordFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserRecords(
+      userID: $userID
+      exercise: $exercise
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        postID
+        orm
+        exercise
+        countryID
+        stateID
+        cityID
+        gymID
         createdAt
         updatedAt
       }
@@ -1063,6 +633,360 @@ export const listRecordsByExercise = /* GraphQL */ `
     }
   }
 `;
+export const getUserLocation = /* GraphQL */ `
+  query GetUserLocation($userID: ID!) {
+    getUserLocation(userID: $userID) {
+      userID
+      gymID
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+export const listUserLocations = /* GraphQL */ `
+  query ListUserLocations(
+    $userID: ID
+    $filter: ModelUserLocationFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserLocations(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        gymID
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listGyms = /* GraphQL */ `
+  query ListGyms(
+    $filter: ModelGymFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGyms(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getGym = /* GraphQL */ `
+  query GetGym($id: ID!) {
+    getGym(id: $id) {
+      id
+      name
+      location {
+        lat
+        lon
+      }
+      countryID
+      stateID
+      cityID
+      createdAt
+      updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      state {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export const listGymsByCity = /* GraphQL */ `
   query ListGymsByCity(
     $cityID: ID
@@ -1088,12 +1012,20 @@ export const listGymsByCity = /* GraphQL */ `
         countryID
         stateID
         cityID
+        createdAt
+        updatedAt
         country {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -1101,20 +1033,20 @@ export const listGymsByCity = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         state {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -1122,20 +1054,20 @@ export const listGymsByCity = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
-          name
-          createdAt
-          updatedAt
         }
         city {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -1143,18 +1075,184 @@ export const listGymsByCity = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
-            createdAt
-            updatedAt
           }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const searchGyms = /* GraphQL */ `
+  query SearchGyms(
+    $filter: SearchableGymFilterInput
+    $sort: SearchableGymSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchGyms(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
           name
           createdAt
           updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
         }
-        createdAt
-        updatedAt
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
       }
       nextToken
+      total
+    }
+  }
+`;
+export const listRegions = /* GraphQL */ `
+  query ListRegions(
+    $filter: ModelRegionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRegions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getRegion = /* GraphQL */ `
+  query GetRegion($id: ID!) {
+    getRegion(id: $id) {
+      id
+      superRegionID
+      name
+      createdAt
+      updatedAt
+      superRegion {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+        superRegion {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -1176,12 +1274,21 @@ export const listRegionsBySuperRegions = /* GraphQL */ `
       items {
         id
         superRegionID
+        name
+        createdAt
+        updatedAt
         superRegion {
           id
           superRegionID
+          name
+          createdAt
+          updatedAt
           superRegion {
             id
             superRegionID
+            name
+            createdAt
+            updatedAt
             superRegion {
               id
               superRegionID
@@ -1189,17 +1296,838 @@ export const listRegionsBySuperRegions = /* GraphQL */ `
               createdAt
               updatedAt
             }
-            name
+          }
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listPosts = /* GraphQL */ `
+  query ListPosts(
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        type
+        id
+        media {
+          items {
+            id
+            postID
+            uri
             createdAt
             updatedAt
           }
-          name
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        gymID
+        user {
+          id
+          username
+          email
+          image
           createdAt
           updatedAt
         }
-        name
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            likes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
         createdAt
         updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            createdAt
+            updatedAt
+            trophies {
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getPost = /* GraphQL */ `
+  query GetPost($id: ID!) {
+    getPost(id: $id) {
+      type
+      id
+      media {
+        items {
+          id
+          postID
+          uri
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      title
+      description
+      data
+      userID
+      gymID
+      user {
+        id
+        username
+        email
+        image
+        createdAt
+        updatedAt
+      }
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+      likes {
+        items {
+          id
+          parentID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      comments {
+        items {
+          id
+          userID
+          postID
+          content
+          likes {
+            items {
+              id
+              parentID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+          superRegion {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+      }
+      efforts {
+        items {
+          id
+          postID
+          userID
+          exercise
+          weight
+          reps
+          orm
+          createdAt
+          updatedAt
+          trophies {
+            items {
+              id
+              effortID
+              type
+              targetID
+              rank
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listPostsSortedByTimestamp = /* GraphQL */ `
+  query ListPostsSortedByTimestamp(
+    $type: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsSortedByTimestamp(
+      type: $type
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        gymID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            likes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            createdAt
+            updatedAt
+            trophies {
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
+  query ListPostsSortedByUserAndTimestamp(
+    $userID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPostsSortedByUserAndTimestamp(
+      userID: $userID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        gymID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            likes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            createdAt
+            updatedAt
+            trophies {
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const searchPosts = /* GraphQL */ `
+  query SearchPosts(
+    $filter: SearchablePostFilterInput
+    $sort: SearchablePostSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchPosts(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        type
+        id
+        media {
+          items {
+            id
+            postID
+            uri
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        title
+        description
+        data
+        userID
+        gymID
+        user {
+          id
+          username
+          email
+          image
+          createdAt
+          updatedAt
+        }
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
+        likes {
+          items {
+            id
+            parentID
+            userID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        comments {
+          items {
+            id
+            userID
+            postID
+            content
+            likes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
+        efforts {
+          items {
+            id
+            postID
+            userID
+            exercise
+            weight
+            reps
+            orm
+            createdAt
+            updatedAt
+            trophies {
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }
+      nextToken
+      total
+    }
+  }
+`;
+export const getEffort = /* GraphQL */ `
+  query GetEffort($id: ID!) {
+    getEffort(id: $id) {
+      id
+      postID
+      userID
+      exercise
+      weight
+      reps
+      orm
+      createdAt
+      updatedAt
+      trophies {
+        items {
+          id
+          effortID
+          type
+          targetID
+          rank
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listEfforts = /* GraphQL */ `
+  query ListEfforts(
+    $filter: ModelEffortFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEfforts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        postID
+        userID
+        exercise
+        weight
+        reps
+        orm
+        createdAt
+        updatedAt
+        trophies {
+          items {
+            id
+            effortID
+            type
+            targetID
+            rank
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
       }
       nextToken
     }
@@ -1231,6 +2159,7 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
         reps
         orm
         createdAt
+        updatedAt
         trophies {
           items {
             id
@@ -1243,6 +2172,71 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
           }
           nextToken
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const getTrophy = /* GraphQL */ `
+  query GetTrophy($id: ID!) {
+    getTrophy(id: $id) {
+      id
+      effortID
+      type
+      targetID
+      rank
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTrophys = /* GraphQL */ `
+  query ListTrophys(
+    $filter: ModelTrophyFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTrophys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        effortID
+        type
+        targetID
+        rank
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getRoutine = /* GraphQL */ `
+  query GetRoutine($id: ID!) {
+    getRoutine(id: $id) {
+      id
+      userID
+      title
+      current
+      routine
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRoutines = /* GraphQL */ `
+  query ListRoutines(
+    $filter: ModelRoutineFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRoutines(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        title
+        current
+        routine
+        createdAt
         updatedAt
       }
       nextToken
@@ -1307,1034 +2301,40 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
     }
   }
 `;
-export const searchGyms = /* GraphQL */ `
-  query SearchGyms(
-    $filter: SearchableGymFilterInput
-    $sort: SearchableGymSortInput
-    $limit: Int
-    $nextToken: String
-    $from: Int
-  ) {
-    searchGyms(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-    ) {
-      items {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
-    }
-  }
-`;
-export const getUserLocation = /* GraphQL */ `
-  query GetUserLocation($userID: ID!) {
-    getUserLocation(userID: $userID) {
+export const getCurrentWorkout = /* GraphQL */ `
+  query GetCurrentWorkout($userID: ID!) {
+    getCurrentWorkout(userID: $userID) {
       userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUserLocations = /* GraphQL */ `
-  query ListUserLocations(
-    $userID: ID
-    $filter: ModelUserLocationFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listUserLocations(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        type
-        id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        title
-        description
-        data
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        efforts {
-          items {
-            id
-            postID
-            userID
-            exercise
-            weight
-            reps
-            orm
-            createdAt
-            trophies {
-              nextToken
-            }
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      type
-      id
-      media {
-        items {
-          id
-          postID
-          uri
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      title
-      description
       data
-      userID
-      gymID
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        country {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          name
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        username
-        email
-        image
-        createdAt
-        updatedAt
-      }
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-      likes {
-        items {
-          id
-          parentID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          userID
-          postID
-          content
-          likes {
-            items {
-              id
-              parentID
-              userID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      efforts {
-        items {
-          id
-          postID
-          userID
-          exercise
-          weight
-          reps
-          orm
-          createdAt
-          trophies {
-            items {
-              id
-              effortID
-              type
-              targetID
-              rank
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          updatedAt
-        }
-        nextToken
-      }
+      routineID
       createdAt
       updatedAt
     }
   }
 `;
-export const listPostsSortedByTimestamp = /* GraphQL */ `
-  query ListPostsSortedByTimestamp(
-    $type: String
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPostsSortedByTimestamp(
-      type: $type
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        type
-        id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        title
-        description
-        data
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        efforts {
-          items {
-            id
-            postID
-            userID
-            exercise
-            weight
-            reps
-            orm
-            createdAt
-            trophies {
-              nextToken
-            }
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
-  query ListPostsSortedByUserAndTimestamp(
+export const listCurrentWorkouts = /* GraphQL */ `
+  query ListCurrentWorkouts(
     $userID: ID
-    $createdAt: ModelStringKeyConditionInput
+    $filter: ModelCurrentWorkoutFilterInput
+    $limit: Int
+    $nextToken: String
     $sortDirection: ModelSortDirection
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
   ) {
-    listPostsSortedByUserAndTimestamp(
+    listCurrentWorkouts(
       userID: $userID
-      createdAt: $createdAt
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
       sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
     ) {
       items {
-        type
-        id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        title
-        description
-        data
         userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        efforts {
-          items {
-            id
-            postID
-            userID
-            exercise
-            weight
-            reps
-            orm
-            createdAt
-            trophies {
-              nextToken
-            }
-            updatedAt
-          }
-          nextToken
-        }
+        data
+        routineID
         createdAt
         updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const searchPosts = /* GraphQL */ `
-  query SearchPosts(
-    $filter: SearchablePostFilterInput
-    $sort: SearchablePostSortInput
-    $limit: Int
-    $nextToken: String
-    $from: Int
-  ) {
-    searchPosts(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-    ) {
-      items {
-        type
-        id
-        media {
-          items {
-            id
-            postID
-            uri
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        title
-        description
-        data
-        userID
-        gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          username
-          email
-          image
-          createdAt
-          updatedAt
-        }
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-        likes {
-          items {
-            id
-            parentID
-            userID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        comments {
-          items {
-            id
-            userID
-            postID
-            content
-            likes {
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        efforts {
-          items {
-            id
-            postID
-            userID
-            exercise
-            weight
-            reps
-            orm
-            createdAt
-            trophies {
-              nextToken
-            }
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-      total
     }
   }
 `;
@@ -2400,61 +2400,6 @@ export const getTimeline = /* GraphQL */ `
         data
         userID
         gymID
-        gym {
-          id
-          name
-          location {
-            lat
-            lon
-          }
-          countryID
-          stateID
-          cityID
-          country {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          state {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          city {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
-          createdAt
-          updatedAt
-        }
         user {
           id
           username
@@ -2493,6 +2438,63 @@ export const getTimeline = /* GraphQL */ `
           }
           nextToken
         }
+        createdAt
+        updatedAt
+        gym {
+          id
+          name
+          location {
+            lat
+            lon
+          }
+          countryID
+          stateID
+          cityID
+          createdAt
+          updatedAt
+          country {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          state {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+          city {
+            id
+            superRegionID
+            name
+            createdAt
+            updatedAt
+            superRegion {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
+        }
         efforts {
           items {
             id
@@ -2503,15 +2505,13 @@ export const getTimeline = /* GraphQL */ `
             reps
             orm
             createdAt
+            updatedAt
             trophies {
               nextToken
             }
-            updatedAt
           }
           nextToken
         }
-        createdAt
-        updatedAt
       }
     }
   }
@@ -2556,40 +2556,6 @@ export const listTimelines = /* GraphQL */ `
           data
           userID
           gymID
-          gym {
-            id
-            name
-            location {
-              lat
-              lon
-            }
-            countryID
-            stateID
-            cityID
-            country {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            state {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            city {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            createdAt
-            updatedAt
-          }
           user {
             id
             username
@@ -2625,6 +2591,42 @@ export const listTimelines = /* GraphQL */ `
             }
             nextToken
           }
+          createdAt
+          updatedAt
+          gym {
+            id
+            name
+            location {
+              lat
+              lon
+            }
+            countryID
+            stateID
+            cityID
+            createdAt
+            updatedAt
+            country {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            state {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+            city {
+              id
+              superRegionID
+              name
+              createdAt
+              updatedAt
+            }
+          }
           efforts {
             items {
               id
@@ -2639,8 +2641,6 @@ export const listTimelines = /* GraphQL */ `
             }
             nextToken
           }
-          createdAt
-          updatedAt
         }
       }
       nextToken

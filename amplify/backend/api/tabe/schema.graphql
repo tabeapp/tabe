@@ -9,6 +9,7 @@ type User @model{
 type UserRecord @model
 @key(fields: ["userID", "exercise"])
 @auth(rules: [
+  {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, update, create]}
 ])
 @key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
@@ -54,6 +55,7 @@ type UserImage @model
 #might rename these to be more generic later idk
 type Gym @model @searchable
 @auth(rules: [
+  {allow: private, provider: userPools, operations: [read, create]}
   {allow: private, provider: iam, operations: [read]}
 ])
 @key(name: "byCity", fields: ["cityID"], queryField: "listGymsByCity")
@@ -74,7 +76,8 @@ type Gym @model @searchable
 #a gym will belong to dover, belong to nh, and belong to usa
 type Region @model
 @auth(rules: [
-  {allow: private, provider: iam, operations: [read]}
+  {allow: private, provider: userPools, operations: [read, create]}
+  {allow: private, provider: iam, operations: [read, create]}
 ])
 @key(name: "bySuperRegion", fields: ["superRegionID"], queryField: "listRegionsBySuperRegions")
 {
@@ -200,6 +203,8 @@ type Comment
 type Routine
 @model(subscriptions: null)
 @auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations: [read, update, create]}
+  {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, update]}
 ])
 @key(name: "byUser", fields: ["userID"], queryField: "listRoutinesByUser")
@@ -220,6 +225,7 @@ type Routine
 type CurrentWorkout
 @model
 @auth(rules: [
+  {allow: private, provider: userPools, operations: [read, update]}
   {allow: private, provider: iam, operations: [update]}
 ])
 @key(fields: ["userID"])
