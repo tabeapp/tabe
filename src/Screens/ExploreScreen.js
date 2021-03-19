@@ -19,7 +19,7 @@ const ExploreScreen = props => {
                     listOperation={listPostsSortedByTimestamp}
                     sortKey={'type'}
                     sortValue={'post'}
-                    subscriptionOperation={graphqlOperation(onCreatePost)}
+                    filledSubscriptionOperation={graphqlOperation(onCreatePost)}
                     subscriptionCriteria={() => true}
                 />
             </View>

@@ -284,7 +284,7 @@ const ProfileScreen = props => {
                         listOperation={listPostsSortedByUserAndTimestamp}
                         sortKey={'userID'}
                         sortValue={profileUser}
-                        subscriptionOperation={graphqlOperation(onCreatePost)}
+                        filledSubscriptionOperation={graphqlOperation(onCreatePost)}
                         subscriptionCriteria={post =>
                             post.userID === profileUser
                         }
