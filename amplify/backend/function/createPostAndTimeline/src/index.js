@@ -89,7 +89,7 @@ exports.handler = async (event, context, callback) => {
     const userLocation = getUserLocationResult.data.getUserLocation;
 
     const postInput = {
-        mutuation: gql(createPost),
+        mutation: gql(createPost),
         variables: {
             input: {
                 type: 'post',

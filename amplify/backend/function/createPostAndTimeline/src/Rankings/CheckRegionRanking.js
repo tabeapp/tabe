@@ -32,7 +32,7 @@ exports.checkRegionRanking = async (graphqlClient, effort, postID, operation, ke
     if(rank === -1)
         return false;
 
-    await graphqlClient.mutuation({
+    await graphqlClient.mutation({
         mutation: createTrophy,
         variables: {
             input: {
