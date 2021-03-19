@@ -32,7 +32,7 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
     if (personalRank === -1)
         return;
 
-    await graphqlClient.mutation({
+    await graphqlClient.mutate({
         mutation: gql(createTrophy),
         variables: {
             input: {

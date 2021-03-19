@@ -48,7 +48,15 @@ const PostList = props => {
         console.log('new', res);
         //so sorry
         const list = Object.values(res.data)[0];
-        dispatch({ type: type, posts: list.items });
+
+        //this is kinda a lazy way to do it, but hey what can you do
+        //list of timelines, which contains posts
+        if(list.items.length !== 0) {
+            if ('post' in list.items[0])
+                dispatch({ type: type, posts: list.items.map(timeline => timeline.post) });
+            else//list of posts
+                dispatch({ type: type, posts: list.items });
+        }
         setNextToken(list.nextToken);
         setIsLoading(false);
     };

@@ -162,6 +162,7 @@ type Effort
 type Trophy
 @model
 @auth(rules: [
+  {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, create]}
 ])
 @key(name: "byEffort", fields: ["effortID"])

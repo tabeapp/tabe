@@ -8,7 +8,7 @@ exports.analyzeRoutine = async (graphqlClient, workoutData, report, efforts) => 
         query: gql(getRoutine),
         fetchPolicy: 'network-only',
         variables: {
-            routineID: workoutData.routineID
+            id: workoutData.routineID
         }
     });
 
@@ -19,7 +19,6 @@ exports.analyzeRoutine = async (graphqlClient, workoutData, report, efforts) => 
     if(routine)
         await graphqlClient.mutate({
             mutation: gql(updateRoutine),
-            fetchPolicy: 'network-only',
             variables: {
                 input:{
                     id: oldRoutine.id,

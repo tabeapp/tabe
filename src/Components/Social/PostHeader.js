@@ -33,7 +33,11 @@ const PostHeader = props => {
                     navigation.navigate('profile', {userID: post.userID})
                 }}
             >
-                <S3Image key={post.userImage.uri} style={{width: 40, height: 40}} imgKey={post.userImage.uri}/>
+                {
+
+                    post.userImage &&
+                    <S3Image key={post.userImage.uri} style={{width: 40, height: 40}} imgKey={post.userImage.uri}/>
+                }
             </TouchableOpacity>
 
             <View style={{flex:1}}>

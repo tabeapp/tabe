@@ -65,7 +65,7 @@ const Post = ({post}) => {
                         }}
                     >
                         <Words style={{fontWeight: 'bold'}}>
-                            {post.likes.items.length}
+                            {post.likes && post.likes.items.length}
                         </Words>
                         <Words>
                             <Ionicons size={30} color={PRIMARY} name={icon}/>
@@ -78,7 +78,9 @@ const Post = ({post}) => {
                         }}
                     >
                         <Words>
-                            {post.comments.items.length}
+                            {
+                                //TODO you'll actually have to address this eventually
+                                post.comments && post.comments.items.length}
                         </Words>
                         <Words>
                             <Ionicons size={30} color={PRIMARY} name={'chatbox-outline'}/>

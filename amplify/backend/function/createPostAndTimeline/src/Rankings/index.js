@@ -10,13 +10,13 @@ exports.analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, u
 
     const uploadedEfforts = [];
 
-    for(let i = 0; i < Object.keys(efforts).length; i++){
-        const effort = efforts[i];
+    //hope this works lol
+    await Promise.all(Object.entries(efforts).map(async ([exercise, effort]) => {
         const effortResult = await graphqlClient.mutate({
             mutation: gql(createEffort),
             variables: {
                 input: {
-                    exercise: Object.keys(efforts)[i],
+                    exercise: exercise,
                     userID: userID,
                     postID: postID,
                     weight: effort.weight,
@@ -26,7 +26,7 @@ exports.analyzeEffortsRecordsTrophies = async (graphqlClient, postID, efforts, u
             }
         });
         uploadedEfforts.push(effortResult.data.createEffort);
-    }
+    }));
 
     //this isn't causing an error
     console.log(uploadedEfforts);

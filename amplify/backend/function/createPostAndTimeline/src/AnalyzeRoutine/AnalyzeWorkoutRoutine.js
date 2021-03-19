@@ -32,7 +32,7 @@ exports.analyzeWorkoutRoutine = (workout, report, efforts, routine) => {
         }
     });
 
-    report.exercises.forEach(ex => {
+    report.forEach(ex => {
         const setInfo = newRoutine.info[ex.name].setInfo;
         if(setInfo.type !== 'Custom')
             return;
