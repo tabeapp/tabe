@@ -117,7 +117,7 @@ const RestTimer = props => {
 
                 </Row>
 
-                <TouchableOpacity style={{margin: 20, borderRadius: 100, backgroundColor: 'black'}} onPress={close}>
+                <TouchableOpacity style={{margin: 20, borderRadius: 100, backgroundColor: BACKGROUND}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>
                 </TouchableOpacity>
             </SafeAreaView>

@@ -7,6 +7,7 @@ import Words from '../Simple/Words';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
+import { DARK_GRAY } from '../../Style/Colors';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
@@ -45,7 +46,7 @@ const WorkoutsDisplay = props => {
                     />
                 )
             }
-            <View style={{justifyContent: 'center', height: 200, width: width, backgroundColor: '#333'}}>
+            <View style={{justifyContent: 'center', height: 200, width: width, backgroundColor: DARK_GRAY}}>
                 <TouchableOpacity style={STYLES.textButton} onPress={() => {
                     //append a new obj
                     //works, but ideally I'd like A B C instead of 1 2 3

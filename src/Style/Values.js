@@ -1,6 +1,7 @@
 //i really don't know if this is the best way to do this, should i use some fancy CSS thing?
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { DARK_GRAY } from './Colors';
 
 export const FONT = 'Arial';
 
@@ -22,7 +23,7 @@ export const STYLES = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         justifyContent: 'center',
-        backgroundColor: '#333',
+        backgroundColor: DARK_GRAY,
         width: 50,
         height: 50,
     },

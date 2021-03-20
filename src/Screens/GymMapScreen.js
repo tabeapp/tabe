@@ -17,6 +17,7 @@ import {
     deleteUserLocation, deleteUserRecord,
 } from '../../graphql/mutations';
 import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import { BACKGROUND } from '../Style/Colors';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -353,7 +354,7 @@ const GymMapScreen = props => {
                     >
                         <View style={{ backgroundColor: 'gray', width: '50%', alignItems: 'center'}}>
                             <Write
-                                style={{backgroundColor: 'black', height: 50, width: '100%'}}
+                                style={{backgroundColor: BACKGROUND, height: 50, width: '100%'}}
                                 onChange={val => setNewGym({...newGym, name: val})}
                                 value={newGym.name}
                             />

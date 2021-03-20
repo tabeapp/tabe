@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
-import { PRIMARY } from '../../Style/Theme';
+import { PRIMARY } from '../../Style/Colors';
 //again, this appears in nearly every screen
 
 //this takes rightText, onPressLeft, title, onPressRight, and rightText

@@ -4,6 +4,7 @@ import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import Words from '../Simple/Words';
 import Chooser from '../Simple/Chooser';
 import { REST_DAY } from '../../Constants/Symbols';
+import { DARK_GRAY } from '../../Style/Colors';
 
 const DaysEditor = props => {
     const {routinesDispatch} = useContext(RoutinesContext);
@@ -28,7 +29,7 @@ const DaysEditor = props => {
                         alignItems: 'center',
                         width: '12.5%',
                         height: 40,
-                        backgroundColor: '#333',
+                        backgroundColor: DARK_GRAY,
                         margin: 3
                     }}>
                         <Chooser

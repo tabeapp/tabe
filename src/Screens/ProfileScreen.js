@@ -1,6 +1,6 @@
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { PRIMARY } from '../Style/Theme';
+import { PRIMARY } from '../Style/Colors';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
 import TopBar from '../Components/Navigation/TopBar';

@@ -8,6 +8,7 @@ import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { CommonActions } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { DARK_GRAY } from '../Style/Colors';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
@@ -103,7 +104,7 @@ const ReportScreen = props => {
                     report && report.map((ex, index) =>
                         index === 0 ?
                             //first one is biggest
-                            <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                            <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
                                 <Words style={{fontSize: 40}}>{ex.name}</Words>
                                 {
                                     ex.work.map((set,i) =>
@@ -113,7 +114,7 @@ const ReportScreen = props => {
                                 }
                             </View>
                             :
-                            <View style={{margin: 5, padding: 4, backgroundColor: '#333'}} key={ex.name}>
+                            <View style={{margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
                                 <Words style={{fontSize: 20}}>{ex.name}</Words>
                                 {
                                     ex.work.map((set,i) =>

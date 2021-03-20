@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
-import { PRIMARY } from '../../Style/Theme';
+import { DARK_GRAY, PRIMARY } from '../../Style/Colors';
 import Row from '../Simple/Row';
 import { S3Image } from 'aws-amplify-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -35,7 +35,7 @@ const Post = ({post}) => {
                         {
                             post.data &&
                             JSON.parse(post.data).map(exercise =>
-                                <View key={exercise.name} style={{borderTopWidth: 1, borderColor: '#222'}}>
+                                <View key={exercise.name} style={{borderTopWidth: 1, borderColor: DARK_GRAY}}>
                                     <Words style={{fontSize: 20}}>{exercise.name}</Words>
                                     <View style={{alignItems: 'center'}}>{
                                         exercise.work.map((set,i) =>

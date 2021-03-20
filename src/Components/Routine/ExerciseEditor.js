@@ -10,6 +10,7 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import Flip from '../Simple/Flip';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import { DARK_GRAY } from '../../Style/Colors';
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -55,7 +56,7 @@ const ExerciseEditor = props => {
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
     return (
-        <View key={name} style={{width: width, backgroundColor: '#222', padding: 3}}>
+        <View key={name} style={{width: width, backgroundColor: DARK_GRAY, padding: 3}}>
             <Words style={{fontSize: 30}}>{name}</Words>
 
             <Row>

@@ -9,6 +9,7 @@ import { STYLES } from '../../Style/Values';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
+import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -18,7 +19,7 @@ const SupersetSelector = props => {
 
     return (
         <TouchableOpacity
-            style={{flex: 1, backgroundColor: 'gray', borderWidth: 1, borderColor: 'black', justifyContent: 'center', alignItems: 'center'}}
+            style={{flex: 1, backgroundColor: 'gray', borderWidth: 1, borderColor: BACKGROUND, justifyContent: 'center', alignItems: 'center'}}
             onPress={() => setModal(true)}
         >
             <Words>Add Exercise</Words>
@@ -154,8 +155,8 @@ const WorkoutEditor = props => {
 
     //wtf is this 415 number supposed to be?
     return (
-        <View style={{width: width, backgroundColor: '#333'}}>
-            <Row style={{backgroundColor: '#222', padding: 5}}>
+        <View style={{width: width, backgroundColor: DARK_GRAY}}>
+            <Row style={{backgroundColor: DARK_GRAY, padding: 5}}>
                 <Words style={{fontSize: 30}}>Workout {name}</Words>
 
                 <Row>
@@ -204,7 +205,7 @@ const WorkoutEditor = props => {
                                     else{
                                         return <Words style={{
                                             borderWidth: 1,
-                                            borderColor: 'black',
+                                            borderColor: BACKGROUND,
                                             backgroundColor: 'gray',
                                             flex: 1
                                         }}>{e}</Words>

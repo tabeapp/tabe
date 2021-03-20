@@ -4,7 +4,7 @@ import Words from '../Simple/Words';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Row from '../Simple/Row';
 import { useNavigation } from '@react-navigation/native';
-import { PRIMARY } from '../../Style/Theme';
+import { PRIMARY } from '../../Style/Colors';
 import TrophyIcon from '../../Utils/TrophyIcon';
 import { S3Image } from 'aws-amplify-react-native';
 

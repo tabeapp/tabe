@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { API, graphqlOperation } from 'aws-amplify';
 import { deleteRoutine, updateRoutine } from '../../../graphql/mutations';
-import { PRIMARY } from '../../Style/Theme';
+import { DARK_GRAY, PRIMARY } from '../../Style/Colors';
 
 const RoutineCard = props => {
     const {routinesDispatch, getCurrent} = useContext(RoutinesContext);
@@ -59,7 +59,7 @@ const RoutineCard = props => {
                 /*send it off to routine editor*/
                 props.navigation.navigate('routineedit');
             }}
-            style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#222', padding: 10, margin: 4, borderRadius: 20, height: 100}}
+            style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: DARK_GRAY, padding: 10, margin: 4, borderRadius: 20, height: 100}}
         >
             <View>
                 <Words style={{fontSize: 40, fontWeight: 'bold'}}>{title}</Words>

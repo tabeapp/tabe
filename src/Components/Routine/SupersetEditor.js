@@ -29,7 +29,7 @@ const SupersetEditor = props => {
     //there's gotta be a more programmatic way to do this
     console.log(JSON.stringify(info));
     return(
-        <View key={name} style={{margin: 5, width: 400, backgroundColor: '#333'}}>
+        <View key={name} style={{margin: 5, width: 400, backgroundColor: DARK_GRAY}}>
             <Row>
                 <Words>{name}</Words>
                 <TouchableOpacity onPress={deleteExercise} style={{width: 20, borderWidth: 1, borderColor: 'red', borderRadius: 10}}>

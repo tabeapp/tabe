@@ -6,14 +6,10 @@ import SetCircle from './SetCircle';
 import Words from '../Simple/Words';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { CURRENT } from '../../Constants/Symbols';
-import { PRIMARY } from '../../Style/Theme';
+import { PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import NumericSelector from '../Routine/NumericSelector';
-
-
-const primaryColor = '#66d6f8';
-const secondaryColor = '#356b7e';
 
 //yes this will eventually implement timer visual
 const MidLine = (props) => {
@@ -66,11 +62,10 @@ const ExerciseCard = (props) => {
 
     let twoColors = sets.map(set => {
         if(!set.progress || set.progress === CURRENT)
-            return ['transparent', secondaryColor];
+            return ['transparent', PRIMARY_DARKER];
         return [PRIMARY, PRIMARY];
     });
 
-    //let outlines = sets.map(_ => secondaryColor);
     if(sets.every(set => set.progress && set.progress !== CURRENT))
         twoColors = twoColors.map(_ => ['lightgreen', 'lightgreen']);
 
@@ -137,7 +132,7 @@ const ExerciseCard = (props) => {
 
                             return <React.Fragment key={index}>
                                 <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
-                                    <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?primaryColor:twoColors[index][1]}}/>
+                                    <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}/>
                                     {
                                         showWeightLabel &&
                                         <Words style={{alignSelf: 'center'}}>{

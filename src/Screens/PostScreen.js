@@ -12,7 +12,7 @@ import { createComment, createLike, deleteLike } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import Write from '../Components/Simple/Write';
 import PostHeader from '../Components/Social/PostHeader';
-import { PRIMARY } from '../Style/Theme';
+import { BACKGROUND, PRIMARY } from '../Style/Colors';
 import TrophyVisual from '../Components/Social/TrophyVisual';
 
 //yes this is a copy of report screen
@@ -192,7 +192,7 @@ const PostScreen = props => {
                         placeholder={'Add comment...'}
                         style={{height: 40, fontSize: 20, flex: 1}}
                     />
-                    <TouchableOpacity style={{justifyContent: 'center', backgroundColor: 'black'}} onPress={commentOnPost}>
+                    <TouchableOpacity style={{justifyContent: 'center', backgroundColor: BACKGROUND}} onPress={commentOnPost}>
                         <Words>Comment</Words>
                     </TouchableOpacity>
                 </Row>

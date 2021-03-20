@@ -7,6 +7,7 @@ import {RoutinesContext } from '../Contexts/RoutinesProvider';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
+import { DARK_GRAY } from '../Style/Colors';
 
 const repNumbers = {
     def: 1,
@@ -76,7 +77,7 @@ const RoutineSetupScreen = props => {
             />
             <ScrollView>{
                 maxEfforts.map(ex =>
-                    <View key={ex.name} style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
+                    <View key={ex.name} style={{backgroundColor: DARK_GRAY, padding: 5, margin: 4, borderRadius: 15, width: '98%'}}>
                         <Words style={{fontSize: 20}}>{ex.name}</Words>
                         <Row style={{justifyContent: 'space-around', height: 90}}>
                             <Words style={{fontSize: 20}}>Enter Max Effort:</Words>
@@ -90,13 +91,6 @@ const RoutineSetupScreen = props => {
                     </View>
                 )
             }</ScrollView>
-            {/*
-                not sure if we need this, defaults are set anyways
-                <View style={styles.bottom}>
-                    <TouchableOpacity style={{marginBottom: 5, justifyContent: 'center', alignItems: 'center', height: 40, width: '100%', borderColor: PRIMARY, borderWidth: 1}}>
-                        <Text style={{color: 'white', fontSize: 20}}>Skip and use Default Weights</Text>
-                    </TouchableOpacity>
-                </View>*/}
         </SafeBorder>
     );
 };

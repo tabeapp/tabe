@@ -16,7 +16,7 @@ import { REST_DAY } from '../Constants/Symbols';
 import { API, graphqlOperation } from 'aws-amplify';
 import { UserContext } from '../Contexts/UserProvider';
 import { createRoutine, updateRoutine } from '../../graphql/mutations';
-import { PRIMARY } from '../Style/Theme';
+import { DARK_GRAY, PRIMARY } from '../Style/Colors';
 import Flip from '../Components/Simple/Flip';
 import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
 import { NextObjectKey } from '../Utils/NextObjectKey';
@@ -190,7 +190,7 @@ const RoutineEditScreen = props => {
                                     <RepSchemeEditor key={k} sets={v} name={k} />
                                 )
                             }
-                            <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: '#333'}}>
+                            <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: DARK_GRAY}}>
                                 <TouchableOpacity style={STYLES.textButton} onPress={() => {
                                     //this actually works
                                     rd('customSets.' + NextObjectKey(customSets), []);

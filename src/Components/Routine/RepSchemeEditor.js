@@ -7,6 +7,7 @@ import { NEW_PR } from '../../Constants/Symbols';
 import Chooser from '../Simple/Chooser';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
+import { DARK_GRAY } from '../../Style/Colors';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -30,7 +31,7 @@ const RepSchemeEditor = props => {
     //this is kinda going to resemble customexercise card
     return(
         <>
-            <View style={{justifyContent: 'center', height: 400, margin: 5, width: 400, backgroundColor: '#333'}}>
+            <View style={{justifyContent: 'center', height: 400, margin: 5, width: 400, backgroundColor: DARK_GRAY}}>
                 <Words>Rep Scheme {name}</Words>
                 {
                     props.sets.map((week, weekIndex) =>

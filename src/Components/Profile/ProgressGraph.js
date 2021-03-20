@@ -3,7 +3,7 @@ import {useState} from 'react';
 //...yet
 
 import { View } from 'react-native';
-import { PRIMARY } from '../../Style/Theme';
+import { PRIMARY } from '../../Style/Colors';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listEffortsByExerciseAndUser } from '../../../graphql/queries';
 

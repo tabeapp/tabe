@@ -12,7 +12,7 @@ import {
 } from '../../graphql/queries';
 import BigWords from '../Components/Simple/BigWords';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
-import { PRIMARY } from '../Style/Theme';
+import { PRIMARY } from '../Style/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 import SubRegionPicker from '../Components/Social/SubRegionPicker';

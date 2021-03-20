@@ -7,6 +7,7 @@ import Words from '../Components/Simple/Words';
 import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
+import { DARK_GRAY } from '../Style/Colors';
 
 const routines = [
     {
@@ -57,7 +58,7 @@ const ChooseRoutineScreen = props => {
                     <TouchableOpacity
                         key={r.title}
                         onPress={() => handleRoutinePress(r)}
-                        style={{backgroundColor: '#333', padding: 10, margin: 4, borderRadius: 20, height: 100, width: '48%'}}
+                        style={{backgroundColor: DARK_GRAY, padding: 10, margin: 4, borderRadius: 20, height: 100, width: '48%'}}
                     >
                         <Words style={{fontSize: 20}}>{
                             r.title
@@ -69,7 +70,7 @@ const ChooseRoutineScreen = props => {
             }</View>
             <TouchableOpacity
                 onPress={handleCustomPress}
-                style={{backgroundColor: '#333', padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
+                style={{backgroundColor: DARK_GRAY, padding: 5, margin: 4, borderRadius: 20, height: 80, width: '98%'}}
             >
                 <Words style={{fontSize: 20}}>Custom</Words>
                 <Words>Build your own routine</Words>
