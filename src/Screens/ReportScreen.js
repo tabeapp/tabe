@@ -6,7 +6,6 @@ import Write from '../Components/Simple/Write';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
-import { STYLES } from '../Style/Values';
 import { CommonActions } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
@@ -62,22 +61,10 @@ const ReportScreen = props => {
     //console.log('summary ' + JSON.stringify(workout));
 
     const handleNext = () => {
-        //idk what else to call this
-        //but essentially increment progressing weights, look for prs, etc
-        //finalizeWorkout(report);
-
-
-
-        //clear the entire nav stack, no going back through workouts
-        //props.navigation.dispatch(StackActions.popToTop());
         props.navigation.dispatch(CommonActions.reset({
             index: 0,
             routes: [{name: 'home'}]
         }))
-            //index: 0,
-            //routes: {name: 'home'}
-        //}));
-        //props.navigation.navigate('home');
 
         //combine workout and title and description
         //necessary transformation

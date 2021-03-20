@@ -5,29 +5,14 @@ import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
-    createCurrentWorkout, createEffort,
+    createCurrentWorkout,
     createPostAndTimeline,
-    createPostMedia, createTrophy,
     updateCurrentWorkout,
-    createUserRecord,
-    updateUserRecord
 } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
-import { Effort } from '../../models';
 import { UserContext } from './UserProvider';
-import { analyzeWorkout } from '../Utils/AnalyzeWorkout';
 import { generateWorkout } from '../Utils/GenerateWorkout';
-import {
-    getCurrentWorkout,
-    getUserLocation,
-    listEffortsByExerciseAndUser,
-    getUserRecord,
-    listRecordsByExerciseAndGym,
-    listRecordsByExerciseAndCity,
-    listRecordsByExerciseAndState,
-    listRecordsByExerciseAndCountry, listRecordsByExercise,
-} from '../../graphql/queries';
-import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
+import { getCurrentWorkout } from '../../graphql/queries';
 //ehhhh not sure how i feel about this import
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 
@@ -44,7 +29,7 @@ const WorkoutProvider = props => {
 
     const {username} = useContext(UserContext);
     //is this legal
-    const {routines, updateRoutineData, getCurrent} = useContext(RoutinesContext);
+    const {updateRoutineData, getCurrent} = useContext(RoutinesContext);
 
     //i guess like use effect?
     //this same logic shows up over and over again in the old code
@@ -248,264 +233,12 @@ const WorkoutProvider = props => {
         return report;
     };
 
-    //this is the real meat and potatoes that handles this entire app
-    //i guess put it here tomorrow, but you need to clear workout out of state & storage
-    const finalizeWorkout = async (report, postID) => {
-
-        //this function needs cleanup, but this is basically how were gonna do it
-        const oldRoutine = routines.find(r => r.id === data.routineID).routine;
-        const { routine, efforts } = analyzeWorkout(report, data, oldRoutine);
-
-
-        //we're just gonna copy the countryid, cityid, stateid to the effort, tey're just strings
-
-        //take the efforts and turn them into actual efforts, upload them
-        //console.log('sample effort', efforts[Object.keys(efforts)]);
-        const detailedEfforts = Object.entries(efforts).map(([name, info]) =>
-            new Effort({
-                ...info,
-                exercise: name,
-                userID: username,
-                postID: postID,
-            })
-        );
-        //ensure this works
-
-        //and finally, save the routine
-        if (routine)
-            updateRoutineData(data.routineID, routine);
-
-        workoutDispatch(() => initState);
-        saveEfforts(detailedEfforts, postID);
-    }
-
-    const saveEfforts = async (efforts, postID) => {
-        if(efforts.length === 0)
-            return;
-
-        //this is a whole other function smh
-
-
-        const uploadedEfforts = [];
-        //we need to wait for all the efforts to upload
-        //this or something similar to a map and a promise.all might also work
-        for(let i = 0; i < efforts.length; i++){
-            const effort = efforts[i];
-            console.log('effort', effort);
-            const result = await API.graphql(graphqlOperation(createEffort, {
-                input:{
-                    ...effort//will this work? no
-                }
-            }));
-            console.log('create effort result', result);
-            uploadedEfforts.push(result.data.createEffort);
-        }
-
-        const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
-            userID: username
-        }));
-        const ul = ulRes.data.getUserLocation;
-
-        //now how tf do you get rankings...
-        //at this point we can search for prs
-        //kinda obvious, but there are 6 levels of PRing
-        //personal, gym, city, state, country, and world
-        //if you don't pr in any of these, you don't pr in the following either
-        //these are 6 calls max
-        //honestly should be a fn lambda
-
-        //this is so fucking ugly, is there a better way?
-        //maybe a single graphql query to check all of these?
-        //would only be 60 items back tops
-        const operations = [
-            listRecordsByExerciseAndGym,
-            listRecordsByExerciseAndCity,
-            listRecordsByExerciseAndState,
-            listRecordsByExerciseAndCountry,
-        ];
-        const keys = ['gymID', 'cityID', 'stateID', 'countryID'];
-        const values = [ul.gymID, ul.gym.cityID, ul.gym.stateID, ul.gym.countryID];
-
-
-        //fuck me, is this really ideal?
-        for(let i = 0; i < uploadedEfforts.length; i++) {
-            const effort = uploadedEfforts[i];
-
-            const personal = await API.graphql(graphqlOperation(listEffortsByExerciseAndUser, {
-                userID: username,
-                exerciseOrm: {
-                    beginsWith: {
-                        exercise: effort.exercise
-                    }
-                },
-                limit: 10,
-                sortDirection: 'DESC'
-            }));
-            console.log('check rank result', personal);
-            const personalRank = personal.data.listEffortsByExerciseAndUser
-                .items.findIndex(ef => ef.id === effort.id);
-
-            if(personalRank === -1)
-                continue;
-
-            console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${personalRank+1} for user ${username}`);
-            //somethign down here is giving may not e working
-            await API.graphql(graphqlOperation(createTrophy, {
-                input: {
-                    effortID: effort.id,
-                    type: 'personal',
-                    targetID: username,
-                    rank: personalRank
-                }
-            }));
-
-            if(personalRank !== 0)
-                continue;
-
-            //new pr, save that shit
-            const input = {
-                userID: username,
-                exercise: effort.exercise,
-                orm: effort.orm,
-                postID: postID,
-                gymID: ul.gymID,
-                cityID: ul.gym.cityID,
-                stateID: ul.gym.stateID,
-                countryID: ul.gym.countryID
-            };
-
-            //its bs that I have to check if it exists before hand
-            const prExists = await API.graphql(graphqlOperation(getUserRecord, {
-                userID: username,
-                exercise: effort.exercise,
-            }));
-            console.log('userecord input', input)
-            console.log('userecord result', prExists.data.getUserRecord);
-            //i think thi sis broken
-            if(!prExists.data.getUserRecord)
-                await API.graphql(graphqlOperation(createUserRecord, {
-                    input: input
-                }));
-            else
-                await API.graphql(graphqlOperation(updateUserRecord, {
-                    input: input
-                }));
-
-            console.log('user record should be created or updated');
-
-
-            //should trophies link to efforts or post?
-
-            for(let n = 0; n < operations.length; n++){
-                console.log('checking for exercise from', effort);
-
-                const result = await API.graphql(graphqlOperation(operations[n], {
-                    [keys[n]]: values[n],
-                    exerciseOrm: {
-                        beginsWith: {
-                            exercise: effort.exercise
-                        }
-                    },
-                    limit: 10,
-                    sortDirection: 'DESC'
-                }));
-                console.log('check rank result', result);
-
-                //this is so fucking complex
-                //effort doesn't have an id, the effort object is from before uploading to aws
-                //you have to get the effort ids
-                //there should only be one thing under data, just get that instead of what evah
-                //is checking by post id really the best idea?
-                //why is this function so fucking long?
-                //why isn't it a lambda?
-                const rank = result.data[Object.keys(result.data)[0]]
-                    .items.findIndex(re => re.postID === postID);
-
-                //not a pr on this level, fuck it
-                //check personal and gym followed by the rest
-                if(rank === -1)
-                    break;
-                else{
-                    //just gonna log it for now, idc
-                    //eventually add an award like how strava does
-                    console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${rank+1} in ${values[n]}`)
-                    await API.graphql(graphqlOperation(createTrophy, {
-                        input: {
-                            effortID: effort.id,
-                            type: n === 0 ? 'gym' : 'region',
-                            targetID: values[n],
-                            rank: rank
-                        }
-                    }))
-                }
-            }
-
-            //can't avoid doing a global search I suppose
-            const global = await API.graphql(graphqlOperation(listRecordsByExercise, {
-                exercise: effort.exercise,
-                limit: 10,
-                sortDirection: 'DESC'
-            }));
-            const globalRank = global.data.listRecordsByExercise.items
-                .findIndex(re => re.postID === postID);
-
-            if(globalRank === -1)
-                continue;
-
-
-            console.log(`effort of ${effort.exercise} at ${effort.orm} orm ranked ${globalRank+1} in the world`);
-            await API.graphql(graphqlOperation(createTrophy, {
-                input: {
-                    effortID: effort.id,
-                    type: 'region',
-                    targetID: GLOBAL_REGION_ID,
-                    rank: globalRank
-                }
-            }))
-        }
-    };
-
     //only here cuz of the async storage
     const quitWorkout = () => {
         workoutDispatch(() => ({}));
     };
 
     const saveWorkout = async (workoutData) => {
-        //finally clear it
-
-        //make a post to aws db, this is the first i implemented
-        //lets see if it works
-        //console.log(workoutData);
-        //await API.graphql(graphqlOperation(createPost, {input: workoutData}));
-
-        /*const ulRes = await API.graphql(graphqlOperation(getUserLocation, {
-            userID: username
-        }));
-
-        let gymID = 'emptyGym';
-        if(ulRes.data.getUserLocation)
-            gymID = ulRes.data.getUserLocation.gymID;
-
-        console.log('gymID', gymID);*/
-
-
-        //ugh, I guess this should call that labmda actually
-        //this isn't working start from here next time...
-
-        //console.log('res: ' + JSON.stringify(res));
-        //once we have res, we should be able to use its id to upload images
-        //to s3
-        //should this be in the labmda function?
-        //get the post id for later linking
-        //const postID = res.data.createPostAndTimeline.id;
-
-        //as it turns out, we really need this postID to build efforts
-        //so here we are
-        //finalizeWorkout(report, postID);
-
-
-        //upload the images to s3
-
 
         //get the urls ready in this way, then send them to teh
         // lambda then upload them whenever
@@ -545,49 +278,6 @@ const WorkoutProvider = props => {
 
         }
 
-
-
-
-        /*const s3Urls = [];
-        //there's a way to do this with await promise.all but its so fn complicated
-        for(let i = 0; i < workoutData.media.length; i++){
-            //suppose this could be a function of its own
-            try{
-
-                console.log('starting image fetch');
-                const response = await fetch(workoutData.media[i]);
-                console.log('fetched');
-                const blob = await response.blob();
-                console.log('blobbed');
-
-                const urlParts = workoutData.media[i].split('.');
-                const extension = urlParts[urlParts.length-1];
-                const key = `${uuidv4()}.${extension}`;
-                //this line definitely doesn't go into lambda
-                await Storage.put(key, blob);
-                console.log('putted');
-                s3Urls.push(key);
-            }
-            catch (e) {
-                console.log(e);
-
-            }
-        }*/
-
-        //now s3 urls are ready
-        //lets save some postmedias
-        /*s3Urls.forEach(key => {
-            API.graphql(graphqlOperation(createPostMedia, {
-                input: {
-                    postID: postID,
-                    uri: key
-                }
-            }));
-        });*/
-
-        //need to clear workout from state as well
-        //and the report, it doesn't get cleared
-        //does this not work?
     };
 
 
@@ -607,7 +297,6 @@ const WorkoutProvider = props => {
 
             //after
             createReport: createReport,
-            finalizeWorkout: finalizeWorkout,
             saveWorkout: saveWorkout
         }}>
             {props.children}
