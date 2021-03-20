@@ -29,11 +29,14 @@ exports.checkRegionRanking = async (graphqlClient, effort, postID, operation, ke
     const rank = result.data[Object.keys(result.data)[0]]
         .items.findIndex(re => re.postID === postID);
 
+    console.log('region rank', rank, value);
+    console.log('region items', result.data[Object.keys(result.data)[0]].items);
+
     if(rank === -1)
         return false;
 
     await graphqlClient.mutate({
-        mutation: createTrophy,
+        mutation: gql(createTrophy),
         variables: {
             input: {
                 effortID: effort.id,
