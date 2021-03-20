@@ -3,10 +3,8 @@ import {View} from 'react-native';
 import Words from '../Simple/Words';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Row from '../Simple/Row';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { PRIMARY } from '../../Style/Theme';
-import TrophyVisual from './TrophyVisual';
 import TrophyIcon from '../../Utils/TrophyIcon';
 import { S3Image } from 'aws-amplify-react-native';
 

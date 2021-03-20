@@ -1,19 +1,4 @@
 //so this will add default info like
-/*
-{
-    current: 145,
-        amrap: true,
-    barbell: true,
-    progress: {
-    amount: 5,
-        rate: 1
-},
-    setInfo: {
-        type: 'normal',
-            sets: [5,5,5]
-    }
-}
-*/
 export const CATEGORIES = [
     'Arms',
     'Shoulders',
@@ -135,19 +120,4 @@ export const DEFAULT_SUPERSET_INFO = (name) => {
 
 };
 //would probably be something more like
-
-//might even need to have it's own component
-/*
-export const DEFAULT_SUPERSET_INFO = () => ({
-    current: [0,0],
-    progress:{
-        amount: [5,5],
-        rate: 1,
-    },
-    setInfo: {
-        type: 'Normal',
-        sets: [[5,5,5,5,5],[5,5,5,5,5]]
-    }
-});
-*/
 
