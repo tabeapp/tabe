@@ -181,16 +181,18 @@ const PostScreen = props => {
             }
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+                style={{padding: 5}}
             >
                 <Row
-                    style={{width: '100%', borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1, borderRadius: 40}}
+                    style={{width: '100%', borderColor: PRIMARY, paddingHorizontal: 15, borderWidth: 1, borderRadius: 40, overflow: 'hidden'}}
                 >
                     <Write
                         value={comment}
                         onChange={setComment}
-                        style={{height: 40, fontSize: 20, backgroundColor: '#222', flex: 1}}
+                        placeholder={'Add comment...'}
+                        style={{height: 40, fontSize: 20, flex: 1}}
                     />
-                    <TouchableOpacity style={{justifyContent: 'center', padding: 5, backgroundColor: 'black'}} onPress={commentOnPost}>
+                    <TouchableOpacity style={{justifyContent: 'center', backgroundColor: 'black'}} onPress={commentOnPost}>
                         <Words>Comment</Words>
                     </TouchableOpacity>
                 </Row>

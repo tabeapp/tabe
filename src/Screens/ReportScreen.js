@@ -97,6 +97,7 @@ const ReportScreen = props => {
                 <Write
                     value={description}
                     onChange={setDescription}
+                    placeholder={'Add Description'}
                 />
                 {
                     report && report.map((ex, index) =>
