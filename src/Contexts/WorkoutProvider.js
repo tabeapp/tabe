@@ -4,11 +4,7 @@ import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import {
-    createCurrentWorkout,
-    createPostAndTimeline,
-    updateCurrentWorkout,
-} from '../../graphql/mutations';
+import { createCurrentWorkout, createPostAndTimeline, updateCurrentWorkout } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from './UserProvider';
 import { generateWorkout } from '../Utils/GenerateWorkout';
@@ -199,7 +195,6 @@ const WorkoutProvider = props => {
             exercises: [],
             edit: true,
             routineID: '',
-            //necessary?
             timer: 0,
             restStart: 0
 
@@ -228,10 +223,7 @@ const WorkoutProvider = props => {
         return false;
     };
 
-    const createReport = () => {
-        const report = generateReport(data);
-        return report;
-    };
+    const createReport = () => generateReport(data);
 
     //only here cuz of the async storage
     const quitWorkout = () => {
