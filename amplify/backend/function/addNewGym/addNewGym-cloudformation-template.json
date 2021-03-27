@@ -23,6 +23,10 @@
     "apitabeGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apitabeGraphQLAPIEndpointOutput"
+    },
+    "functionlibraryArn": {
+      "Type": "String",
+      "Default": "functionlibraryArn"
     }
   },
   "Conditions": {
@@ -93,7 +97,11 @@
           ]
         },
         "Runtime": "nodejs12.x",
-        "Layers": [],
+        "Layers": [
+          {
+            "Fn::Sub": "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:library-dev:2"
+          }
+        ],
         "Timeout": "25"
       }
     },

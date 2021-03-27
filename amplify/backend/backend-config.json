@@ -41,6 +41,13 @@
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "library",
+          "attributes": [
+            "Arn"
+          ]
         }
       ]
     },
@@ -56,8 +63,20 @@
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "library",
+          "attributes": [
+            "Arn"
+          ]
         }
       ]
+    },
+    "library": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
     }
   },
   "storage": {

@@ -18,11 +18,39 @@
       "function": {
         "createPostAndTimeline": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/createPostAndTimeline-6d634a41795255445133-build.zip"
+          "s3Key": "amplify-builds/createPostAndTimeline-625756474a647a355137-build.zip"
         },
         "addNewGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/addNewGym-473946785a6d4b504441-build.zip"
+          "s3Key": "amplify-builds/addNewGym-39306b4c56326e686232-build.zip"
+        },
+        "library": {
+          "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
+          "s3Key": "amplify-builds/library-build.zip"
+        }
+      }
+    },
+    "nonCFNdata": {
+      "function": {
+        "library": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "uX6hrXcjKW4pACgh1QBMmQeh+K92+TyfOoF2ghXjFAk="
+            },
+            "2": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "RcfWgYvLmsLeHUpi3R8l6gU2RGzewEtfO1Gr/af8FKk="
+            }
+          }
         }
       }
     }
