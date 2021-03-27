@@ -3,7 +3,7 @@ import { TouchableOpacity, Modal, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getRegion, getUserLocation, listRecordsByUser, nearbyGyms } from '../../graphql/queries';
+import { getUserLocation, listRecordsByUser, nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -12,11 +12,9 @@ import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
 import {
     createGym,
-    createRegion,
     createUserLocation, createUserRecord,
     deleteUserLocation, deleteUserRecord,
 } from '../../graphql/mutations';
-import { emptyRegion, GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 import { BACKGROUND } from '../Style/Colors';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
@@ -119,74 +117,11 @@ const GymMapScreen = props => {
             coordinates: [coordinates[1], coordinates[0]]
         }));
 
+        //just make sure this work
         gymDraft = gymDraft.data.addNewGym;
         console.log('gymdraft', gymDraft);
 
-
-
-
-        //lon, lat
-        //tapping on map will now load info for it
-        const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
-        let response = await fetch(geocodeURL);
-        let obj = await response.json();
-
-        //these are the regions we may need to add
-        //this is actually super imporant, these are the default values if nothign is found
-        const regionInfo = emptyRegion();
-
-        // sometimes poi wont return any features, just use the same query but types=address, limit=1
-        //reload but using place(city) instead of poi
-        if (obj.features.length === 0) {
-            const geocodeCityURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=place&access_token=${MAPBOX_ACCESS_TOKEN}`;
-            response = await fetch(geocodeCityURL);
-            obj = await response.json();
-
-            //the only thing is that we need to get the city info not from context
-            if (obj.features.length !== 0)
-                regionInfo.city = { id: obj.features[0].id, name: obj.features[0].text };
-        }
-
-        let gymName = 'New Gym Name';
-        let gymCenter = coordinates;
-
-        //this will allow for workouts even without country
-        if (obj.features.length !== 0) {
-            //this even works for planet fitness
-            let gymSuggestion = obj.features.find(feat =>
-                feat.properties.category &&
-                feat.properties.category.includes('gym')
-            );
-
-            //if no gym is found, the user may be adding a home gym
-            //dont use the center coordinates or text, let the user add something new
-            if (gymSuggestion) {
-                gymName = gymSuggestion.text;
-                gymCenter = gymSuggestion.center;
-            }
-
-            //but for city and state and country, uuse gymSugestion or the first feature
-            (gymSuggestion || obj.features[0]).context.forEach(area => {
-                const { id, text } = area;
-                if (id.startsWith('place.'))
-                    regionInfo.city = { id, name: text };
-                else if (id.startsWith('region.'))
-                    regionInfo.state = { id, name: text };
-                else if (id.startsWith('country.'))
-                    regionInfo.country = { id, name: text };
-            });
-        }
-
-        console.log(regionInfo);
-
-        setNewGym({
-            name: gymName,
-            location: {
-                lon: gymCenter[0],
-                lat: gymCenter[1]
-            },
-            regionInfo: regionInfo
-        })
+        setNewGym(gymDraft);
     };
 
     const updateCenter = feature => {
@@ -204,63 +139,19 @@ const GymMapScreen = props => {
     //take the new gym and save it to db
     //thid dhould be lambda
     const addNewGym = async () => {
-        const regions = newGym.regionInfo;
-        console.log(regions);
-        //newGym has everything we need
-        //name, location, regionInfo
-        //lets go through regionInfo and ensure regions exist
-        //for(const level in ['country', 'state', 'city']
-        const levels = ['country', 'state', 'city'];
-
-        //start with earth, reassign id as you go
-        //we dont even need to make an earth region, it's just a superregion
-        let superRegionID = GLOBAL_REGION_ID;
-
-        //for(const level in regions){
-        for(let i = 0; i < levels.length; i++){
-            const level = levels[i];
-            const {id, name} = regions[level];
-            console.log(id, name);
-            //could we combine these into one graphql request?
-            const result = await API.graphql(graphqlOperation(getRegion, {
-                id: id
-            }));
-            console.log(result);
-
-            //if the country exists, assign its to the superregionid
-            //otherwise make the country, then assign the id to the superregion id
-            //but then again, we're using ids from mapbox so it doesn't matter if it exists or not
-
-            //otherwise the region already exists, we're good to use the region id
-            if(result.data.getRegion === null){
-                const regionCreate = await API.graphql(graphqlOperation(createRegion, {
-                    input: {
-                        id: id,
-                        superRegionID: superRegionID,
-                        name: name
-                    }
-                }));
-                console.log(regionCreate);
-            }
-            //this might work
-            superRegionID = id;
-        }
-
-        //at this point we're good to use the region ids
         const gymResult = await API.graphql(graphqlOperation(createGym, {
             input: {
                 name: newGym.name,
-                location: newGym.location,
-                countryID: regions.country.id,
-                stateID: regions.state.id,
-                cityID: regions.city.id,
+                location: newGym.center,
+                countryID: newGym.countryID,
+                stateID: newGym.stateID,
+                cityID: newGym.cityID,
             }
         }));
         console.log(gymResult);
 
         dispatch({type: ADD_GYMS, gyms: [gymResult.data.createGym]});
         setNewGym(null);
-
     };
 
     const joinGym = async () => {
