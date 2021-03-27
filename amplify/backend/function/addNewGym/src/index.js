@@ -5,18 +5,15 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 
-import { GLOBAL_REGION_ID } from '../../../../../src/Constants/RegionConstants';
-import { API, graphqlOperation } from 'aws-amplify';
-import { getRegion } from '../../../../../graphql/queries';
-import { createGym, createRegion } from '../../../../../graphql/mutations';
-
 const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
+const { emptyRegion, GLOBAL_REGION_ID } = require('./Constants/RegionConstants');
 
+const { createRegion } = require('./graphql/mutations');
+const { getRegion } = require('./graphql/queries');
 
-const { createPost } = require('./graphql/mutations');
-const { getUserLocation } = require('./graphql/queries');
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 
 let graphqlClient;
 
@@ -65,24 +62,74 @@ exports.handler = async (event, context, callback) => {
     }
 
     //call mapbox api with coords
+    const [lat, lon] = event.arguments.coordinates;
+
+    const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
+    let response = await fetch(geocodeURL);
+    let obj = await response.json();
+
+    const regionInfo = emptyRegion();
+    if (obj.features.length === 0) {
+        const geocodeCityURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?types=place&access_token=${MAPBOX_ACCESS_TOKEN}`;
+        response = await fetch(geocodeCityURL);
+        obj = await response.json();
+
+        //the only thing is that we need to get the city info not from context
+        if (obj.features.length !== 0)
+            regionInfo.city = { id: obj.features[0].id, name: obj.features[0].text };
+    }
+
     //derive name suggestion
+    let gymName = 'New Gym Name';
+    let gymCenter = [lat, lon];
+
+    if(obj.features.length !== 0){
+        //this even works for planet fitness
+        let gymSuggestion = obj.features.find(feat =>
+            feat.properties.category &&
+            feat.properties.category.includes('gym')
+        );
+
+        //if no gym is found, the user may be adding a home gym
+        //dont use the center coordinates or text, let the user add something new
+        if (gymSuggestion) {
+            gymName = gymSuggestion.text;
+            gymCenter = gymSuggestion.center;
+        }
+
+        //but for city and state and country, uuse gymSugestion or the first feature
+        (gymSuggestion || obj.features[0]).context.forEach(area => {
+            const { id, text } = area;
+            if (id.startsWith('place.'))
+                regionInfo.city = { id, name: text };
+            else if (id.startsWith('region.'))
+                regionInfo.state = { id, name: text };
+            else if (id.startsWith('country.'))
+                regionInfo.country = { id, name: text };
+        });
+    }
+
     //async create regions
+    //it's a decent idea to create regions anywhere the user presses
+    //but we'll do it async so no one notices the delay
+    addRegions(regionInfo);
+
     //retrun name + regionids
 
     return {
-        name: 'potato gym',
+        name: gymName,
         center: {
-            lat: 42.0,
-            lon: 69.0
+            lat: gymCenter[0],
+            lon: gymCenter[1]
         },
-        countryID: 'no',
-        stateID: 'no',
-        cityID: 'no'
+        countryID: regionInfo.country.id,
+        stateID: regionInfo.state.id,
+        cityID: regionInfo.city.id,
     };
 };
-/*
-const addNewGym = async () => {
-    const regions = newGym.regionInfo;
+
+const addRegions = async (regionInfo) => {
+    const regions = regionInfo;
     console.log(regions);
     //newGym has everything we need
     //name, location, regionInfo
@@ -100,9 +147,13 @@ const addNewGym = async () => {
         const {id, name} = regions[level];
         console.log(id, name);
         //could we combine these into one graphql request?
-        const result = await API.graphql(graphqlOperation(getRegion, {
-            id: id
-        }));
+        const result = graphqlClient.query({
+            query: gql(getRegion),
+            fetchPolicy: 'network-only',
+            variables: {
+                id: id
+            }
+        })
         console.log(result);
 
         //if the country exists, assign its to the superregionid
@@ -111,20 +162,25 @@ const addNewGym = async () => {
 
         //otherwise the region already exists, we're good to use the region id
         if(result.data.getRegion === null){
-            const regionCreate = await API.graphql(graphqlOperation(createRegion, {
-                input: {
-                    id: id,
-                    superRegionID: superRegionID,
-                    name: name
+            const regionCreate = graphqlClient.mutation({
+                mutation: gql(createRegion),
+                variables: {
+                    input: {
+                        id: id,
+                        superRegionID: superRegionID,
+                        name: name
+
+                    }
                 }
-            }));
+            })
             console.log(regionCreate);
         }
         //this might work
         superRegionID = id;
     }
 
-    //at this point we're good to use the region ids
+    //keep this part in gymmapscreen until we're ready to make a gym
+    /*//at this point we're good to use the region ids
     const gymResult = await API.graphql(graphqlOperation(createGym, {
         input: {
             name: newGym.name,
@@ -134,11 +190,8 @@ const addNewGym = async () => {
             cityID: regions.city.id,
         }
     }));
-    console.log(gymResult);
+    console.log(gymResult);*/
 
-    dispatch({type: ADD_GYMS, gyms: [gymResult.data.createGym]});
-    setNewGym(null);
 
 };
 
-*/

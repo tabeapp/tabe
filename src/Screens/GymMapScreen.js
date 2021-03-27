@@ -115,6 +115,14 @@ const GymMapScreen = props => {
         }
 
 
+        let gymDraft = await API.graphql(graphqlOperation(addNewGym, {
+            coordinates: [coordinates[1], coordinates[0]]
+        }));
+
+        gymDraft = gymDraft.data.addNewGym;
+        console.log('gymdraft', gymDraft);
+
+
 
 
         //lon, lat
