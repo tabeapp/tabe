@@ -295,11 +295,26 @@ type Mutation{
 
   addNewGym(
     coordinates: LocationInput!
-  ): String
+  ): GymDraft!
   @function(name: "addNewGym-${env}")
   @auth(rules:[
     {allow: private, provider: userPools},
   ])
+
+  changeUserGym(
+    gymChangeInput: GymChangeInput!
+  ): String#idk this just needs success or failure
+  @function(name: "changeUserGym-${env}")
+  @auth(rules:[
+    {allow: private, provider: userPools},
+  ])
+}
+
+input GymChangeInput{
+  id: ID!
+  countryID: ID!
+  stateID: ID!
+  cityID: ID!
 }
 
 

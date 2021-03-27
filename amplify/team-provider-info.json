@@ -27,6 +27,10 @@
         "library": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
           "s3Key": "amplify-builds/library-build.zip"
+        },
+        "changeUserGym": {
+          "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
+          "s3Key": "amplify-builds/changeUserGym-5a716475377a644c2f67-build.zip"
         }
       }
     },
@@ -49,6 +53,14 @@
                 }
               ],
               "hash": "RcfWgYvLmsLeHUpi3R8l6gU2RGzewEtfO1Gr/af8FKk="
+            },
+            "3": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "A2gfF/uAmX82DRN82UrH7ECWgzEjM8FGCoaA3iQwJbI="
             }
           }
         }

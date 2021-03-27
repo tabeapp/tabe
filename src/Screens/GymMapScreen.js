@@ -155,7 +155,15 @@ const GymMapScreen = props => {
     };
 
     const joinGym = async () => {
-        //cant do create, it'll just make a new one
+        //just call the lamba
+
+        await API.graphql(graphqlOperation(changeUserGym, {
+            id: selectedGym.id,
+            cityID: selectedGym.cityID,
+            stateID: selectedGym.stateID,
+            countryID: selectedGym.countryID,
+        }));
+        /*//cant do create, it'll just make a new one
         //maybe have a way to check if the user has a gym in memory?
         //list, followed by create or update, could be an abstract method
 
@@ -217,7 +225,7 @@ const GymMapScreen = props => {
                 }
             }))
         }
-
+*/
         props.navigation.goBack();
 
         setSelectedGym(null);

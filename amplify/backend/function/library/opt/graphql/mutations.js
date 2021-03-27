@@ -2331,20 +2331,6 @@ export const createPostAndTimeline = /* GraphQL */ `
 `;
 export const addNewGym = /* GraphQL */ `
   mutation AddNewGym($coordinates: LocationInput!) {
-    addNewGym(coordinates: $coordinates) {
-      name
-      center {
-        lat
-        lon
-      }
-      countryID
-      stateID
-      cityID
-    }
-  }
-`;
-export const changeUserGym = /* GraphQL */ `
-  mutation ChangeUserGym($gymChangeInput: GymChangeInput!) {
-    changeUserGym(gymChangeInput: $gymChangeInput)
+    addNewGym(coordinates: $coordinates)
   }
 `;
