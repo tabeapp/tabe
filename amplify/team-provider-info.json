@@ -19,6 +19,10 @@
         "createPostAndTimeline": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
           "s3Key": "amplify-builds/createPostAndTimeline-6d634a41795255445133-build.zip"
+        },
+        "addNewGym": {
+          "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
+          "s3Key": "amplify-builds/addNewGym-473946785a6d4b504441-build.zip"
         }
       }
     }

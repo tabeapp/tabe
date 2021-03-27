@@ -114,6 +114,9 @@ const GymMapScreen = props => {
             return;
         }
 
+
+
+
         //lon, lat
         //tapping on map will now load info for it
         const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${coordinates[0]},${coordinates[1]}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
@@ -191,6 +194,7 @@ const GymMapScreen = props => {
     };
 
     //take the new gym and save it to db
+    //thid dhould be lambda
     const addNewGym = async () => {
         const regions = newGym.regionInfo;
         console.log(regions);

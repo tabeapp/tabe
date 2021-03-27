@@ -2329,3 +2329,8 @@ export const createPostAndTimeline = /* GraphQL */ `
     }
   }
 `;
+export const addNewGym = /* GraphQL */ `
+  mutation AddNewGym($coordinates: LocationInput!) {
+    addNewGym(coordinates: $coordinates)
+  }
+`;

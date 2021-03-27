@@ -292,6 +292,24 @@ type Mutation{
   @auth(rules:[
     {allow: private, provider: userPools},
   ])
+
+  addNewGym(
+    coordinates: LocationInput!
+  ): String
+  @function(name: "addNewGym-${env}")
+  @auth(rules:[
+    {allow: private, provider: userPools},
+  ])
+}
+
+
+#intermediate suggestion for gym
+type GymDraft{
+  name: String!
+  center: Coordinates!
+  countryID: ID!
+  stateID: ID!
+  cityID: ID!
 }
 
 type Subscription {
