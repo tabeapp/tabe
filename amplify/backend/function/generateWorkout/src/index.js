@@ -90,11 +90,8 @@ exports.handler = async (event) => {
             timer: 0,
             restStart: 0
         };
-        return {
-            userID: userID,
-            data: JSON.stringify(custom),
-            routineID: ''
-        };
+        const res = await saveWorkout(custom, userID);
+        return res.data.updateCurrentWorkout;
     }
 
     current = current.data.listCurrentRoutinesByUser.items[0]
@@ -119,10 +116,19 @@ exports.handler = async (event) => {
 
     //save this to workotu
     const currentWorkout = {...workout, routineID: routineID};
-    return {
-        userID: userID,
-        data: JSON.stringify(currentWorkout),
-        routineID: currentWorkout.routineID || ''
-    };
+    const res = await saveWorkout(currentWorkout, userID);
+    return res.data.updateCurrentWorkout;
+};
 
+const saveWorkout = async (workoutData, username) => {
+    return await graphqlClient.mutate({
+        mutation: gql(updateCurrentWorkout),
+        variables: {
+            input: {
+                userID: username,
+                data: JSON.stringify(workoutData),
+                routineID: workoutData.routineID || ''
+            }
+        }
+    });
 };

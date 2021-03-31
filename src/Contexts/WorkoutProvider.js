@@ -153,7 +153,7 @@ const WorkoutProvider = props => {
             }
         });
 
-        const sub = API.graphql(graphqlOperation(onUpdateCurrentWorkout, {
+        /*const sub = API.graphql(graphqlOperation(onUpdateCurrentWorkout, {
             userID: username
         })).subscribe({
             next: (obj) => {
@@ -168,7 +168,7 @@ const WorkoutProvider = props => {
             //ehhh, not sure how I feel about this but we can't have sync current in dispatch
             syncCurrentWorkout();
             sub.unsubscribe();
-        }
+        }*/
     }, [username]);
 
     //heavy logic here, not much you can do with usereducer here
@@ -183,7 +183,8 @@ const WorkoutProvider = props => {
 
         //just await lamda and  go
         //add a subscription to current workout
-        await API.graphql(graphqlOperation(generateWorkout));
+        const wo = await API.graphql(graphqlOperation(generateWorkout));
+        console.log(wo);
     };
 
     const generateCustom = () => {
