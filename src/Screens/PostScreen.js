@@ -112,7 +112,7 @@ const PostScreen = props => {
                         setLiked(false)
                 })
         }
-    }
+    };
 
     return (
         <SafeBorder>

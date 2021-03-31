@@ -40,6 +40,7 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
             input: {
                 effortID: effort.id,
                 type: 'personal',
+                name: userID,
                 targetID: userID,
                 rank: personalRank
             }
@@ -93,11 +94,12 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
     ];
     const keys = ['gymID', 'cityID', 'stateID', 'countryID', null];
     const values = [userLocation.gymID, userLocation.gym.cityID, userLocation.gym.stateID, userLocation.gym.countryID, GLOBAL_REGION_ID];
+    const names = [userLocation.gym.name, userLocation.gym.city.name, userLocation.gym.state.name, userLocation.gym.country.name, GLOBAL_REGION_ID];
     console.log(keys);
     console.log(values);
 
     for (let n = 0; n < operations.length; n++) {
-        const cont = await checkRegionRanking(graphqlClient, effort, postID, operations[n], keys[n], values[n], n === 0 ? 'gym': 'region')
+        const cont = await checkRegionRanking(graphqlClient, effort, postID, operations[n], keys[n], values[n], names[n], n === 0 ? 'gym': 'region')
         if(!cont)
             break;
     }

@@ -12,7 +12,7 @@ const TrophyVisual = (props) => {
     const navigation = useNavigation();
     const {trophy, exercise} = props;
 
-    const {rank, type, targetID} = trophy;
+    const {rank, type, targetID, name} = trophy;
 
     //gold, silver, bronze
     //should I have diamond too?
@@ -32,12 +32,8 @@ const TrophyVisual = (props) => {
 
     if(type === 'personal')
         wording = `Ranked ${rank+1} of ${targetID}'s efforts`;
-    else if(type === 'gym')
-        wording = `Ranked ${rank+1} in the gym`;//should we actually get the gym name?
-    else if(targetID === 'earth')
-        wording = `Ranked ${rank+1} in the world`;
-    else if(type === 'region')
-        wording = `Ranked ${rank+1} in the ${targetID} region`;
+    else
+        wording = `Ranked ${rank+1} in ${name}`;
 
     return (
         <TouchableOpacity onPress={handlePress} style={{height: 40}}>

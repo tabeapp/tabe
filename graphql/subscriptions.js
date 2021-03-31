@@ -124,6 +124,7 @@ export const onCreatePost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -288,6 +289,7 @@ export const onUpdatePost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -452,6 +454,7 @@ export const onDeletePost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -1297,6 +1300,7 @@ export const onCreateEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1324,6 +1328,7 @@ export const onUpdateEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1351,6 +1356,7 @@ export const onDeleteEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1367,6 +1373,7 @@ export const onCreateTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -1380,6 +1387,7 @@ export const onUpdateTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -1393,6 +1401,7 @@ export const onDeleteTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt

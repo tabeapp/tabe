@@ -170,6 +170,7 @@ type Trophy
   id: ID!
   effortID: ID!
   type: String!#user, gym, or region
+  name: String! #actual name of location
   targetID: ID!#the id of the user, gym, or region
   rank: Int!
 }

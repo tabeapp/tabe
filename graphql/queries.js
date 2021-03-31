@@ -1329,6 +1329,7 @@ export const getPost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -1831,6 +1832,7 @@ export const getEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1863,6 +1865,7 @@ export const listEfforts = /* GraphQL */ `
             id
             effortID
             type
+            name
             targetID
             rank
             createdAt
@@ -1907,6 +1910,7 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
             id
             effortID
             type
+            name
             targetID
             rank
             createdAt
@@ -1925,6 +1929,7 @@ export const getTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -1943,6 +1948,7 @@ export const listTrophys = /* GraphQL */ `
         id
         effortID
         type
+        name
         targetID
         rank
         createdAt
