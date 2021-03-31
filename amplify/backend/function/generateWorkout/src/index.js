@@ -75,6 +75,8 @@ exports.handler = async (event) => {
         }
     });
 
+    console.log('graphql query done');
+
     console.log(current);
 
     if(current.data.listCurrentRoutinesByUser.items.length === 0){

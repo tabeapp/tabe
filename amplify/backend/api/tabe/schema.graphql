@@ -195,7 +195,7 @@ type Routine
 @auth(rules: [
   {allow: owner, ownerField: "userID", provider: userPools, operations: [read, update, create]}
   {allow: private, provider: userPools, operations: [read]}
-  {allow: private, provider: iam, operations: [read, update]}
+  {allow: private, provider: iam, operations: [read, update, create]}
 ])
 @key(name: "byUser", fields: ["userID"], queryField: "listRoutinesByUser")
 @key(name: "byUserAndCurrent", fields: ["userID", "current"], queryField: "listCurrentRoutinesByUser")

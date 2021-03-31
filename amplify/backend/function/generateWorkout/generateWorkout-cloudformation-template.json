@@ -205,7 +205,12 @@
             {
               "Effect": "Allow",
               "Action": [
-                "appsync:GraphQL"
+                "appsync:Create*",
+                "appsync:StartSchemaCreation",
+                "appsync:GraphQL",
+                "appsync:Get*",
+                "appsync:List*",
+                "appsync:Update*"
               ],
               "Resource": [
                 {
@@ -224,7 +229,7 @@
                       {
                         "Ref": "apitabeGraphQLAPIIdOutput"
                       },
-                      "/types/read/*"
+                      "/*"
                     ]
                   ]
                 },
@@ -243,8 +248,7 @@
                       ":apis/",
                       {
                         "Ref": "apitabeGraphQLAPIIdOutput"
-                      },
-                      "/types/update/*"
+                      }
                     ]
                   ]
                 }

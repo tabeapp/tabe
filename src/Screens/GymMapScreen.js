@@ -11,6 +11,7 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
 import {
+    addNewGym,
     createGym,
     createUserLocation, createUserRecord,
     deleteUserLocation, deleteUserRecord,
@@ -114,7 +115,7 @@ const GymMapScreen = props => {
 
 
         let gymDraft = await API.graphql(graphqlOperation(addNewGym, {
-            coordinates: [coordinates[1], coordinates[0]]
+            coordinates: { lat: coordinates[1], lon: coordinates[0]}
         }));
 
         //just make sure this work
@@ -138,7 +139,7 @@ const GymMapScreen = props => {
 
     //take the new gym and save it to db
     //thid dhould be lambda
-    const addNewGym = async () => {
+    const onPressScreen = async () => {
         const gymResult = await API.graphql(graphqlOperation(createGym, {
             input: {
                 name: newGym.name,
@@ -270,7 +271,7 @@ const GymMapScreen = props => {
                                 value={newGym.name}
                             />
                             <TouchableOpacity
-                                onPress={addNewGym}
+                                onPress={onPressScreen}
                                 style={{backgroundColor: 'green', height: 50, width: '100%'}}
                             >
                                 <Words>Add New Gym</Words>
