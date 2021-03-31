@@ -7,6 +7,7 @@ import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ProgressCircle from './ProgressCircle';
 import Row from '../Simple/Row';
+import { BACKGROUND } from '../../Style/Colors';
 
 //make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})

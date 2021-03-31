@@ -9,9 +9,9 @@ Amplify Params - DO NOT EDIT */
 const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
-//should work, right? from opt?
-const { listCurrentRoutinesByUser } = require('/opt/graphql/queries');
-const { updateCurrentWorkout, updateRoutine } = require('/opt/graphql/mutations');
+// /OPT/ DOESN'T DO SHIT, FUCK THEM
+const { listCurrentRoutinesByUser } = require('./graphql/queries');
+const { updateCurrentWorkout, updateRoutine } = require('./graphql/mutations');
 const { generateWorkout } = require('./Utils/GenerateWorkout');
 
 let graphqlClient;

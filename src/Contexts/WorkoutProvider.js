@@ -57,7 +57,7 @@ const WorkoutProvider = props => {
         return next;
     };
 
-    const syncCurrentWorkout = async data => {
+    const syncCurrentWorkout = async () => {
         API.graphql(graphqlOperation(updateCurrentWorkout, {
             input: {
                 userID: username,
@@ -81,7 +81,6 @@ const WorkoutProvider = props => {
         if(action.constructor === Function){
             //run action on state
             const x = invariantCheck(action(next));
-            //syncCurrentWorkout(x);
             console.log(x);
 
             return x;
@@ -124,8 +123,6 @@ const WorkoutProvider = props => {
         //if(action.type === 'setItem')
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
-
-        //syncCurrentWorkout(x);
 
         console.log(x);
         return x;

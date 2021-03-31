@@ -34,7 +34,7 @@
         },
         "generateWorkout": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/generateWorkout-7535744b793552356d6c-build.zip"
+          "s3Key": "amplify-builds/generateWorkout-2f376d30446d6b48686c-build.zip"
         }
       }
     },
@@ -65,6 +65,14 @@
                 }
               ],
               "hash": "A2gfF/uAmX82DRN82UrH7ECWgzEjM8FGCoaA3iQwJbI="
+            },
+            "4": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "KZp1nLRcNhi+CP9U8ddmFN63m8IxZ2kiW9DhuwDIcvs="
             }
           }
         }
