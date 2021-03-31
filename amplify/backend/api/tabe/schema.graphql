@@ -309,7 +309,7 @@ type Mutation{
     {allow: private, provider: userPools},
   ])
 
-  generateWorkout: String
+  generateWorkout: CurrentWorkout
   @function(name: "generateWorkout-${env}")
   @auth(rules:[
     {allow: private, provider: userPools},

@@ -2350,6 +2350,12 @@ export const changeUserGym = /* GraphQL */ `
 `;
 export const generateWorkout = /* GraphQL */ `
   mutation GenerateWorkout {
-    generateWorkout
+    generateWorkout {
+      userID
+      data
+      routineID
+      createdAt
+      updatedAt
+    }
   }
 `;

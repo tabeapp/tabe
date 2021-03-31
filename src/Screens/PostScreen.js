@@ -16,6 +16,7 @@ import { BACKGROUND, PRIMARY } from '../Style/Colors';
 import TrophyVisual from '../Components/Social/TrophyVisual';
 
 //yes this is a copy of report screen
+//side note: for trophy info, use post location info to fill in info
 const PostScreen = props => {
     const { postID } = props.route.params;
 
