@@ -3,7 +3,7 @@ const { ROUND_5 } = require('./UtilFunctions');
 
 //does this even matter?
 //not too sure what to do, so roughly copying starting strengtsh
-export const WARMUP_WEIGHTS = (ex, workoutWeight) => {
+exports.WARMUP_WEIGHTS = (ex, workoutWeight) => {
     const bb = EX_INFO[ex].barbell;
     const min = bb ? 45 : 0;
 

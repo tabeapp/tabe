@@ -1,3 +1,3 @@
-export const ROUND_5 = num => {
+exports.ROUND_5 = num => {
     return Math.round(num/5)*5;
 };

@@ -1,7 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const deleteUserRecord = /* GraphQL */ `
+exports.deleteUserRecord = /* GraphQL */ `
   mutation DeleteUserRecord(
     $input: DeleteUserRecordInput!
     $condition: ModelUserRecordConditionInput
@@ -26,7 +26,7 @@ export const deleteUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const updateUserLocation = /* GraphQL */ `
+exports.updateUserLocation = /* GraphQL */ `
   mutation UpdateUserLocation(
     $input: UpdateUserLocationInput!
     $condition: ModelUserLocationConditionInput
@@ -115,7 +115,7 @@ export const updateUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const deleteUserLocation = /* GraphQL */ `
+exports.deleteUserLocation = /* GraphQL */ `
   mutation DeleteUserLocation(
     $input: DeleteUserLocationInput!
     $condition: ModelUserLocationConditionInput
@@ -204,7 +204,7 @@ export const deleteUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const deleteUserImage = /* GraphQL */ `
+exports.deleteUserImage = /* GraphQL */ `
   mutation DeleteUserImage(
     $input: DeleteUserImageInput!
     $condition: ModelUserImageConditionInput
@@ -217,7 +217,7 @@ export const deleteUserImage = /* GraphQL */ `
     }
   }
 `;
-export const updateRegion = /* GraphQL */ `
+exports.updateRegion = /* GraphQL */ `
   mutation UpdateRegion(
     $input: UpdateRegionInput!
     $condition: ModelRegionConditionInput
@@ -259,7 +259,7 @@ export const updateRegion = /* GraphQL */ `
     }
   }
 `;
-export const deleteRegion = /* GraphQL */ `
+exports.deleteRegion = /* GraphQL */ `
   mutation DeleteRegion(
     $input: DeleteRegionInput!
     $condition: ModelRegionConditionInput
@@ -301,7 +301,7 @@ export const deleteRegion = /* GraphQL */ `
     }
   }
 `;
-export const updatePost = /* GraphQL */ `
+exports.updatePost = /* GraphQL */ `
   mutation UpdatePost(
     $input: UpdatePostInput!
     $condition: ModelPostConditionInput
@@ -468,7 +468,7 @@ export const updatePost = /* GraphQL */ `
     }
   }
 `;
-export const deletePost = /* GraphQL */ `
+exports.deletePost = /* GraphQL */ `
   mutation DeletePost(
     $input: DeletePostInput!
     $condition: ModelPostConditionInput
@@ -635,7 +635,7 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const updateEffort = /* GraphQL */ `
+exports.updateEffort = /* GraphQL */ `
   mutation UpdateEffort(
     $input: UpdateEffortInput!
     $condition: ModelEffortConditionInput
@@ -665,7 +665,7 @@ export const updateEffort = /* GraphQL */ `
     }
   }
 `;
-export const deleteEffort = /* GraphQL */ `
+exports.deleteEffort = /* GraphQL */ `
   mutation DeleteEffort(
     $input: DeleteEffortInput!
     $condition: ModelEffortConditionInput
@@ -695,7 +695,7 @@ export const deleteEffort = /* GraphQL */ `
     }
   }
 `;
-export const updateTrophy = /* GraphQL */ `
+exports.updateTrophy = /* GraphQL */ `
   mutation UpdateTrophy(
     $input: UpdateTrophyInput!
     $condition: ModelTrophyConditionInput
@@ -711,7 +711,7 @@ export const updateTrophy = /* GraphQL */ `
     }
   }
 `;
-export const deleteTrophy = /* GraphQL */ `
+exports.deleteTrophy = /* GraphQL */ `
   mutation DeleteTrophy(
     $input: DeleteTrophyInput!
     $condition: ModelTrophyConditionInput
@@ -727,7 +727,7 @@ export const deleteTrophy = /* GraphQL */ `
     }
   }
 `;
-export const updateComment = /* GraphQL */ `
+exports.updateComment = /* GraphQL */ `
   mutation UpdateComment(
     $input: UpdateCommentInput!
     $condition: ModelCommentConditionInput
@@ -752,7 +752,7 @@ export const updateComment = /* GraphQL */ `
     }
   }
 `;
-export const deleteComment = /* GraphQL */ `
+exports.deleteComment = /* GraphQL */ `
   mutation DeleteComment(
     $input: DeleteCommentInput!
     $condition: ModelCommentConditionInput
@@ -777,7 +777,7 @@ export const deleteComment = /* GraphQL */ `
     }
   }
 `;
-export const deleteRoutine = /* GraphQL */ `
+exports.deleteRoutine = /* GraphQL */ `
   mutation DeleteRoutine(
     $input: DeleteRoutineInput!
     $condition: ModelRoutineConditionInput
@@ -793,7 +793,7 @@ export const deleteRoutine = /* GraphQL */ `
     }
   }
 `;
-export const createCurrentWorkout = /* GraphQL */ `
+exports.createCurrentWorkout = /* GraphQL */ `
   mutation CreateCurrentWorkout(
     $input: CreateCurrentWorkoutInput!
     $condition: ModelCurrentWorkoutConditionInput
@@ -807,7 +807,7 @@ export const createCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const deleteCurrentWorkout = /* GraphQL */ `
+exports.deleteCurrentWorkout = /* GraphQL */ `
   mutation DeleteCurrentWorkout(
     $input: DeleteCurrentWorkoutInput!
     $condition: ModelCurrentWorkoutConditionInput
@@ -821,7 +821,7 @@ export const deleteCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const updateLike = /* GraphQL */ `
+exports.updateLike = /* GraphQL */ `
   mutation UpdateLike(
     $input: UpdateLikeInput!
     $condition: ModelLikeConditionInput
@@ -835,7 +835,7 @@ export const updateLike = /* GraphQL */ `
     }
   }
 `;
-export const updatePostMedia = /* GraphQL */ `
+exports.updatePostMedia = /* GraphQL */ `
   mutation UpdatePostMedia(
     $input: UpdatePostMediaInput!
     $condition: ModelPostMediaConditionInput
@@ -849,7 +849,7 @@ export const updatePostMedia = /* GraphQL */ `
     }
   }
 `;
-export const deletePostMedia = /* GraphQL */ `
+exports.deletePostMedia = /* GraphQL */ `
   mutation DeletePostMedia(
     $input: DeletePostMediaInput!
     $condition: ModelPostMediaConditionInput
@@ -863,7 +863,7 @@ export const deletePostMedia = /* GraphQL */ `
     }
   }
 `;
-export const updateFollowRelationship = /* GraphQL */ `
+exports.updateFollowRelationship = /* GraphQL */ `
   mutation UpdateFollowRelationship(
     $input: UpdateFollowRelationshipInput!
     $condition: ModelFollowRelationshipConditionInput
@@ -876,7 +876,7 @@ export const updateFollowRelationship = /* GraphQL */ `
     }
   }
 `;
-export const deleteFollowRelationship = /* GraphQL */ `
+exports.deleteFollowRelationship = /* GraphQL */ `
   mutation DeleteFollowRelationship(
     $input: DeleteFollowRelationshipInput!
     $condition: ModelFollowRelationshipConditionInput
@@ -889,7 +889,7 @@ export const deleteFollowRelationship = /* GraphQL */ `
     }
   }
 `;
-export const updateTimeline = /* GraphQL */ `
+exports.updateTimeline = /* GraphQL */ `
   mutation UpdateTimeline(
     $input: UpdateTimelineInput!
     $condition: ModelTimelineConditionInput
@@ -1025,7 +1025,7 @@ export const updateTimeline = /* GraphQL */ `
     }
   }
 `;
-export const deleteTimeline = /* GraphQL */ `
+exports.deleteTimeline = /* GraphQL */ `
   mutation DeleteTimeline(
     $input: DeleteTimelineInput!
     $condition: ModelTimelineConditionInput
@@ -1161,7 +1161,7 @@ export const deleteTimeline = /* GraphQL */ `
     }
   }
 `;
-export const createUserRecord = /* GraphQL */ `
+exports.createUserRecord = /* GraphQL */ `
   mutation CreateUserRecord(
     $input: CreateUserRecordInput!
     $condition: ModelUserRecordConditionInput
@@ -1186,7 +1186,7 @@ export const createUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const updateUserRecord = /* GraphQL */ `
+exports.updateUserRecord = /* GraphQL */ `
   mutation UpdateUserRecord(
     $input: UpdateUserRecordInput!
     $condition: ModelUserRecordConditionInput
@@ -1211,7 +1211,7 @@ export const updateUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const createUserLocation = /* GraphQL */ `
+exports.createUserLocation = /* GraphQL */ `
   mutation CreateUserLocation(
     $input: CreateUserLocationInput!
     $condition: ModelUserLocationConditionInput
@@ -1300,7 +1300,7 @@ export const createUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const createUserImage = /* GraphQL */ `
+exports.createUserImage = /* GraphQL */ `
   mutation CreateUserImage(
     $input: CreateUserImageInput!
     $condition: ModelUserImageConditionInput
@@ -1313,7 +1313,7 @@ export const createUserImage = /* GraphQL */ `
     }
   }
 `;
-export const updateUserImage = /* GraphQL */ `
+exports.updateUserImage = /* GraphQL */ `
   mutation UpdateUserImage(
     $input: UpdateUserImageInput!
     $condition: ModelUserImageConditionInput
@@ -1326,7 +1326,7 @@ export const updateUserImage = /* GraphQL */ `
     }
   }
 `;
-export const createGym = /* GraphQL */ `
+exports.createGym = /* GraphQL */ `
   mutation CreateGym(
     $input: CreateGymInput!
     $condition: ModelGymConditionInput
@@ -1430,7 +1430,7 @@ export const createGym = /* GraphQL */ `
     }
   }
 `;
-export const updateGym = /* GraphQL */ `
+exports.updateGym = /* GraphQL */ `
   mutation UpdateGym(
     $input: UpdateGymInput!
     $condition: ModelGymConditionInput
@@ -1534,7 +1534,7 @@ export const updateGym = /* GraphQL */ `
     }
   }
 `;
-export const deleteGym = /* GraphQL */ `
+exports.deleteGym = /* GraphQL */ `
   mutation DeleteGym(
     $input: DeleteGymInput!
     $condition: ModelGymConditionInput
@@ -1638,7 +1638,7 @@ export const deleteGym = /* GraphQL */ `
     }
   }
 `;
-export const createRegion = /* GraphQL */ `
+exports.createRegion = /* GraphQL */ `
   mutation CreateRegion(
     $input: CreateRegionInput!
     $condition: ModelRegionConditionInput
@@ -1680,7 +1680,7 @@ export const createRegion = /* GraphQL */ `
     }
   }
 `;
-export const createPost = /* GraphQL */ `
+exports.createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
     $condition: ModelPostConditionInput
@@ -1847,7 +1847,7 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const createEffort = /* GraphQL */ `
+exports.createEffort = /* GraphQL */ `
   mutation CreateEffort(
     $input: CreateEffortInput!
     $condition: ModelEffortConditionInput
@@ -1877,7 +1877,7 @@ export const createEffort = /* GraphQL */ `
     }
   }
 `;
-export const createTrophy = /* GraphQL */ `
+exports.createTrophy = /* GraphQL */ `
   mutation CreateTrophy(
     $input: CreateTrophyInput!
     $condition: ModelTrophyConditionInput
@@ -1893,7 +1893,7 @@ export const createTrophy = /* GraphQL */ `
     }
   }
 `;
-export const createComment = /* GraphQL */ `
+exports.createComment = /* GraphQL */ `
   mutation CreateComment(
     $input: CreateCommentInput!
     $condition: ModelCommentConditionInput
@@ -1918,7 +1918,7 @@ export const createComment = /* GraphQL */ `
     }
   }
 `;
-export const createRoutine = /* GraphQL */ `
+exports.createRoutine = /* GraphQL */ `
   mutation CreateRoutine(
     $input: CreateRoutineInput!
     $condition: ModelRoutineConditionInput
@@ -1934,7 +1934,7 @@ export const createRoutine = /* GraphQL */ `
     }
   }
 `;
-export const updateRoutine = /* GraphQL */ `
+exports.updateRoutine = /* GraphQL */ `
   mutation UpdateRoutine(
     $input: UpdateRoutineInput!
     $condition: ModelRoutineConditionInput
@@ -1950,7 +1950,7 @@ export const updateRoutine = /* GraphQL */ `
     }
   }
 `;
-export const updateCurrentWorkout = /* GraphQL */ `
+exports.updateCurrentWorkout = /* GraphQL */ `
   mutation UpdateCurrentWorkout(
     $input: UpdateCurrentWorkoutInput!
     $condition: ModelCurrentWorkoutConditionInput
@@ -1964,7 +1964,7 @@ export const updateCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const createLike = /* GraphQL */ `
+exports.createLike = /* GraphQL */ `
   mutation CreateLike(
     $input: CreateLikeInput!
     $condition: ModelLikeConditionInput
@@ -1978,7 +1978,7 @@ export const createLike = /* GraphQL */ `
     }
   }
 `;
-export const deleteLike = /* GraphQL */ `
+exports.deleteLike = /* GraphQL */ `
   mutation DeleteLike(
     $input: DeleteLikeInput!
     $condition: ModelLikeConditionInput
@@ -1992,7 +1992,7 @@ export const deleteLike = /* GraphQL */ `
     }
   }
 `;
-export const createPostMedia = /* GraphQL */ `
+exports.createPostMedia = /* GraphQL */ `
   mutation CreatePostMedia(
     $input: CreatePostMediaInput!
     $condition: ModelPostMediaConditionInput
@@ -2006,7 +2006,7 @@ export const createPostMedia = /* GraphQL */ `
     }
   }
 `;
-export const createFollowRelationship = /* GraphQL */ `
+exports.createFollowRelationship = /* GraphQL */ `
   mutation CreateFollowRelationship(
     $input: CreateFollowRelationshipInput!
     $condition: ModelFollowRelationshipConditionInput
@@ -2019,7 +2019,7 @@ export const createFollowRelationship = /* GraphQL */ `
     }
   }
 `;
-export const createTimeline = /* GraphQL */ `
+exports.createTimeline = /* GraphQL */ `
   mutation CreateTimeline(
     $input: CreateTimelineInput!
     $condition: ModelTimelineConditionInput
@@ -2155,7 +2155,7 @@ export const createTimeline = /* GraphQL */ `
     }
   }
 `;
-export const createPostAndTimeline = /* GraphQL */ `
+exports.createPostAndTimeline = /* GraphQL */ `
   mutation CreatePostAndTimeline(
     $title: String!
     $description: String!
@@ -2329,7 +2329,7 @@ export const createPostAndTimeline = /* GraphQL */ `
     }
   }
 `;
-export const addNewGym = /* GraphQL */ `
+exports.addNewGym = /* GraphQL */ `
   mutation AddNewGym($coordinates: LocationInput!) {
     addNewGym(coordinates: $coordinates)
   }

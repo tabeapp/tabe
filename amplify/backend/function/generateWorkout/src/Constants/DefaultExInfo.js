@@ -1,4 +1,4 @@
-export const EX_INFO = {
+exports.EX_INFO = {
     //these are 5rm from symmetric strength for 198lb male
     'Squat': {weight:125, barbell: true, categories: ['Legs']},
     'Bench': {weight:90, barbell: true, categories: ['Chest', 'Arms']},

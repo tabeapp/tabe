@@ -1,4 +1,4 @@
-export const updateRoutine = /* GraphQL */ `
+exports.updateRoutine = /* GraphQL */ `
   mutation UpdateRoutine(
     $input: UpdateRoutineInput!
     $condition: ModelRoutineConditionInput
@@ -14,7 +14,7 @@ export const updateRoutine = /* GraphQL */ `
     }
   }
 `;
-export const updateCurrentWorkout = /* GraphQL */ `
+exports.updateCurrentWorkout = /* GraphQL */ `
   mutation UpdateCurrentWorkout(
     $input: UpdateCurrentWorkoutInput!
     $condition: ModelCurrentWorkoutConditionInput

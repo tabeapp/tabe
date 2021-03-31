@@ -4,7 +4,7 @@ const { WARMUP_WEIGHTS } = require('./WarmupCalc');
 
 //we're not checking some other workout here,
 //just taking a routine, generating a workout from it, and updating the routine
-export const generateWorkout = async routine => {
+exports.generateWorkout = async routine => {
     //comment this out to clear workout
     const r = routine;
 

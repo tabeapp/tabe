@@ -1,4 +1,4 @@
-export const listCurrentRoutinesByUser = /* GraphQL */ `
+exports.listCurrentRoutinesByUser = /* GraphQL */ `
   query ListCurrentRoutinesByUser(
     $userID: ID
     $current: ModelIntKeyConditionInput

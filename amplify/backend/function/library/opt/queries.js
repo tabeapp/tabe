@@ -1,7 +1,7 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const nearbyGyms = /* GraphQL */ `
+exports.nearbyGyms = /* GraphQL */ `
   query NearbyGyms($location: LocationInput!, $km: Int) {
     nearbyGyms(location: $location, km: $km) {
       items {
@@ -85,7 +85,7 @@ export const nearbyGyms = /* GraphQL */ `
     }
   }
 `;
-export const getUserRecord = /* GraphQL */ `
+exports.getUserRecord = /* GraphQL */ `
   query GetUserRecord($userID: ID!, $exercise: String!) {
     getUserRecord(userID: $userID, exercise: $exercise) {
       userID
@@ -107,7 +107,7 @@ export const getUserRecord = /* GraphQL */ `
     }
   }
 `;
-export const listUserRecords = /* GraphQL */ `
+exports.listUserRecords = /* GraphQL */ `
   query ListUserRecords(
     $userID: ID
     $exercise: ModelStringKeyConditionInput
@@ -146,7 +146,7 @@ export const listUserRecords = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndCountry = /* GraphQL */ `
+exports.listRecordsByExerciseAndCountry = /* GraphQL */ `
   query ListRecordsByExerciseAndCountry(
     $countryID: ID
     $exerciseOrm: ModelUserRecordByCountryCompositeKeyConditionInput
@@ -185,7 +185,7 @@ export const listRecordsByExerciseAndCountry = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndState = /* GraphQL */ `
+exports.listRecordsByExerciseAndState = /* GraphQL */ `
   query ListRecordsByExerciseAndState(
     $stateID: ID
     $exerciseOrm: ModelUserRecordByStateCompositeKeyConditionInput
@@ -224,7 +224,7 @@ export const listRecordsByExerciseAndState = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndCity = /* GraphQL */ `
+exports.listRecordsByExerciseAndCity = /* GraphQL */ `
   query ListRecordsByExerciseAndCity(
     $cityID: ID
     $exerciseOrm: ModelUserRecordByCityCompositeKeyConditionInput
@@ -263,7 +263,7 @@ export const listRecordsByExerciseAndCity = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExerciseAndGym = /* GraphQL */ `
+exports.listRecordsByExerciseAndGym = /* GraphQL */ `
   query ListRecordsByExerciseAndGym(
     $gymID: ID
     $exerciseOrm: ModelUserRecordByGymCompositeKeyConditionInput
@@ -302,7 +302,7 @@ export const listRecordsByExerciseAndGym = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByUser = /* GraphQL */ `
+exports.listRecordsByUser = /* GraphQL */ `
   query ListRecordsByUser(
     $userID: ID
     $orm: ModelIntKeyConditionInput
@@ -341,7 +341,7 @@ export const listRecordsByUser = /* GraphQL */ `
     }
   }
 `;
-export const listRecordsByExercise = /* GraphQL */ `
+exports.listRecordsByExercise = /* GraphQL */ `
   query ListRecordsByExercise(
     $exercise: String
     $orm: ModelIntKeyConditionInput
@@ -380,7 +380,7 @@ export const listRecordsByExercise = /* GraphQL */ `
     }
   }
 `;
-export const getUserLocation = /* GraphQL */ `
+exports.getUserLocation = /* GraphQL */ `
   query GetUserLocation($userID: ID!) {
     getUserLocation(userID: $userID) {
       userID
@@ -466,7 +466,7 @@ export const getUserLocation = /* GraphQL */ `
     }
   }
 `;
-export const listUserLocations = /* GraphQL */ `
+exports.listUserLocations = /* GraphQL */ `
   query ListUserLocations(
     $userID: ID
     $filter: ModelUserLocationFilterInput
@@ -546,7 +546,7 @@ export const listUserLocations = /* GraphQL */ `
     }
   }
 `;
-export const listUserImages = /* GraphQL */ `
+exports.listUserImages = /* GraphQL */ `
   query ListUserImages(
     $userID: ID
     $filter: ModelUserImageFilterInput
@@ -571,7 +571,7 @@ export const listUserImages = /* GraphQL */ `
     }
   }
 `;
-export const getUserImage = /* GraphQL */ `
+exports.getUserImage = /* GraphQL */ `
   query GetUserImage($userID: ID!) {
     getUserImage(userID: $userID) {
       userID
@@ -581,7 +581,7 @@ export const getUserImage = /* GraphQL */ `
     }
   }
 `;
-export const listGyms = /* GraphQL */ `
+exports.listGyms = /* GraphQL */ `
   query ListGyms(
     $filter: ModelGymFilterInput
     $limit: Int
@@ -668,7 +668,7 @@ export const listGyms = /* GraphQL */ `
     }
   }
 `;
-export const getGym = /* GraphQL */ `
+exports.getGym = /* GraphQL */ `
   query GetGym($id: ID!) {
     getGym(id: $id) {
       id
@@ -769,7 +769,7 @@ export const getGym = /* GraphQL */ `
     }
   }
 `;
-export const listGymsByCity = /* GraphQL */ `
+exports.listGymsByCity = /* GraphQL */ `
   query ListGymsByCity(
     $cityID: ID
     $sortDirection: ModelSortDirection
@@ -864,7 +864,7 @@ export const listGymsByCity = /* GraphQL */ `
     }
   }
 `;
-export const searchGyms = /* GraphQL */ `
+exports.searchGyms = /* GraphQL */ `
   query SearchGyms(
     $filter: SearchableGymFilterInput
     $sort: SearchableGymSortInput
@@ -960,7 +960,7 @@ export const searchGyms = /* GraphQL */ `
     }
   }
 `;
-export const listRegions = /* GraphQL */ `
+exports.listRegions = /* GraphQL */ `
   query ListRegions(
     $filter: ModelRegionFilterInput
     $limit: Int
@@ -999,7 +999,7 @@ export const listRegions = /* GraphQL */ `
     }
   }
 `;
-export const getRegion = /* GraphQL */ `
+exports.getRegion = /* GraphQL */ `
   query GetRegion($id: ID!) {
     getRegion(id: $id) {
       id
@@ -1038,7 +1038,7 @@ export const getRegion = /* GraphQL */ `
     }
   }
 `;
-export const listRegionsBySuperRegions = /* GraphQL */ `
+exports.listRegionsBySuperRegions = /* GraphQL */ `
   query ListRegionsBySuperRegions(
     $superRegionID: ID
     $sortDirection: ModelSortDirection
@@ -1085,7 +1085,7 @@ export const listRegionsBySuperRegions = /* GraphQL */ `
     }
   }
 `;
-export const listPosts = /* GraphQL */ `
+exports.listPosts = /* GraphQL */ `
   query ListPosts(
     $filter: ModelPostFilterInput
     $limit: Int
@@ -1219,7 +1219,7 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getPost = /* GraphQL */ `
+exports.getPost = /* GraphQL */ `
   query GetPost($id: ID!) {
     getPost(id: $id) {
       type
@@ -1383,7 +1383,7 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
-export const listPostsSortedByTimestamp = /* GraphQL */ `
+exports.listPostsSortedByTimestamp = /* GraphQL */ `
   query ListPostsSortedByTimestamp(
     $type: String
     $createdAt: ModelStringKeyConditionInput
@@ -1527,7 +1527,7 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
     }
   }
 `;
-export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
+exports.listPostsSortedByUserAndTimestamp = /* GraphQL */ `
   query ListPostsSortedByUserAndTimestamp(
     $userID: ID
     $createdAt: ModelStringKeyConditionInput
@@ -1671,7 +1671,7 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
     }
   }
 `;
-export const searchPosts = /* GraphQL */ `
+exports.searchPosts = /* GraphQL */ `
   query SearchPosts(
     $filter: SearchablePostFilterInput
     $sort: SearchablePostSortInput
@@ -1814,7 +1814,7 @@ export const searchPosts = /* GraphQL */ `
     }
   }
 `;
-export const getEffort = /* GraphQL */ `
+exports.getEffort = /* GraphQL */ `
   query GetEffort($id: ID!) {
     getEffort(id: $id) {
       id
@@ -1841,7 +1841,7 @@ export const getEffort = /* GraphQL */ `
     }
   }
 `;
-export const listEfforts = /* GraphQL */ `
+exports.listEfforts = /* GraphQL */ `
   query ListEfforts(
     $filter: ModelEffortFilterInput
     $limit: Int
@@ -1875,7 +1875,7 @@ export const listEfforts = /* GraphQL */ `
     }
   }
 `;
-export const listEffortsByExerciseAndUser = /* GraphQL */ `
+exports.listEffortsByExerciseAndUser = /* GraphQL */ `
   query ListEffortsByExerciseAndUser(
     $userID: ID
     $exerciseOrm: ModelEffortByExerciseAndUserCompositeKeyConditionInput
@@ -1919,7 +1919,7 @@ export const listEffortsByExerciseAndUser = /* GraphQL */ `
     }
   }
 `;
-export const getTrophy = /* GraphQL */ `
+exports.getTrophy = /* GraphQL */ `
   query GetTrophy($id: ID!) {
     getTrophy(id: $id) {
       id
@@ -1932,7 +1932,7 @@ export const getTrophy = /* GraphQL */ `
     }
   }
 `;
-export const listTrophys = /* GraphQL */ `
+exports.listTrophys = /* GraphQL */ `
   query ListTrophys(
     $filter: ModelTrophyFilterInput
     $limit: Int
@@ -1952,7 +1952,7 @@ export const listTrophys = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
+exports.getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
@@ -1974,7 +1974,7 @@ export const getComment = /* GraphQL */ `
     }
   }
 `;
-export const listComments = /* GraphQL */ `
+exports.listComments = /* GraphQL */ `
   query ListComments(
     $filter: ModelCommentFilterInput
     $limit: Int
@@ -2003,7 +2003,7 @@ export const listComments = /* GraphQL */ `
     }
   }
 `;
-export const getRoutine = /* GraphQL */ `
+exports.getRoutine = /* GraphQL */ `
   query GetRoutine($id: ID!) {
     getRoutine(id: $id) {
       id
@@ -2016,7 +2016,7 @@ export const getRoutine = /* GraphQL */ `
     }
   }
 `;
-export const listRoutines = /* GraphQL */ `
+exports.listRoutines = /* GraphQL */ `
   query ListRoutines(
     $filter: ModelRoutineFilterInput
     $limit: Int
@@ -2036,7 +2036,7 @@ export const listRoutines = /* GraphQL */ `
     }
   }
 `;
-export const listRoutinesByUser = /* GraphQL */ `
+exports.listRoutinesByUser = /* GraphQL */ `
   query ListRoutinesByUser(
     $userID: ID
     $sortDirection: ModelSortDirection
@@ -2064,7 +2064,7 @@ export const listRoutinesByUser = /* GraphQL */ `
     }
   }
 `;
-export const listCurrentRoutinesByUser = /* GraphQL */ `
+exports.listCurrentRoutinesByUser = /* GraphQL */ `
   query ListCurrentRoutinesByUser(
     $userID: ID
     $current: ModelIntKeyConditionInput
@@ -2094,7 +2094,7 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
     }
   }
 `;
-export const getCurrentWorkout = /* GraphQL */ `
+exports.getCurrentWorkout = /* GraphQL */ `
   query GetCurrentWorkout($userID: ID!) {
     getCurrentWorkout(userID: $userID) {
       userID
@@ -2105,7 +2105,7 @@ export const getCurrentWorkout = /* GraphQL */ `
     }
   }
 `;
-export const listCurrentWorkouts = /* GraphQL */ `
+exports.listCurrentWorkouts = /* GraphQL */ `
   query ListCurrentWorkouts(
     $userID: ID
     $filter: ModelCurrentWorkoutFilterInput
@@ -2131,7 +2131,7 @@ export const listCurrentWorkouts = /* GraphQL */ `
     }
   }
 `;
-export const getLike = /* GraphQL */ `
+exports.getLike = /* GraphQL */ `
   query GetLike($id: ID!) {
     getLike(id: $id) {
       id
@@ -2142,7 +2142,7 @@ export const getLike = /* GraphQL */ `
     }
   }
 `;
-export const listLikes = /* GraphQL */ `
+exports.listLikes = /* GraphQL */ `
   query ListLikes(
     $filter: ModelLikeFilterInput
     $limit: Int
@@ -2160,7 +2160,7 @@ export const listLikes = /* GraphQL */ `
     }
   }
 `;
-export const getPostMedia = /* GraphQL */ `
+exports.getPostMedia = /* GraphQL */ `
   query GetPostMedia($id: ID!) {
     getPostMedia(id: $id) {
       id
@@ -2171,7 +2171,7 @@ export const getPostMedia = /* GraphQL */ `
     }
   }
 `;
-export const listPostMedias = /* GraphQL */ `
+exports.listPostMedias = /* GraphQL */ `
   query ListPostMedias(
     $filter: ModelPostMediaFilterInput
     $limit: Int
@@ -2189,7 +2189,7 @@ export const listPostMedias = /* GraphQL */ `
     }
   }
 `;
-export const getFollowRelationship = /* GraphQL */ `
+exports.getFollowRelationship = /* GraphQL */ `
   query GetFollowRelationship($followeeID: ID!, $followerID: ID!) {
     getFollowRelationship(followeeID: $followeeID, followerID: $followerID) {
       followeeID
@@ -2199,7 +2199,7 @@ export const getFollowRelationship = /* GraphQL */ `
     }
   }
 `;
-export const listFollowRelationships = /* GraphQL */ `
+exports.listFollowRelationships = /* GraphQL */ `
   query ListFollowRelationships(
     $followeeID: ID
     $followerID: ModelIDKeyConditionInput
@@ -2226,7 +2226,7 @@ export const listFollowRelationships = /* GraphQL */ `
     }
   }
 `;
-export const getTimeline = /* GraphQL */ `
+exports.getTimeline = /* GraphQL */ `
   query GetTimeline($userID: ID!, $createdAt: String!) {
     getTimeline(userID: $userID, createdAt: $createdAt) {
       userID
@@ -2359,7 +2359,7 @@ export const getTimeline = /* GraphQL */ `
     }
   }
 `;
-export const listTimelines = /* GraphQL */ `
+exports.listTimelines = /* GraphQL */ `
   query ListTimelines(
     $userID: ID
     $createdAt: ModelStringKeyConditionInput
