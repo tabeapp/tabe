@@ -5,13 +5,13 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 
-import { getUserLocation, listRecordsByUser } from '/opt/graphql/queries';
-import {
+const { getUserLocation, listRecordsByUser } = require('/opt/queries');
+const {
     createUserLocation,
     createUserRecord,
     deleteUserLocation,
     deleteUserRecord,
-} from '/opt/graphql/mutations';
+} = require('/opt/mutations');
 const AWSAppSyncClient = require('aws-appsync').default;
 const gql = require('graphql-tag');
 global.fetch = require('node-fetch');

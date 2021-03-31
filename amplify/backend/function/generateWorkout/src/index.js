@@ -20,6 +20,8 @@ exports.handler = async (event) => {
     let env;
     let graphql_auth;
 
+    console.log('gen workout lamba invoked');
+
     if ('AWS_EXECUTION_ENV' in process.env && process.env.AWS_EXECUTION_ENV.startsWith('AWS_Lambda_')) {
         //for cloud env
         env = process.env;
@@ -47,6 +49,7 @@ exports.handler = async (event) => {
         };
     }
 
+
     if (!graphqlClient) {
         graphqlClient = new AWSAppSyncClient({
             //i think this is the problem
@@ -57,7 +60,11 @@ exports.handler = async (event) => {
         });
     }
 
+    console.log('graphql client created');
+
     const userID = event.identity.username;
+
+    console.log('identity retrieved');
 
     let current = await graphqlClient.query({
         query: gql(listCurrentRoutinesByUser),
@@ -67,6 +74,9 @@ exports.handler = async (event) => {
             sortDirection: 'DESC'
         }
     });
+
+    console.log(current);
+
     if(current.data.listCurrentRoutinesByUser.items.length === 0){
 
         //save this to current workout

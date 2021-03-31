@@ -1,4 +1,4 @@
-export const getRegion = /* GraphQL */ `
+exports.getRegion = /* GraphQL */ `
   query GetRegion($id: ID!) {
     getRegion(id: $id) {
       id

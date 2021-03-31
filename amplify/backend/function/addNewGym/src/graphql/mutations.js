@@ -1,4 +1,4 @@
-export const createRegion = /* GraphQL */ `
+exports.createRegion = /* GraphQL */ `
   mutation CreateRegion(
     $input: CreateRegionInput!
     $condition: ModelRegionConditionInput

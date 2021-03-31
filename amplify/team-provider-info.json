@@ -22,7 +22,7 @@
         },
         "addNewGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/addNewGym-39306b4c56326e686232-build.zip"
+          "s3Key": "amplify-builds/addNewGym-56346453786158505677-build.zip"
         },
         "library": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
@@ -30,11 +30,11 @@
         },
         "changeUserGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/changeUserGym-5a716475377a644c2f67-build.zip"
+          "s3Key": "amplify-builds/changeUserGym-333233324c666768477a-build.zip"
         },
         "generateWorkout": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/generateWorkout-2f376d30446d6b48686c-build.zip"
+          "s3Key": "amplify-builds/generateWorkout-704a6847446575484e64-build.zip"
         }
       }
     },
@@ -73,6 +73,14 @@
                 }
               ],
               "hash": "KZp1nLRcNhi+CP9U8ddmFN63m8IxZ2kiW9DhuwDIcvs="
+            },
+            "5": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "dr2JjvCjHUgtHD181qMKhQEhLzvQv0RzFPg3mfWCkeU="
             }
           }
         }
