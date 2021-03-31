@@ -4,13 +4,13 @@ import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { createCurrentWorkout, createPostAndTimeline, updateCurrentWorkout } from '../../graphql/mutations';
+import { createCurrentWorkout, createPostAndTimeline, generateWorkout, updateCurrentWorkout } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from './UserProvider';
-import { generateWorkout } from '../Utils/GenerateWorkout';
 import { getCurrentWorkout } from '../../graphql/queries';
 //ehhhh not sure how i feel about this import
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
+import { onUpdateCurrentWorkout } from '../../graphql/subscriptions';
 
 export const WorkoutContext = React.createContext();
 
@@ -81,7 +81,7 @@ const WorkoutProvider = props => {
         if(action.constructor === Function){
             //run action on state
             const x = invariantCheck(action(next));
-            syncCurrentWorkout(x);
+            //syncCurrentWorkout(x);
             console.log(x);
 
             return x;
@@ -125,7 +125,7 @@ const WorkoutProvider = props => {
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
 
-        syncCurrentWorkout(x);
+        //syncCurrentWorkout(x);
 
         console.log(x);
         return x;
@@ -155,38 +155,38 @@ const WorkoutProvider = props => {
                 workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
             }
         });
+
+        const sub = API.graphql(graphqlOperation(onUpdateCurrentWorkout, {
+            userID: username
+        })).subscribe({
+            next: (obj) => {
+                console.log(obj);
+                workoutDispatch(() => JSON.parse(obj));
+                //overwrite what's in workout
+
+            }
+        });
+
+        return () => {
+            //ehhh, not sure how I feel about this but we can't have sync current in dispatch
+            syncCurrentWorkout();
+            sub.unsubscribe();
+        }
     }, [username]);
 
     //heavy logic here, not much you can do with usereducer here
     //wonder if this could be a lambda function...
     //step 4, generating a workout
+    //make this a lamba just because we'll be calling it from apple watch one day
     const createWorkout = async () => {
-        //comment this out to clear workout
-        console.log('generating workout', JSON.stringify(data));
-        //for some reason workout can now be undefined
+        //this is fine to keep, solid check
         if(data && JSON.stringify(data) !== '{}')
             return;
 
-        const current = getCurrent();
 
-        //i'd think you return and not let this happen
-        if(!current){
-            console.log('generating workout, current routine not found');
-            generateCustom();
-            return;
-        }
-
-        const routineID = current.id;
-        const r = JSON.parse(current.routine);
-
-        const {routine, workout} = await generateWorkout(r);
-
-        //this looks fine
-        updateRoutineData(routineID, routine);
-
-        console.log('generated workout', workout);
-        //hmmmm maybe there should be a mutuable routineid in workout...
-        workoutDispatch(() => ({...workout, routineID: routineID}));
+        //just await lamda and  go
+        //add a subscription to current workout
+        await API.graphql(graphqlOperation(generateWorkout));
     };
 
     const generateCustom = () => {
@@ -223,6 +223,7 @@ const WorkoutProvider = props => {
         return false;
     };
 
+    //end uses of this
     const createReport = () => generateReport(data);
 
     //only here cuz of the async storage

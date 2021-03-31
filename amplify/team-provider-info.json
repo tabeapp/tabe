@@ -31,6 +31,10 @@
         "changeUserGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
           "s3Key": "amplify-builds/changeUserGym-5a716475377a644c2f67-build.zip"
+        },
+        "generateWorkout": {
+          "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
+          "s3Key": "amplify-builds/generateWorkout-7535744b793552356d6c-build.zip"
         }
       }
     },

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "api": {
+      "tabe": [
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "library",
+      "version": 3
+    }
+  ]
+}

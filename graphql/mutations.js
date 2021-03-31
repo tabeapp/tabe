@@ -2348,3 +2348,8 @@ export const changeUserGym = /* GraphQL */ `
     changeUserGym(gymChangeInput: $gymChangeInput)
   }
 `;
+export const generateWorkout = /* GraphQL */ `
+  mutation GenerateWorkout {
+    generateWorkout
+  }
+`;

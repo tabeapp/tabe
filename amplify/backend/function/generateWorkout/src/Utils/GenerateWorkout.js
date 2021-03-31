@@ -1,6 +1,6 @@
-import { CURRENT, NEW_PR, REST_DAY } from '../Constants/Symbols';
-import { ROUND_5 } from './UtilFunctions';
-import { WARMUP_WEIGHTS } from './WarmupCalc';
+const { CURRENT, NEW_PR, REST_DAY } = require('../Constants/Symbols');
+const { ROUND_5 } = require('./UtilFunctions');
+const { WARMUP_WEIGHTS } = require('./WarmupCalc');
 
 //we're not checking some other workout here,
 //just taking a routine, generating a workout from it, and updating the routine

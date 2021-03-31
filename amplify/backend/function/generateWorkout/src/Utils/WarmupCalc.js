@@ -1,5 +1,5 @@
-import { EX_INFO } from '../Constants/DefaultExInfo';
-import { ROUND_5 } from './UtilFunctions';
+const { EX_INFO } = require('../Constants/DefaultExInfo');
+const { ROUND_5 } = require('./UtilFunctions');
 
 //does this even matter?
 //not too sure what to do, so roughly copying starting strengtsh

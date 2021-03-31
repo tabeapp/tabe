@@ -308,6 +308,12 @@ type Mutation{
   @auth(rules:[
     {allow: private, provider: userPools},
   ])
+
+  generateWorkout: String
+  @function(name: "generateWorkout-${env}")
+  @auth(rules:[
+    {allow: private, provider: userPools},
+  ])
 }
 
 input GymChangeInput{
