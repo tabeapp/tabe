@@ -10,7 +10,7 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import Flip from '../Simple/Flip';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
-import { DARK_GRAY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -21,7 +21,7 @@ const ExerciseEditor = props => {
     const {name, info, advanced} = props;
 
     const {routinesDispatch} = useContext(RoutinesContext);
-    const {routines} = useContext(RoutinesContext);
+    const {editRoutine} = useContext(RoutinesContext);
     const rd = (path, value) => {
         routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
     };
@@ -56,11 +56,11 @@ const ExerciseEditor = props => {
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
     return (
-        <View key={name} style={{width: width, backgroundColor: DARK_GRAY, padding: 3}}>
-            <Words style={{fontSize: 30}}>{name}</Words>
+        <View key={name} style={{width: width, borderWidth: 1, borderColor: BACKGROUND, backgroundColor: DARK_GRAY}}>
+            <Words style={{fontWeight: 'bold', fontSize: 30}}>{name}</Words>
 
             <Row>
-                <Words>Current Working Weight: </Words>
+                <Words style={{fontSize: 20}}>Current Working Weight: </Words>
                 <NumericSelector onChange={value => {
                     routinesDispatch({path: 'editRoutine.info.' + name + '.current', value: value});
 
@@ -69,22 +69,21 @@ const ExerciseEditor = props => {
             {
                 advanced && <>
 
-                    <Row>
-                        <Words>Rest between sets</Words>
+                    <Row style={{justifyContent: 'flex-end'}}>
+                        <Words style={{fontSize: 20}}>Rest</Words>
 
-                        <View style={{flexDirection:'row'}}>
-                            <NumericSelector
-                                //you should add default incrememtn value
-                                //this is so dumb, but it does make rest a single thing and handle it ok
-                                onChange={value => rd('rest', value*60 + info.rest%60) }
-                                numInfo={{def:Math.floor(info.rest/60), min: 0, max: 10, increment: 1}}
-                            />
-                            <Words>:</Words>
-                            <NumericSelector
-                                onChange={value => rd('rest', value + Math.floor(info.rest/60)*60)}
-                                numInfo={{def:info.rest%60, min: 0, max: 55, increment: 5}}
-                            />
-                        </View>
+                        <NumericSelector
+                            //you should add default incrememtn value
+                            //this is so dumb, but it does make rest a single thing and handle it ok
+                            onChange={value => rd('rest', value*60 + info.rest%60) }
+                            numInfo={{def:Math.floor(info.rest/60), min: 0, max: 10, increment: 1}}
+                        />
+                        <Words style={{fontSize: 20}}>:</Words>
+                        <NumericSelector
+                            onChange={value => rd('rest', value + Math.floor(info.rest/60)*60)}
+                            numInfo={{def:info.rest%60, min: 0, max: 55, increment: 5}}
+                        />
+                        <Words style={{fontSize: 20}}>between sets</Words>
                     </Row>
 
                     <Words style={{fontSize: 20}}>Sets:</Words>
@@ -205,7 +204,7 @@ const ExerciseEditor = props => {
                                 onChange={value => {
                                     rd('setInfo.scheme', value);
                                 }}
-                                list={Object.keys(routines.editRoutine.customSets)}
+                                list={Object.keys(editRoutine.customSets)}
                             />
                         </View>
                     }
@@ -260,17 +259,17 @@ const ExerciseEditor = props => {
                         </Row>
                     }
                     <Words style={{fontSize: 20}}>Progression:</Words>
-                    <Row>
-                        <Words>Add lb</Words>
+
+                    <Row style={{justifyContent: 'flex-end'}}>
+                        <Words style={{fontSize: 20}}>Add</Words>
                         <NumericSelector onChange={value => {
                             rd('progress.amount', value);
                         }} numInfo={{def:info.progress.amount, min: 0, max: 25, increment: 2.5}}/>
-                    </Row>
-                    <Row>
-                        <Words>per workouts</Words>
+                        <Words style={{fontSize: 20}}>lb every</Words>
                         <NumericSelector onChange={value => {
                             rd('progress.rate', value);
                         }} numInfo={{def:info.progress.rate, min: 1, max: 10, increment: 1}}/>
+                        <Words style={{fontSize: 20}}>workouts</Words>
                     </Row>
 
                     {

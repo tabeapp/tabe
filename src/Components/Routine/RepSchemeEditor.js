@@ -7,7 +7,8 @@ import { NEW_PR } from '../../Constants/Symbols';
 import Chooser from '../Simple/Chooser';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
-import { DARK_GRAY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -27,102 +28,104 @@ const RepSchemeEditor = props => {
     const {name} = props;//need to use name
     //i guess only one custom scheme per routine
     //otherwise how fucking complex is your workout?
+    const width = useWindowDimensions().width;
 
     //this is kinda going to resemble customexercise card
     return(
-        <>
-            <View style={{justifyContent: 'center', height: 400, margin: 5, width: 400, backgroundColor: DARK_GRAY}}>
-                <Words>Rep Scheme {name}</Words>
-                {
-                    props.sets.map((week, weekIndex) =>
-                        <Row key={weekIndex}>
-                            <Words>{weekIndex+1}:</Words>
-                            <View style={{flex: 1, height: 60, backgroundColor: 'transparent', borderRadius: 20}}>
-                                {
-                                    <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-                                        <TouchableOpacity
-                                            style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
-                                            onPress={() => {
-                                                routinesDispatch(prev => {
-                                                    const x = prev.editRoutine.customSets[name][weekIndex];
-                                                    x.splice(x.length-1);
-                                                    return prev;
-                                                })
-                                            }}>
-                                            <Words style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Words>
-                                        </TouchableOpacity>
-                                        {
-                                            week.map((v, setIndex) =>
-
-                                                <>
-                                                    <View key={setIndex}>
-                                                        <Chooser
-                                                            selected={v.reps}
-                                                            onChange={value => {
-                                                                routinesDispatch({
-                                                                    path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
-                                                                    value: value
-                                                                });
-                                                            }}
-                                                            list={reps}
-                                                        />
-                                                    </View>
-                                                    <Words key={setIndex+'a'}>@</Words>
-                                                    <View key={setIndex+'f'}>
-                                                        <Chooser
-                                                            selected={v['%']}
-                                                            onChange={value => {
-                                                                routinesDispatch({
-                                                                    path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
-                                                                    value: value
-                                                                });
-                                                            }}
-                                                            list={percents}
-                                                        />
-                                                    </View>
-                                                    <Words key={setIndex+'b'}>%</Words>
-                                                </>
-                                            )
+        <View style={{borderColor: 'red', borderWidth: 1, width: width, backgroundColor: DARK_GRAY}}>
+            <Words style={{fontWeight: 'bold', fontSize: 30}}>Rep Scheme {name}</Words>
+            {
+                props.sets.map((week, weekIndex) =>
+                    <Row key={weekIndex}>
+                        <Words>{weekIndex+1}:</Words>
+                        <View style={{flex: 1, backgroundColor: 'transparent', borderRadius: 20}}>
+                            {
+                                <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                                    <TouchableOpacity
+                                        style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
+                                        onPress={() => {
+                                            routinesDispatch(prev => {
+                                                const x = prev.editRoutine.customSets[name][weekIndex];
+                                                x.splice(x.length-1);
+                                                return prev;
+                                            })
+                                        }}>
+                                        <Words style={{color: 'red', fontWeight: 'bold', fontSize: 15, }}>-</Words>
+                                    </TouchableOpacity>
+                                    {
+                                        week.map((v, setIndex) =>
+                                            <Row key={setIndex}>
+                                                <View>
+                                                    <Chooser
+                                                        style={{height: 45}}
+                                                        itemStyle={{height: 45}}
+                                                        selected={v.reps}
+                                                        onChange={value => {
+                                                            routinesDispatch({
+                                                                path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
+                                                                value: value
+                                                            });
+                                                        }}
+                                                        list={reps}
+                                                    />
+                                                </View>
+                                                <Words>@</Words>
+                                                <View>
+                                                    <Chooser
+                                                        style={{height: 45}}
+                                                        itemStyle={{height: 45}}
+                                                        selected={v['%']}
+                                                        onChange={value => {
+                                                            routinesDispatch({
+                                                                path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
+                                                                value: value
+                                                            });
+                                                        }}
+                                                        list={percents}
+                                                    />
+                                                </View>
+                                                <Words>%</Words>
+                                            </Row>
+                                        )
+                                    }
+                                    <TouchableOpacity
+                                        style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
+                                        onPress={() =>
+                                            routinesDispatch(prev => {
+                                                const x = prev.editRoutine.customSets[name][weekIndex];
+                                                if(x.length === 0)
+                                                    x.push({reps:5, '%': 100});
+                                                else
+                                                    x.push({...x[x.length-1]});
+                                                return prev;
+                                            })
                                         }
-                                        <TouchableOpacity
-                                            style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
-                                            onPress={() =>
-                                                routinesDispatch(prev => {
-                                                    const x = prev.editRoutine.customSets[name][weekIndex];
-                                                    if(x.length === 0)
-                                                        x.push({reps:5, '%': 100});
-                                                    else
-                                                        x.push({...x[x.length-1]});
-                                                    return prev;
-                                                })
-                                            }
-                                        >
-                                            <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
-                                        </TouchableOpacity>
-                                    </View>
-                                }
+                                    >
+                                        <Words style={{color: 'green', fontWeight: 'bold', fontSize: 15, }}>+</Words>
+                                    </TouchableOpacity>
+                                </View>
+                            }
 
-                            </View>
-                        </Row>
+                        </View>
+                    </Row>
 
-                    )
+                )
 
-                }
-                <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                    routinesDispatch(prev => {
-                        const x = prev.editRoutine.customSets[name];
-                        if(x.length === 0)
-                            x.push([]);
-                        else
-                            x.push(FULL_COPY(x[x.length-1]));
-                        return prev;
-                    });
-                    //append a new obj
-                }}>
-                    <Words style={{fontSize: 30}}>Add Week?Cycle?idk</Words>
-                </TouchableOpacity>
-            </View>
-        </>
+            }
+            <TouchableOpacity style={STYLES.textButton} onPress={() => {
+                routinesDispatch(prev => {
+                    const x = prev.editRoutine.customSets[name];
+                    if(x.length === 0)
+                        x.push([]);
+                    else
+                        x.push(FULL_COPY(x[x.length-1]));
+                    return prev;
+                });
+                //append a new obj
+            }}>
+                <Words style={{fontSize: 30}}>Add iteration</Words>
+            </TouchableOpacity>
+        </View>
     )
 
 }

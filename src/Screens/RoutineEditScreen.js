@@ -20,6 +20,7 @@ import { DARK_GRAY, PRIMARY } from '../Style/Colors';
 import Flip from '../Components/Simple/Flip';
 import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
 import { NextObjectKey } from '../Utils/NextObjectKey';
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -96,6 +97,7 @@ const RoutineEditScreen = props => {
         props.navigation.navigate('routine');
     };
 
+    const width = useWindowDimensions().width;
 
     return (
         <SafeBorder>
@@ -177,16 +179,16 @@ const RoutineEditScreen = props => {
                 {
                     advanced && customScheme &&
                     <>
-                        <Words style={{fontSize: 40}}>Custom Rep Scheme</Words>
-                        <Words>(workouts using this scheme will cycle through the following sets)</Words>
-                        <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>
+                        <Words style={{color: 'gray', fontSize: 15}}>REP SCHEMES</Words>
+                        <Words>(workouts using a schema will cycle through the sets)</Words>
+                        <ScrollView pagingEnabled horizontal={true}>
                             {
                                 Object.entries(customSets).map(([k,v]) =>
                                     <RepSchemeEditor key={k} sets={v} name={k} />
                                 )
                             }
-                            <View style={{justifyContent: 'center', height: 200, margin: 3, width: 406, backgroundColor: DARK_GRAY}}>
-                                <TouchableOpacity style={STYLES.textButton} onPress={() => {
+                            <View style={{width: width, justifyContent: 'center', height: 200}}>
+                                <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
                                     //this actually works
                                     rd('customSets.' + NextObjectKey(customSets), []);
                                     console.log(JSON.stringify(customSets))

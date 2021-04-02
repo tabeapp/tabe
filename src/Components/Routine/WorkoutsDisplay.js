@@ -7,6 +7,7 @@ import Words from '../Simple/Words';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
+import { BACKGROUND } from '../../Style/Colors';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
@@ -21,7 +22,7 @@ const WorkoutsDisplay = props => {
         <ScrollView pagingEnabled style={STYLES.scroller} horizontal={true}>
             {
                 Object.entries(workouts).map(([k,v]) =>
-                    <View style={{width: width}}>
+                    <View style={{width: width, borderColor: BACKGROUND, borderWidth: 1}}>
                         <WorkoutEditor
                             key={k} exercises={v} name={k}
                             advanced={advanced}

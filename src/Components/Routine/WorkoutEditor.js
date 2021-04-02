@@ -154,7 +154,7 @@ const WorkoutEditor = props => {
     return (
         <View style={{backgroundColor: BACKGROUND}}>
             <Row style={{padding: 5}}>
-                <Words style={{fontSize: 30}}>Workout {name}</Words>
+                <Words style={{fontSize: 30, fontWeight: 'bold'}}>Workout {name}</Words>
 
                 <Row>
 
@@ -191,7 +191,7 @@ const WorkoutEditor = props => {
             {
                 exercises.map((ex, index) =>{
                     //we actually need as many superset editors as there are exerices
-                    return <Row key={ex}>
+                    return <Row style={{backgroundColor: DARK_GRAY, marginVertical: 2}} key={ex}>
                         {
                             Array.isArray(ex) &&
                             <View style={{ flex: 1, display: 'flex', height: 30, flexDirection: 'row' }}>{
