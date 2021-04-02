@@ -108,17 +108,14 @@ const RoutineEditScreen = props => {
                 //rewriting this part to save to aws
                 onPressRight={saveRoutine}
             />
-            <ScrollView style={STYLES.box}>
-                <Words>Advanced Editor</Words>
-                <Flip
-                    onChange={setAdvanced}
-                    value={advanced}
-                />
+            <ScrollView>
                 <Write
                     style={{fontSize: 40, fontWeight: 'bold'}}
                     value={title}
                     onChange={v => rd('title', v)}
                 />
+
+                <Words style={{fontSize: 15, color: 'gray'}}>ROUTINE</Words>
                 <Row style={styles.section}>
                     <Words style={{fontSize: 20}}>Cycle length in days: </Words>
                     <NumericSelector
@@ -131,11 +128,11 @@ const RoutineEditScreen = props => {
                             })
                         }
 
-                        numInfo={{def: time, min: 7, max: 56, increment: 7}}/>
+                        numInfo={{def: time, min: 7, max: 56, increment: 7}}
+                    />
+
                 </Row>
 
-                {/*shoud this be towards the bottom
-                        or towards the top as it applies to all exercises?*/}
                 {
                     advanced &&
                     <View style={styles.section}>
@@ -158,13 +155,14 @@ const RoutineEditScreen = props => {
                 }
 
                 <View style={styles.section}>
-                    <Words style={{fontSize: 40}}>Workouts</Words>
+                    <Words style={{fontSize: 15, color: 'gray'}}>WORKOUTS</Words>
                     <WorkoutsDisplay workouts={workouts} info={info} advanced={advanced}/>
                 </View>
 
 
                 <View style={styles.section}>
-                    <Words style={{fontSize: 40}}>Exercises</Words>
+                    <Words style={{fontSize: 15, color: 'gray'}}>EXERCISES</Words>
+
                     <ScrollView pagingEnabled style={styles.scroller} horizontal={true}>{
                         //definitely the trickiest of all
                         //editing exercises involves much of the state, so I've just added them
@@ -203,10 +201,14 @@ const RoutineEditScreen = props => {
                     </>
                 }
 
-                <Words style={{color:'white', fontSize: 40}}>Days</Words>
+                <Words style={{color:'gray', fontSize: 15}}>SCHEDULE</Words>
                 <DaysEditor workouts={Object.keys(workouts)} days={days}/>
+                <Words>Advanced Editor</Words>
+                <Flip
+                    onChange={setAdvanced}
+                    value={advanced}
+                />
 
-                <View style={{height: 25/*for the red button*/}}/>
             </ScrollView>
         </SafeBorder>
     );

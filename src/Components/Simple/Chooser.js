@@ -2,6 +2,7 @@ import React from 'react';
 import { Picker } from '@react-native-picker/picker';
 import { FONT } from '../../Style/Values';
 import { StyleSheet } from 'react-native';
+import { TEXT_COLOR } from '../../Style/Colors';
 
 //my version of picker, whose style I just keep
 const Chooser = ({selected, onChange, list, style, itemStyle}) => {
@@ -15,7 +16,7 @@ const Chooser = ({selected, onChange, list, style, itemStyle}) => {
             list.map(item =>
                 <Picker.Item
                     key={item}
-                    color={'white'}
+                    color={TEXT_COLOR}
                     label={'' + item}
                     value={item}
                 />
@@ -27,14 +28,14 @@ const Chooser = ({selected, onChange, list, style, itemStyle}) => {
 const styles = StyleSheet.create({
     pickerStyle: {
         width: 50,
-        height: 50,
     },
     itemStyle: {
-        fontSize: 20,
-        borderRadius: 0,
-        fontFamily: FONT,
-        fontWeight: 'bold',
-        height: 50,
+        //fontSize: 20,
+        //borderRadius: 0,
+        //fontFamily: FONT,
+        //fontWeight: 'bold',
+        //height: 50,
+        height: 100,
     },
 });
 

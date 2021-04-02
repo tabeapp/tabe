@@ -1,7 +1,7 @@
 //i really don't know if this is the best way to do this, should i use some fancy CSS thing?
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { DARK_GRAY } from './Colors';
+import { DARK_GRAY, TEXT_COLOR } from './Colors';
 
 export const FONT = 'Arial';
 
@@ -36,7 +36,7 @@ export const STYLES = StyleSheet.create({
     text: {
         fontFamily: FONT,
         //fontWeight: 'bold',
-        color: 'white'
+        color: TEXT_COLOR
     },
     body: {
         flex: 1,
