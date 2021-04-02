@@ -30,11 +30,6 @@ const styles = StyleSheet.create({
         width: 50,
     },
     itemStyle: {
-        //fontSize: 20,
-        //borderRadius: 0,
-        //fontFamily: FONT,
-        //fontWeight: 'bold',
-        //height: 50,
         height: 100,
     },
 });

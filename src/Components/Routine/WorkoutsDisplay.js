@@ -7,7 +7,6 @@ import Words from '../Simple/Words';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
-import { DARK_GRAY } from '../../Style/Colors';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
@@ -22,37 +21,29 @@ const WorkoutsDisplay = props => {
         <ScrollView pagingEnabled style={STYLES.scroller} horizontal={true}>
             {
                 Object.entries(workouts).map(([k,v]) =>
-                    <WorkoutEditor
-                        key={k} exercises={v} name={k}
-                        advanced={advanced}
-                        editSuperset={(val, exerciseIndex, supersetIndex) => {
-                            //exerciseindex is the superset order in the workout
-                            //superset index is the exercise order in the super set
+                    <View style={{width: width}}>
+                        <WorkoutEditor
+                            key={k} exercises={v} name={k}
+                            advanced={advanced}
+                            editSuperset={(val, exerciseIndex, supersetIndex) => {
+                                //exerciseindex is the superset order in the workout
+                                //superset index is the exercise order in the super set
+                                routinesDispatch(prev => {
+                                    let x = prev.editRoutine.workouts[k][exerciseIndex];
+                                    x[supersetIndex] = val;
 
-                            //SUPASET TS TS TS TS
+                                    if(x.every(i => i !== ''))
+                                        prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
 
-                            routinesDispatch(prev => {
-                                let x = prev.editRoutine.workouts[k][exerciseIndex];
-                                x[supersetIndex] = val;
-
-                                if(x.every(i => i !== ''))
-                                    prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
-
-                                return prev;
-                            });
-
-                        }}
-
-                    />
+                                    return prev;
+                                });
+                            }}
+                        />
+                    </View>
                 )
             }
-            <View style={{justifyContent: 'center', height: 200, width: width, backgroundColor: DARK_GRAY}}>
-                <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                    //append a new obj
-                    //works, but ideally I'd like A B C instead of 1 2 3
-                    //too complex?
-                    //this actually works now
-                    //trust me bro
+            <View style={{width: width, justifyContent: 'center', height: 200}}>
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
                     const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
                     rd('workouts.' + NextObjectKey(workouts), []);
                 }}>

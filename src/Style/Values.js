@@ -28,10 +28,9 @@ export const STYLES = StyleSheet.create({
         height: 50,
     },
     textButton: {
-        borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(143,143,143,0.5)'
+        backgroundColor: 'gray'
     },
     text: {
         fontFamily: FONT,

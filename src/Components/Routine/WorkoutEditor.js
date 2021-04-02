@@ -6,7 +6,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
-import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
@@ -34,8 +33,6 @@ const WorkoutEditor = props => {
     const {editRoutine, routinesDispatch} = useContext(RoutinesContext);
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
     const {name, advanced, exercises, editSuperset} = props;//this is like a key btw
-
-    const width = useWindowDimensions().width;
 
     const {info, workouts} = editRoutine;
 
@@ -155,8 +152,8 @@ const WorkoutEditor = props => {
 
     //wtf is this 415 number supposed to be?
     return (
-        <View style={{width: width, backgroundColor: DARK_GRAY}}>
-            <Row style={{backgroundColor: DARK_GRAY, padding: 5}}>
+        <View style={{backgroundColor: BACKGROUND}}>
+            <Row style={{padding: 5}}>
                 <Words style={{fontSize: 30}}>Workout {name}</Words>
 
                 <Row>

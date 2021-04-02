@@ -117,7 +117,7 @@ const RoutineEditScreen = props => {
 
                 <Words style={{fontSize: 15, color: 'gray'}}>ROUTINE</Words>
                 <Row style={styles.section}>
-                    <Words style={{fontSize: 20}}>Cycle length in days: </Words>
+                    <Words style={{fontSize: 20}}>Cycle length is</Words>
                     <NumericSelector
                         onChange={v =>
                             //that's fucking it, useEffect completely suks
@@ -130,28 +130,25 @@ const RoutineEditScreen = props => {
 
                         numInfo={{def: time, min: 7, max: 56, increment: 7}}
                     />
+                    <Words style={{fontSize: 20}}>days</Words>
 
                 </Row>
 
                 {
                     advanced &&
-                    <View style={styles.section}>
-                        <Words style={{fontSize: 30}}>Failure Behavior:</Words>
-                        <View style={styles.slot}>
-                            <Words style={{fontSize: 20}}>Deload %</Words>
-                            <NumericSelector
-                                onChange={v => rd('failure.deloadPercent', v)}
-                                numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
-                            />
-                        </View>
-                        <View style={styles.slot}>
-                            <Words style={{fontSize: 20}}>after failed sets</Words>
-                            <NumericSelector
-                                onChange={v => rd('failure.after', v)}
-                                numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
-                            />
-                        </View>
-                    </View>
+                    <Row style={styles.section}>
+                        <Words style={{fontSize: 20}}>Deload</Words>
+                        <NumericSelector
+                            onChange={v => rd('failure.deloadPercent', v)}
+                            numInfo={{def: failure.deloadPercent, min: 0, max: 50, increment: 5}}
+                        />
+                        <Words style={{fontSize: 20}}>% after</Words>
+                        <NumericSelector
+                            onChange={v => rd('failure.after', v)}
+                            numInfo={{def: failure.after, min: 1, max: 5, increment: 1}}
+                        />
+                        <Words style={{fontSize: 20}}>failed sets</Words>
+                    </Row>
                 }
 
                 <View style={styles.section}>
@@ -232,9 +229,11 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
     },
     section: {
-        borderColor: PRIMARY,
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
+        //borderColor: PRIMARY,
+        //borderWidth: 1,
+        //borderTopWidth: 1,
+        //borderBottomWidth: 1,
+        justifyContent: 'flex-end'
     },
     slot: {
         justifyContent: 'space-between',

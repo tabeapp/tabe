@@ -23,7 +23,7 @@ const NumericSelector = props => {
         <Chooser
             selected={selected}
             style={{width: 100, ...props.style}}
-            itemStyle={{fontSize: 40, borderRadius: 5, height: 150, ...props.itemStyle}}
+            itemStyle={{fontSize: 30, borderRadius: 5, height: 150, ...props.itemStyle}}
             onChange={onChange}
             list={temp}
         />
