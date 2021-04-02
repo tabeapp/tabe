@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, TouchableOpacity } from 'react-native';
+import { View, Modal, TouchableOpacity } from 'react-native';
 import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
 import Words from '../Simple/Words';
+import { DARK_GRAY, PRIMARY_DARKER } from '../../Style/Colors';
 
 //make it possible to cancel
 //i think exercise picker should be able to clsoe itself
@@ -15,7 +16,11 @@ const ExercisePicker = props => {
     let list;
     if(category === ''){
         list = CATEGORIES.map(cat =>
-            <TouchableOpacity onPress={() => setCategory(cat)} key={cat} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
+            <TouchableOpacity
+                key={cat}
+                onPress={() => setCategory(cat)}
+                style={{height: 30, padding: 5, backgroundColor: DARK_GRAY}}
+            >
                 <Words>{cat}</Words>
             </TouchableOpacity>
         )
@@ -28,7 +33,7 @@ const ExercisePicker = props => {
                         props.close();
                         handleSelection(k);
                     }}
-                    key={k} style={{width: '50%', height: 30, padding: 5, backgroundColor: 'gray'}}>
+                    key={k} style={{height: 30, padding: 5, backgroundColor: DARK_GRAY}}>
 
                     <Words>{k}</Words>
                 </TouchableOpacity>
@@ -37,8 +42,13 @@ const ExercisePicker = props => {
 
     return (
         <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
-            <TouchableOpacity onPress={() => {props.close();setCategory('')}} style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}>
-                {list}
+            <TouchableOpacity
+                onPress={() => {props.close();setCategory('')}}
+                style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}
+            >
+                <View style={{width: '50%', borderWidth: 1, borderColor: PRIMARY_DARKER}}>
+                    {list}
+                </View>
             </TouchableOpacity>
         </Modal>
     );
