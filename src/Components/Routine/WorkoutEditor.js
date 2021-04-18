@@ -120,7 +120,7 @@ const WorkoutEditor = props => {
     };
 
     const renderItem = useCallback(dragInfo => {
-        return <WorkoutItem dragInfo={dragInfo} editSuperset={editSuperset}/>
+        return <WorkoutItem dragInfo={dragInfo} editSuperset={editSuperset}/>;
     }, []);
 
     //wtf is this 415 number supposed to be?

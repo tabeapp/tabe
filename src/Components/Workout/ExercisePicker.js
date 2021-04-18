@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Modal, TouchableOpacity } from 'react-native';
 import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
 import Words from '../Simple/Words';
-import { DARK_GRAY, PRIMARY_DARKER } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY_DARKER } from '../../Style/Colors';
+import Write from '../Simple/Write';
 
 //make it possible to cancel
 //i think exercise picker should be able to clsoe itself
@@ -13,8 +14,26 @@ const ExercisePicker = props => {
 
     const [category, setCategory] = useState('');
 
+    const [search, setSearch] = useState('');
+
     let list;
-    if(category === ''){
+    if(search !== ''){
+        //of course this could be a bit more complex with scoring and such but for now this is ok
+        list = Object.entries(EX_INFO).filter(([k,v]) => k.toLowerCase().includes(search.toLowerCase()))
+            .map(([k]) =>
+                <TouchableOpacity
+                    onPress={() => {
+                        setSearch('');
+                        props.close();
+                        handleSelection(k);
+                    }}
+                    key={k} style={{height: 30, padding: 5, backgroundColor: DARK_GRAY}}>
+
+                    <Words>{k}</Words>
+                </TouchableOpacity>
+            )
+
+    } else if(category === ''){
         list = CATEGORIES.map(cat =>
             <TouchableOpacity
                 key={cat}
@@ -47,6 +66,12 @@ const ExercisePicker = props => {
                 style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}
             >
                 <View style={{width: '50%', borderWidth: 1, borderColor: PRIMARY_DARKER}}>
+                    <Write
+                        value={search}
+                        onChange={setSearch}
+                        style={{backgroundColor: BACKGROUND}}
+                        placeholder='search'
+                    />
                     {list}
                 </View>
             </TouchableOpacity>
