@@ -12,7 +12,7 @@ const RepSchemeIteration = props => {
     const {week, weekIndex, name} = props;//need to use name
 
     return(
-        <Row key={weekIndex} style={{borderTopWidth: 1, borderColor: PRIMARY}}>
+        <Row style={{borderTopWidth: 1, borderColor: PRIMARY}}>
             <TouchableOpacity
                 style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                 onPress={() => {

@@ -35,7 +35,7 @@ const RepSchemeEditor = props => {
             <Words style={{fontWeight: 'bold', fontSize: 30}}>Rep Scheme {name}</Words>
             {
                 props.sets.map((week, weekIndex) =>
-                    <RepSchemeIteration week={week} weekIndex={weekIndex} name={name}/>
+                    <RepSchemeIteration key={weekIndex} week={week} weekIndex={weekIndex} name={name}/>
                 )
 
             }

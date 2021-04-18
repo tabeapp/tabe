@@ -187,6 +187,7 @@ const WorkoutProvider = props => {
         //add a subscription to current workout
         const wo = await API.graphql(graphqlOperation(generateWorkout));
         console.log(wo);
+        workoutDispatch(() => JSON.parse(wo.data.generateWorkout.data));
     };
 
     const generateCustom = () => {
