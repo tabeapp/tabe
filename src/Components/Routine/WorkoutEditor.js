@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { Alert, Pressable, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import ExercisePicker from '../Workout/ExercisePicker';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -7,7 +7,7 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
-import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
+import { BACKGROUND } from '../../Style/Colors';
 import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 import DraggableFlatList from 'react-native-draggable-flatlist';
 import WorkoutItem from './WorkoutItem';
@@ -15,20 +15,6 @@ import WorkoutItem from './WorkoutItem';
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
 //should we pass in selected ones?
-const SupersetSelector = props => {
-    const [modal, setModal] = useState(false);
-
-    return (
-        <TouchableOpacity
-            style={{flex: 1, backgroundColor: 'gray', borderWidth: 1, borderColor: BACKGROUND, justifyContent: 'center', alignItems: 'center'}}
-            onPress={() => setModal(true)}
-        >
-            <Words>Add Exercise</Words>
-            <ExercisePicker visible={modal} handleSelection={props.onSelect} close={() => setModal(false)}/>
-        </TouchableOpacity>
-    );
-};
-
 const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
     const {routine, routineEditDispatch} = useContext(RoutineEditContext);
@@ -74,23 +60,6 @@ const WorkoutEditor = props => {
                 else
                     prev.info[ex] = DEFAULT_EX_INFO(ex);
             })
-
-            return prev;
-        });
-    };
-
-    const deleteAnExercise = (k) => {
-        routineEditDispatch(prev => {
-            delete prev.info[k];
-
-            let removal = k;
-            if(k.includes('/'))
-                removal = k.split('/');//that might do it, who knows
-
-            Object.keys(prev.workouts).forEach(w => {
-                prev.workouts[w] = prev.workouts[w]
-                    .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
-            });
 
             return prev;
         });
