@@ -80,12 +80,12 @@ const RoutineEditProvider = props => {
         return x;
     };
 
-    const [editRoutine, routinesDispatch] = useReducer(routineEditReducer, initState);
+    const [routine, routineEditDispatch] = useReducer(routineEditReducer, initState);
 
     return (
         <RoutineEditContext.Provider value={{
-            editRoutine: editRoutine,
-            routinesDispatch: routinesDispatch,
+            routine: routine,
+            routineEditDispatch: routineEditDispatch,
         }}>
             {props.children}
         </RoutineEditContext.Provider>

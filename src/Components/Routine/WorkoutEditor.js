@@ -9,6 +9,7 @@ import { STYLES } from '../../Style/Values';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -29,12 +30,11 @@ const SupersetSelector = props => {
 
 const WorkoutEditor = props => {
     const [modal, setModal] = useState(false);
-    //const routine = useContext(RoutinesContext).routines.editRoutine;
-    const {editRoutine, routinesDispatch} = useContext(RoutinesContext);
+    const {routine, routineEditDispatch} = useContext(RoutineEditContext);
     //hows this: data is fine to be 'propped' down, but editing handlers will be handled by context
     const {name, advanced, exercises, editSuperset} = props;//this is like a key btw
 
-    const {info, workouts} = editRoutine;
+    const {info, workouts} = routine;
 
     const altExName = ex => {
         let suffix = '-b';
@@ -60,18 +60,18 @@ const WorkoutEditor = props => {
             return altExName(ex);
         });
 
-        routinesDispatch(prev => {
+        routineEditDispatch(prev => {
             //save to workouts
-            prev.editRoutine.workouts[NextObjectKey(workouts)] = newWorkout;
+            prev.workouts[NextObjectKey(workouts)] = newWorkout;
 
             //save to info
             //todo make this an invariant in the routine dispatcher
             //for every exercise in workouts, there should be a corresponding exerciseinfo
             newWorkout.forEach(ex => {
                 if(Array.isArray(ex))
-                    prev.editRoutine.info[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex);
+                    prev.info[ex.join('/')] =  DEFAULT_SUPERSET_INFO(ex);
                 else
-                    prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
+                    prev.info[ex] = DEFAULT_EX_INFO(ex);
             })
 
             return prev;
@@ -79,15 +79,15 @@ const WorkoutEditor = props => {
     };
 
     const deleteAnExercise = (k) => {
-        routinesDispatch(prev => {
-            delete prev.editRoutine.info[k];
+        routineEditDispatch(prev => {
+            delete prev.info[k];
 
             let removal = k;
             if(k.includes('/'))
                 removal = k.split('/');//that might do it, who knows
 
-            Object.keys(prev.editRoutine.workouts).forEach(w => {
-                prev.editRoutine.workouts[w] = prev.editRoutine.workouts[w]
+            Object.keys(prev.workouts).forEach(w => {
+                prev.workouts[w] = prev.workouts[w]
                     .filter(e => JSON.stringify(e) !== JSON.stringify(removal));
             });
 
@@ -112,8 +112,8 @@ const WorkoutEditor = props => {
                 [
                     {
                         text: "Link",//just use the other one, don't need to add a new one to exercises
-                        onPress: () => routinesDispatch(prev => {
-                            prev.editRoutine.workouts[k].push(ex);
+                        onPress: () => routineEditDispatch(prev => {
+                            prev.workouts[k].push(ex);
                             return prev;
                         }),
                         style: "cancel"
@@ -123,11 +123,11 @@ const WorkoutEditor = props => {
                         onPress: () => {
                             const altName = altExName(ex);
 
-                            routinesDispatch(prev => {
+                            routineEditDispatch(prev => {
                                 //does this work for supersets?
-                                prev.editRoutine.workouts[k].push(altName);
+                                prev.workouts[k].push(altName);
                                 //definitely not
-                                prev.editRoutine.info[altName] = DEFAULT_EX_INFO(ex);
+                                prev.info[altName] = DEFAULT_EX_INFO(ex);
                                 //we really need info to set itself automatically, wiht useffect
                                 return prev;
                             });
@@ -138,11 +138,11 @@ const WorkoutEditor = props => {
             )
         }
         else{
-            routinesDispatch(prev => {
+            routineEditDispatch(prev => {
                 //does this work for supersets?
-                prev.editRoutine.workouts[k].push(ex);
+                prev.workouts[k].push(ex);
                 //definitely not
-                prev.editRoutine.info[ex] = DEFAULT_EX_INFO(ex);
+                prev.info[ex] = DEFAULT_EX_INFO(ex);
                 //we really need info to set itself automatically, wiht useffect
                 return prev;
             });
@@ -164,19 +164,19 @@ const WorkoutEditor = props => {
 
                     <TouchableOpacity onPress={() => {
                         //delete the workout
-                        routinesDispatch(prev => {
-                            delete prev.editRoutine.workouts[name];
+                        routineEditDispatch(prev => {
+                            delete prev.workouts[name];
 
                             //thanks to useffect not playing well with usereducer, this is now managed here
                             //thanks, dude
                             //or should I put it in the reducer itself...
-                            Object.keys(prev.editRoutine.info).forEach(i => {
-                                if(!Object.values(prev.editRoutine.workouts).some(w =>
+                            Object.keys(prev.info).forEach(i => {
+                                if(!Object.values(prev.workouts).some(w =>
                                     w.some(ex =>
                                         ex === i || ex === i.split('/')
                                     )
                                 )){
-                                    delete prev.editRoutine.info[i];
+                                    delete prev.info[i];
                                 }
                             });
 
@@ -236,8 +236,8 @@ const WorkoutEditor = props => {
                 advanced && <>
 
                     <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                        routinesDispatch(prev => {
-                            prev.editRoutine.workouts[name].push(['','']);
+                        routineEditDispatch(prev => {
+                            prev.workouts[name].push(['','']);
                             return prev;
                         })
                     }} >

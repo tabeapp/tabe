@@ -6,9 +6,11 @@ import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { API, graphqlOperation } from 'aws-amplify';
 import { deleteRoutine, updateRoutine } from '../../../graphql/mutations';
 import { DARK_GRAY, PRIMARY } from '../../Style/Colors';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 const RoutineCard = props => {
-    const {routinesDispatch, getCurrent} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
+    const {getCurrent} = useContext(RoutinesContext);
 
     const {id, title, current, routine} = props.routine;
 
@@ -52,8 +54,8 @@ const RoutineCard = props => {
             onPress={() => {
                 //set it in the context
                 //need to just throw in title and id so we can edit it
-                routinesDispatch({
-                    path: 'editRoutine',
+                routineEditDispatch({
+                    path: '',
                     value: {...JSON.parse(routine), id: id, title: title}
                 });
                 /*send it off to routine editor*/

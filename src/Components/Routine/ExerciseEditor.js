@@ -11,6 +11,7 @@ import { STYLES } from '../../Style/Values';
 import Flip from '../Simple/Flip';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 const reps = [FAILURE];
 for(let i = 0; i <= 50; i++)
@@ -20,16 +21,15 @@ const ExerciseEditor = props => {
     //ugh this sucks
     const {name, info, advanced} = props;
 
-    const {routinesDispatch} = useContext(RoutinesContext);
-    const {editRoutine} = useContext(RoutinesContext);
+    const {routine, routineEditDispatch} = useContext(RoutineEditContext);
     const rd = (path, value) => {
-        routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
+        routineEditDispatch({path: 'info.' + name + '.' + path, value});
     };
 
     //it's only here cuz it appears twice
     const addSet = () => {
-        routinesDispatch(prev => {
-            let x = prev.editRoutine.info[name].setInfo;
+        routineEditDispatch(prev => {
+            let x = prev.info[name].setInfo;
             if(x.sets.length === 0) {
                 if (x.type === 'Normal')
                     x.sets.push(5);
@@ -62,7 +62,7 @@ const ExerciseEditor = props => {
             <Row>
                 <Words style={{fontSize: 20}}>Current Working Weight: </Words>
                 <NumericSelector onChange={value => {
-                    routinesDispatch({path: 'editRoutine.info.' + name + '.current', value: value});
+                    routineEditDispatch({path: 'info.' + name + '.current', value: value});
 
                 }} numInfo={{def:info.current, min: 0, max: 995, increment: 5}}/>
             </Row>
@@ -93,8 +93,8 @@ const ExerciseEditor = props => {
                             style={{width: 100}}
                             selected={info.setInfo.type}
                             onChange={value => {
-                                routinesDispatch(prev => {
-                                    const x = prev.editRoutine.info[name].setInfo;
+                                routineEditDispatch(prev => {
+                                    const x = prev.info[name].setInfo;
                                     x.type = value;
 
                                     //this is a good start, making it an object with properties, but
@@ -103,17 +103,17 @@ const ExerciseEditor = props => {
                                     //and handles mulitples rep schemes similar to how we have multiple workotus, in repscheme editor
                                     //i had this in useffect, but react is too dumb for my genius
                                     if(value === 'Custom'){
-                                        prev.editRoutine.customScheme = true;
+                                        prev.customScheme = true;
                                         //need to make one quick
-                                        if(Object.keys(prev.editRoutine.customSets).length === 0)
-                                            prev.editRoutine.customSets.A = [];
+                                        if(Object.keys(prev.customSets).length === 0)
+                                            prev.customSets.A = [];
                                         //set to first
-                                        x.scheme = Object.keys(prev.editRoutine.customSets)[0];
+                                        x.scheme = Object.keys(prev.customSets)[0];
                                         //can't edit this, this is just for later when we actually use it to generate workouts
                                         x.selector = 0;
                                     }
                                     else{
-                                        prev.editRoutine.customScheme = Object.values(prev.editRoutine.info).some(i => {
+                                        prev.customScheme = Object.values(prev.info).some(i => {
                                             //always jujmping through hoops for supersets
                                             if (Array.isArray(i))
                                                 return i.some(j => j.setInfo.type === 'Custom');
@@ -151,8 +151,8 @@ const ExerciseEditor = props => {
                                 style={{margin: 10, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                                 onPress={() => {
                                     //k is replaced by props.name
-                                    routinesDispatch(prev => {
-                                        const x = prev.editRoutine.info[name].setInfo.sets;
+                                    routineEditDispatch(prev => {
+                                        const x = prev.info[name].setInfo.sets;
                                         x.splice(x.length-1);
                                         return prev;
                                     })
@@ -171,8 +171,8 @@ const ExerciseEditor = props => {
                                                 onChange={(value) => {
                                                     //how the fuck
                                                     //would defeinitely be a good idea to set all following sets to current rep
-                                                    routinesDispatch(prev => {
-                                                        let x = prev.editRoutine.info[name].setInfo.sets;
+                                                    routineEditDispatch(prev => {
+                                                        let x = prev.info[name].setInfo.sets;
                                                         x[index] = value;
                                                         for(let i = index; i < x.length; i++)
                                                             x[i] = value;
@@ -204,7 +204,7 @@ const ExerciseEditor = props => {
                                 onChange={value => {
                                     rd('setInfo.scheme', value);
                                 }}
-                                list={Object.keys(editRoutine.customSets)}
+                                list={Object.keys(routine.customSets)}
                             />
                         </View>
                     }
@@ -214,7 +214,7 @@ const ExerciseEditor = props => {
                             <Chooser
                                 selected={info.setInfo.sum}
                                 onChange={(value) => {
-                                    routinesDispatch({path: 'editRoutine.info.' + name + '.setInfo.sum', value: value})
+                                    routineEditDispatch({path: 'info.' + name + '.setInfo.sum', value: value})
                                 }}
                                 list={reps}
                             />
@@ -227,8 +227,8 @@ const ExerciseEditor = props => {
                                 style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                                 onPress={() => {
                                     //k is replaced by props.name
-                                    routinesDispatch(prev => {
-                                        const x = prev.editRoutine.info[name].setInfo.sets;
+                                    routineEditDispatch(prev => {
+                                        const x = prev.info[name].setInfo.sets;
                                         x.splice(x.length-1);
                                         return prev;
                                     })

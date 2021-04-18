@@ -5,9 +5,10 @@ import Words from '../Simple/Words';
 import Chooser from '../Simple/Chooser';
 import { REST_DAY } from '../../Constants/Symbols';
 import { DARK_GRAY } from '../../Style/Colors';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 const DaysEditor = props => {
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
 
     const temp = [REST_DAY, ...props.workouts];
 
@@ -35,7 +36,7 @@ const DaysEditor = props => {
                         <Chooser
                             selected={d}
                             onChange={value =>
-                                routinesDispatch({path: 'editRoutine.days.' + index, value: value})
+                                routineEditDispatch({path: 'days.' + index, value: value})
                             }
                             list={temp}
                         />

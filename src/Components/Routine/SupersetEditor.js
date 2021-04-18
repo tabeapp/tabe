@@ -6,6 +6,7 @@ import RoutinesContext from '../../Contexts/RoutinesProvider';
 import Chooser from '../Simple/Chooser';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -16,12 +17,12 @@ const SupersetEditor = props => {
     //ugh this sucks
     const {name, info, deleteExercise} = props;
 
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
 
     //an extreme simplification useful for handling stuff like
     //onChnage={value => routinedispathch("path", value)}
     const rd = path => value =>
-        routinesDispatch({path: 'editRoutine.info.' + name + '.' + path, value});
+        routineEditDispatch({path: 'info.' + name + '.' + path, value});
 
     const subExercises = name.split('/');
 
@@ -74,8 +75,8 @@ const SupersetEditor = props => {
                                 style={{width:100}}
                                 selected={subInfo.setInfo.type}
                                 onChange={value => {
-                                    routinesDispatch(prev => {
-                                        const x = prev.editRoutine.info[name][ssi].setInfo;
+                                    routineEditDispatch(prev => {
+                                        const x = prev.info[name][ssi].setInfo;
                                         x.type = value;
                                         if(value === 'Timed'){
                                             x.sets = x.sets.map(_ => ({minutes: 1, seconds: 0}))
@@ -123,8 +124,8 @@ const SupersetEditor = props => {
                         borderColor: 'red'
                     }}
                     onPress={() => {
-                        routinesDispatch(prev => {
-                            const x = prev.editRoutine.info[name];
+                        routineEditDispatch(prev => {
+                            const x = prev.info[name];
                             x.forEach(sub =>
                                 sub.setInfo.sets.splice(sub.setInfo.sets.length-1)
                             );
@@ -153,8 +154,8 @@ const SupersetEditor = props => {
                                                 <Chooser
                                                     selected={v}
                                                     onChange={(value) => {
-                                                        routinesDispatch(prev => {
-                                                            const x = prev.editRoutine.info[name][ssi].setInfo.sets;
+                                                        routineEditDispatch(prev => {
+                                                            const x = prev.info[name][ssi].setInfo.sets;
                                                             for(let i = index; i < x.length; i++)
                                                                 x[i] = value;
                                                             return prev;
@@ -206,8 +207,8 @@ const SupersetEditor = props => {
                         borderColor: 'green'
                     }}
                     onPress={() => {
-                        routinesDispatch(prev => {
-                            const x = prev.editRoutine.info[name];
+                        routineEditDispatch(prev => {
+                            const x = prev.info[name];
                             x.forEach(sub => {
                                 const y = sub.setInfo.sets;
                                 if(y.length === 0){

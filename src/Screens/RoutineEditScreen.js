@@ -21,6 +21,7 @@ import Flip from '../Components/Simple/Flip';
 import WorkoutsDisplay from '../Components/Routine/WorkoutsDisplay';
 import { NextObjectKey } from '../Utils/NextObjectKey';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import { RoutineEditContext } from '../Contexts/RoutineEditProvider';
 
 //so this isn't for setting up the routine with weights,
 // this is for editing the routine nearly any way you want
@@ -30,14 +31,13 @@ const RoutineEditScreen = props => {
     const {username} = useContext(UserContext);
     //this is used more than you'd think
 
-    const {editRoutine} = useContext(RoutinesContext);
+    const {routine, routineEditDispatch} = useContext(RoutineEditContext);
     //consider making an edit routine dispatch just for editRoutine, this is annoying
-    const {routinesDispatch} = useContext(RoutinesContext);
     //maybe i can do this shortcut?
-    const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
+    const rd = (path, value) => routineEditDispatch({path: path, value});
 
     //can i do this?
-    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = editRoutine;
+    const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = routine;
 
     //this will allow for a much MUCH cleaner edit experience
     const [advanced, setAdvanced] = useState(false);
@@ -45,16 +45,16 @@ const RoutineEditScreen = props => {
     //why the fuck is this one fine while the others go crazy
     //useeffects still coming back to haunt me
     useEffect(() => {
-        routinesDispatch(prev => {
-            if(prev.editRoutine.days.length !== prev.editRoutine.time)
-                prev.editRoutine.days = Array.from(new Array(time), () => REST_DAY);
+        routineEditDispatch(prev => {
+            if(prev.days.length !== prev.time)
+                prev.days = Array.from(new Array(time), () => REST_DAY);
             return prev;
         });
     }, []);
 
     const saveRoutine = () => {
         //this is copied over, it's the save process
-        const newRoutine = FULL_COPY(editRoutine);
+        const newRoutine = FULL_COPY(routine);
         newRoutine.currentDay = currentDay || 0;
         newRoutine.nextWorkoutTime = nextWorkoutTime || new Date().getTime();
 
@@ -123,9 +123,9 @@ const RoutineEditScreen = props => {
                     <NumericSelector
                         onChange={v =>
                             //that's fucking it, useEffect completely suks
-                            routinesDispatch(prev => {
-                                prev.editRoutine.time = v;
-                                prev.editRoutine.days = Array.from(new Array(v), () => REST_DAY);
+                            routineEditDispatch(prev => {
+                                prev.time = v;
+                                prev.days = Array.from(new Array(v), () => REST_DAY);
                                 return prev;
                             })
                         }

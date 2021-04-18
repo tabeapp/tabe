@@ -6,13 +6,14 @@ import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { RoutinesContext } from '../Contexts/RoutinesProvider';
 import RoutineCard from '../Components/Routine/RoutineCard';
+import { RoutineEditContext } from '../Contexts/RoutineEditProvider';
 
 //this is for choosing a routine to edit, instead of jumping right in
 //crud operations on this level deserve server calls
 const RoutineScreen = props => {
     //why is it like this
-    const {routines, routinesDispatch} = useContext(RoutinesContext);
-
+    const {routines} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
 
     return (
         <SafeBorderNav {...props} screen={'routine'}>
@@ -20,7 +21,7 @@ const RoutineScreen = props => {
                 title='Routines'
                 rightText='+'
                 onPressRight={() => {
-                    routinesDispatch({path: 'editRoutine', value: BLANK_ROUTINE()});
+                    routineEditDispatch(() => BLANK_ROUTINE());
                     props.navigation.navigate('routineedit');
                 }}
             />

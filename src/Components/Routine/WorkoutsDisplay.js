@@ -8,11 +8,12 @@ import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
 import { BACKGROUND } from '../../Style/Colors';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 //that horizontal scrolling part
 const WorkoutsDisplay = props => {
 
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
 
     const {workouts, advanced} = props;
 
@@ -29,12 +30,12 @@ const WorkoutsDisplay = props => {
                             editSuperset={(val, exerciseIndex, supersetIndex) => {
                                 //exerciseindex is the superset order in the workout
                                 //superset index is the exercise order in the super set
-                                routinesDispatch(prev => {
-                                    let x = prev.editRoutine.workouts[k][exerciseIndex];
+                                routineEditDispatch(prev => {
+                                    let x = prev.workouts[k][exerciseIndex];
                                     x[supersetIndex] = val;
 
                                     if(x.every(i => i !== ''))
-                                        prev.editRoutine.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
+                                        prev.info[x.join('/')] = DEFAULT_SUPERSET_INFO(x);
 
                                     return prev;
                                 });
@@ -45,7 +46,7 @@ const WorkoutsDisplay = props => {
             }
             <View style={{width: width, justifyContent: 'center', height: 200}}>
                 <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
-                    const rd = (path, value) => routinesDispatch({path: 'editRoutine.' + path, value});
+                    const rd = (path, value) => routineEditDispatch({path: path, value});
                     rd('workouts.' + NextObjectKey(workouts), []);
                 }}>
                     <Words style={{fontSize: 30}}>Add Workout</Words>

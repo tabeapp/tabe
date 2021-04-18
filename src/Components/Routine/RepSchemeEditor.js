@@ -9,6 +9,7 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)
@@ -24,7 +25,7 @@ percents.push(NEW_PR);
 const RepSchemeEditor = props => {
     //eventually you'll need to pass down the name of the rep scheme for multiple
 
-    const {routinesDispatch} = useContext(RoutinesContext);
+    const {routineEditDispatch} = useContext(RoutineEditContext);
     const {name} = props;//need to use name
     //i guess only one custom scheme per routine
     //otherwise how fucking complex is your workout?
@@ -44,8 +45,8 @@ const RepSchemeEditor = props => {
                                     <TouchableOpacity
                                         style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'red'}}
                                         onPress={() => {
-                                            routinesDispatch(prev => {
-                                                const x = prev.editRoutine.customSets[name][weekIndex];
+                                            routineEditDispatch(prev => {
+                                                const x = prev.customSets[name][weekIndex];
                                                 x.splice(x.length-1);
                                                 return prev;
                                             })
@@ -61,8 +62,8 @@ const RepSchemeEditor = props => {
                                                         itemStyle={{height: 45}}
                                                         selected={v.reps}
                                                         onChange={value => {
-                                                            routinesDispatch({
-                                                                path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.reps`,
+                                                            routineEditDispatch({
+                                                                path: `customSets.${name}.${weekIndex}.${setIndex}.reps`,
                                                                 value: value
                                                             });
                                                         }}
@@ -76,8 +77,8 @@ const RepSchemeEditor = props => {
                                                         itemStyle={{height: 45}}
                                                         selected={v['%']}
                                                         onChange={value => {
-                                                            routinesDispatch({
-                                                                path: `editRoutine.customSets.${name}.${weekIndex}.${setIndex}.%`,
+                                                            routineEditDispatch({
+                                                                path: `customSets.${name}.${weekIndex}.${setIndex}.%`,
                                                                 value: value
                                                             });
                                                         }}
@@ -91,8 +92,8 @@ const RepSchemeEditor = props => {
                                     <TouchableOpacity
                                         style={{margin: 5, height: 30, width: 30, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', borderRadius: 15, borderWidth: 3, borderColor: 'green'}}
                                         onPress={() =>
-                                            routinesDispatch(prev => {
-                                                const x = prev.editRoutine.customSets[name][weekIndex];
+                                            routineEditDispatch(prev => {
+                                                const x = prev.customSets[name][weekIndex];
                                                 if(x.length === 0)
                                                     x.push({reps:5, '%': 100});
                                                 else
@@ -113,8 +114,8 @@ const RepSchemeEditor = props => {
 
             }
             <TouchableOpacity style={STYLES.textButton} onPress={() => {
-                routinesDispatch(prev => {
-                    const x = prev.editRoutine.customSets[name];
+                routineEditDispatch(prev => {
+                    const x = prev.customSets[name];
                     if(x.length === 0)
                         x.push([]);
                     else
