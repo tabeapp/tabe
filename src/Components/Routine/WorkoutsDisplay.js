@@ -22,9 +22,9 @@ const WorkoutsDisplay = props => {
         <ScrollView pagingEnabled style={STYLES.scroller} horizontal={true}>
             {
                 Object.entries(workouts).map(([k,v]) =>
-                    <View style={{width: width, borderColor: BACKGROUND, borderWidth: 1}}>
+                    <View key={k} style={{width: width, borderColor: BACKGROUND, borderWidth: 1}}>
                         <WorkoutEditor
-                            key={k} exercises={v} name={k}
+                            exercises={v} name={k}
                             advanced={advanced}
                             editSuperset={(val, exerciseIndex, supersetIndex) => {
                                 //exerciseindex is the superset order in the workout
