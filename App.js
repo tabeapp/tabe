@@ -20,6 +20,7 @@ import {
 import GymScreen from './src/Screens/GymScreen';
 import LeaderboardScreen from './src/Screens/LeaderboardScreen';
 import SettingsScreen from './src/Screens/SettingsScreen';
+import RoutineEditProvider from './src/Contexts/RoutineEditProvider';
 
 //this might help
 //https://medium.com/javascript-in-plain-english/the-ultimate-guide-for-integrate-aws-amplify-authentication-for-react-native-15a8eec10890
@@ -41,28 +42,31 @@ const App = () => {
         <UserProvider>
 
             <RoutinesProvider>
-                <WorkoutProvider>
+                <RoutineEditProvider>
 
-                    <NavigationContainer>
-                        <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false}}>
-                            <Stack.Screen name="home" component={HomeScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
-                            <Stack.Screen name="post" component={PostScreen}/>
-                            <Stack.Screen name="explore" component={ExploreScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
-                            <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                            <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                            <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
-                            <Stack.Screen name="report" component={ReportScreen}/>
-                            <Stack.Screen name="routine" component={RoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
-                            <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
-                            <Stack.Screen name="profile" component={ProfileScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
-                            <Stack.Screen name="settings" component={SettingsScreen}/>
-                            <Stack.Screen name="gymmap" component={GymMapScreen}/>
-                            <Stack.Screen name="gym" component={GymScreen}/>
-                            <Stack.Screen name="leaderboard" component={LeaderboardScreen}/>
-                        </Stack.Navigator>
-                    </NavigationContainer>
+                    <WorkoutProvider>
 
-                </WorkoutProvider>
+                        <NavigationContainer>
+                            <Stack.Navigator initialRouteName="routine" screenOptions={{headerShown:false}}>
+                                <Stack.Screen name="home" component={HomeScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
+                                <Stack.Screen name="post" component={PostScreen}/>
+                                <Stack.Screen name="explore" component={ExploreScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
+                                <Stack.Screen name="chooseroutine" component={ChooseRoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                                <Stack.Screen name="routinesetup" component={RoutineSetupScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                                <Stack.Screen name="workout" component={WorkoutScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS}}/>
+                                <Stack.Screen name="report" component={ReportScreen}/>
+                                <Stack.Screen name="routine" component={RoutineScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
+                                <Stack.Screen name="routineedit" component={RoutineEditScreen}/>
+                                <Stack.Screen name="profile" component={ProfileScreen} options={{cardStyleInterpolator: CardStyleInterpolators.forNoAnimation}}/>
+                                <Stack.Screen name="settings" component={SettingsScreen}/>
+                                <Stack.Screen name="gymmap" component={GymMapScreen}/>
+                                <Stack.Screen name="gym" component={GymScreen}/>
+                                <Stack.Screen name="leaderboard" component={LeaderboardScreen}/>
+                            </Stack.Navigator>
+                        </NavigationContainer>
+
+                    </WorkoutProvider>
+                </RoutineEditProvider>
             </RoutinesProvider>
         </UserProvider>
     );
