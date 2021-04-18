@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { Alert, Pressable, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import ExercisePicker from '../Workout/ExercisePicker';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -7,8 +7,10 @@ import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';
 import { DEFAULT_EX_INFO, DEFAULT_SUPERSET_INFO } from '../../Constants/DefaultExInfo';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
-import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
 import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
+import DraggableFlatList from 'react-native-draggable-flatlist';
+import WorkoutItem from './WorkoutItem';
 
 //this is for getting just one of the exercises of a super set
 //it's hard to make the modal work with multiple possible endpoints
@@ -148,6 +150,9 @@ const WorkoutEditor = props => {
         }
     };
 
+    const renderItem = useCallback(dragInfo => {
+        return <WorkoutItem dragInfo={dragInfo} editSuperset={editSuperset}/>
+    }, []);
 
     //wtf is this 415 number supposed to be?
     return (
@@ -187,41 +192,19 @@ const WorkoutEditor = props => {
                     </TouchableOpacity>
                 </Row>
             </Row>
-            {
-                exercises.map((ex, index) =>{
-                    //we actually need as many superset editors as there are exerices
-                    return <Row style={{backgroundColor: DARK_GRAY, marginVertical: 2}} key={ex}>
-                        {
-                            Array.isArray(ex) &&
-                            <View style={{ flex: 1, display: 'flex', height: 30, flexDirection: 'row' }}>{
-                                ex.map((e, index2) => {
-                                    if (e === '')
-                                        return <SupersetSelector
-                                            onSelect={val => editSuperset(val, index, index2)} />
-                                    else{
-                                        return <Words style={{
-                                            borderWidth: 1,
-                                            borderColor: BACKGROUND,
-                                            backgroundColor: 'gray',
-                                            flex: 1
-                                        }}>{e}</Words>
-                                    }
-                                })
-                            }</View>
-                        }
-                        {
-                            !Array.isArray(ex) &&
-                            <Words style={{ color: 'white', fontSize: 30 }}>{ex}</Words>
-                        }
-                        <TouchableOpacity onPress={() => {
-                            //this should do the same thing as pressing the X on an exercise
-                            deleteAnExercise(ex);
-                        }}>
-                            <Words><Ionicons color={'gray'} name={'close'} size={30}/></Words>
-                        </TouchableOpacity>
-                    </Row>
-                })
-            }
+            <DraggableFlatList
+                renderItem={renderItem}
+                data={exercises}
+                keyExtractor={item => item}
+                onDragEnd={({ data }) => {
+                    //replace the workout list with data, i think
+                    console.log(data);
+                    routineEditDispatch(prev => {
+                        prev.workouts[name] = data;
+                        return prev;
+                    });
+                }}
+            />
             <TouchableOpacity style={STYLES.textButton} onPress={() => {
                 //append a new obj
                 //works, but ideally I'd like A B C instead of 1 2 3
@@ -248,6 +231,6 @@ const WorkoutEditor = props => {
             <ExercisePicker visible={modal} handleSelection={(ex) => addExercise(name,ex)} close={() => setModal(false)}/>
 
         </View>);
-};
+}
 
 export default WorkoutEditor;
