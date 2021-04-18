@@ -54,11 +54,7 @@ const RoutineCard = props => {
             onPress={() => {
                 //set it in the context
                 //need to just throw in title and id so we can edit it
-                routineEditDispatch({
-                    path: '',
-                    value: {...JSON.parse(routine), id: id, title: title}
-                });
-                /*send it off to routine editor*/
+                routineEditDispatch(() => JSON.parse(routine));
                 props.navigation.navigate('routineedit');
             }}
             style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: DARK_GRAY, padding: 10, margin: 4, borderRadius: 20, height: 100}}

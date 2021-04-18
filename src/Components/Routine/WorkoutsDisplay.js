@@ -4,7 +4,6 @@ import React, { useContext } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { STYLES } from '../../Style/Values';
 import Words from '../Simple/Words';
-import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import { NextObjectKey } from '../../Utils/NextObjectKey';
 import { BACKGROUND } from '../../Style/Colors';

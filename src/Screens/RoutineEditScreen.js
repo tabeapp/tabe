@@ -37,6 +37,7 @@ const RoutineEditScreen = props => {
     const rd = (path, value) => routineEditDispatch({path: path, value});
 
     //can i do this?
+    console.log('showing routine', routine);
     const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = routine;
 
     //this will allow for a much MUCH cleaner edit experience
