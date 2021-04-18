@@ -173,6 +173,7 @@ const WorkoutEditor = props => {
                         return prev;
                     });
                 }}
+                scrollEnabled={false}
             />
             <TouchableOpacity style={STYLES.textButton} onPress={() => {
                 //append a new obj
