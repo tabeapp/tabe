@@ -4,7 +4,7 @@ import { STYLES } from '../../Style/Values';
 import { DARK_GRAY } from '../../Style/Colors';
 
 //my own text input, just want to keep style consistent
-const Write = ({value, onChange, style, placeholder=''}) => {
+const Write = ({value, onChange, style, autoFocus=false, placeholder=''}) => {
     return <TextInput
         style={{...STYLES.text, ...style}}
         value={value}
@@ -16,6 +16,7 @@ const Write = ({value, onChange, style, placeholder=''}) => {
         onChangeText={onChange}
         keyboardType="default"
         returnKeyType="done"
+        autoFocus={autoFocus}
     />;
 };
 

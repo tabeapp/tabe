@@ -53,7 +53,9 @@ const WorkoutItem = props => {
         style={{flexDirection: 'row', justifyContent: 'space-between', backgroundColor: isActive ? DARK_GRAY : BACKGROUND, marginVertical: 2}}
     >
         <Row>
-            <Words><Ionicons color={DARK_GRAY} name={'menu'} size={30}/></Words>
+            <Words style={{marginHorizontal: 10}}>
+                <Ionicons color={DARK_GRAY} name={'menu'} size={30}/>
+            </Words>
             {
                 Array.isArray(ex) &&
                 <View style={{ flex: 1, display: 'flex', height: 30, flexDirection: 'row' }}>{

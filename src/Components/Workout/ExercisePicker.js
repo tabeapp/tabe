@@ -19,7 +19,7 @@ const ExercisePicker = props => {
     let list;
     if(search !== ''){
         //of course this could be a bit more complex with scoring and such but for now this is ok
-        list = Object.entries(EX_INFO).filter(([k,v]) => k.toLowerCase().includes(search.toLowerCase()))
+        list = Object.entries(EX_INFO).filter(([k,v]) => k.toLowerCase().trim().includes(search.toLowerCase().trim()))
             .map(([k]) =>
                 <TouchableOpacity
                     onPress={() => {
@@ -71,6 +71,7 @@ const ExercisePicker = props => {
                         onChange={setSearch}
                         style={{backgroundColor: BACKGROUND}}
                         placeholder='search'
+                        autoFocus={true}
                     />
                     {list}
                 </View>

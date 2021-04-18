@@ -130,6 +130,8 @@ const WorkoutProvider = props => {
 
 
     //step 1 this use effect should be all set
+    //i really don't think I want to use currentworkout anymore,
+    //async storage instead
     useEffect(() => {
         //kinda annoying but it wont work without the username
         if(!username)
