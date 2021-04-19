@@ -90,7 +90,6 @@ const SetCircle = (props) => {
             onPress={handlePress}
             style={{ ...STYLES.circle, ...style }}
         >
-            <Words>^</Words>
             <Chooser
                 selected={selected}
                 //fuck it, if we're in edit mode, you can just set progress to whatever you want
@@ -111,7 +110,6 @@ const SetCircle = (props) => {
                 }}
                 list={temp}
             />
-            <Words style={{transform: [{rotate: '180deg'}]}}>^</Words>
         </TouchableOpacity>
     );
 };

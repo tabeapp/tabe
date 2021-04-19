@@ -28,7 +28,8 @@ const renderThirdLayer = (percent) => {
 
 const colorB = 'black';
 
-const width = 10;
+const radius = 75;
+const borderWidth = 2;
 
 //consider using svg
 const ProgressCircle = props => {
@@ -54,40 +55,40 @@ const ProgressCircle = props => {
 }
 const styles = StyleSheet.create({
     container: {
-        width: 200,
-        height: 200,
-        borderRadius: 100,
+        width: radius*2,
+        height: radius*2,
+        borderRadius: radius,
         backgroundColor: 'black',
         borderColor: colorB,
         justifyContent: 'center',
         alignItems: 'center',
     },
     firstProgressLayer: {
-        width: 200,
-        height: 200,
-        borderWidth: width,
-        borderRadius: 100,
+        width: radius*2,
+        height: radius*2,
+        borderWidth: borderWidth,
+        borderRadius: radius,
         position: 'absolute',
         borderLeftColor: 'transparent',
         borderBottomColor: 'transparent',
         transform:[{rotateZ: '-135deg'}]
     },
     secondProgressLayer:{
-        width: 200,
-        height: 200,
+        width: radius*2,
+        height: radius*2,
         position: 'absolute',
-        borderWidth: width,
-        borderRadius: 100,
+        borderWidth: borderWidth,
+        borderRadius: radius,
         borderLeftColor: 'transparent',
         borderBottomColor: 'transparent',
         transform: [{rotateZ: '45deg'}]
     },
     offsetLayer: {
-        width: 200,
-        height: 200,
+        width: radius*2,
+        height: radius*2,
         position: 'absolute',
-        borderWidth: width+5,
-        borderRadius: 100,
+        borderWidth: borderWidth+5,
+        borderRadius: radius,
         borderLeftColor: 'transparent',
         borderBottomColor: 'transparent',
         borderRightColor: colorB,

@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import WeightVisual from '../../Utils/WeightVisual';
 import SetCircle from './SetCircle';
 import Words from '../Simple/Words';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { CURRENT } from '../../Constants/Symbols';
-import { PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Row from '../Simple/Row';
-import { STYLES } from '../../Style/Values';
 import NumericSelector from '../Routine/NumericSelector';
 
 //yes this will eventually implement timer visual
@@ -50,8 +48,6 @@ const SetModButton = props => {
 };
 
 const ExerciseCard = (props) => {
-    //this is a string
-    //maybe not the worst idea to pass this stuff down if we're gonna be calling much
     const {workoutDispatch} = useContext(WorkoutContext);
 
     //this shoudl be fine
@@ -90,13 +86,13 @@ const ExerciseCard = (props) => {
     //this is fucking it, i'll just make my own keys
 
     return (
-        <View style={STYLES.card} key={name}>
-            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <Words>{name}</Words>
-                <Words>{currentWeight}</Words>
-            </View>
+        <View style={styles.card} key={name}>
+            <Row style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <Words style={{fontSize: 25, fontWeight: 'bold'}}>{name}</Words>
+                <Words style={{fontSize: 25}}>{currentWeight}</Words>
+            </Row>
 
-            <Row>
+            <Row style={{flex: 1, marginHorizontal: 5}}>
                 {
                     edit&&
                     <SetModButton key={'a'} type='-' exerciseN={props.exerciseN}/>
@@ -109,7 +105,7 @@ const ExerciseCard = (props) => {
                         <MidLine key={'c'} completion={1}/>
                     </>
                 }
-                <Row style={{ flex: 1, justifyContent: 'center'}}>
+                <Row style={{ flex: 1, justifyContent: 'space-around'}}>
                     {
                         sets.map((set, index) => {
                             //this could probably be its own component
@@ -186,5 +182,16 @@ const ExerciseCard = (props) => {
     );
 };
 
+export const styles = StyleSheet.create({
+    card:{
+        margin: 5,
+        padding: 5,
+        height: 150,
+        backgroundColor: BACKGROUND,
+        borderColor: PRIMARY,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+    },
+});
 
 export default ExerciseCard;

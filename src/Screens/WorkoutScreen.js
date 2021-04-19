@@ -81,7 +81,7 @@ const WorkoutScreen = props => {
     const [modal, setModal] = useState(false);
 
     const sampleSuggestion = [
-        'bench', 'curl', 'deadlift',
+        'Bench', 'Squat', 'Deadlift',
     ];
 
     const addFromSuggestions = name => {
@@ -104,31 +104,33 @@ const WorkoutScreen = props => {
                 onPressRight={handleNext}
             />
 
-            <ScrollView>{
-                workout.exercises&&workout.exercises.map((ex, index) => (
-                    <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
-                ))
-            }</ScrollView>
+            <ScrollView>
+                {
+                    workout.exercises&&workout.exercises.map((ex, index) => (
+                        <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
+                    ))
+                }
 
-            {
-                edit &&
-                <>
-                    <View style={{flexDirection: 'row' }}>{
-                        sampleSuggestion.map(name => {
-                            return (<TouchableOpacity
-                                key={name}
-                                style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
-                                onPress={() => addFromSuggestions(name)}>
-                                <Words>{name}</Words>
-                            </TouchableOpacity>);
-                        })
-                    }</View>
-                    <TouchableOpacity style={STYLES.button} onPress={() => setModal(true)}>
-                        <Words style={{fontSize: 35}}>+</Words>
-                    </TouchableOpacity>
+                {
+                    edit &&
+                    <>
+                        <View style={{flexDirection: 'row' }}>{
+                            sampleSuggestion.map(name => {
+                                return (<TouchableOpacity
+                                    key={name}
+                                    style={{borderColor: 'white', borderWidth: 1, borderRadius: 20, padding: 2, paddingHorizontal: 5, margin: 2}}
+                                    onPress={() => addFromSuggestions(name)}>
+                                    <Words>{name}</Words>
+                                </TouchableOpacity>);
+                            })
+                        }</View>
+                        <TouchableOpacity style={STYLES.button} onPress={() => setModal(true)}>
+                            <Words style={{fontSize: 35}}>+</Words>
+                        </TouchableOpacity>
 
-                </>
-            }
+                    </>
+                }
+            </ScrollView>
 
             {/*fun little button*/}
             <View
@@ -151,7 +153,7 @@ const WorkoutScreen = props => {
                             return prev;
                         })
                     }>
-                    <Words><Ionicons color={BACKGROUND} name='pencil' size={30}/></Words>
+                    <Words><Ionicons color={BACKGROUND} name='pencil' size={25}/></Words>
                 </TouchableOpacity>
             </View>
 

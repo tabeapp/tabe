@@ -9,7 +9,6 @@ import ProgressCircle from './ProgressCircle';
 import Row from '../Simple/Row';
 import { BACKGROUND } from '../../Style/Colors';
 
-//make it possible to cancel
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
 //note: maybe this should be saved as part of the workout, or do some kind of

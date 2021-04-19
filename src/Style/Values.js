@@ -1,7 +1,7 @@
 //i really don't know if this is the best way to do this, should i use some fancy CSS thing?
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { DARK_GRAY, TEXT_COLOR } from './Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY, TEXT_COLOR } from './Colors';
 
 export const FONT = 'Arial';
 
@@ -41,15 +41,6 @@ export const STYLES = StyleSheet.create({
         flex: 1,
         backgroundColor: 'black',
         alignItems: 'center',
-    },
-    //like a container, just a bit of padding
-    card:{
-        margin: 5,
-        justifyContent: 'center',
-        padding: 5,
-        borderRadius: 5,
-        backgroundColor: 'rgba(143,143,143,0.2)',
-
     },
     scroller: {
         flex: 1,
