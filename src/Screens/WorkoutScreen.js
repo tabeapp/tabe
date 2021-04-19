@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Alert, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Alert, ScrollView, TouchableOpacity, View } from 'react-native';
 
 import ExerciseCard from '../Components/Workout/ExerciseCard';
 import Words from '../Components/Simple/Words';
@@ -11,9 +11,11 @@ import RestTimer from '../Components/Workout/RestTimer';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../Style/Colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WorkoutScreen = props => {
-    const {workout, workoutDispatch, quitWorkout} = useContext(WorkoutContext);
+    const {workout, workoutDispatch, quitWorkout, pressNext} = useContext(WorkoutContext);
 
 
     //workout.edit false => normal workout screen
@@ -102,11 +104,11 @@ const WorkoutScreen = props => {
                 onPressRight={handleNext}
             />
 
-            <View>{
+            <ScrollView>{
                 workout.exercises&&workout.exercises.map((ex, index) => (
                     <ExerciseCard key={ex.name} edit={edit} exercise={ex} exerciseN={index} />
                 ))
-            }</View>
+            }</ScrollView>
 
             {
                 edit &&
@@ -127,15 +129,31 @@ const WorkoutScreen = props => {
 
                 </>
             }
-            <TouchableOpacity onPress={() =>
-                //works, but really not sure where to put this edit button
-                workoutDispatch(prev => {
-                    prev.edit = !prev.edit
-                    return prev;
-                })
-            }>
-                <Words>Edit</Words>
-            </TouchableOpacity>
+
+            {/*fun little button*/}
+            <View
+                style={{position: 'absolute', bottom: 25, right: 15, alignItems: 'center'}}
+            >
+
+                <TouchableOpacity
+                    style={styles.nextButton}
+                    onPress={pressNext}
+                >
+                    <Words><Ionicons color={BACKGROUND} name='arrow-forward' size={30}/></Words>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={() =>
+                        //works, but really not sure where to put this edit button
+                        workoutDispatch(prev => {
+                            prev.edit = !prev.edit;
+                            return prev;
+                        })
+                    }>
+                    <Words><Ionicons color={BACKGROUND} name='pencil' size={30}/></Words>
+                </TouchableOpacity>
+            </View>
 
 
             <RestTimer
@@ -149,14 +167,30 @@ const WorkoutScreen = props => {
                     return prev;
                 })
             } visible={modal} close={() => setModal(false)}/>
-            {
-                /*<Words>
-                    {JSON.stringify(workout)}
-                </Words>*/
-            }
 
         </SafeBorder>
     );
 };
+
+const styles = StyleSheet.create({
+    nextButton: {
+        backgroundColor: PRIMARY,
+        height: 60,
+        width: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5
+    },
+    editButton: {
+        backgroundColor: PRIMARY_DARKER,
+        height: 50,
+        width: 50,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5
+    },
+});
 
 export default WorkoutScreen;

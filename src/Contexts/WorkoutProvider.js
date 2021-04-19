@@ -274,6 +274,27 @@ const WorkoutProvider = props => {
 
     };
 
+    const pressNext = () => {
+
+
+
+        for(let e = 0; e < data.exercises.length; e++) {
+            const ex = data.exercises[e];
+            for (let s = 0; s < ex.sets.length; s++) {
+                const set = ex.sets[s];
+                if (set.progress === CURRENT) {
+
+                    workoutDispatch(prev => {
+                        prev.exercises[e].sets[s].progress = prev.exercises[e].sets[s].reps;
+                        prev.timer = new Date().getTime() + prev.exercises[e].rest*1000;
+                        prev.restStart = new Date().getTime();
+                        return prev;
+                    });
+                    return;
+                }
+            }
+        }
+    };
 
 
     const [data, workoutDispatch] = useReducer(workoutReducer, initState);
@@ -282,6 +303,7 @@ const WorkoutProvider = props => {
             //during
             workout: data,//dont like this but workout seems to break it
             workoutDispatch: workoutDispatch,
+            pressNext: pressNext,
             quitWorkout:quitWorkout,
 
             //pre

@@ -78,7 +78,7 @@ const WorkoutEditor = props => {
             Alert.alert(
                 "Duplicate Exercise",
                 //maybe rephrase this
-                "This exercise already is in the routine, do you want to link to that one or make an alternative version?",
+                "Exercise is already in the routine, use that data or make an alternative version?",
                 [
                     {
                         text: "Link",//just use the other one, don't need to add a new one to exercises

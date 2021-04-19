@@ -63,7 +63,7 @@ const RestTimer = props => {
                     return 0;
                 }
 
-                return Math.floor(diff/1000);
+                return diff/1000;
             });
         }, 100);//temporarily speeding it up
 
