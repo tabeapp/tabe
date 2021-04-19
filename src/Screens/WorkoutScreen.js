@@ -134,7 +134,7 @@ const WorkoutScreen = props => {
 
             {/*fun little button*/}
             <View
-                style={{position: 'absolute', bottom: 25, right: 15, alignItems: 'center'}}
+                style={{justifyContent: 'space-between', position: 'absolute', height: 170, bottom: 20, right: 15, alignItems: 'center'}}
             >
 
                 <TouchableOpacity
@@ -182,7 +182,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 5
     },
     editButton: {
         backgroundColor: PRIMARY_DARKER,
@@ -191,7 +190,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
-        margin: 5
     },
 });
 

@@ -131,7 +131,7 @@ const ExerciseCard = (props) => {
                                     <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}/>
                                     {
                                         showWeightLabel &&
-                                        <Words style={{alignSelf: 'center'}}>{
+                                        <Words style={{fontSize: 15, alignSelf: 'center'}}>{
                                             weight
                                         }</Words>
                                     }

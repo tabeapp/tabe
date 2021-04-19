@@ -30,7 +30,7 @@ const SetCircle = (props) => {
             text = progress;
         return (
             <View style={{ ...STYLES.circle, ...style }} >
-                <Words>{
+                <Words style={{fontSize: 20}}>{
                     text
                 }</Words>
             </View>
@@ -109,6 +109,7 @@ const SetCircle = (props) => {
 
                 }}
                 list={temp}
+                itemStyle={{fontFamily: 'Arial', fontSize: 20}}
             />
         </TouchableOpacity>
     );
