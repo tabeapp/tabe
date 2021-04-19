@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Image, TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import Write from '../Components/Simple/Write';
@@ -9,9 +9,12 @@ import Row from '../Components/Simple/Row';
 import { CommonActions } from '@react-navigation/native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { DARK_GRAY } from '../Style/Colors';
+import { UserContext } from '../Contexts/UserProvider';
+import { S3Image } from 'aws-amplify-react-native';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
+    const {username, profileURI} = useContext(UserContext);
     const {saveWorkout, createReport, workout } = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
@@ -84,10 +87,13 @@ const ReportScreen = props => {
     return (
         <SafeBorder>
             <TopBar title='Workout Summary' rightText='Save' onPressRight={handleNext}/>
-            <View>
-                <Row>
-                    <View style={{height: 50, width: 50, borderRadius: 25, backgroundColor: 'gray'}}/>
-                    <Words>Zyzz</Words>
+            <ScrollView>
+                <Row style={{justifyContent: 'flex-start'}}>
+                    {
+                        profileURI !== '' &&
+                        <S3Image key={profileURI} style={{width: 50, height: 50, borderRadius: 25}} imgKey={profileURI}/>
+                    }
+                    <Words>{username}</Words>
                 </Row>
                 <Write
                     placeholder={'Add notes'}
@@ -101,48 +107,32 @@ const ReportScreen = props => {
                     placeholder={'Add Description'}
                 />
                 {
-                    report && report.map((ex, index) =>
-                        index === 0 ?
-                            //first one is biggest
-                            <View style={{alignItems: 'center', margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
-                                <Words style={{fontSize: 40}}>{ex.name}</Words>
-                                {
-                                    ex.work.map((set,i) =>
-                                        <Words key={i} style={{fontSize:40}}>
-                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Words>)
-                                }
-                            </View>
-                            :
-                            <View style={{margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
-                                <Words style={{fontSize: 20}}>{ex.name}</Words>
-                                {
-                                    ex.work.map((set,i) =>
-
-                                        <Words key={i} style={{fontSize: 20}}>
-                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Words>)
-                                }
-                            </View>
-                    )
-                }
-                {
                     media.map(uri =>
                         //<Words>{uri}</Words>
                         <Image style={{width: 50, height: 50}} source={{uri: uri}}/>
                     )
                 }
+                <TouchableOpacity
+                    style={{backgroundColor: 'gray', width: 100, height: 100}}
+                    onPress={selectImage}
+                >
+                    <Words>Add image</Words>
+                </TouchableOpacity>
                 {
-                    //something to add photos
+                    report.map(ex =>
+                        <View style={{margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
+                            <Words style={{fontSize: 20}}>{ex.name}</Words>
+                            {
+                                ex.work.map((set,i) =>
 
-                    <TouchableOpacity
-                        style={{backgroundColor: 'gray', width: 100, height: 100}}
-                        onPress={selectImage}
-                    >
-                        <Words>Choose image</Words>
-                    </TouchableOpacity>
+                                    <Words key={i} style={{fontSize: 20}}>
+                                        {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                    </Words>)
+                            }
+                        </View>
+                    )
                 }
-            </View>
+            </ScrollView>
         </SafeBorder>
     );
 };

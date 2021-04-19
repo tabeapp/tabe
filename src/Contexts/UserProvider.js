@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { API, Auth, graphqlOperation } from 'aws-amplify';
-import { getUserLocation } from '../../graphql/queries';
+import { getUserImage, getUserLocation } from '../../graphql/queries';
 
 export const UserContext = React.createContext();
 
 const UserProvider = props => {
     //is this legal
     const [username, setUsername] = useState('');
+    const [profileURI, setProfileURI] = useState('');
 
     const [location, setLocation] = useState([null, null, null, null]);
 
@@ -36,12 +37,21 @@ const UserProvider = props => {
             //just names for now
             setLocation([gym.country.name, gym.state.name, gym.city.name, gym.name]);
         })
+
+        API.graphql(graphqlOperation(getUserImage, {
+            userID: username
+        })).then(result => {
+            if(result.data.getUserImage)
+                setProfileURI(result.data.getUserImage.uri);
+        });
+
     }, [username]);
 
     return (
         <UserContext.Provider value={{
             username: username,
-            location: location
+            location: location,
+            profileURI: profileURI
         }}>
             {props.children}
         </UserContext.Provider>
