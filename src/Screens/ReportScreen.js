@@ -11,11 +11,12 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { DARK_GRAY } from '../Style/Colors';
 import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
+import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
     const {username, profileURI} = useContext(UserContext);
-    const {saveWorkout, createReport, workout } = useContext(WorkoutContext);
+    const {saveWorkout, workout } = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
     //this is fucky
@@ -24,8 +25,7 @@ const ReportScreen = props => {
     useEffect(() => {
         //maybe just like a report preview?
         //this report thing is mostly handles by the lambda
-        let x = createReport();
-        setReport(x);
+        setReport(generateReport());
         setTitle(workout.title);
     }, [/*workout*/]);
 

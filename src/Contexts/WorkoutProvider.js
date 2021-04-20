@@ -7,8 +7,6 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createPostAndTimeline, generateWorkout } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from './UserProvider';
-//ehhhh not sure how i feel about this import
-import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 
 export const WorkoutContext = React.createContext();
 
@@ -171,9 +169,6 @@ const WorkoutProvider = props => {
         return false;
     };
 
-    //end uses of this
-    const createReport = () => generateReport(data);
-
     //only here cuz of the async storage
     const quitWorkout = () => {
         workoutDispatch(() => ({}));
@@ -259,7 +254,6 @@ const WorkoutProvider = props => {
             generateCustom: generateCustom,
 
             //after
-            createReport: createReport,
             saveWorkout: saveWorkout
         }}>
             {props.children}
