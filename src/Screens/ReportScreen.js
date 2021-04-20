@@ -12,6 +12,7 @@ import { DARK_GRAY } from '../Style/Colors';
 import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
@@ -25,13 +26,13 @@ const ReportScreen = props => {
     useEffect(() => {
         //maybe just like a report preview?
         //this report thing is mostly handles by the lambda
-        setReport(generateReport());
+        setReport(generateReport(workout));
         setTitle(workout.title);
     }, [/*workout*/]);
 
     const [title, setTitle] = useState('');
 
-    const [description, setDescription] = useState('add description');
+    const [description, setDescription] = useState('');
 
     const [media, setMedia] = useState([]);
 
@@ -56,13 +57,8 @@ const ReportScreen = props => {
                 setMedia(m => [...m, res.uri]);
                 //res.uri is what you want
             }
-
-
-
         });
-    }
-
-    //console.log('summary ' + JSON.stringify(workout));
+    };
 
     const handleNext = () => {
         props.navigation.dispatch(CommonActions.reset({
@@ -70,24 +66,19 @@ const ReportScreen = props => {
             routes: [{name: 'home'}]
         }))
 
-        //combine workout and title and description
-        //necessary transformation
         saveWorkout({
             title: title,
             description: description,
-            //data: JSON.stringify(report.e.xercises),
             media: media
-
         });
-
     };
 
     //ok this should pretty match "post screen"
     //lets make some shared components
     return (
         <SafeBorder>
-            <TopBar title='Workout Summary' rightText='Save' onPressRight={handleNext}/>
-            <ScrollView>
+            <TopBar title='Workout Preview' rightText='Save' onPressRight={handleNext}/>
+            <ScrollView style={{margin: 5}}>
                 <Row style={{justifyContent: 'flex-start'}}>
                     {
                         profileURI !== '' &&
@@ -97,39 +88,50 @@ const ReportScreen = props => {
                 </Row>
                 <Write
                     placeholder={'Add notes'}
-                    style={{fontSize: 20, height: 100}}
+                    style={{borderWidth: 1, fontSize: 30, height: 40}}
                     value={title}
                     onChange={setTitle}
                 />
                 <Write
                     value={description}
+                    style={{height: 100}}
                     onChange={setDescription}
-                    placeholder={'Add Description'}
+                    placeholder={'Add Description...'}
                 />
-                {
-                    media.map(uri =>
-                        //<Words>{uri}</Words>
-                        <Image style={{width: 50, height: 50}} source={{uri: uri}}/>
-                    )
-                }
-                <TouchableOpacity
-                    style={{backgroundColor: 'gray', width: 100, height: 100}}
-                    onPress={selectImage}
-                >
-                    <Words>Add image</Words>
-                </TouchableOpacity>
+
+                <ScrollView horizontal>
+                    {
+                        //this pattern has happened many times
+                        //where you have a map followed by an add button
+                        //all contained in scrollview
+                        //hm...
+                        media.map(uri =>
+                            //<Words>{uri}</Words>
+                            <Image style={{width: 100, height: 100, marginRight: 5}} source={{uri: uri}}/>
+                        )
+                    }
+                    <TouchableOpacity
+                        style={{backgroundColor: DARK_GRAY, width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}
+                        onPress={selectImage}
+                    >
+                        <Words style={{fontSize:40}}>+<Ionicons size={40} name={'image'}/></Words>
+                    </TouchableOpacity>
+                </ScrollView>
+
                 {
                     report.map(ex =>
-                        <View style={{margin: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
-                            <Words style={{fontSize: 20}}>{ex.name}</Words>
-                            {
+                        <Row style={{alignItems: 'flex-start', marginVertical: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
+                            <Words style={{fontSize: 25}}>{ex.name}</Words>
+                            <View>{
                                 ex.work.map((set,i) =>
-
-                                    <Words key={i} style={{fontSize: 20}}>
-                                        {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                    </Words>)
-                            }
-                        </View>
+                                    <View style={{flex: 1, justifyContent: 'center'}}>
+                                        <Words key={i} style={{fontSize: 15}}>
+                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
+                                        </Words>
+                                    </View>
+                                )
+                            }</View>
+                        </Row>
                     )
                 }
             </ScrollView>

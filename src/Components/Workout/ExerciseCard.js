@@ -47,6 +47,7 @@ const SetModButton = props => {
     );
 };
 
+//also just realized we're gonna be dealing with summed sets here
 const ExerciseCard = (props) => {
     const {workoutDispatch} = useContext(WorkoutContext);
 
@@ -128,7 +129,10 @@ const ExerciseCard = (props) => {
 
                             return <React.Fragment key={index}>
                                 <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
-                                    <SetCircle setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text} style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}/>
+                                    <SetCircle
+                                        setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text}
+                                        style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}
+                                    />
                                     {
                                         showWeightLabel &&
                                         <Words style={{fontSize: 15, alignSelf: 'center'}}>{
@@ -137,6 +141,7 @@ const ExerciseCard = (props) => {
                                     }
                                     {
                                         //so if it's in edit mode, we need to be able to adjust the weight on the fly
+                                        //this looks like dog shit
                                         edit &&
                                         <NumericSelector
                                             numInfo={{
