@@ -2100,43 +2100,6 @@ export const listCurrentRoutinesByUser = /* GraphQL */ `
     }
   }
 `;
-export const getCurrentWorkout = /* GraphQL */ `
-  query GetCurrentWorkout($userID: ID!) {
-    getCurrentWorkout(userID: $userID) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listCurrentWorkouts = /* GraphQL */ `
-  query ListCurrentWorkouts(
-    $userID: ID
-    $filter: ModelCurrentWorkoutFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listCurrentWorkouts(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        data
-        routineID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getLike = /* GraphQL */ `
   query GetLike($id: ID!) {
     getLike(id: $id) {

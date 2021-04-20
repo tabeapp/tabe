@@ -4,6 +4,7 @@ type UserRecord @model
   {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, update, create]}
 ])
+#sneaky feeling we don't even need all these keys, just use filters
 @key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
 @key(name: "byState", fields: ["stateID", "exercise", "orm"], queryField: "listRecordsByExerciseAndState")
 @key(name: "byCity", fields: ["cityID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCity")
@@ -210,22 +211,6 @@ type Routine
   updatedAt: String!
 }
 
-#this is for saving the current state of the workout
-#in case you want to sync between devices or so
-#a user will update and clear a single one of these objects
-type CurrentWorkout
-@model
-@auth(rules: [
-  {allow: private, provider: userPools, operations: [read, update]}
-  {allow: private, provider: iam, operations: [read, update]}
-])
-@key(fields: ["userID"])
-{
-  userID: ID!
-  data: AWSJSON!
-  routineID: ID!
-}
-
 type Like
 @model
 @auth(rules: [
@@ -310,7 +295,7 @@ type Mutation{
     {allow: private, provider: userPools},
   ])
 
-  generateWorkout: CurrentWorkout
+  generateWorkout: AWSJSON
   @function(name: "generateWorkout-${env}")
   @auth(rules:[
     {allow: private, provider: userPools},

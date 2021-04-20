@@ -4,13 +4,11 @@ import { RoutinesContext } from './RoutinesProvider';
 import { CURRENT, REST_DAY } from '../Constants/Symbols';
 
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { createCurrentWorkout, createPostAndTimeline, generateWorkout, updateCurrentWorkout } from '../../graphql/mutations';
+import { createPostAndTimeline, generateWorkout } from '../../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { UserContext } from './UserProvider';
-import { getCurrentWorkout } from '../../graphql/queries';
 //ehhhh not sure how i feel about this import
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
-import { onUpdateCurrentWorkout } from '../../graphql/subscriptions';
 
 export const WorkoutContext = React.createContext();
 
@@ -55,16 +53,6 @@ const WorkoutProvider = props => {
         next.done = !found;
 
         return next;
-    };
-
-    const syncCurrentWorkout = async () => {
-        API.graphql(graphqlOperation(updateCurrentWorkout, {
-            input: {
-                userID: username,
-                data: JSON.stringify(data),
-                routineID: data.routinesID || ''
-            }
-        }));
     };
 
     //so i guess state is the previous state
@@ -129,49 +117,8 @@ const WorkoutProvider = props => {
     };
 
 
-    //step 1 this use effect should be all set
-    //i really don't think I want to use currentworkout anymore,
     //async storage instead
-    useEffect(() => {
-        //kinda annoying but it wont work without the username
-        if(!username)
-            return;
-        API.graphql(graphqlOperation(getCurrentWorkout, {
-            userID: username
-        })).then(result => {
-            if(!result.data.getCurrentWorkout){
-                API.graphql(graphqlOperation(createCurrentWorkout, {
-                    input: {
-                        userID: username,
-                        data: '{}',
-                        routineID: ''
-                    }
-                }));
-
-            }
-            else{
-                console.log('current workout load', result);
-                workoutDispatch(() => JSON.parse(result.data.getCurrentWorkout.data));
-            }
-        });
-
-        /*const sub = API.graphql(graphqlOperation(onUpdateCurrentWorkout, {
-            userID: username
-        })).subscribe({
-            next: (obj) => {
-                console.log(obj);
-                workoutDispatch(() => JSON.parse(obj));
-                //overwrite what's in workout
-
-            }
-        });
-
-        return () => {
-            //ehhh, not sure how I feel about this but we can't have sync current in dispatch
-            syncCurrentWorkout();
-            sub.unsubscribe();
-        }*/
-    }, [username]);
+    useEffect(() => { }, []);
 
     //heavy logic here, not much you can do with usereducer here
     //wonder if this could be a lambda function...
@@ -187,7 +134,7 @@ const WorkoutProvider = props => {
         //add a subscription to current workout
         const wo = await API.graphql(graphqlOperation(generateWorkout));
         console.log(wo);
-        workoutDispatch(() => JSON.parse(wo.data.generateWorkout.data));
+        workoutDispatch(() => JSON.parse(wo.data.generateWorkout));
     };
 
     const generateCustom = () => {

@@ -14,17 +14,3 @@ exports.updateRoutine = /* GraphQL */ `
     }
   }
 `;
-exports.updateCurrentWorkout = /* GraphQL */ `
-  mutation UpdateCurrentWorkout(
-    $input: UpdateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    updateCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;

@@ -11,7 +11,7 @@ const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
 // /OPT/ DOESN'T DO SHIT, FUCK THEM
 const { listCurrentRoutinesByUser } = require('./graphql/queries');
-const { updateCurrentWorkout, updateRoutine } = require('./graphql/mutations');
+const { updateRoutine } = require('./graphql/mutations');
 const { generateWorkout } = require('./Utils/GenerateWorkout');
 
 let graphqlClient;
@@ -90,8 +90,7 @@ exports.handler = async (event) => {
             timer: 0,
             restStart: 0
         };
-        const res = await saveWorkout(custom, userID);
-        return res.data.updateCurrentWorkout;
+        return custom;
     }
 
     current = current.data.listCurrentRoutinesByUser.items[0]
@@ -115,20 +114,5 @@ exports.handler = async (event) => {
     });
 
     //save this to workotu
-    const currentWorkout = {...workout, routineID: routineID};
-    const res = await saveWorkout(currentWorkout, userID);
-    return res.data.updateCurrentWorkout;
-};
-
-const saveWorkout = async (workoutData, username) => {
-    return await graphqlClient.mutate({
-        mutation: gql(updateCurrentWorkout),
-        variables: {
-            input: {
-                userID: username,
-                data: JSON.stringify(workoutData),
-                routineID: workoutData.routineID || ''
-            }
-        }
-    });
+    return { ...workout, routineID: routineID };
 };

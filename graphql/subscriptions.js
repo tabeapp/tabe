@@ -1475,39 +1475,6 @@ export const onDeleteComment = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCurrentWorkout = /* GraphQL */ `
-  subscription OnCreateCurrentWorkout {
-    onCreateCurrentWorkout {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCurrentWorkout = /* GraphQL */ `
-  subscription OnUpdateCurrentWorkout {
-    onUpdateCurrentWorkout {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCurrentWorkout = /* GraphQL */ `
-  subscription OnDeleteCurrentWorkout {
-    onDeleteCurrentWorkout {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateLike = /* GraphQL */ `
   subscription OnCreateLike {
     onCreateLike {

@@ -799,34 +799,6 @@ export const deleteRoutine = /* GraphQL */ `
     }
   }
 `;
-export const createCurrentWorkout = /* GraphQL */ `
-  mutation CreateCurrentWorkout(
-    $input: CreateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    createCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteCurrentWorkout = /* GraphQL */ `
-  mutation DeleteCurrentWorkout(
-    $input: DeleteCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    deleteCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const updateLike = /* GraphQL */ `
   mutation UpdateLike(
     $input: UpdateLikeInput!
@@ -1959,20 +1931,6 @@ export const updateRoutine = /* GraphQL */ `
     }
   }
 `;
-export const updateCurrentWorkout = /* GraphQL */ `
-  mutation UpdateCurrentWorkout(
-    $input: UpdateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    updateCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createLike = /* GraphQL */ `
   mutation CreateLike(
     $input: CreateLikeInput!
@@ -2360,12 +2318,6 @@ export const changeUserGym = /* GraphQL */ `
 `;
 export const generateWorkout = /* GraphQL */ `
   mutation GenerateWorkout {
-    generateWorkout {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
+    generateWorkout
   }
 `;
