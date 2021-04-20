@@ -167,6 +167,7 @@ const PostScreen = props => {
                     </Words>
                     <View style={{width: '100%'}}>
                         {
+                            //this looks like shit too
                             post.comments.items.map(comment =>
                                 <Row>
                                     <Words>{comment.userID}</Words>

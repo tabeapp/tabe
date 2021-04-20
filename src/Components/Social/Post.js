@@ -7,9 +7,12 @@ import Row from '../Simple/Row';
 import { S3Image } from 'aws-amplify-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PostHeader from './PostHeader';
+import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
+
+    const width = useWindowDimensions().width;
 
     const navigation = useNavigation();
 
@@ -30,8 +33,17 @@ const Post = ({post}) => {
                 <Words style={{fontSize: 30}}>{post.title}</Words>
                 <Words>{post.description}</Words>
 
-                <ScrollView horizontal>
-                    <View style={{width: 400}}>
+                {/*this scroll view is really busted*/}
+                <ScrollView horizontal pagingEnabled>
+                    {
+                        //so we'd see all the images uploaded with the thing
+                        post.media&&
+                        post.media.items.map(({uri}) =>
+                            //<Words>{uri}</Words>
+                            <S3Image key={uri} style={{width: width}} imgKey={uri}/>
+                        )
+                    }
+                    <View style={{width: width}}>
                         {
                             post.data &&
                             JSON.parse(post.data).map(exercise =>
@@ -46,14 +58,7 @@ const Post = ({post}) => {
                             )
                         }
                     </View>
-                    {
-                        //so we'd see all the images uploaded with the thing
-                        post.media&&
-                        post.media.items.map(({uri}) =>
-                            //<Words>{uri}</Words>
-                            <S3Image key={uri} style={{width: 50, height: 50}} imgKey={uri}/>
-                        )
-                    }
+
                 </ScrollView>
 
                 <Row style={{height: 50}}>
