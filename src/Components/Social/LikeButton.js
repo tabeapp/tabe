@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { createLike, deleteLike } from '../../../graphql/mutations';
 import Words from '../Simple/Words';
@@ -15,12 +15,14 @@ const LikeButton = props => {
     const { username } = useContext(UserContext);
 
     const [liked, setLiked] = useState(false);
+    const [n, setN] = useState(likes.items.length);
 
     const handlePress = () => {
         //the like function
 
         if(liked){
             //unlike
+            setN(n-1);
             setLiked(false);
 
             const likeID = likes.items.find(like =>
@@ -34,12 +36,14 @@ const LikeButton = props => {
                 }
             }))
                 .then(res => {
+                    console.log(res);
                     if(res.data.deleteLike.errors)
                         setLiked(true);
                 })
 
         } else{
             // like
+            setN(n+1);
             setLiked(true);
             API.graphql(graphqlOperation(createLike, {
                 input: {
@@ -55,6 +59,7 @@ const LikeButton = props => {
     };
 
     useEffect(() => {
+        if(!likes) return;
         const l = likes.items.some(like =>
             like.userID === username
         );
@@ -70,7 +75,7 @@ const LikeButton = props => {
             onPress={handlePress}
         >
             <Words style={{fontWeight: 'bold'}}>
-                {likes.items.length}
+                {n}
             </Words>
             <Words>
                 <Ionicons size={30} color={PRIMARY} name={icon}/>

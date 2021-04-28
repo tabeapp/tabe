@@ -62,20 +62,6 @@ const Post = ({post}) => {
                     <TouchableOpacity
                         style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
                         onPress={() => {
-                            //todo i swear to god there's gotta be something we can reuse here
-                            //the like function
-                        }}
-                    >
-                        <Words style={{fontWeight: 'bold'}}>
-                            {post.likes && post.likes.items.length}
-                        </Words>
-                        <Words>
-                            <Ionicons size={30} color={PRIMARY} name={icon}/>
-                        </Words>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
-                        onPress={() => {
                             //the like function
                         }}
                     >
