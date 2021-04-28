@@ -12,7 +12,7 @@ const TrophyIcon = props => {
     else if(rank === 2)
         color =  '#725626';
 
-    const name = rank === 0 ? 'ribbon': 'trophy';
+    const name = rank === 0 ? 'trophy': 'ribbon';
 
     return <Ionicons name={name} color={color} size={40}/>;
 };

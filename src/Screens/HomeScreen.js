@@ -17,7 +17,7 @@ const HomeScreen = props => {
             <TopBar title='Feed'/>
             <View style={STYLES.body}>
                 {
-                    username &&
+                    username !== '' &&
                     <PostList
                         listOperation={listTimelines}
                         sortKey={'userID'}

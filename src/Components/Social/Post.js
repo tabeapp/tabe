@@ -8,6 +8,7 @@ import { S3Image } from 'aws-amplify-react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
+import SummaryDisplay from '../Workout/SummaryDisplay';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
@@ -21,43 +22,37 @@ const Post = ({post}) => {
     const icon = liked? 'heart': 'heart-outline';
 
     return (
-        <TouchableWithoutFeedback
+        <View
             style={{borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1, marginBottom: 15 }}
-            onPress={() => {
-                navigation.navigate('post', {postID: post.id})
-            }}
         >
             <View>
-                <PostHeader post={post}/>
+                <TouchableWithoutFeedback
+                    onPress={() => navigation.navigate('post', {postID: post.id})}
+                >
+                    <View>
+                        <PostHeader post={post}/>
 
-                <Words style={{fontSize: 30}}>{post.title}</Words>
-                <Words>{post.description}</Words>
+                        <Words style={{fontSize: 30}}>{post.title}</Words>
+                        <Words>{post.description}</Words>
+                    </View>
+                </TouchableWithoutFeedback>
 
                 {/*this scroll view is really busted*/}
-                <ScrollView horizontal pagingEnabled>
+                <ScrollView
+                    horizontal pagingEnabled
+                    contentOffset={{x: post.media.items ? width : 0, y:0}}
+                >
+                    <View style={{width: width}}>
+                        <SummaryDisplay exercises={post.data}/>
+                    </View>
                     {
                         //so we'd see all the images uploaded with the thing
                         post.media&&
                         post.media.items.map(({uri}) =>
-                            //<Words>{uri}</Words>
+                            //width doesn't work the way you expect btw
                             <S3Image key={uri} style={{width: width}} imgKey={uri}/>
                         )
                     }
-                    <View style={{width: width}}>
-                        {
-                            post.data &&
-                            JSON.parse(post.data).map(exercise =>
-                                <View key={exercise.name} style={{borderTopWidth: 1, borderColor: DARK_GRAY}}>
-                                    <Words style={{fontSize: 20}}>{exercise.name}</Words>
-                                    <View style={{alignItems: 'center'}}>{
-                                        exercise.work.map((set,i) =>
-                                            <Words key={i}>{set.reps + 'x' + set.weight}</Words>
-                                        )
-                                    }</View>
-                                </View>
-                            )
-                        }
-                    </View>
 
                 </ScrollView>
 
@@ -95,7 +90,7 @@ const Post = ({post}) => {
 
 
             </View>
-        </TouchableWithoutFeedback>
+        </View>
     );
 };
 
