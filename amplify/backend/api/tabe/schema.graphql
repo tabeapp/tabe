@@ -190,6 +190,7 @@ type Comment
   postID: ID!
   content: String!
   likes: [Like] @connection(keyName: "byParent", fields: ["id"])
+  userImage: UserImage @connection(fields: ["userID"])
 }
 
 type Routine
