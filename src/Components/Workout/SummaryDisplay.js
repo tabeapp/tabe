@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
-import { DARK_GRAY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 import Words from '../Simple/Words';
 import Row from '../Simple/Row';
 
@@ -14,7 +14,7 @@ const SummaryDisplay = props => {
                 exercises.map(exercise =>
                     <Row
                         key={exercise.name}
-                        style={{alignItems: 'flex-start', padding: 4, borderTopWidth: 1, borderColor: DARK_GRAY}}
+                        style={{alignItems: 'flex-start', padding: 4, borderTopWidth: 1, borderColor: BACKGROUND}}
                     >
                         <Words style={{fontSize: 25}}>{exercise.name}</Words>
                         <View>{

@@ -10,6 +10,8 @@ import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import SummaryDisplay from '../Workout/SummaryDisplay';
 import LikeButton from './LikeButton';
+import CommentBar from './CommentBar';
+import SafeBorder from '../Navigation/SafeBorder';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
@@ -18,13 +20,9 @@ const Post = ({post}) => {
 
     const navigation = useNavigation();
 
-    //this is cap
-    const liked = false;
-    const icon = liked? 'heart': 'heart-outline';
-
     return (
         <View
-            style={{borderColor: PRIMARY, borderTopWidth: 1, borderBottomWidth: 1, marginBottom: 15 }}
+            style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 30 }}
         >
             <View>
                 <TouchableWithoutFeedback
@@ -57,23 +55,12 @@ const Post = ({post}) => {
 
                 </ScrollView>
 
-                <Row style={{height: 50}}>
+                <Row>
                     <LikeButton likes={post.likes} postID={post.id}/>
-                    <TouchableOpacity
-                        style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
-                        onPress={() => {
-                            //the like function
-                        }}
-                    >
-                        <Words>
-                            {
-                                //TODO you'll actually have to address this eventually
-                                post.comments && post.comments.items.length}
-                        </Words>
-                        <Words>
-                            <Ionicons size={30} color={PRIMARY} name={'chatbox-outline'}/>
-                        </Words>
-                    </TouchableOpacity>
+                    <Words>
+                        {post.comments && post.comments.items.length}
+                    </Words>
+                    <CommentBar postID={post.id}/>
                 </Row>
 
 
