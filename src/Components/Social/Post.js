@@ -43,7 +43,7 @@ const Post = ({post}) => {
                     contentOffset={{x: post.media.items ? width : 0, y:0}}
                 >
                     <View style={{width: width}}>
-                        <SummaryDisplay exercises={post.data}/>
+                        <SummaryDisplay exercises={JSON.parse(post.data)}/>
                     </View>
                     {
                         //so we'd see all the images uploaded with the thing

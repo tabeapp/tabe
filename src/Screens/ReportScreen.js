@@ -13,6 +13,7 @@ import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
@@ -118,22 +119,7 @@ const ReportScreen = props => {
                     </TouchableOpacity>
                 </ScrollView>
 
-                {
-                    report.map(ex =>
-                        <Row style={{alignItems: 'flex-start', marginVertical: 5, padding: 4, backgroundColor: DARK_GRAY}} key={ex.name}>
-                            <Words style={{fontSize: 25}}>{ex.name}</Words>
-                            <View>{
-                                ex.work.map((set,i) =>
-                                    <View style={{flex: 1, justifyContent: 'center'}}>
-                                        <Words key={i} style={{fontSize: 15}}>
-                                            {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                        </Words>
-                                    </View>
-                                )
-                            }</View>
-                        </Row>
-                    )
-                }
+                <SummaryDisplay exercises={report}/>
             </ScrollView>
         </SafeBorder>
     );

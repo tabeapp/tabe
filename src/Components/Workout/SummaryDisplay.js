@@ -8,11 +8,10 @@ const SummaryDisplay = props => {
     const {exercises} = props;
 
     return (
-
         <>
             {
                 exercises &&
-                JSON.parse(exercises).map(exercise =>
+                exercises.map(exercise =>
                     <Row
                         key={exercise.name}
                         style={{alignItems: 'flex-start', padding: 4, borderTopWidth: 1, borderColor: DARK_GRAY}}
@@ -21,9 +20,18 @@ const SummaryDisplay = props => {
                         <View>{
                             exercise.work.map((set,i) =>
                                 <View style={{flex: 1, justifyContent: 'center'}}>
-                                    <Words key={i} style={{fontSize: 15}}>
-                                        {set.sets + 'x' + set.reps + '@' + set.weight + 'lb'}
-                                    </Words>
+                                    <Row key={i}>
+                                        <Words style={{fontSize: 15, width: 20}}>
+                                            {set.sets + 'x'}
+                                        </Words>
+                                        <Words style={{fontSize: 15, width: 40, textAlign: 'right'}}>
+                                            {set.reps + ' x'}
+                                        </Words>
+                                        <Words style={{fontSize: 15, width: 50, textAlign: 'right'}}>
+                                            {set.weight + 'lb'}
+                                        </Words>
+
+                                    </Row>
                                 </View>
                             )
                         }</View>
