@@ -9,6 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import SummaryDisplay from '../Workout/SummaryDisplay';
+import LikeButton from './LikeButton';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
@@ -57,6 +58,7 @@ const Post = ({post}) => {
                 </ScrollView>
 
                 <Row style={{height: 50}}>
+                    <LikeButton likes={post.likes} postID={post.id}/>
                     <TouchableOpacity
                         style={{flex: 1, alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
                         onPress={() => {

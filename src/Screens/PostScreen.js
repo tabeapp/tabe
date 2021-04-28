@@ -14,6 +14,7 @@ import Write from '../Components/Simple/Write';
 import PostHeader from '../Components/Social/PostHeader';
 import { BACKGROUND, PRIMARY } from '../Style/Colors';
 import TrophyVisual from '../Components/Social/TrophyVisual';
+import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 
 //yes this is a copy of report screen
 //side note: for trophy info, use post location info to fill in info
@@ -139,6 +140,11 @@ const PostScreen = props => {
                             <Ionicons size={30} color={PRIMARY} name={icon}/>
                         </Words>
                     </TouchableOpacity>
+
+                    <Words style={{fontWeight: 'bold', fontSize: 40}}>
+                        Workout Detail
+                    </Words>
+                    <SummaryDisplay exercises={JSON.parse(post.data)}/>
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Achievements
