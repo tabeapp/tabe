@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Row from '../Simple/Row';
-import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Write from '../Simple/Write';
 import Words from '../Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
 import { createComment } from '../../../graphql/mutations';
 import { UserContext } from '../../Contexts/UserProvider';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //even easier than the like thing
 const CommentBar = props => {
@@ -40,7 +41,7 @@ const CommentBar = props => {
             <Write
                 value={comment}
                 onChange={setComment}
-                placeholder={'Add comment...'}
+                placeholder={'Comment...'}
                 style={{padding: 3, height: 40, fontSize: 20, flex: 1, backgroundColor: DARK_GRAY}}
             />
 
@@ -48,14 +49,14 @@ const CommentBar = props => {
                 style={{
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: PRIMARY,
+                    backgroundColor: PRIMARY_DARKER,
                     height: 40,
                     width: 90,
                     borderBottomRightRadius: 20,
                 }}
                 onPress={commentOnPost}
             >
-                <Words>Comment</Words>
+                <Words><Ionicons name={'chatbox-ellipses-outline'} color={PRIMARY} size={30}/></Words>
             </TouchableOpacity>
         </Row>
     </View>

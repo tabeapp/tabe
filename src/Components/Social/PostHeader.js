@@ -30,7 +30,7 @@ const PostHeader = props => {
 
 
     return(
-        <Row style={{padding: 10, justifyContent: 'space-around'}}>
+        <Row style={{padding: 10, justifyContent: 'flex-start'}}>
             <TouchableOpacity
                 style={{height: 40, width: 40, borderRadius: 20, overflow: 'hidden'}}
                 onPress={() => {
