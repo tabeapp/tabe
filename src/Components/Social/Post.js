@@ -29,7 +29,7 @@ const Post = ({post}) => {
                     onPress={() => navigation.navigate('post', {postID: post.id})}
                 >
                     <View>
-                        <PostHeader post={post}/>
+                        <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
 
                         <Words style={{fontSize: 30}}>{post.title}</Words>
                         <Words>{post.description}</Words>
@@ -41,9 +41,13 @@ const Post = ({post}) => {
                     horizontal pagingEnabled
                     contentOffset={{x: post.media.items ? width : 0, y:0}}
                 >
-                    <View style={{width: width}}>
-                        <SummaryDisplay exercises={JSON.parse(post.data)}/>
-                    </View>
+                    <TouchableWithoutFeedback
+                        onPress={() => navigation.navigate('post', {postID: post.id})}
+                    >
+                        <View style={{width: width}}>
+                            <SummaryDisplay exercises={JSON.parse(post.data)}/>
+                        </View>
+                    </TouchableWithoutFeedback>
                     {
                         //so we'd see all the images uploaded with the thing
                         post.media&&

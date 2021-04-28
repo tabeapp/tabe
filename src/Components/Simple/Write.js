@@ -11,7 +11,7 @@ const Write = ({value, onChange, style, autoFocus=false, placeholder=''}) => {
         multiline={true}
         blurOnSubmit={true}
         placeholder={placeholder}
-        placeholderTextColor={DARK_GRAY}
+        placeholderTextColor={'gray'}
         //onSubmitEditing could be very useful method to use
         onChangeText={onChange}
         keyboardType="default"

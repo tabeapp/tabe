@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Row from '../Simple/Row';
-import { BACKGROUND, PRIMARY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
 import Write from '../Simple/Write';
 import Words from '../Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -41,7 +41,7 @@ const CommentBar = props => {
                 value={comment}
                 onChange={setComment}
                 placeholder={'Add comment...'}
-                style={{padding: 3, height: 40, fontSize: 20, flex: 1, backgroundColor: 'gray'}}
+                style={{padding: 3, height: 40, fontSize: 20, flex: 1, backgroundColor: DARK_GRAY}}
             />
 
             <TouchableOpacity

@@ -7,8 +7,13 @@ import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 
 //just the image, username, time, location
+//we need to rethink this
+//instead of just post, let's instead take
+//userID, , createdAt, uri
 const PostHeader = props => {
-    const {post} = props;
+
+    const {userID, createdAt, imageUri} = props;
+
     const now = moment();
     const calcTimestampDiff = (timestamp) => {
         const scales = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
@@ -29,21 +34,21 @@ const PostHeader = props => {
             <TouchableOpacity
                 style={{height: 40, width: 40, borderRadius: 20, overflow: 'hidden'}}
                 onPress={() => {
-                    navigation.navigate('profile', {userID: post.userID})
+                    navigation.navigate('profile', {userID: userID})
                 }}
             >
                 {
 
-                    post.userImage &&
-                    <S3Image key={post.userImage.uri} style={{width: 40, height: 40}} imgKey={post.userImage.uri}/>
+                    imageUri &&
+                    <S3Image key={imageUri} style={{width: 40, height: 40}} imgKey={imageUri}/>
                 }
             </TouchableOpacity>
 
-            <View style={{flex:1}}>
-                <Words style={{fontWeight: 'bold'}}>{post.userID}</Words>
+            <View>
+                <Words style={{fontWeight: 'bold'}}>{userID}</Words>
                 <TouchableOpacity>
                     {/*<Words>{moment(post.createdAt).format('MMMM D YYYY, h:mma')}</Words>*/}
-                    <Words>{calcTimestampDiff(post.createdAt)}</Words>
+                    <Words>{calcTimestampDiff(createdAt)}</Words>
                 </TouchableOpacity>
             </View>
         </Row>

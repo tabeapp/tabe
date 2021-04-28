@@ -11,6 +11,7 @@ import TrophyVisual from '../Components/Social/TrophyVisual';
 import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 import LikeButton from '../Components/Social/LikeButton';
 import CommentBar from '../Components/Social/CommentBar';
+import { S3Image } from 'aws-amplify-react-native';
 
 //yes this is a copy of report screen
 //side note: for trophy info, use post location info to fill in info
@@ -54,7 +55,7 @@ const PostScreen = props => {
                 //easier than adding dumb default properties
                 loaded &&
                 <ScrollView style={{flex: 1}}>
-                    <PostHeader post={post}/>
+                    <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
                     <Words style={{fontSize: 40}} >
                         {post.title}
                     </Words>
@@ -96,8 +97,14 @@ const PostScreen = props => {
                         {
                             //this looks like shit too
                             post.comments.items.map(comment =>
-                                <Row>
-                                    <Words>{comment.userID}</Words>
+                                <Row
+                                    style={{justifyContent: 'space-between', flex: 1}}
+                                >
+                                    <PostHeader
+                                        userID={comment.userID}
+                                        imageUri={comment.userImage.uri}
+                                        createdAt={comment.createdAt}
+                                    />
                                     <Words>{comment.content}</Words>
 
                                 </Row>

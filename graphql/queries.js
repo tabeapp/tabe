@@ -1188,6 +1188,12 @@ export const listPosts = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1348,6 +1354,12 @@ export const getPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -1497,6 +1509,12 @@ export const listPostsSortedByTimestamp = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1641,6 +1659,12 @@ export const listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1783,6 +1807,12 @@ export const searchPosts = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1967,6 +1997,12 @@ export const getComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1994,6 +2030,12 @@ export const listComments = /* GraphQL */ `
         content
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -2298,6 +2340,12 @@ export const getTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }

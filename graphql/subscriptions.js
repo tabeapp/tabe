@@ -143,6 +143,12 @@ export const onCreatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -308,6 +314,12 @@ export const onUpdatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -473,6 +485,12 @@ export const onDeletePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -1418,6 +1436,12 @@ export const onCreateComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1440,6 +1464,12 @@ export const onUpdateComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1462,6 +1492,12 @@ export const onDeleteComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1674,6 +1710,12 @@ export const onCreateTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1807,6 +1849,12 @@ export const onUpdateTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1940,6 +1988,12 @@ export const onDeleteTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }

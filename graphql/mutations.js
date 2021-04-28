@@ -433,6 +433,12 @@ export const updatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -601,6 +607,12 @@ export const deletePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -745,6 +757,12 @@ export const updateComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -770,6 +788,12 @@ export const deleteComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -973,6 +997,12 @@ export const updateTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1109,6 +1139,12 @@ export const deleteTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1790,6 +1826,12 @@ export const createPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -1886,6 +1928,12 @@ export const createComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -2092,6 +2140,12 @@ export const createTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -2261,6 +2315,12 @@ export const createPostAndTimeline = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
