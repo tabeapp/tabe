@@ -22,7 +22,7 @@ const Post = ({post}) => {
 
     return (
         <View
-            style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 30 }}
+            style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 20 }}
         >
             <View>
                 <TouchableWithoutFeedback
@@ -57,9 +57,6 @@ const Post = ({post}) => {
 
                 <Row>
                     <LikeButton likes={post.likes} postID={post.id}/>
-                    <Words>
-                        {post.comments && post.comments.items.length}
-                    </Words>
                     <CommentBar postID={post.id}/>
                 </Row>
 

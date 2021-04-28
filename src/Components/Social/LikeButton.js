@@ -4,7 +4,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { createLike, deleteLike } from '../../../graphql/mutations';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { PRIMARY } from '../../Style/Colors';
+import { PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import { UserContext } from '../../Contexts/UserProvider';
 
 //ugh i have no idea
@@ -71,7 +71,14 @@ const LikeButton = props => {
 
     return (
         <TouchableOpacity
-            style={{alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}
+            style={{
+                height: 40, width: 90,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                backgroundColor: PRIMARY_DARKER,
+                borderBottomLeftRadius: 20
+            }}
             onPress={handlePress}
         >
             <Words style={{fontWeight: 'bold'}}>

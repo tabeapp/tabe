@@ -61,7 +61,6 @@ const PostScreen = props => {
                     <Words style={{fontSize: 20}}>
                         {post.description}
                     </Words>
-                    <LikeButton likes={post.likes} postID={post.id}/>
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Workout Detail
@@ -109,9 +108,19 @@ const PostScreen = props => {
 
                 </ScrollView>
             }
-            <Row>
-                <CommentBar postID={post.id}/>
-            </Row>
+            {
+
+                loaded&&
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    keyboardVerticalOffset={50} //this is mad dumb
+                >
+                    <Row>
+                        <LikeButton likes={post.likes} postID={post.id}/>
+                        <CommentBar postID={post.id}/>
+                    </Row>
+                </KeyboardAvoidingView>
+            }
         </SafeBorder>
     );
 };

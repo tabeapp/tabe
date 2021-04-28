@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import Row from '../Simple/Row';
 import { BACKGROUND, PRIMARY } from '../../Style/Colors';
 import Write from '../Simple/Write';
@@ -28,34 +28,37 @@ const CommentBar = props => {
             });
     };
 
-    return <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'position' : 'height'}
-        style={{flex: 1, height: 50}}
+    return <View
+        //behavior={Platform.OS === 'ios' ? 'position' : 'height'}
+        style={{flex: 1, height: 40}}
     >
         <Row
             style={{
                 overflow: 'hidden',
-                justifyContent: 'center'
             }}
         >
             <Write
                 value={comment}
                 onChange={setComment}
                 placeholder={'Add comment...'}
-                style={{height: 50, fontSize: 20, flex: 1}}
+                style={{padding: 3, height: 40, fontSize: 20, flex: 1, backgroundColor: 'gray'}}
             />
+
             <TouchableOpacity
                 style={{
-                    justifyContent: 'center', backgroundColor: PRIMARY,
-                    height: '100%',
-                    borderBottomRightRadius: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: PRIMARY,
+                    height: 40,
+                    width: 90,
+                    borderBottomRightRadius: 20,
                 }}
                 onPress={commentOnPost}
             >
                 <Words>Comment</Words>
             </TouchableOpacity>
         </Row>
-    </KeyboardAvoidingView>
+    </View>
 }
 
 export default CommentBar;
