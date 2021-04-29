@@ -2,35 +2,35 @@ const { listRecordsByExercise } = require('../graphql/queries');
 const { createTrophy } = require('../graphql/mutations');
 const gql = require('graphql-tag');
 
-exports.checkRegionRanking = async (graphqlClient, effort, postID, operation, key, value, name, type) => {
+exports.checkRegionRanking = async (graphqlClient, effort, postID, key, value, name, type) => {
+    //new wild idea: just use filters instead of 5 different fucking queries
+    //will this work? who knows
     const listInput = {
         limit: 10,
-        sortDirection: 'DESC'
+        sortDirection: 'DESC',
+        exercise: effort.exercise
     };
 
-    //global
-    if(operation === listRecordsByExercise){
-        listInput.exercise = effort.exercise;
-    }
-    else{
-        listInput[key] = value;
-        listInput.exerciseOrm = {
-            beginsWith: {
-                exercise: effort.exercise
+
+    //not global
+    if(key !== null){
+        listInput.filter = {
+            [key]: {
+                eq: value
             }
         };
     }
 
     const result = await graphqlClient.query({
-        query: gql(operation),
+        query: gql(listRecordsByExercise),
         variables: listInput
     });
 
-    const rank = result.data[Object.keys(result.data)[0]]
+    const rank = result.data.listRecordsByExercise
         .items.findIndex(re => re.postID === postID);
 
     console.log('region rank', rank, value);
-    console.log('region items', result.data[Object.keys(result.data)[0]].items);
+    console.log('region items', result.data.listRecordsByExercise.items);
 
     if(rank === -1)
         return false;

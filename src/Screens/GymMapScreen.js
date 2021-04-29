@@ -11,7 +11,7 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
 import {
-    addNewGym,
+    addNewGym, changeUserGym,
     createGym,
     createUserLocation, createUserRecord,
     deleteUserLocation, deleteUserRecord,

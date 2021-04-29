@@ -4,12 +4,7 @@ import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Words from '../Components/Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
-import {
-    getGym, getRegion,
-    listRecordsByExercise,
-    listRecordsByExerciseAndCity, listRecordsByExerciseAndCountry,
-    listRecordsByExerciseAndGym, listRecordsByExerciseAndState,
-} from '../../graphql/queries';
+import { getGym, getRegion, listRecordsByExercise, } from '../../graphql/queries';
 import BigWords from '../Components/Simple/BigWords';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
 import { PRIMARY } from '../Style/Colors';
@@ -38,51 +33,33 @@ const LeaderboardScreen = props => {
     useEffect(() => {
 
         const listOpInput = {
-            exerciseOrm: {
-                beginsWith: {
-                    exercise: exercise
-                }
-            },
             limit: 10,
-            sortDirection: 'DESC'
+            sortDirection: 'DESC',
+            exercise: exercise
         };
-        //finally, user records comes into play
-        //load gym/region and exercise
-
-        //if(!regionID && !gymID)
-        //return;
 
         if(regionID){
-            //ill admit, this is the dumbest thing I've ever done
-            let operation;
-            if(regionID === GLOBAL_REGION_ID)
-                operation = graphqlOperation(listRecordsByExercise, {
-                    exercise: exercise
-                });
-            else {
-                let listOp;
+            if(regionID !== GLOBAL_REGION_ID){
                 let key;
-                if(regionID.startsWith('country')){
-                    listOp = listRecordsByExerciseAndCountry;
+                if(regionID.startsWith('country'))
                     key = 'countryID';
-                } else if(regionID.startsWith('region')){
-                    listOp = listRecordsByExerciseAndState;
+                else if(regionID.startsWith('region'))
                     key = 'stateID';
-                } else if(regionID.startsWith('place')){
-                    listOp = listRecordsByExerciseAndCity;
+                else if(regionID.startsWith('place'))
                     key = 'cityID';
-                }
 
-                operation = graphqlOperation(listOp, {
-                    ...listOpInput,
-                    [key]: regionID
-                })
+                listOpInput.filter = {
+                    [key]: {
+                        eq: regionID
+                    }
+                };
             }
 
+            let operation = graphqlOperation(listRecordsByExercise, listOpInput);
 
             //im sure this works
             API.graphql(operation)
-                .then(result => setRecords(Object.values(result.data)[0].items));
+                .then(result => setRecords(result.data.listRecordsByExercise.items));
 
             API.graphql(graphqlOperation(getRegion, {
                 id: regionID
@@ -124,13 +101,17 @@ const LeaderboardScreen = props => {
                     ]);
                 })
 
-            API.graphql(graphqlOperation(listRecordsByExerciseAndGym, {
+            API.graphql(graphqlOperation(listRecordsByExercise, {
                 ...listOpInput,
-                gymID: gymID,
+                filter: {
+                    gymID: {
+                        eq: gymID
+                    }
+                },
             }))
                 .then(result => {
                     //this is huge
-                    setRecords(result.data.listRecordsByExerciseAndGym.items);
+                    setRecords(result.data.listRecordsByExercise.items);
                 });
 
         }

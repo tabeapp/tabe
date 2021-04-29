@@ -5,10 +5,6 @@ type UserRecord @model
   {allow: private, provider: iam, operations: [read, update, create]}
 ])
 #sneaky feeling we don't even need all these keys, just use filters
-@key(name: "byCountry", fields: ["countryID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCountry")
-@key(name: "byState", fields: ["stateID", "exercise", "orm"], queryField: "listRecordsByExerciseAndState")
-@key(name: "byCity", fields: ["cityID", "exercise", "orm"], queryField: "listRecordsByExerciseAndCity")
-@key(name: "byGym", fields: ["gymID", "exercise", "orm"], queryField: "listRecordsByExerciseAndGym")
 @key(name: "byUser", fields: ["userID", "orm"], queryField: "listRecordsByUser")
 @key(name: "byExercise", fields: ["exercise", "orm"], queryField: "listRecordsByExercise")
 {

@@ -1,8 +1,6 @@
 const {
     getUserRecord,
-    listEffortsByExerciseAndUser, listRecordsByExercise,
-    listRecordsByExerciseAndCity, listRecordsByExerciseAndCountry,
-    listRecordsByExerciseAndGym, listRecordsByExerciseAndState,
+    listEffortsByExerciseAndUser
 } = require('../graphql/queries');
 const { createTrophy, createUserRecord, updateUserRecord } = require('../graphql/mutations');
 const { GLOBAL_REGION_ID } = require('../Constants/RegionConstants');
@@ -85,21 +83,14 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
 
     }
 
-    const operations = [
-        listRecordsByExerciseAndGym,
-        listRecordsByExerciseAndCity,
-        listRecordsByExerciseAndState,
-        listRecordsByExerciseAndCountry,
-        listRecordsByExercise
-    ];
     const keys = ['gymID', 'cityID', 'stateID', 'countryID', null];
     const values = [userLocation.gymID, userLocation.gym.cityID, userLocation.gym.stateID, userLocation.gym.countryID, GLOBAL_REGION_ID];
     const names = [userLocation.gym.name, userLocation.gym.city.name, userLocation.gym.state.name, userLocation.gym.country.name, GLOBAL_REGION_ID];
     console.log(keys);
     console.log(values);
 
-    for (let n = 0; n < operations.length; n++) {
-        const cont = await checkRegionRanking(graphqlClient, effort, postID, operations[n], keys[n], values[n], names[n], n === 0 ? 'gym': 'region')
+    for (let n = 0; n < keys.length; n++) {
+        const cont = await checkRegionRanking(graphqlClient, effort, postID, keys[n], values[n], names[n], n === 0 ? 'gym': 'region')
         if(!cont)
             break;
     }
