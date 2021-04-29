@@ -15,6 +15,7 @@ export const deleteUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -1189,6 +1190,7 @@ export const createUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -1214,6 +1216,7 @@ export const updateUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {

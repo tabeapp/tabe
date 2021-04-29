@@ -18,6 +18,7 @@ type UserRecord @model
   stateID: ID!
   cityID: ID!
   gymID: ID!
+  male: Boolean!
 }
 
 type UserLocation @model

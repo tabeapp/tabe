@@ -96,6 +96,7 @@ export const getUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -133,162 +134,7 @@ export const listUserRecords = /* GraphQL */ `
         stateID
         cityID
         gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listRecordsByExerciseAndCountry = /* GraphQL */ `
-  query ListRecordsByExerciseAndCountry(
-    $countryID: ID
-    $exerciseOrm: ModelUserRecordByCountryCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndCountry(
-      countryID: $countryID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listRecordsByExerciseAndState = /* GraphQL */ `
-  query ListRecordsByExerciseAndState(
-    $stateID: ID
-    $exerciseOrm: ModelUserRecordByStateCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndState(
-      stateID: $stateID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listRecordsByExerciseAndCity = /* GraphQL */ `
-  query ListRecordsByExerciseAndCity(
-    $cityID: ID
-    $exerciseOrm: ModelUserRecordByCityCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndCity(
-      cityID: $cityID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-export const listRecordsByExerciseAndGym = /* GraphQL */ `
-  query ListRecordsByExerciseAndGym(
-    $gymID: ID
-    $exerciseOrm: ModelUserRecordByGymCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndGym(
-      gymID: $gymID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
+        male
         createdAt
         updatedAt
         userImage {
@@ -328,6 +174,7 @@ export const listRecordsByUser = /* GraphQL */ `
         stateID
         cityID
         gymID
+        male
         createdAt
         updatedAt
         userImage {
@@ -367,6 +214,7 @@ export const listRecordsByExercise = /* GraphQL */ `
         stateID
         cityID
         gymID
+        male
         createdAt
         updatedAt
         userImage {
