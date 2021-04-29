@@ -12,6 +12,7 @@ import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 import LikeButton from '../Components/Social/LikeButton';
 import CommentBar from '../Components/Social/CommentBar';
 import { S3Image } from 'aws-amplify-react-native';
+import { BACKGROUND } from '../Style/Colors';
 
 //yes this is a copy of report screen
 //side note: for trophy info, use post location info to fill in info
@@ -74,11 +75,24 @@ const PostScreen = props => {
                     {
                         post.efforts.items.map(effort =>
                             <View key={effort.id}>
-                                <Row>
-                                    <Words>{effort.exercise}</Words>
-                                    <Words>{effort.reps}</Words>
-                                    <Words>{effort.weight}</Words>
-                                    <Words>{effort.orm}</Words>
+                                <Row
+                                    style={{alignItems: 'center', padding: 4, borderTopWidth: 1, borderColor: BACKGROUND}}
+                                >
+                                    <Words style={{fontSize: 25}}>{effort.exercise}</Words>
+                                    <View style={{justifyContent: 'center'}}>
+                                        <Row>
+                                            <Words style={{fontSize: 15, width: 40, textAlign: 'right'}}>
+                                                {effort.reps + ' x '}
+                                            </Words>
+                                            <Words style={{fontSize: 15, width: 50, textAlign: 'right'}}>
+                                                {effort.weight + 'lb ='}
+                                            </Words>
+                                            <Words style={{fontSize: 15, width: 100, textAlign: 'right'}}>
+                                                {effort.orm + ' lb ORM'}
+                                            </Words>
+
+                                        </Row>
+                                    </View>
                                 </Row>
                                 {
                                     effort.trophies.items.map(trophy =>
