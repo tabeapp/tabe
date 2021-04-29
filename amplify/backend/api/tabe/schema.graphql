@@ -21,6 +21,21 @@ type UserRecord @model
   male: Boolean!
 }
 
+type UserStats @model
+@auth(rules: [
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}
+  {allow: private, provider: userPools, operations: [read]}
+  {allow: private, provider: iam, operations: [read, update, create]}
+])
+@key(fields: ["userID"])
+{
+  userID: ID!
+  birthday: String!
+  weight: Int#lb
+  height: Int#inches
+  male: Boolean#lol
+}
+
 type UserLocation @model
 @auth(rules: [
   {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}

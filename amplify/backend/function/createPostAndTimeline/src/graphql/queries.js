@@ -36,6 +36,19 @@ exports.getRoutine = /* GraphQL */ `
     }
   }
 `;
+exports.getUserStats = /* GraphQL */ `
+  query GetUserStats($userID: ID!) {
+    getUserStats(userID: $userID) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
 exports.listRecordsByExercise = /* GraphQL */ `
   query ListRecordsByExercise(
     $exercise: String

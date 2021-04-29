@@ -96,6 +96,7 @@ exports.getUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -133,162 +134,7 @@ exports.listUserRecords = /* GraphQL */ `
         stateID
         cityID
         gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-exports.listRecordsByExerciseAndCountry = /* GraphQL */ `
-  query ListRecordsByExerciseAndCountry(
-    $countryID: ID
-    $exerciseOrm: ModelUserRecordByCountryCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndCountry(
-      countryID: $countryID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-exports.listRecordsByExerciseAndState = /* GraphQL */ `
-  query ListRecordsByExerciseAndState(
-    $stateID: ID
-    $exerciseOrm: ModelUserRecordByStateCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndState(
-      stateID: $stateID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-exports.listRecordsByExerciseAndCity = /* GraphQL */ `
-  query ListRecordsByExerciseAndCity(
-    $cityID: ID
-    $exerciseOrm: ModelUserRecordByCityCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndCity(
-      cityID: $cityID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
-        createdAt
-        updatedAt
-        userImage {
-          userID
-          uri
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-`;
-exports.listRecordsByExerciseAndGym = /* GraphQL */ `
-  query ListRecordsByExerciseAndGym(
-    $gymID: ID
-    $exerciseOrm: ModelUserRecordByGymCompositeKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelUserRecordFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listRecordsByExerciseAndGym(
-      gymID: $gymID
-      exerciseOrm: $exerciseOrm
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        userID
-        postID
-        orm
-        exercise
-        countryID
-        stateID
-        cityID
-        gymID
+        male
         createdAt
         updatedAt
         userImage {
@@ -328,6 +174,7 @@ exports.listRecordsByUser = /* GraphQL */ `
         stateID
         cityID
         gymID
+        male
         createdAt
         updatedAt
         userImage {
@@ -367,6 +214,7 @@ exports.listRecordsByExercise = /* GraphQL */ `
         stateID
         cityID
         gymID
+        male
         createdAt
         updatedAt
         userImage {
@@ -375,6 +223,47 @@ exports.listRecordsByExercise = /* GraphQL */ `
           createdAt
           updatedAt
         }
+      }
+      nextToken
+    }
+  }
+`;
+exports.getUserStats = /* GraphQL */ `
+  query GetUserStats($userID: ID!) {
+    getUserStats(userID: $userID) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+exports.listUserStatss = /* GraphQL */ `
+  query ListUserStatss(
+    $userID: ID
+    $filter: ModelUserStatsFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserStatss(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        birthday
+        weight
+        height
+        male
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -1188,6 +1077,12 @@ exports.listPosts = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1329,6 +1224,7 @@ exports.getPost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -1347,6 +1243,12 @@ exports.getPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -1496,6 +1398,12 @@ exports.listPostsSortedByTimestamp = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1640,6 +1548,12 @@ exports.listPostsSortedByUserAndTimestamp = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1782,6 +1696,12 @@ exports.searchPosts = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1831,6 +1751,7 @@ exports.getEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1863,6 +1784,7 @@ exports.listEfforts = /* GraphQL */ `
             id
             effortID
             type
+            name
             targetID
             rank
             createdAt
@@ -1907,6 +1829,7 @@ exports.listEffortsByExerciseAndUser = /* GraphQL */ `
             id
             effortID
             type
+            name
             targetID
             rank
             createdAt
@@ -1925,6 +1848,7 @@ exports.getTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -1943,6 +1867,7 @@ exports.listTrophys = /* GraphQL */ `
         id
         effortID
         type
+        name
         targetID
         rank
         createdAt
@@ -1961,6 +1886,12 @@ exports.getComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1988,6 +1919,12 @@ exports.listComments = /* GraphQL */ `
         content
         createdAt
         updatedAt
+        userImage {
+          userID
+          uri
+          createdAt
+          updatedAt
+        }
         likes {
           items {
             id
@@ -2087,43 +2024,6 @@ exports.listCurrentRoutinesByUser = /* GraphQL */ `
         title
         current
         routine
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-exports.getCurrentWorkout = /* GraphQL */ `
-  query GetCurrentWorkout($userID: ID!) {
-    getCurrentWorkout(userID: $userID) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-exports.listCurrentWorkouts = /* GraphQL */ `
-  query ListCurrentWorkouts(
-    $userID: ID
-    $filter: ModelCurrentWorkoutFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listCurrentWorkouts(
-      userID: $userID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        userID
-        data
-        routineID
         createdAt
         updatedAt
       }
@@ -2329,6 +2229,12 @@ exports.getTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }

@@ -596,6 +596,45 @@ export const onDeleteUserRecord = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserStats = /* GraphQL */ `
+  subscription OnCreateUserStats {
+    onCreateUserStats {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserStats = /* GraphQL */ `
+  subscription OnUpdateUserStats {
+    onUpdateUserStats {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserStats = /* GraphQL */ `
+  subscription OnDeleteUserStats {
+    onDeleteUserStats {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUserLocation = /* GraphQL */ `
   subscription OnCreateUserLocation {
     onCreateUserLocation {

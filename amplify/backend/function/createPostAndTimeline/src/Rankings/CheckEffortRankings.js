@@ -1,6 +1,7 @@
 const {
     getUserRecord,
-    listEffortsByExerciseAndUser
+    listEffortsByExerciseAndUser,
+    getUserStats
 } = require('../graphql/queries');
 const { createTrophy, createUserRecord, updateUserRecord } = require('../graphql/mutations');
 const { GLOBAL_REGION_ID } = require('../Constants/RegionConstants');
@@ -48,10 +49,21 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
     if (personalRank !== 0)
         return;
 
+    //call get user Stats to fill in male input
+    const stats = await graphqlClient.query({
+        query: gql(getUserStats),
+        variables: {
+            userID: userID
+        }
+    });
+
+    const male = stats.getUserStats.male === undefined ? true: stats.getUserStats.male;
+
     const userRecordInput = {
         input: {
             userID: userID,
             exercise: effort.exercise,
+            male: male,
             orm: effort.orm,
             postID: postID,
             gymID: userLocation.gymID,

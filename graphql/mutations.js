@@ -27,6 +27,22 @@ export const deleteUserRecord = /* GraphQL */ `
     }
   }
 `;
+export const deleteUserStats = /* GraphQL */ `
+  mutation DeleteUserStats(
+    $input: DeleteUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    deleteUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const updateUserLocation = /* GraphQL */ `
   mutation UpdateUserLocation(
     $input: UpdateUserLocationInput!
@@ -1225,6 +1241,38 @@ export const updateUserRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+export const createUserStats = /* GraphQL */ `
+  mutation CreateUserStats(
+    $input: CreateUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    createUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserStats = /* GraphQL */ `
+  mutation UpdateUserStats(
+    $input: UpdateUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    updateUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
     }
   }
 `;

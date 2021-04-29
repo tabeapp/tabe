@@ -228,6 +228,47 @@ export const listRecordsByExercise = /* GraphQL */ `
     }
   }
 `;
+export const getUserStats = /* GraphQL */ `
+  query GetUserStats($userID: ID!) {
+    getUserStats(userID: $userID) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserStatss = /* GraphQL */ `
+  query ListUserStatss(
+    $userID: ID
+    $filter: ModelUserStatsFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUserStatss(
+      userID: $userID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        userID
+        birthday
+        weight
+        height
+        male
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUserLocation = /* GraphQL */ `
   query GetUserLocation($userID: ID!) {
     getUserLocation(userID: $userID) {

@@ -15,6 +15,7 @@ exports.deleteUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -23,6 +24,22 @@ exports.deleteUserRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+exports.deleteUserStats = /* GraphQL */ `
+  mutation DeleteUserStats(
+    $input: DeleteUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    deleteUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -414,6 +431,7 @@ exports.updatePost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -432,6 +450,12 @@ exports.updatePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -581,6 +605,7 @@ exports.deletePost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -599,6 +624,12 @@ exports.deletePost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -655,6 +686,7 @@ exports.updateEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -685,6 +717,7 @@ exports.deleteEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -704,6 +737,7 @@ exports.updateTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -720,6 +754,7 @@ exports.deleteTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -739,6 +774,12 @@ exports.updateComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -764,6 +805,12 @@ exports.deleteComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -788,34 +835,6 @@ exports.deleteRoutine = /* GraphQL */ `
       title
       current
       routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-exports.createCurrentWorkout = /* GraphQL */ `
-  mutation CreateCurrentWorkout(
-    $input: CreateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    createCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
-      createdAt
-      updatedAt
-    }
-  }
-`;
-exports.deleteCurrentWorkout = /* GraphQL */ `
-  mutation DeleteCurrentWorkout(
-    $input: DeleteCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    deleteCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
       createdAt
       updatedAt
     }
@@ -995,6 +1014,12 @@ exports.updateTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1131,6 +1156,12 @@ exports.deleteTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -1175,6 +1206,7 @@ exports.createUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -1200,6 +1232,7 @@ exports.updateUserRecord = /* GraphQL */ `
       stateID
       cityID
       gymID
+      male
       createdAt
       updatedAt
       userImage {
@@ -1208,6 +1241,38 @@ exports.updateUserRecord = /* GraphQL */ `
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+exports.createUserStats = /* GraphQL */ `
+  mutation CreateUserStats(
+    $input: CreateUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    createUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
+    }
+  }
+`;
+exports.updateUserStats = /* GraphQL */ `
+  mutation UpdateUserStats(
+    $input: UpdateUserStatsInput!
+    $condition: ModelUserStatsConditionInput
+  ) {
+    updateUserStats(input: $input, condition: $condition) {
+      userID
+      birthday
+      weight
+      height
+      male
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1793,6 +1858,7 @@ exports.createPost = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -1811,6 +1877,12 @@ exports.createPost = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -1867,6 +1939,7 @@ exports.createEffort = /* GraphQL */ `
           id
           effortID
           type
+          name
           targetID
           rank
           createdAt
@@ -1886,6 +1959,7 @@ exports.createTrophy = /* GraphQL */ `
       id
       effortID
       type
+      name
       targetID
       rank
       createdAt
@@ -1905,6 +1979,12 @@ exports.createComment = /* GraphQL */ `
       content
       createdAt
       updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
       likes {
         items {
           id
@@ -1945,20 +2025,6 @@ exports.updateRoutine = /* GraphQL */ `
       title
       current
       routine
-      createdAt
-      updatedAt
-    }
-  }
-`;
-exports.updateCurrentWorkout = /* GraphQL */ `
-  mutation UpdateCurrentWorkout(
-    $input: UpdateCurrentWorkoutInput!
-    $condition: ModelCurrentWorkoutConditionInput
-  ) {
-    updateCurrentWorkout(input: $input, condition: $condition) {
-      userID
-      data
-      routineID
       createdAt
       updatedAt
     }
@@ -2125,6 +2191,12 @@ exports.createTimeline = /* GraphQL */ `
             content
             createdAt
             updatedAt
+            userImage {
+              userID
+              uri
+              createdAt
+              updatedAt
+            }
             likes {
               nextToken
             }
@@ -2275,6 +2347,7 @@ exports.createPostAndTimeline = /* GraphQL */ `
               id
               effortID
               type
+              name
               targetID
               rank
               createdAt
@@ -2293,6 +2366,12 @@ exports.createPostAndTimeline = /* GraphQL */ `
           content
           createdAt
           updatedAt
+          userImage {
+            userID
+            uri
+            createdAt
+            updatedAt
+          }
           likes {
             items {
               id
@@ -2331,6 +2410,25 @@ exports.createPostAndTimeline = /* GraphQL */ `
 `;
 exports.addNewGym = /* GraphQL */ `
   mutation AddNewGym($coordinates: LocationInput!) {
-    addNewGym(coordinates: $coordinates)
+    addNewGym(coordinates: $coordinates) {
+      name
+      center {
+        lat
+        lon
+      }
+      countryID
+      stateID
+      cityID
+    }
+  }
+`;
+exports.changeUserGym = /* GraphQL */ `
+  mutation ChangeUserGym($gymChangeInput: GymChangeInput!) {
+    changeUserGym(gymChangeInput: $gymChangeInput)
+  }
+`;
+exports.generateWorkout = /* GraphQL */ `
+  mutation GenerateWorkout {
+    generateWorkout
   }
 `;

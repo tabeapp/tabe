@@ -5,7 +5,7 @@
 	REGION
 Amplify Params - DO NOT EDIT */
 
-const { getUserLocation, listRecordsByUser } = require('/opt/queries');
+const { getUserLocation, listRecordsByUser, getUserStats } = require('/opt/queries');
 const {
     createUserLocation,
     createUserRecord,
@@ -105,6 +105,16 @@ exports.handler = async (event) => {
         }
     });
 
+    const stats = await graphqlClient.query({
+        query: gql(getUserStats),
+        variables: {
+            userID: userID
+        }
+    });
+
+    //undefined is male, male is male, female is female
+    const male = stats.getUserStats.male === undefined ? true: stats.getUserStats.male;
+
     for(let i = 0; i < records.data.listRecordsByUser.items.length; i++){
         const record = records.data.listRecordsByUser.items[i]
 
@@ -124,6 +134,7 @@ exports.handler = async (event) => {
                 input: {
                     userID: record.userID,
                     exercise: record.exercise,
+                    male: male,
                     orm: record.orm,
                     effortID: record.effortID,
                     gymID: selectedGym.id,
