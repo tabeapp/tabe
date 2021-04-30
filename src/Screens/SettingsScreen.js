@@ -88,8 +88,9 @@ const SettingsScreen = props => {
             <View style={{flex: 1}}>
                 <RNDateTimePicker
                     value={birthday}
-                    display='default'
-                    onChange={v => setBirthday(new Date(v))}
+                    onChange={(e, date) => setBirthday(date)}
+                    maximumDate={new Date()}
+                    style={{height: 50}}
                 />
                 <Row>
                     <Row>
