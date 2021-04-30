@@ -12,6 +12,7 @@ import { BACKGROUND, DARK_GRAY, PRIMARY } from '../Style/Colors';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import { INCH_TO_HEIGHT } from '../Utils/UtilFunctions';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
+import GenderSelector from '../Components/Profile/GenderSelector';
 
 const SettingsScreen = props => {
     const {username} = useContext(UserContext);
@@ -94,13 +95,16 @@ const SettingsScreen = props => {
                 />
                 <Row>
                     <Row>
-
                         <NumericSelector
+                            style={{height: 70}}
+                            itemStyle={{height: 70}}
                             numInfo={{def: formatHeight.feet, min: 4, max: 7, increment: 1}}
                             onChange={v => setHeight(v*12 + formatHeight.inches) }
                         />
                         <Words style={{fontSize: 25}}>'</Words>
                         <NumericSelector
+                            style={{height: 70}}
+                            itemStyle={{height: 70}}
                             numInfo={{def: formatHeight.inches, min: 0, max: 11, increment: 1}}
                             onChange={v => setHeight(formatHeight.feet*12 + v) }
                         />
@@ -109,6 +113,8 @@ const SettingsScreen = props => {
 
                     <Row>
                         <NumericSelector
+                            style={{height: 70}}
+                            itemStyle={{height: 70}}
                             numInfo={{def: weight, min: 50, max: 500, increment: 1}}
                             onChange={setWeight}
                         />
@@ -118,18 +124,7 @@ const SettingsScreen = props => {
 
                 </Row>
 
-                <Row>
-                    <TouchableOpacity
-                        style={{backgroundColor: male? PRIMARY: BACKGROUND, borderColor: PRIMARY, borderWidth: 1, flex: 1, alignItems: 'center'}}
-                        onPress={() => setMale(true)}>
-                        <Words style={{fontSize: 20}}>Male</Words>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{backgroundColor: male? BACKGROUND: PRIMARY, borderColor: PRIMARY, borderWidth: 1, flex: 1, alignItems: 'center'}}
-                        onPress={() => setMale(false)}>
-                        <Words style={{fontSize: 20}}>Female</Words>
-                    </TouchableOpacity>
-                </Row>
+                <GenderSelector male={male} setMale={setMale}/>
 
                 <TouchableOpacity style={{justifyContent: 'center', position: 'absolute', height: 50, bottom: 0, backgroundColor: DARK_GRAY, width: '100%', alignItems: 'center'}} onPress={signOut} >
                     <Words style={{color: 'red', fontSize: 25}}>Sign out</Words>
