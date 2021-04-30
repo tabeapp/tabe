@@ -29,5 +29,6 @@ const NumericSelector = props => {
         />
     );
 };
+//proptypes and defaults would be real nice
 
 export default NumericSelector;
