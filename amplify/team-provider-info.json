@@ -18,7 +18,7 @@
       "function": {
         "createPostAndTimeline": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/createPostAndTimeline-685a2b49777a70305265-build.zip"
+          "s3Key": "amplify-builds/createPostAndTimeline-4177626e4248764d367a-build.zip"
         },
         "addNewGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
@@ -89,6 +89,14 @@
                 }
               ],
               "hash": "rBAayEu0rJpPAXdB4HUwIefOS3xhuUH7GG2LlIP1J6Y="
+            },
+            "7": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "m3Z74xJ5m+dhz6B/zsZ5HYVsDxie4Wy2eqEokMGEsMA="
             }
           }
         }

@@ -150,20 +150,6 @@ exports.getUserLocation = /* GraphQL */ `
         country {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt
@@ -171,20 +157,6 @@ exports.getUserLocation = /* GraphQL */ `
         state {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt
@@ -192,20 +164,6 @@ exports.getUserLocation = /* GraphQL */ `
         city {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt

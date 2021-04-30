@@ -175,20 +175,6 @@ exports.createPost = /* GraphQL */ `
         country {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt
@@ -196,20 +182,6 @@ exports.createPost = /* GraphQL */ `
         state {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt
@@ -217,20 +189,6 @@ exports.createPost = /* GraphQL */ `
         city {
           id
           superRegionID
-          superRegion {
-            id
-            superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-            name
-            createdAt
-            updatedAt
-          }
           name
           createdAt
           updatedAt
@@ -347,13 +305,6 @@ exports.createTimeline = /* GraphQL */ `
           country {
             id
             superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
             name
             createdAt
             updatedAt
@@ -361,13 +312,6 @@ exports.createTimeline = /* GraphQL */ `
           state {
             id
             superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
             name
             createdAt
             updatedAt
@@ -375,13 +319,6 @@ exports.createTimeline = /* GraphQL */ `
           city {
             id
             superRegionID
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
             name
             createdAt
             updatedAt
