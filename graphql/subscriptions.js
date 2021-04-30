@@ -50,20 +50,6 @@ export const onCreatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -71,20 +57,6 @@ export const onCreatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -92,20 +64,6 @@ export const onCreatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
       efforts {
@@ -221,20 +179,6 @@ export const onUpdatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -242,20 +186,6 @@ export const onUpdatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -263,20 +193,6 @@ export const onUpdatePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
       efforts {
@@ -392,20 +308,6 @@ export const onDeletePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -413,20 +315,6 @@ export const onDeletePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -434,20 +322,6 @@ export const onDeletePost = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
       efforts {
@@ -660,20 +534,6 @@ export const onCreateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -681,20 +541,6 @@ export const onCreateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -702,20 +548,6 @@ export const onCreateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
     }
@@ -746,20 +578,6 @@ export const onUpdateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -767,20 +585,6 @@ export const onUpdateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -788,20 +592,6 @@ export const onUpdateUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
     }
@@ -832,20 +622,6 @@ export const onDeleteUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         state {
           id
@@ -853,20 +629,6 @@ export const onDeleteUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
         city {
           id
@@ -874,20 +636,6 @@ export const onDeleteUserLocation = /* GraphQL */ `
           name
           createdAt
           updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
         }
       }
     }
@@ -943,27 +691,6 @@ export const onCreateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       state {
         id
@@ -971,27 +698,6 @@ export const onCreateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       city {
         id
@@ -999,27 +705,6 @@ export const onCreateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
     }
   }
@@ -1044,27 +729,6 @@ export const onUpdateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       state {
         id
@@ -1072,27 +736,6 @@ export const onUpdateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       city {
         id
@@ -1100,27 +743,6 @@ export const onUpdateGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
     }
   }
@@ -1145,27 +767,6 @@ export const onDeleteGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       state {
         id
@@ -1173,27 +774,6 @@ export const onDeleteGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
       city {
         id
@@ -1201,27 +781,6 @@ export const onDeleteGym = /* GraphQL */ `
         name
         createdAt
         updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
       }
     }
   }
@@ -1234,34 +793,6 @@ export const onCreateRegion = /* GraphQL */ `
       name
       createdAt
       updatedAt
-      superRegion {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
     }
   }
 `;
@@ -1273,34 +804,6 @@ export const onUpdateRegion = /* GraphQL */ `
       name
       createdAt
       updatedAt
-      superRegion {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
     }
   }
 `;
@@ -1312,34 +815,6 @@ export const onDeleteRegion = /* GraphQL */ `
       name
       createdAt
       updatedAt
-      superRegion {
-        id
-        superRegionID
-        name
-        createdAt
-        updatedAt
-        superRegion {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-          superRegion {
-            id
-            superRegionID
-            name
-            createdAt
-            updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
-          }
-        }
-      }
     }
   }
 `;
@@ -1690,13 +1165,6 @@ export const onCreateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           state {
             id
@@ -1704,13 +1172,6 @@ export const onCreateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           city {
             id
@@ -1718,13 +1179,6 @@ export const onCreateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
         }
         efforts {
@@ -1829,13 +1283,6 @@ export const onUpdateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           state {
             id
@@ -1843,13 +1290,6 @@ export const onUpdateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           city {
             id
@@ -1857,13 +1297,6 @@ export const onUpdateTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
         }
         efforts {
@@ -1968,13 +1401,6 @@ export const onDeleteTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           state {
             id
@@ -1982,13 +1408,6 @@ export const onDeleteTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
           city {
             id
@@ -1996,13 +1415,6 @@ export const onDeleteTimeline = /* GraphQL */ `
             name
             createdAt
             updatedAt
-            superRegion {
-              id
-              superRegionID
-              name
-              createdAt
-              updatedAt
-            }
           }
         }
         efforts {
