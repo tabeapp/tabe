@@ -1,4 +1,6 @@
 //just need to make sure to NOT duplicate functions, cuz that is recursive in react
+import moment from 'moment';
+
 export const FULL_COPY = o => {
     return JSON.parse(JSON.stringify(o));
 };
@@ -22,4 +24,24 @@ export const INCH_TO_HEIGHT = inches => {
 
 export const ROUND_5 = num => {
     return Math.round(num/5)*5;
+};
+
+export const PAST_DATE_FORMAT = (timestamp, now) => {
+
+    const days = moment(now).diff(timestamp /** 1000*/, 'days');
+
+
+    if(days > 0)
+        return moment(timestamp).format('MMMM D YYYY, h:mma');
+
+    const scales = ['days', 'hours', 'minutes', 'seconds'];
+
+    for (let i=0; i < scales.length; i++){
+        const scale = scales[i];
+        const diff = moment(now).diff(timestamp /** 1000*/, scale);
+        if(diff > 0)
+            return diff + scale.charAt(0);
+    }
+
+    return 0 + scales[scales.length - 1].charAt(0);
 };

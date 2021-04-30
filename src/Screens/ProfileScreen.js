@@ -266,7 +266,7 @@ const ProfileScreen = props => {
 
                 <ScrollView>
 
-                    <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Stats</Words>
+                    <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Maxes</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
                         Object.entries(records).map(([k,v]) =>
                             <Row key={k} style={{display: 'flex', justifyContent: 'space-between'}}>

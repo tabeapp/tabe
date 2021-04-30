@@ -5,6 +5,7 @@ import { S3Image } from 'aws-amplify-react-native';
 import Words from '../Simple/Words';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
+import { PAST_DATE_FORMAT } from '../../Utils/UtilFunctions';
 
 //just the image, username, time, location
 //we need to rethink this
@@ -15,17 +16,8 @@ const PostHeader = props => {
     const {userID, createdAt, imageUri} = props;
 
     const now = moment();
-    const calcTimestampDiff = (timestamp) => {
-        const scales = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
 
-        for (let i=0; i < scales.length; i++){
-            const scale = scales[i];
-            const diff = moment(now).diff(timestamp /** 1000*/, scale);
-            if( diff > 0) return diff + scale.charAt(0)
-        }
-
-        return 0 + scales[scales.length - 1].charAt(0)
-    };
+    //this really should be in utils, super useful
     const navigation = useNavigation();
 
 
@@ -47,8 +39,7 @@ const PostHeader = props => {
             <View>
                 <Words style={{fontWeight: 'bold'}}>{userID}</Words>
                 <TouchableOpacity>
-                    {/*<Words>{moment(post.createdAt).format('MMMM D YYYY, h:mma')}</Words>*/}
-                    <Words>{calcTimestampDiff(createdAt)}</Words>
+                    <Words>{PAST_DATE_FORMAT(createdAt, now)}</Words>
                 </TouchableOpacity>
             </View>
         </Row>
