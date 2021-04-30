@@ -113,7 +113,7 @@ exports.handler = async (event) => {
     });
 
     //undefined is male, male is male, female is female
-    const male = stats.getUserStats.male === undefined ? true: stats.getUserStats.male;
+    const male = stats.data.getUserStats.male === undefined ? true: stats.data.getUserStats.male;
 
     for(let i = 0; i < records.data.listRecordsByUser.items.length; i++){
         const record = records.data.listRecordsByUser.items[i]

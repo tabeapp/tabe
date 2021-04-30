@@ -57,7 +57,7 @@ exports.checkEffortRankings = async (graphqlClient, effort, userLocation, userID
         }
     });
 
-    const male = stats.getUserStats.male === undefined ? true: stats.getUserStats.male;
+    const male = stats.data.getUserStats.male === undefined ? true: stats.data.getUserStats.male;
 
     const userRecordInput = {
         input: {

@@ -18,7 +18,7 @@
       "function": {
         "createPostAndTimeline": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/createPostAndTimeline-4177626e4248764d367a-build.zip"
+          "s3Key": "amplify-builds/createPostAndTimeline-386e6f2b32636a714879-build.zip"
         },
         "addNewGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
@@ -30,7 +30,7 @@
         },
         "changeUserGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/changeUserGym-2b694439485a61597154-build.zip"
+          "s3Key": "amplify-builds/changeUserGym-517a664176725459434b-build.zip"
         },
         "generateWorkout": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
