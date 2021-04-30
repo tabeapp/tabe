@@ -134,7 +134,7 @@ const ExerciseCard = (props) => {
                                         style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}
                                     />
                                     {
-                                        showWeightLabel &&
+                                        showWeightLabel && !edit &&
                                         <Words style={{fontSize: 15, alignSelf: 'center'}}>{
                                             weight
                                         }</Words>

@@ -95,9 +95,10 @@ const RestTimer = props => {
                         }}
                         style={{width: 50, height: 50, backgroundColor: 'green', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
                     >
-                        <Words style={{fontSize: 15, textAlign: 'center'}}>Easy -2:00</Words>
+                        <Words style={{fontSize: 15, textAlign: 'center'}}>-2:00</Words>
                     </TouchableOpacity>
 
+                    {/*TODO this should use react native svg*/}
                     <ProgressCircle ratio={ratio}>
                         <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
                     </ProgressCircle>
@@ -112,7 +113,7 @@ const RestTimer = props => {
                         }}
                         style={{width: 50, height: 50, backgroundColor: 'red', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
                     >
-                        <Words style={{fontSize: 15, textAlign: 'center'}}>Hard +2:00</Words>
+                        <Words style={{fontSize: 15, textAlign: 'center'}}>+2:00</Words>
                     </TouchableOpacity>
 
                 </Row>

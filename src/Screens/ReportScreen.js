@@ -7,7 +7,7 @@ import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { CommonActions } from '@react-navigation/native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { DARK_GRAY } from '../Style/Colors';
 import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
@@ -43,22 +43,33 @@ const ReportScreen = props => {
             maxHeight: 1080,
             durationLimit: 60,
             mediaType: 'photo'
+        };
+
+        launchImageLibrary(options, addImageToPost);
+    };
+
+    const selectCamera = () => {
+        let options = {
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+
+        launchCamera(options, addImageToPost);
+    };
+
+    const addImageToPost = res => {
+        console.log({ res });
+
+        if(res.didCancel)
+            console.log('user cancelled');
+        else if(res.errorMessage)
+            console.log('error', res.errorMessage)
+        else{
+            console.log(res.uri);
+            setMedia(m => [...m, res.uri]);
         }
-
-        launchImageLibrary(options, res => {
-            console.log({ res });
-
-            if(res.didCancel)
-                console.log('user cancelled');
-            else if(res.errorMessage)
-                console.log('error', res.errorMessage)
-            else{
-                //save uri and show image
-                console.log(res.uri);
-                setMedia(m => [...m, res.uri]);
-                //res.uri is what you want
-            }
-        });
     };
 
     const handleNext = () => {
@@ -78,7 +89,7 @@ const ReportScreen = props => {
     //lets make some shared components
     return (
         <SafeBorder>
-            <TopBar title='Workout Preview' rightText='Save' onPressRight={handleNext}/>
+            <TopBar title='Workout Preview' rightText='Post' onPressRight={handleNext}/>
             <ScrollView style={{margin: 5}}>
                 <Row style={{justifyContent: 'flex-start'}}>
                     {
@@ -115,7 +126,13 @@ const ReportScreen = props => {
                         style={{backgroundColor: DARK_GRAY, width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}
                         onPress={selectImage}
                     >
-                        <Words style={{fontSize:40}}>+<Ionicons size={40} name={'image'}/></Words>
+                        <Words style={{fontSize:40}}><Ionicons size={40} name={'image'}/></Words>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{backgroundColor: DARK_GRAY, width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}
+                        onPress={selectCamera}
+                    >
+                        <Words style={{fontSize:40}}><Ionicons size={40} name={'camera'}/></Words>
                     </TouchableOpacity>
                 </ScrollView>
 
