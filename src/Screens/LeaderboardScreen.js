@@ -33,7 +33,35 @@ const LeaderboardScreen = props => {
     //this will be for searching through super regions and sub regions
     const [regionTree, setRegionTree] = useState([]);
 
+    //it's either this or return a ridiculous amount of nested regions in graphql
+    //idk which is better honestly
+    const buildRegionTree = (runningId, regions) => {
+        API.graphql(graphqlOperation(getRegion, {
+            id: runningId
+        })).then(result => {
+            let run = result.data.getRegion;
+            console.log(run, regions);
 
+            //just the first time
+            if(regions.length === 0){
+                if(!run){
+                    setRegionTree([globalRegion]);
+                    return;
+                }
+
+                setTitle(run.name);
+            }
+
+            regions.unshift(run);
+
+            //recurse
+            if(run.superRegionID !== GLOBAL_REGION_ID)
+                buildRegionTree(run.superRegionID, regions);
+            else
+                setRegionTree([globalRegion, ...regions]);
+
+        });
+    };
 
     useEffect(() => {
 
@@ -53,10 +81,12 @@ const LeaderboardScreen = props => {
                 else if(regionID.startsWith('place'))
                     key = 'cityID';
 
+                //hpe this works, not giving any error so far
                 listOpInput.filter = {
-                    [key]: {
-                        eq: regionID
-                    }
+                    and: [
+                        { [key]: { eq: regionID } },
+                        { male: { eq: male } }
+                    ]
                 };
             }
 
@@ -65,29 +95,6 @@ const LeaderboardScreen = props => {
             //im sure this works
             API.graphql(operation)
                 .then(result => setRecords(result.data.listRecordsByExercise.items));
-
-            API.graphql(graphqlOperation(getRegion, {
-                id: regionID
-            }))
-                .then(res => {
-                    const supRegions = [];
-                    let run = res.data.getRegion;
-                    if(!run){
-                        setRegionTree([globalRegion]);
-                        return;
-                    }
-
-
-                    setTitle(run.name);
-                    supRegions.unshift(run);
-                    while(run.superRegion){
-                        supRegions.unshift(run.superRegion)//should we only copy id and name?
-                        run = run.superRegion;
-                    }
-
-                    setRegionTree([globalRegion, ...supRegions]);
-
-                });
 
         }
         else if(gymID){
@@ -121,7 +128,10 @@ const LeaderboardScreen = props => {
 
         }
 
-    }, [regionID, gymID, exercise]);
+    }, [regionID, gymID, exercise, male]);
+
+    useEffect(() => buildRegionTree(regionID, []),
+        [regionID])
 
     const [modal, setModal] = useState(false);
 
