@@ -12,11 +12,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 import SubRegionPicker from '../Components/Social/SubRegionPicker';
 import LeaderboardPosition from '../Components/Social/LeaderboardPosition';
+import GenderSelector from '../Components/Profile/GenderSelector';
 
 //maybe this should be a leader board screen?
 //and actual gym screen would be something different, more simliar to profile?
 const LeaderboardScreen = props => {
     const [exercise, setExercise] = useState(props.route.params.exercise);
+
+    const [male, setMale] = useState(true);
 
     //i have a feeling these should just be "targetID"
     const [gymID, setGymID] = useState(props.route.params.gymID);
@@ -29,6 +32,8 @@ const LeaderboardScreen = props => {
 
     //this will be for searching through super regions and sub regions
     const [regionTree, setRegionTree] = useState([]);
+
+
 
     useEffect(() => {
 
@@ -165,6 +170,7 @@ const LeaderboardScreen = props => {
             >
                 <Words>{exercise} Leaderboard</Words>
             </TouchableOpacity>
+            <GenderSelector male={male} setMale={setMale}/>
 
             {
                 //you know, these would ideally link to posts

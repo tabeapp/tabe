@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView, Platform, KeyboardAvoidingView, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, Platform, KeyboardAvoidingView, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
@@ -11,14 +11,11 @@ import TrophyVisual from '../Components/Social/TrophyVisual';
 import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 import LikeButton from '../Components/Social/LikeButton';
 import CommentBar from '../Components/Social/CommentBar';
-import { S3Image } from 'aws-amplify-react-native';
 import { BACKGROUND } from '../Style/Colors';
 
-//yes this is a copy of report screen
 //side note: for trophy info, use post location info to fill in info
 const PostScreen = props => {
     const { postID } = props.route.params;
-
 
     const [post, setPost] = useState({
         title: '',
@@ -112,6 +109,7 @@ const PostScreen = props => {
                             //this looks like shit too
                             post.comments.items.map(comment =>
                                 <Row
+                                    key={comment.id}
                                     style={{justifyContent: 'space-between', flex: 1}}
                                 >
                                     <PostHeader
