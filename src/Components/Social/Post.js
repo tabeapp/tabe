@@ -27,7 +27,10 @@ const Post = ({post}) => {
                     onPress={() => navigation.navigate('post', {postID: post.id})}
                 >
                     <View>
-                        <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
+                        {
+                            post.userImage &&
+                            <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
+                        }
 
                         <Words style={{fontSize: 30}}>{post.title}</Words>
                         <Words>{post.description}</Words>

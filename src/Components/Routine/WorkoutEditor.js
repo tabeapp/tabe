@@ -167,7 +167,6 @@ const WorkoutEditor = props => {
                 keyExtractor={item => item}
                 onDragEnd={({ data }) => {
                     //replace the workout list with data, i think
-                    console.log(data);
                     routineEditDispatch(prev => {
                         prev.workouts[name] = data;
                         return prev;

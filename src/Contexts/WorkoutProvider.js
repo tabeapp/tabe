@@ -67,7 +67,6 @@ const WorkoutProvider = props => {
         if(action.constructor === Function){
             //run action on state
             const x = invariantCheck(action(next));
-            console.log(x);
 
             return x;
         }
@@ -110,7 +109,6 @@ const WorkoutProvider = props => {
         //don't save editRoutine... or should we?
         const x = invariantCheck(next);
 
-        console.log(x);
         return x;
     };
 
@@ -131,7 +129,6 @@ const WorkoutProvider = props => {
         //just await lamda and  go
         //add a subscription to current workout
         const wo = await API.graphql(graphqlOperation(generateWorkout));
-        console.log(wo);
         workoutDispatch(() => JSON.parse(wo.data.generateWorkout));
     };
 
@@ -177,7 +174,6 @@ const WorkoutProvider = props => {
             //gymID: gymID
         }));
 
-        console.log('lambda done, ', res);
 
         workoutDispatch(() => initState);
 

@@ -21,14 +21,12 @@ const RoutinesProvider = props => {
             userID: username,
             limit: 10
         }))
-        console.log('routine load', routinesResult);
         setRoutines(routinesResult.data.listRoutinesByUser.items);
     };
 
     //initial load from storage
     //BETTER IDEA, USE DATA STORE
     useEffect(() => {
-        console.log('username', username);
         if(username === '')
             return;
 
@@ -40,7 +38,6 @@ const RoutinesProvider = props => {
         })).subscribe({
             //just reload routines, it should be pretty small
             next: (obj) => {
-                console.log(obj);
                 reload();
             }
         })

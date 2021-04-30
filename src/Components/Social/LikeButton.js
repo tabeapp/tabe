@@ -36,7 +36,6 @@ const LikeButton = props => {
                 }
             }))
                 .then(res => {
-                    console.log(res);
                     if(res.data.deleteLike.errors)
                         setLiked(true);
                 })

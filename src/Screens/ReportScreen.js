@@ -60,16 +60,8 @@ const ReportScreen = props => {
     };
 
     const addImageToPost = res => {
-        console.log({ res });
-
-        if(res.didCancel)
-            console.log('user cancelled');
-        else if(res.errorMessage)
-            console.log('error', res.errorMessage)
-        else{
-            console.log(res.uri);
+        if(!res.didCancel && !res.errorMessage)
             setMedia(m => [...m, res.uri]);
-        }
     };
 
     const handleNext = () => {
@@ -119,7 +111,7 @@ const ReportScreen = props => {
                         //hm...
                         media.map(uri =>
                             //<Words>{uri}</Words>
-                            <Image style={{width: 100, height: 100, marginRight: 5}} source={{uri: uri}}/>
+                            <Image key={uri} style={{width: 100, height: 100, marginRight: 5}} source={{uri: uri}}/>
                         )
                     }
                     <TouchableOpacity

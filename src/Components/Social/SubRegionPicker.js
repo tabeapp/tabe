@@ -18,7 +18,6 @@ const SubRegionPicker = props => {
 
         let operation;
 
-        console.log(regionID);
         if(regionID.startsWith('place'))
             operation = graphqlOperation(listGymsByCity, { cityID: regionID });
         else
@@ -33,7 +32,7 @@ const SubRegionPicker = props => {
     const [list, setList] = useState([]);
 
     return (
-        <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
+        <Modal animationType={'slide'} transparent={true} visible={props.visible}>
             <TouchableOpacity onPress={() => props.close()} style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}>{
                 list.map(sub =>
                     <TouchableOpacity

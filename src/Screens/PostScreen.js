@@ -35,7 +35,6 @@ const PostScreen = props => {
             id: postID
         }))
             .then(res => {
-                console.log(res)
                 //should only be one?
                 const p = res.data.getPost;
                 setPost(p);

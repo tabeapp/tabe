@@ -62,7 +62,6 @@ const GymMapScreen = props => {
             km: 20
         }))
             .then(results => {
-                console.log(results);
                 dispatch({type: ADD_GYMS, gyms: results.data.nearbyGyms.items});
                 setIsLoading(false);
             });
@@ -84,7 +83,6 @@ const GymMapScreen = props => {
     }, []);
 
     const pressOnGym = id => {
-        console.log(id)
         setSelectedGym(gyms[id]);
         //yeah there probably should be a modal or something to see
 
@@ -115,7 +113,6 @@ const GymMapScreen = props => {
 
         //just make sure this work
         gymDraft = gymDraft.data.addNewGym;
-        console.log('gymdraft', gymDraft);
 
         setNewGym(gymDraft);
     };
@@ -144,7 +141,6 @@ const GymMapScreen = props => {
                 cityID: newGym.cityID,
             }
         }));
-        console.log(gymResult);
 
         dispatch({type: ADD_GYMS, gyms: [gymResult.data.createGym]});
         setNewGym(null);

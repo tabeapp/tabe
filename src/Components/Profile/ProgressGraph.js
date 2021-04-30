@@ -32,7 +32,6 @@ const ProgressGraph = props => {
             //limit: 1//just the PR
         }))
             .then(result => {
-                console.log('prs', result);
                 const items = result.data.listEffortsByExerciseAndUser.items;
                 if(items.length !== 0) {
                     const prog = items.map(effort => ({

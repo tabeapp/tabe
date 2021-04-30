@@ -60,7 +60,7 @@ const ExercisePicker = props => {
     }
 
     return (
-        <Modal animationType={'slide'} transparent={true} visible={props.visible} onRequest={() => {console.log('idk')}}>
+        <Modal animationType={'slide'} transparent={true} visible={props.visible}>
             <TouchableOpacity
                 onPress={() => {props.close();setCategory('')}}
                 style={{alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%'}}

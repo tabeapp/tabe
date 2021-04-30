@@ -45,7 +45,6 @@ const SettingsScreen = props => {
             }
             else{
                 const stats = result.data.getUserStats;
-                console.log(stats);
 
                 setMale(stats.male);
                 setHeight(stats.height);
@@ -55,8 +54,6 @@ const SettingsScreen = props => {
         });
 
     }, [username]);
-
-
 
     const signOut = () => {
         Auth.signOut()

@@ -19,8 +19,8 @@ const SummaryDisplay = props => {
                         <Words style={{fontSize: 25}}>{exercise.name}</Words>
                         <View>{
                             exercise.work.map((set,i) =>
-                                <View style={{flex: 1, justifyContent: 'center'}}>
-                                    <Row key={i}>
+                                <View key={i} style={{flex: 1, justifyContent: 'center'}}>
+                                    <Row>
                                         <Words style={{fontSize: 15, width: 20}}>
                                             {set.sets + 'x'}
                                         </Words>

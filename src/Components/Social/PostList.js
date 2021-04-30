@@ -38,14 +38,12 @@ const PostList = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     const getPosts = async (type, nextToken=null) => {
-        console.log(sortKey, sortValue);
         const res = await API.graphql(graphqlOperation(listOperation, {
             [sortKey]: sortValue,
             sortDirection: 'DESC',
             limit: 20,
             nextToken: nextToken
         }));
-        console.log('new', res);
         //so sorry
         const list = Object.values(res.data)[0];
 

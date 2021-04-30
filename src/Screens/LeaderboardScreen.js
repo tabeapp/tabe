@@ -40,7 +40,6 @@ const LeaderboardScreen = props => {
             id: runningId
         })).then(result => {
             let run = result.data.getRegion;
-            console.log(run, regions);
 
             //just the first time
             if(regions.length === 0){

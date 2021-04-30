@@ -14,7 +14,6 @@ const UserProvider = props => {
     useEffect(() => {
         //hopefully this doesn't take long lol
         Auth.currentAuthenticatedUser().then(user => {
-            console.log('user', user);
             setUsername(user.username);
 
         })
@@ -26,7 +25,6 @@ const UserProvider = props => {
         API.graphql(graphqlOperation(getUserLocation, {
             userID: username
         })).then(result => {
-            console.log('userlocaiton load', result);
             //what if its null?
             if(!result.data.getUserLocation)
                 return;

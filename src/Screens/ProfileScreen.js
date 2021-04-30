@@ -52,7 +52,6 @@ const ProfileScreen = props => {
             followeeID: followeeID,
             followerID: followerID
         }))
-        console.log(res);
         return res.data.getFollowRelationship !== null;
 
     };
@@ -98,7 +97,6 @@ const ProfileScreen = props => {
                 exercise: exercise
             }))
                 .then(result => {
-                    console.log('prs', result);
                     const record = result.data.getUserRecord;
                     if(record){
                         setRecords(prev => ({
@@ -160,21 +158,14 @@ const ProfileScreen = props => {
         }
 
         launchImageLibrary(options, res => {
-            console.log({ res });
 
-            if(res.didCancel)
-                console.log('user cancelled');
-            else if(res.errorMessage)
-                console.log('error', res.errorMessage)
-            else{
+            if(!res.didCancel && !res.errorMessage){
                 //save uri and show image
-                console.log(res.uri);
                 //setMedia(res.uri);
                 //res.uri is what you want
 
                 uploadImage(res.uri)
                     .then(key => {
-                        console.log('async worked correct key is', key);
                         API.graphql(graphqlOperation(createUserImage, {
                             input: {
                                 userID: signedInUser,

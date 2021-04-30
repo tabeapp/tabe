@@ -34,7 +34,6 @@ const RoutineEditScreen = props => {
     const rd = (path, value) => routineEditDispatch({path: path, value});
 
     //can i do this?
-    console.log('showing routine', routine);
     const {title, time, info, workouts, days, failure, customScheme, customSets, currentDay, nextWorkoutTime, id} = routine;
 
     //this will allow for a much MUCH cleaner edit experience
@@ -189,7 +188,6 @@ const RoutineEditScreen = props => {
                                 <TouchableOpacity style={{alignItems: 'center'}} onPress={() => {
                                     //this actually works
                                     rd('customSets.' + NextObjectKey(customSets), []);
-                                    console.log(JSON.stringify(customSets))
                                 }}>
                                     <Words style={{fontSize: 30}}>Add Custom Scheme</Words>
                                 </TouchableOpacity>

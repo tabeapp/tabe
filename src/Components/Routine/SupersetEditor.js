@@ -27,7 +27,6 @@ const SupersetEditor = props => {
 
     //i guess the width is 400?
     //there's gotta be a more programmatic way to do this
-    console.log(JSON.stringify(info));
     return(
         <View key={name} style={{margin: 5, width: 400, backgroundColor: DARK_GRAY}}>
             <Row>
