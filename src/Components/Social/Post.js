@@ -29,7 +29,10 @@ const Post = ({post}) => {
                     <View>
                         {
                             post.userImage &&
-                            <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
+                            <PostHeader
+                                post={post}
+                                size={60}
+                            />
                         }
 
                         <Words style={{fontSize: 30}}>{post.title}</Words>

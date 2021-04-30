@@ -53,7 +53,10 @@ const PostScreen = props => {
                 //easier than adding dumb default properties
                 loaded &&
                 <ScrollView style={{flex: 1}}>
-                    <PostHeader userID={post.userID} imageUri={post.userImage.uri} createdAt={post.createdAt}/>
+                    <PostHeader
+                        post={post}
+                        size={60}
+                    />
                     <Words style={{fontSize: 40}} >
                         {post.title}
                     </Words>
@@ -113,9 +116,14 @@ const PostScreen = props => {
                                     style={{justifyContent: 'space-between', flex: 1}}
                                 >
                                     <PostHeader
-                                        userID={comment.userID}
-                                        imageUri={comment.userImage.uri}
-                                        createdAt={comment.createdAt}
+                                        post={{
+                                            userID: comment.userID,
+                                            createdAt: comment.createdAt,
+                                            userImage: {
+                                                uri: comment.userImage.uri
+                                            }
+                                        }}
+                                        size={40}
                                     />
                                     <Words>{comment.content}</Words>
 
