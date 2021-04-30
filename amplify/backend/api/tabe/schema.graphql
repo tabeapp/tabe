@@ -23,9 +23,9 @@ type UserRecord @model
 
 type UserStats @model
 @auth(rules: [
-  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}
+  {allow: owner, ownerField: "userID", provider: userPools, operations:[read, update, create]}
   {allow: private, provider: userPools, operations: [read]}
-  {allow: private, provider: iam, operations: [read, update, create]}
+  {allow: private, provider: iam, operations: [read]}
 ])
 @key(fields: ["userID"])
 {

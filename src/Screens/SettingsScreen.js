@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
@@ -11,6 +11,7 @@ import Row from '../Components/Simple/Row';
 import { BACKGROUND, DARK_GRAY, PRIMARY } from '../Style/Colors';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import { INCH_TO_HEIGHT } from '../Utils/UtilFunctions';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 const SettingsScreen = props => {
     const {username} = useContext(UserContext);
@@ -18,7 +19,7 @@ const SettingsScreen = props => {
     const [male, setMale] = useState(true);
     const [height, setHeight] = useState(0);
     const [weight, setWeight] = useState(0);
-    const [birthday, setBirthday] = useState('');
+    const [birthday, setBirthday] = useState(new Date());
 
 
     useEffect(() => {
@@ -48,7 +49,7 @@ const SettingsScreen = props => {
                 setMale(stats.male);
                 setHeight(stats.height);
                 setWeight(stats.weight);
-                setBirthday(stats.birthday);
+                setBirthday(new Date(stats.birthday));
             }
         });
 
@@ -77,14 +78,19 @@ const SettingsScreen = props => {
                             weight: weight,
                             birthday: birthday,
                         }
-                    }))
+                    }));
+                    props.navigation.goBack();
                     //save to server
                 }}
             />
 
 
             <View style={{flex: 1}}>
-                <Words>{birthday}</Words>
+                <RNDateTimePicker
+                    value={birthday}
+                    display='default'
+                    onChange={v => setBirthday(new Date(v))}
+                />
                 <Row>
                     <Row>
 
