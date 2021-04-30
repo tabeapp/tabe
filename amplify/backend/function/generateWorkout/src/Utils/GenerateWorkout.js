@@ -8,7 +8,7 @@ exports.generateWorkout = async routine => {
     //comment this out to clear workout
     const r = routine;
 
-    console.log(r)
+    console.log(JSON.stringify(r))
     let day = r.days[r.currentDay % r.time];
 
     while(day === REST_DAY){

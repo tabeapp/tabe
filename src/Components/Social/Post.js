@@ -18,6 +18,12 @@ const Post = ({post}) => {
 
     const navigation = useNavigation();
 
+    //this is being really fucking annoying about undefineds
+    const loaded = post.media && post.userImage && post.data && post.likes;
+
+    if(!loaded)
+        return (<View style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 20 }}/>);
+
     return (
         <View
             style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 20 }}
@@ -27,13 +33,10 @@ const Post = ({post}) => {
                     onPress={() => navigation.navigate('post', {postID: post.id})}
                 >
                     <View>
-                        {
-                            post.userImage &&
-                            <PostHeader
-                                post={post}
-                                size={60}
-                            />
-                        }
+                        <PostHeader
+                            post={post}
+                            size={60}
+                        />
 
                         <Words style={{fontSize: 30}}>{post.title}</Words>
                         <Words>{post.description}</Words>

@@ -72,12 +72,13 @@ exports.handler = async (event) => {
             userID: userID,
             limit: 1,
             sortDirection: 'DESC'
-        }
+        },
+        fetchPolicy: 'network-only'
     });
 
     console.log('graphql query done');
 
-    console.log(current);
+    console.log(JSON.stringify(current));
 
     if(current.data.listCurrentRoutinesByUser.items.length === 0){
 

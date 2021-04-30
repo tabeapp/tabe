@@ -34,7 +34,7 @@
         },
         "generateWorkout": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/generateWorkout-37724430374f7358385a-build.zip"
+          "s3Key": "amplify-builds/generateWorkout-5741797a664a35626e46-build.zip"
         }
       }
     },
