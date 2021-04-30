@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +19,12 @@ const Post = ({post}) => {
     const navigation = useNavigation();
 
     //this is being really fucking annoying about undefineds
-    const loaded = post.media && post.userImage && post.data && post.likes;
+    //not sure what's going on, might need to look at some stuff
+    //posts aren't immediately loading when you post nowadays
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => {
+        setLoaded( post.media && post.userImage && post.data && post.likes );
+    }, [post]);
 
     if(!loaded)
         return (<View style={{backgroundColor: DARK_GRAY, marginBottom: 15, borderRadius: 20 }}/>);
@@ -46,7 +51,7 @@ const Post = ({post}) => {
                 {/*this scroll view is really busted*/}
                 <ScrollView
                     horizontal pagingEnabled
-                    contentOffset={{x: post.media.items ? width : 0, y:0}}
+                    contentOffset={{x: post.media.items.length!==0 ? width : 0, y:0}}
                 >
                     <TouchableWithoutFeedback
                         onPress={() => navigation.navigate('post', {postID: post.id})}
