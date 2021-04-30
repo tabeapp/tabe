@@ -147,27 +147,6 @@ const WorkoutProvider = props => {
         }));
     };
 
-    //can't avoid doing this
-    //jeez, it's almost as if this is more relevant to the routine and yhou should put it there TODO
-    //step 3, right before workout
-    const checkRest = () => {
-        //if the current time is before the nextWorkout time, take a rest
-        const now = new Date().getTime();
-        //even if this isn't initialized, it should work as it just returns the current day
-        const current = getCurrent();
-        if(now < current.routine.nextWorkoutTime)
-            return true;
-
-        //if it's after, advance currentday until there's a workout
-        //and return false
-        const r = JSON.parse(current.routine);
-        while(r.days[r.currentDay%r.time] === REST_DAY)
-            r.currentDay++;
-
-        updateRoutineData(current.id, r);
-
-        return false;
-    };
 
     //only here cuz of the async storage
     const quitWorkout = () => {
@@ -249,7 +228,6 @@ const WorkoutProvider = props => {
             quitWorkout:quitWorkout,
 
             //pre
-            checkRest: checkRest,
             createWorkout: createWorkout,
             generateCustom: generateCustom,
 

@@ -7,8 +7,8 @@ import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { useNavigation } from '@react-navigation/native';
 
 const WorkoutButton = () => {
-    const {routines} = useContext(RoutinesContext);
-    const {generateCustom, checkRest, createWorkout} = useContext(WorkoutContext);
+    const {getCurrent, checkRest} = useContext(RoutinesContext);
+    const {generateCustom, createWorkout} = useContext(WorkoutContext);
 
     const navigation = useNavigation();
 
@@ -20,7 +20,7 @@ const WorkoutButton = () => {
 
     //need to fucking redo this whole thing too
     const routineStart = async () => {
-        const currentR = routines.find(x => x.current === 1);
+        const currentR = getCurrent();
         if(currentR){
             //if it's a rest day, ask for confirmation
             let isRest = checkRest();
@@ -37,11 +37,10 @@ const WorkoutButton = () => {
                     [
                         {
                             text: "Cancel",//don't do the workout
-                            onPress: () => {},
                             style: "cancel"
                         },
                         {
-                            text: "Override",
+                            text: "Skip",
                             onPress: () => {
                                 createWorkout();
                                 navigation.navigate('workout');
@@ -52,9 +51,9 @@ const WorkoutButton = () => {
                 )
 
             }
-        }else{
-            navigation.navigate('chooseroutine');
         }
+        else
+            navigation.navigate('chooseroutine');
     };
 
     let icon = 'barbell';

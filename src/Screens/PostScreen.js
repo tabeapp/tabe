@@ -28,6 +28,7 @@ const PostScreen = props => {
 
     const [loaded, setLoaded] = useState(false);
 
+    //TODO set up subscription for comments, that would actually be cool
     useEffect(() => {
         setLoaded(false);
         API.graphql(graphqlOperation(getPost, {

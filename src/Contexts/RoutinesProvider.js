@@ -4,6 +4,7 @@ import { UserContext } from './UserProvider';
 import { listRoutinesByUser } from '../../graphql/queries';
 import { updateRoutine } from '../../graphql/mutations';
 import { onChangeRoutine } from '../../graphql/subscriptions';
+import { REST_DAY } from '../Constants/Symbols';
 
 export const RoutinesContext = React.createContext();
 
@@ -109,12 +110,35 @@ const RoutinesProvider = props => {
         return routines.find(x => x.current === 1);
     };
 
+    //can't avoid doing this
+    //step 3, right before workout
+    const checkRest = () => {
+        //if the current time is before the nextWorkout time, take a rest
+        const now = new Date().getTime();
+        //even if this isn't initialized, it should work as it just returns the current day
+        const current = getCurrent();
+        const r = JSON.parse(current.routine);
+
+        if(now < r.nextWorkoutTime)
+            return true;
+
+        //if it's after, advance currentday until there's a workout
+        //and return false
+        while(r.days[r.currentDay%r.time] === REST_DAY)
+            r.currentDay++;
+
+        updateRoutineData(current.id, r);
+
+        return false;
+    };
+
     return (
         <RoutinesContext.Provider value={{
             routines: routines,
             getCurrent: getCurrent,
             updateRoutineData: updateRoutineData,
-            generateRoutine: generateRoutine
+            generateRoutine: generateRoutine,
+            checkRest: checkRest
         }}>
             {props.children}
         </RoutinesContext.Provider>
