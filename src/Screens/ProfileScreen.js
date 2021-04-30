@@ -9,17 +9,14 @@ import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
     getFollowRelationship,
-    getUserImage, getUserLocation,
+    getUserImage,
+    getUserLocation,
     getUserRecord,
     listPostsSortedByUserAndTimestamp,
 } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
-import {
-    createFollowRelationship,
-    createUserImage,
-    deleteFollowRelationship,
-} from '../../graphql/mutations';
+import { createFollowRelationship, createUserImage, deleteFollowRelationship } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';

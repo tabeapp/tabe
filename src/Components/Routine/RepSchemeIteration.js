@@ -4,7 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import Row from '../Simple/Row';
 import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
 import RepSchemeSet from './RepSchemeSet';
-import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
+import { PRIMARY } from '../../Style/Colors';
 
 //yeah maybe I should make another compoenent for htis
 const RepSchemeIteration = props => {

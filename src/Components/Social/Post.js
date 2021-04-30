@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
-import { ScrollView, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import React from 'react';
+import { ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
-import { DARK_GRAY, PRIMARY } from '../../Style/Colors';
+import { DARK_GRAY } from '../../Style/Colors';
 import Row from '../Simple/Row';
 import { S3Image } from 'aws-amplify-react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import SummaryDisplay from '../Workout/SummaryDisplay';
 import LikeButton from './LikeButton';
 import CommentBar from './CommentBar';
-import SafeBorder from '../Navigation/SafeBorder';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {

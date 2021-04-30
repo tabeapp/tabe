@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView, Image, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, TouchableOpacity } from 'react-native';
 import Words from '../Components/Simple/Words';
 import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import Write from '../Components/Simple/Write';

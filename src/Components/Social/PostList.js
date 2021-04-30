@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
 import Post from './Post';

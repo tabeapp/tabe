@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import { Switch, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from '../Simple/Words';
 import SupersetEditor from './SupersetEditor';
-import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { FAILURE } from '../../Constants/Symbols';
 import Chooser from '../Simple/Chooser';
 import Row from '../Simple/Row';

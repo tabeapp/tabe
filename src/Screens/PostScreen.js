@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Platform, KeyboardAvoidingView, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getPost} from '../../graphql/queries';
+import { getPost } from '../../graphql/queries';
 import PostHeader from '../Components/Social/PostHeader';
 import TrophyVisual from '../Components/Social/TrophyVisual';
 import SummaryDisplay from '../Components/Workout/SummaryDisplay';

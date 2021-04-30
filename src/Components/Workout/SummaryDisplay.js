@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
-import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
+import { View } from 'react-native';
+import { BACKGROUND } from '../../Style/Colors';
 import Words from '../Simple/Words';
 import Row from '../Simple/Row';
 

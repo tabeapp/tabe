@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import React, { useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import DaysEditor from '../Components/Routine/DaysEditor';
 import ExerciseEditor from '../Components/Routine/ExerciseEditor';

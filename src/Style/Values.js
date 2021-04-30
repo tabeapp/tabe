@@ -1,7 +1,7 @@
 //i really don't know if this is the best way to do this, should i use some fancy CSS thing?
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { BACKGROUND, DARK_GRAY, PRIMARY, TEXT_COLOR } from './Colors';
+import { DARK_GRAY, TEXT_COLOR } from './Colors';
 
 export const FONT = 'Arial';
 

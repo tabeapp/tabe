@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Modal, TouchableOpacity } from 'react-native';
+import { Modal, TouchableOpacity, View } from 'react-native';
 import { CATEGORIES, EX_INFO } from '../../Constants/DefaultExInfo';
 import Words from '../Simple/Words';
 import { BACKGROUND, DARK_GRAY, PRIMARY_DARKER } from '../../Style/Colors';

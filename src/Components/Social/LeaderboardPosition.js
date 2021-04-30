@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import Words from '../Simple/Words';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Row from '../Simple/Row';

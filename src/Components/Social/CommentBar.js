@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { View, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Row from '../Simple/Row';
-import { BACKGROUND, DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
+import { DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Write from '../Simple/Write';
 import Words from '../Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';

@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Words from '../Components/Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getGym, getRegion, listRecordsByExercise, } from '../../graphql/queries';
+import { getGym, getRegion, listRecordsByExercise } from '../../graphql/queries';
 import BigWords from '../Components/Simple/BigWords';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
 import { PRIMARY } from '../Style/Colors';

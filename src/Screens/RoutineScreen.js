@@ -1,4 +1,4 @@
-import { View, FlatList} from 'react-native';
+import { FlatList, View } from 'react-native';
 import React, { useContext } from 'react';
 import { BLANK_ROUTINE } from '../Constants/DefaultRoutineInfo';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';

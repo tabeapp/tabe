@@ -1,6 +1,5 @@
 import React from 'react';
 import { Picker } from '@react-native-picker/picker';
-import { FONT } from '../../Style/Values';
 import { StyleSheet } from 'react-native';
 import { TEXT_COLOR } from '../../Style/Colors';
 

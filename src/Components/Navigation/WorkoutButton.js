@@ -21,39 +21,41 @@ const WorkoutButton = () => {
     //need to fucking redo this whole thing too
     const routineStart = async () => {
         const currentR = getCurrent();
-        if(currentR){
-            //if it's a rest day, ask for confirmation
-            let isRest = checkRest();
 
-            if(!isRest){
-                //no it's possible it's already loaded
-                createWorkout();
-                navigation.navigate('workout');
-            }
-            else{
-                Alert.alert(
-                    "Recovery Day",
-                    "Are you sure you want to skip recovery?",
-                    [
-                        {
-                            text: "Cancel",//don't do the workout
-                            style: "cancel"
-                        },
-                        {
-                            text: "Skip",
-                            onPress: () => {
-                                createWorkout();
-                                navigation.navigate('workout');
-                            },
-                        }
-                    ],
-                    {cancelable: false}
-                )
-
-            }
-        }
-        else
+        if(!currentR){
             navigation.navigate('chooseroutine');
+            return;
+        }
+
+        //if it's a rest day, ask for confirmation
+        let isRest = checkRest();
+
+        if(!isRest){
+            //no it's possible it's already loaded
+            createWorkout();
+            navigation.navigate('workout');
+            return;
+        }
+
+        //rest day
+        Alert.alert(
+            "Recovery Day",
+            "Are you sure you want to skip recovery?",
+            [
+                {
+                    text: "Cancel",//don't do the workout
+                    style: "cancel"
+                },
+                {
+                    text: "Skip",
+                    onPress: () => {
+                        createWorkout();
+                        navigation.navigate('workout');
+                    },
+                }
+            ],
+            {cancelable: false}
+        );
     };
 
     let icon = 'barbell';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 import { STYLES } from '../../Style/Values';
-import { DARK_GRAY } from '../../Style/Colors';
 
 //my own text input, just want to keep style consistent
 const Write = ({value, onChange, style, autoFocus=false, placeholder=''}) => {

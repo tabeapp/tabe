@@ -1,7 +1,6 @@
-import {useState} from 'react';
+import { useState } from 'react';
 //this is an expensive operation, so I'm tucking it away here so it doesn't get called on accident
 //...yet
-
 import { View } from 'react-native';
 import { PRIMARY } from '../../Style/Colors';
 import { API, graphqlOperation } from 'aws-amplify';

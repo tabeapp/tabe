@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
@@ -8,7 +8,7 @@ import { UserContext } from '../Contexts/UserProvider';
 import { getUserStats } from '../../graphql/queries';
 import { createUserStats, updateUserStats } from '../../graphql/mutations';
 import Row from '../Components/Simple/Row';
-import { BACKGROUND, DARK_GRAY, PRIMARY } from '../Style/Colors';
+import { DARK_GRAY } from '../Style/Colors';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import { INCH_TO_HEIGHT } from '../Utils/UtilFunctions';
 import RNDateTimePicker from '@react-native-community/datetimepicker';

@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React, { useContext } from 'react';

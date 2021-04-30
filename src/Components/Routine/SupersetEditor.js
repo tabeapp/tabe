@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Switch, TouchableOpacity, View } from 'react-native';
 import NumericSelector from './NumericSelector';
 import Words from '../Simple/Words';
-import RoutinesContext from '../../Contexts/RoutinesProvider';
 import Chooser from '../Simple/Chooser';
 import Row from '../Simple/Row';
 import { STYLES } from '../../Style/Values';

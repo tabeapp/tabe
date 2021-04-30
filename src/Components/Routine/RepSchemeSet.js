@@ -3,9 +3,7 @@ import Words from '../Simple/Words';
 import { View } from 'react-native';
 import { NEW_PR } from '../../Constants/Symbols';
 import Chooser from '../Simple/Chooser';
-import Row from '../Simple/Row';
 import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
-import { PRIMARY } from '../../Style/Colors';
 
 const reps = [];
 for(let i = 0; i <= 50; i++)

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import { FULL_COPY } from '../Utils/UtilFunctions';
 import { RoutinesContext } from './RoutinesProvider';
-import { CURRENT, REST_DAY } from '../Constants/Symbols';
+import { CURRENT } from '../Constants/Symbols';
 
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { createPostAndTimeline, generateWorkout } from '../../graphql/mutations';

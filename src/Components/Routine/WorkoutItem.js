@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Pressable, TouchableOpacity, View } from 'react-native';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 import Words from '../Simple/Words';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RoutineEditContext } from '../../Contexts/RoutineEditProvider';
-import { useContext, useState } from 'react';
 import ExercisePicker from '../Workout/ExercisePicker';
 import Row from '../Simple/Row';
 

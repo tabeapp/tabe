@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Alert, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import ExerciseCard from '../Components/Workout/ExerciseCard';
 import Words from '../Components/Simple/Words';

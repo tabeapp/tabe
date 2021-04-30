@@ -1,21 +1,16 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import { TouchableOpacity, Modal, View } from 'react-native';
+import { Modal, TouchableOpacity, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getUserLocation, listRecordsByUser, nearbyGyms } from '../../graphql/queries';
+import { nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
 import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
-import {
-    addNewGym, changeUserGym,
-    createGym,
-    createUserLocation, createUserRecord,
-    deleteUserLocation, deleteUserRecord,
-} from '../../graphql/mutations';
+import { addNewGym, changeUserGym, createGym } from '../../graphql/mutations';
 import { BACKGROUND } from '../Style/Colors';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
