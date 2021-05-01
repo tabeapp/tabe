@@ -129,8 +129,11 @@ const LeaderboardScreen = props => {
 
     }, [regionID, gymID, exercise, male]);
 
-    useEffect(() => buildRegionTree(regionID, []),
-        [regionID])
+    useEffect(() => {
+        if(!regionID)
+            return;
+        buildRegionTree(regionID, []);
+    }, [regionID])
 
     const [modal, setModal] = useState(false);
 

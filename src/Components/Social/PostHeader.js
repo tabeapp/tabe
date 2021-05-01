@@ -33,7 +33,6 @@ const PostHeader = props => {
                 }}
             >
                 {
-
                     imageUri &&
                     <S3Image key={imageUri} style={{width: size, height: size}} imgKey={imageUri}/>
                 }
