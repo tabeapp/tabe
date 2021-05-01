@@ -177,7 +177,7 @@ type Trophy
   {allow: private, provider: userPools, operations: [read]}
   {allow: private, provider: iam, operations: [read, create]}
 ])
-@key(name: "byEffort", fields: ["effortID"])
+@key(name: "byEffort", fields: ["effortID", "createdAt"])
 {
   id: ID!
   effortID: ID!
@@ -185,6 +185,7 @@ type Trophy
   name: String! #actual name of location
   targetID: ID!#the id of the user, gym, or region
   rank: Int!
+  createdAt: String!
 }
 
 type Comment
