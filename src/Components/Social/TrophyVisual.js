@@ -4,13 +4,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Row from '../Simple/Row';
 import TrophyIcon from '../../Utils/TrophyIcon';
+import { View } from 'react-native';
+import { BACKGROUND } from '../../Style/Colors';
 
 //this is acutally pretty complex logic regarding the color of the trophy,
 // as well as determining where to navigate to (gym vs personal vs region)
 
 const TrophyVisual = (props) => {
     const navigation = useNavigation();
-    const {trophy, exercise} = props;
+    const {trophy, exercise, orm} = props;
 
     const {rank, type, targetID, name} = trophy;
 
@@ -28,18 +30,17 @@ const TrophyVisual = (props) => {
             navigation.navigate('leaderboard', {regionID: targetID, exercise: exercise});
     };
 
-    let wording;
-
-    if(type === 'personal')
-        wording = `Ranked ${rank+1} of ${targetID}'s efforts`;
-    else
-        wording = `Ranked ${rank+1} in ${name}`;
-
     return (
-        <TouchableOpacity onPress={handlePress} style={{height: 40}}>
-            <Row>
-                <Words><TrophyIcon rank={rank}/></Words>
-                <Words>{wording}</Words>
+        <TouchableOpacity
+            onPress={handlePress}
+            style={{height: 50, justifyContent: 'center'}}
+        >
+            <Row style={{justifyContent: 'flex-start', height: '100%', borderColor: BACKGROUND, borderTopWidth: 1 }} >
+                <Words style={{paddingHorizontal: 10}}><TrophyIcon rank={rank}/></Words>
+                <View>
+                    <Words>{type==='personal'? targetID: name}</Words>
+                    <Words>#{rank+1} - {orm}lb ORM</Words>
+                </View>
             </Row>
         </TouchableOpacity>
     );

@@ -8,10 +8,9 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { getPost } from '../../graphql/queries';
 import PostHeader from '../Components/Social/PostHeader';
 import TrophyVisual from '../Components/Social/TrophyVisual';
-import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 import LikeButton from '../Components/Social/LikeButton';
 import CommentBar from '../Components/Social/CommentBar';
-import { BACKGROUND } from '../Style/Colors';
+import { DARK_GRAY } from '../Style/Colors';
 
 //side note: for trophy info, use post location info to fill in info
 const PostScreen = props => {
@@ -58,12 +57,14 @@ const PostScreen = props => {
             return <View/>;
 
         return <View>
-            <Words style={{fontSize: 15, width: 100, textAlign: 'right'}}>
-                {effort.orm + ' lb ORM'}
-            </Words>
             {
                 effort.trophies.items.map(trophy =>
-                    <TrophyVisual key={trophy.id} trophy={trophy} exercise={effort.exercise}/>
+                    <TrophyVisual
+                        key={trophy.id}
+                        trophy={trophy}
+                        exercise={effort.exercise}
+                        orm={effort.orm}
+                    />
                 )
             }
 
@@ -97,17 +98,20 @@ const PostScreen = props => {
 
                         //another option: generate list of effort visuals and set visuals, sort them out then render
                         JSON.parse(post.data).map(exercise =>
-                            <Row
+                            <View
                                 key={exercise.name}
-                                style={{alignItems: 'flex-start', padding: 4, borderTopWidth: 1, borderColor: BACKGROUND}}
+                                style={{marginVertical: 5}}
                             >
-                                <Words style={{fontSize: 25}}>{exercise.name}</Words>
-                                <View>{
+                                <Words style={{fontSize: 30}}>{exercise.name}</Words>
+
+                                <View style={{width: '100%'}}>{
                                     exercise.work.map((set,i) =>
-                                        <View key={i} style={{flex: 1, justifyContent: 'center'}}>
-                                            <Words style={{fontSize: 15}}>
-                                                {set.sets + 'x' + set.reps + ' x' + set.weight + 'lb'}
-                                            </Words>
+                                        <View key={i} style={{marginVertical: 2, width: '100%', backgroundColor: DARK_GRAY, justifyContent: 'center'}}>
+                                            <View style={{height: 50, justifyContent: 'center'}}>
+                                                <Words style={{ textAlign: 'center', fontSize: 20}}>
+                                                    {set.sets + 'x' + set.reps + 'x' + set.weight + 'lb'}
+                                                </Words>
+                                            </View>
                                             {
                                                 //need some easier way to find if this set is one of the max efforts
                                                 effortVisForSet(exercise, set)
@@ -115,7 +119,7 @@ const PostScreen = props => {
                                         </View>
                                     )
                                 }</View>
-                            </Row>
+                            </View>
 
                         )
 

@@ -14,6 +14,6 @@ const TrophyIcon = props => {
 
     const name = rank === 0 ? 'trophy': 'ribbon';
 
-    return <Ionicons name={name} color={color} size={30}/>;
+    return <Ionicons name={name} color={color} size={25}/>;
 };
 export default TrophyIcon;
