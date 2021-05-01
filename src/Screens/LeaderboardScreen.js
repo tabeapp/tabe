@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import Words from '../Components/Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
 import { getGym, getRegion, listRecordsByExercise } from '../../graphql/queries';
-import BigWords from '../Components/Simple/BigWords';
 import ExercisePicker from '../Components/Workout/ExercisePicker';
-import { PRIMARY } from '../Style/Colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GLOBAL_REGION_ID } from '../Constants/RegionConstants';
 import SubRegionPicker from '../Components/Social/SubRegionPicker';
 import LeaderboardPosition from '../Components/Social/LeaderboardPosition';
 import GenderSelector from '../Components/Profile/GenderSelector';
+import Row from '../Components/Simple/Row';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //maybe this should be a leader board screen?
 //and actual gym screen would be something different, more simliar to profile?
@@ -36,6 +35,13 @@ const LeaderboardScreen = props => {
     //it's either this or return a ridiculous amount of nested regions in graphql
     //idk which is better honestly
     const buildRegionTree = (runningId, regions) => {
+        //this is in fact a possiblity
+        if(runningId === GLOBAL_REGION_ID){
+            setTitle(globalRegion.name);
+            setRegionTree([globalRegion]);
+            return;
+        }
+
         API.graphql(graphqlOperation(getRegion, {
             id: runningId
         })).then(result => {
@@ -133,7 +139,7 @@ const LeaderboardScreen = props => {
         if(!regionID)
             return;
         buildRegionTree(regionID, []);
-    }, [regionID])
+    }, [regionID]);
 
     const [modal, setModal] = useState(false);
 
@@ -155,38 +161,46 @@ const LeaderboardScreen = props => {
     return (
         <SafeBorder>
             <TopBar title='Leaderboard'/>
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', borderColor: PRIMARY, borderBottomWidth: 1}}>
-                {
-                    regionTree.map(reg =>
-                        <TouchableOpacity
-                            key={reg.id}
-                            style={{borderColor: PRIMARY, borderRightWidth: 1}}
-                            onPress={() => {
-                                setGymID(null);
-                                setRegionID(reg.id)
-                            }}
-                        >
-                            <Words style={{fontSize: 20}}>{reg.name}</Words>
-                        </TouchableOpacity>
-                    )
-                }
-                <TouchableOpacity style={{width: 50}} onPress={() => setSubModal(true)}>
-                    <Words>...</Words>
+            <Words style={{color: 'gray'}}>
+                {regionTree.reduce((a,b) => a + b.name + ' > ', '')}
+            </Words>
+            <Row style={{width: '100%'}}>
+                <TouchableOpacity
+                    onPress={() => {
+                        if(gymID){
+                            setGymID(null);
+                            setRegionID(regionTree[regionTree.length-1].id);
+                        }
+                        else
+                            setRegionID(regionTree[regionTree.length-2].id);
+                    }}
+                >
+                    <Words><Ionicons name={'chevron-up'} size={40}/></Words>
                 </TouchableOpacity>
-            </View>
-            <BigWords>{title}</BigWords>
+
+                <Words style={{textAlign: 'center', fontWeight: 'bold', fontSize: 35}}>{title}</Words>
+
+                <TouchableOpacity onPress={() => {
+                    if(regionID)
+                        setSubModal(true);
+                }}>
+                    <Words><Ionicons name={'chevron-down'} size={40}/></Words>
+                </TouchableOpacity>
+            </Row>
+
 
             <TouchableOpacity
                 onPress={() => setModal(true)}
-                style={{height: 40, borderColor: PRIMARY, borderTopWidth:1, borderBottomWidth: 1}}
+                style={{height: 40, justifyContent: 'center'}}
             >
-                <Words>{exercise} Leaderboard</Words>
+                <Words style={{fontSize: 25}}>{exercise} Leaderboard</Words>
             </TouchableOpacity>
+
             <GenderSelector male={male} setMale={setMale}/>
+
 
             {
                 //you know, these would ideally link to posts
-                records &&
                 records.map((record, index) =>
                     <LeaderboardPosition key={record.id} record={record} rank={index}/>
                 )
