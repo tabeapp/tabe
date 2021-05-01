@@ -189,12 +189,10 @@ const ExerciseCard = (props) => {
 
 export const styles = StyleSheet.create({
     card:{
+        padding: 10,
         margin: 5,
-        padding: 5,
-        height: 150,
-        backgroundColor: BACKGROUND,
+        minHeight: 150,
         borderColor: PRIMARY,
-        borderTopWidth: 1,
         borderBottomWidth: 1,
     },
 });

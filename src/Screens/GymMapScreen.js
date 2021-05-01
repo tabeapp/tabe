@@ -155,69 +155,6 @@ const GymMapScreen = props => {
             stateID: selectedGym.stateID,
             countryID: selectedGym.countryID,
         }));
-        /*//cant do create, it'll just make a new one
-        //maybe have a way to check if the user has a gym in memory?
-        //list, followed by create or update, could be an abstract method
-
-        //that's fucking it
-        //while userlocation is a separate store, we're just gonna delete and make a new one
-        //thats because gymid is sorted on
-        //this is still cancer though
-        //could be a lambda potentially, dont want the user direclty modifyng userlocations
-
-        //get
-        const userGym = await API.graphql(graphqlOperation(getUserLocation, {
-            userID: username
-        }));
-        console.log(userGym);
-        //delete
-        if(userGym.data.getUserLocation){
-            await API.graphql(graphqlOperation(deleteUserLocation, {
-                input: {
-                    userID: username,
-                }
-            }));
-        }
-        //create
-        await API.graphql(graphqlOperation(createUserLocation, {
-            input: {
-                userID: username,
-                gymID: selectedGym.id
-            }
-        }));
-
-        //also need to set all user records to this location
-        //i think you need to load, then delete and create because location is used as key
-
-        const records = await API.graphql(graphqlOperation(listRecordsByUser, {
-            userID: username
-        }));
-
-        for(let i = 0; i < records.data.listRecordsByUser.items.length; i++){
-            const record = records.data.listRecordsByUser.items[i]
-
-            //delete
-            await API.graphql(graphqlOperation(deleteUserRecord, {
-                input:{
-                    userID: record.username,
-                    exercise: record.exercise
-                }
-            }));
-
-            await API.graphql(graphqlOperation(createUserRecord, {
-                input: {
-                    userID: record.username,
-                    exercise: record.exercise,
-                    orm: record.orm,
-                    effortID: record.effortID,
-                    gymID: selectedGym.id,
-                    cityID: selectedGym.cityID,
-                    stateID: selectedGym.stateID,
-                    countryID: selectedGym.countryID,
-                }
-            }))
-        }
-*/
         props.navigation.goBack();
 
         setSelectedGym(null);

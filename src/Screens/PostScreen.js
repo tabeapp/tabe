@@ -38,8 +38,6 @@ const PostScreen = props => {
                 const p = res.data.getPost;
                 setPost(p);
                 //this is so dumb, should we have a username provider?
-                //console.log(JSON.stringify(res))
-                //console.log(username);
                 setLoaded(true)
             })
 
@@ -85,10 +83,6 @@ const PostScreen = props => {
                     </Words>
                     <Words style={{fontSize: 20}}>
                         {post.description}
-                    </Words>
-
-                    <Words style={{fontWeight: 'bold', fontSize: 40}}>
-                        Workout Detail
                     </Words>
 
                     {
