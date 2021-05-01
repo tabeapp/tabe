@@ -46,12 +46,34 @@ const PostScreen = props => {
 
     }, [postID]);
 
+    //yeah this is dumb
+    const effortVisForSet = (exercise, set) => {
+        const effort = post.efforts.items.find(effort =>
+            effort.reps === set.reps &&
+            effort.weight === set.weight &&
+            effort.exercise === exercise.name
+        );
+
+        if(!effort)
+            return <View/>;
+
+        return <View>
+            <Words style={{fontSize: 15, width: 100, textAlign: 'right'}}>
+                {effort.orm + ' lb ORM'}
+            </Words>
+            {
+                effort.trophies.items.map(trophy =>
+                    <TrophyVisual key={trophy.id} trophy={trophy} exercise={effort.exercise}/>
+                )
+            }
+
+        </View>;
+    };
+
     return (
         <SafeBorder>
             <TopBar title='Workout Summary'/>
-            {
-                //easier than adding dumb default properties
-                loaded &&
+            { loaded && <>
                 <ScrollView style={{flex: 1}}>
                     <PostHeader
                         post={post}
@@ -67,41 +89,36 @@ const PostScreen = props => {
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Workout Detail
                     </Words>
-                    <SummaryDisplay exercises={JSON.parse(post.data)}/>
 
-                    <Words style={{fontWeight: 'bold', fontSize: 40}}>
-                        Achievements
-                    </Words>
                     {
-                        post.efforts.items.map(effort =>
-                            <View key={effort.id}>
-                                <Row
-                                    style={{alignItems: 'center', padding: 4, borderTopWidth: 1, borderColor: BACKGROUND}}
-                                >
-                                    <Words style={{fontSize: 25}}>{effort.exercise}</Words>
-                                    <View style={{justifyContent: 'center'}}>
-                                        <Row>
-                                            <Words style={{fontSize: 15, width: 40, textAlign: 'right'}}>
-                                                {effort.reps + ' x '}
-                                            </Words>
-                                            <Words style={{fontSize: 15, width: 50, textAlign: 'right'}}>
-                                                {effort.weight + 'lb ='}
-                                            </Words>
-                                            <Words style={{fontSize: 15, width: 100, textAlign: 'right'}}>
-                                                {effort.orm + ' lb ORM'}
-                                            </Words>
+                        //this is kinda weird but we're gonna combine the data and the efforts
+                        //so for an exercise, you have set 1, set 2, set 3, and set 4
+                        //but set 4 has all the trophies under it, from efforts
 
-                                        </Row>
-                                    </View>
-                                </Row>
-                                {
-                                    effort.trophies.items.map(trophy =>
-                                        <TrophyVisual key={trophy.id} trophy={trophy} exercise={effort.exercise}/>
+                        //another option: generate list of effort visuals and set visuals, sort them out then render
+                        JSON.parse(post.data).map(exercise =>
+                            <Row
+                                key={exercise.name}
+                                style={{alignItems: 'flex-start', padding: 4, borderTopWidth: 1, borderColor: BACKGROUND}}
+                            >
+                                <Words style={{fontSize: 25}}>{exercise.name}</Words>
+                                <View>{
+                                    exercise.work.map((set,i) =>
+                                        <View key={i} style={{flex: 1, justifyContent: 'center'}}>
+                                            <Words style={{fontSize: 15}}>
+                                                {set.sets + 'x' + set.reps + ' x' + set.weight + 'lb'}
+                                            </Words>
+                                            {
+                                                //need some easier way to find if this set is one of the max efforts
+                                                effortVisForSet(exercise, set)
+                                            }
+                                        </View>
                                     )
-                                }
-                            </View>
+                                }</View>
+                            </Row>
 
                         )
+
                     }
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
@@ -132,12 +149,8 @@ const PostScreen = props => {
                         }
                     </View>
 
-
                 </ScrollView>
-            }
-            {
 
-                loaded&&
                 <KeyboardAvoidingView
                     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                     keyboardVerticalOffset={50} //this is mad dumb
@@ -147,7 +160,7 @@ const PostScreen = props => {
                         <CommentBar postID={post.id}/>
                     </Row>
                 </KeyboardAvoidingView>
-            }
+            </> }
         </SafeBorder>
     );
 };
