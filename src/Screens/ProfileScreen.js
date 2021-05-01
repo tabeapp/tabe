@@ -28,10 +28,10 @@ import SafeBorder from '../Components/Navigation/SafeBorder';
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
     const [records, setRecords] = useState({
-        Bench: 0,
-        Squat: 0,
-        Press: 0,
-        Deadlift: 0
+        Bench: {weight: 0},
+        Squat: {weight: 0},
+        Press: {weight: 0},
+        Deadlift: {weight: 0},
     });
 
     //post loading bs part
@@ -101,7 +101,10 @@ const ProfileScreen = props => {
                     if(record){
                         setRecords(prev => ({
                             ...prev,
-                            [record.exercise]: record.orm
+                            [record.exercise]: {
+                                weight: record.orm,
+                                postID: record.postID
+                            }
                         }));
                     }
                 });
@@ -260,11 +263,15 @@ const ProfileScreen = props => {
                     <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Maxes</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
                         Object.entries(records).map(([k,v]) =>
-                            <Row key={k} style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <WeightVisual weight={v} reverse={true} />
-                                <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v}</Words>
-                                <WeightVisual weight={v}/>
-                            </Row>
+                            <TouchableOpacity key={k} onPress={() =>
+                                props.navigation.navigate('post', {postID: v.postID})
+                            }>
+                                <Row style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <WeightVisual weight={v.weight} reverse={true} />
+                                    <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
+                                    <WeightVisual weight={v.weight}/>
+                                </Row>
+                            </TouchableOpacity>
                         )
                     }</View>
 
