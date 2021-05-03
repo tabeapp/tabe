@@ -3,8 +3,8 @@ import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import Animated, {
     Easing,
-    interpolate,
-    multiply, useAnimatedProps, useAnimatedStyle, useSharedValue, withTiming,
+    interpolate, interpolateNode,
+    multiply, useAnimatedProps, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming,
 } from 'react-native-reanimated';
 
 
@@ -18,14 +18,13 @@ const RestCircle = (props) => {
 
     const progress = useSharedValue(0.0);
 
-    const alpha = interpolate(progress.value,
-        [0,1],
-        [0, Math.PI*2]
-    );
+    const alpha = useDerivedValue(() => {
+        return interpolate(progress.value, [0, 1 ], [0, Math.PI * 2], 'CLAMP' );
+    });
 
     const animatedProps = useAnimatedProps(() => {
         return {
-            strokeDashoffset: progress.value * radius/Math.PI/2
+            strokeDashoffset: alpha.value * radius
         }
     })
 
@@ -49,7 +48,7 @@ const RestCircle = (props) => {
             }}
         />
     </View>
-    ;
+        ;
 };
 
 export default RestCircle;
