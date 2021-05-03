@@ -4,7 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 import Animated, {
     Easing,
     interpolate,
-    multiply, useSharedValue, withTiming,
+    multiply, useAnimatedProps, useAnimatedStyle, useSharedValue, withTiming,
 } from 'react-native-reanimated';
 
 
@@ -23,7 +23,11 @@ const RestCircle = (props) => {
         [0, Math.PI*2]
     );
 
-    const strokeDashoffset = multiply(alpha, radius);
+    const animatedProps = useAnimatedProps(() => {
+        return {
+            strokeDashoffset: progress.value * radius/Math.PI/2
+        }
+    })
 
     return <View>
         <Svg width={size} height={size}>
@@ -34,13 +38,14 @@ const RestCircle = (props) => {
                 cy={size/2}
                 r={radius}
                 strokeDasharray={`${circumference} ${circumference}`}
-                {...{strokeWidth, strokeDashoffset}}
+                animatedProps={animatedProps}
+                {...{strokeWidth}}
             />
         </Svg>
         <TouchableOpacity
             style={{width: 100, height: 100, backgroundColor: 'red'}}
             onPress={() =>{
-                progress.value = withTiming(1.0, {duration: 1, easing: Easing.linear})
+                progress.value = withTiming(1.0, {duration: 1000, easing: Easing.linear})
             }}
         />
     </View>
