@@ -5,10 +5,10 @@ import { SafeAreaView } from 'react-navigation';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useSharedValue} from 'react-native-reanimated';
 import Row from '../Simple/Row';
 import { BACKGROUND } from '../../Style/Colors';
 import RestCircle from './RestCircle';
+import { useSharedValue } from 'react-native-reanimated';
 
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
@@ -34,7 +34,7 @@ const RestTimer = props => {
     //(now-timer)/(startrest-timer)
     const [ratio, setRatio] = useState(0);
 
-    const progress = useSharedValue(0.0);
+    const progress = useSharedValue(0);
 
     const {timer, restStart} = props;
 
@@ -102,10 +102,10 @@ const RestTimer = props => {
                     </TouchableOpacity>
 
                     {/*TODO thi
+                    s should use react native svg*/}
                     <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
 
                     <RestCircle progress={progress}/>
-                    s should use react native svg*/}
 
                     <TouchableOpacity
                         onPress={() => {
