@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import SafeBorderNav from '../Components/Navigation/SafeBorderNav';
 import TopBar from '../Components/Navigation/TopBar';
@@ -7,21 +7,23 @@ import { listPostsSortedByTimestamp } from '../../graphql/queries';
 import { onCreatePost } from '../../graphql/subscriptions';
 import PostList from '../Components/Social/PostList';
 import { graphqlOperation } from 'aws-amplify';
+import RestCircle from '../Components/Workout/RestCircle';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const ExploreScreen = props => {
+
+    const progress = useSharedValue(0.5);
+
+    useEffect(() => {
+        progress.value = withTiming(1.0, {duration: 1000});
+    }, []);
 
     return (
         <SafeBorderNav {...props} screen={'explore'}>
             <TopBar title='Global Feed'/>
             <View style={STYLES.body}>
-                <PostList
-                    listOperation={listPostsSortedByTimestamp}
-                    sortKey={'type'}
-                    sortValue={'post'}
-                    filledSubscriptionOperation={graphqlOperation(onCreatePost)}
-                    subscriptionCriteria={() => true}
-                />
+                <RestCircle progress={progress}/>
             </View>
         </SafeBorderNav>
     );

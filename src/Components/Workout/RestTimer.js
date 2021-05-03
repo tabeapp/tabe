@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Row from '../Simple/Row';
 import { BACKGROUND } from '../../Style/Colors';
 import RestCircle from './RestCircle';
-import { useSharedValue } from 'react-native-reanimated';
+import { useSharedValue, withTiming } from 'react-native-reanimated';
 
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
@@ -54,30 +54,30 @@ const RestTimer = props => {
             return;
         }
 
+        const newNow = new Date().getTime();
+        const diff = timer - newNow;
+        if(diff < 0){
+            setSeconds(0);
+            return;
+        }
+        setSeconds(1);
+
+        progress.value = withTiming(1, {duration: Math.round(diff)});
+
+        /*
         //start the countdown
         const interval = setInterval(() => {
             setSeconds(() => {
                 //const now = new Date().getTime()
-                const newNow = new Date().getTime();
-                const diff = timer - newNow;
-                if(diff < 0){
-                    clearInterval(interval)
-                    return 0;
-                }
 
                 return diff/1000;
             });
         }, 100);//temporarily speeding it up
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval);*/
 
     }, [timer]);
 
-    useEffect(() => {
-        setRatio(seconds/(timer-restStart)*1000);
-        if(seconds === 0)
-            close();
-    }, [seconds]);
 
     //safe area view doesnt do shit
     return (
@@ -88,13 +88,8 @@ const RestTimer = props => {
                     <TouchableOpacity
                         onPress={() => {
                             //when subtracting, need to check if we even can
-                            if(seconds < 2*60)
-                                close();
                             //also this goes straight to wokroutdispatch
-                            workoutDispatch(prev => {
-                                prev.timer -= 2*60*1000;
-                                return prev;
-                            });
+                            progress.value = withTiming(0, {duration: 100});
                         }}
                         style={{width: 50, height: 50, backgroundColor: 'green', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
                     >
@@ -103,17 +98,17 @@ const RestTimer = props => {
 
                     {/*TODO thi
                     s should use react native svg*/}
-                    <Words style={{fontSize: 60}}>{seconds>0&&SEC_TO_TIME(seconds)}</Words>
 
                     <RestCircle progress={progress}/>
 
                     <TouchableOpacity
                         onPress={() => {
                             //you can always add time
-                            workoutDispatch(prev => {
-                                prev.timer += 2*60*1000;
-                                return prev;
-                            });
+                            progress.value = withTiming(1, {duration: 100});
+                            //workoutDispatch(prev => {
+                                //prev.timer += 2*60*1000;
+                                //return prev;
+                            //});
                         }}
                         style={{width: 50, height: 50, backgroundColor: 'red', borderRadius: 100, justifyContent: 'center', alignItems: 'center'}}
                     >
