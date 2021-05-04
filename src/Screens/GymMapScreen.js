@@ -5,7 +5,7 @@ import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
 import { nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
-import MapBoxGL from '@react-native-mapbox-gl/maps';
+//import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
@@ -14,7 +14,7 @@ import { addNewGym, changeUserGym, createGym } from '../../graphql/mutations';
 import { BACKGROUND } from '../Style/Colors';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
-MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
+//MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const ADD_GYMS = 'ADD_GYMS';
 
@@ -217,7 +217,7 @@ const GymMapScreen = props => {
                 </Modal>*/
             }
             <View style={STYLES.body}>
-                <MapBoxGL.MapView
+                {/*<MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
                     styleURL={MapBoxGL.StyleURL.Dark}
                     showUserLocation={true}
@@ -244,7 +244,7 @@ const GymMapScreen = props => {
                         )
                     }
 
-                </MapBoxGL.MapView>
+                </MapBoxGL.MapView>*/}
 
             </View>
         </SafeBorder>
