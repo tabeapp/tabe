@@ -99,13 +99,13 @@ const SetCircle = (props) => {
                     //otherwise we're actually gonna directly change expected reps in the workout
                     else
                         //if it's a past or currentset, change the completed reps(progress)
-                        if(progress && progress !== CURRENT)
-                            workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.progress`, value: value});
-                        else if(current)
-                            setProg(value);
-                        //if it's a future set, change the expected reps(reps)
-                        else
-                            workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.reps`, value: value});
+                    if(progress && progress !== CURRENT)
+                        workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.progress`, value: value});
+                    else if(current)
+                        setProg(value);
+                    //if it's a future set, change the expected reps(reps)
+                    else
+                        workoutDispatch({path: `exercises.${exerciseN}.sets.${setN}.reps`, value: value});
 
                 }}
                 list={temp}

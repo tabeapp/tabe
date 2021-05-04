@@ -3,12 +3,11 @@ import { Modal, TouchableOpacity } from 'react-native';
 import Words from '../Simple/Words';
 import { SafeAreaView } from 'react-navigation';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
-import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Row from '../Simple/Row';
 import { BACKGROUND } from '../../Style/Colors';
 import RestCircle from './RestCircle';
-import { useSharedValue, withTiming, Easing } from 'react-native-reanimated';
+import { useSharedValue, withTiming, Easing, runOnJS } from 'react-native-reanimated';
 
 //so i wonder if this should have its own state or rely on workout.timer ({mintues:3, seconds:0})
 //own state might be faster tbh
@@ -68,7 +67,7 @@ const RestTimer = props => {
 
         progress.value = withTiming(1, {
             duration: Math.round(diff), easing: Easing.linear
-        }, close);
+        }, () => runOnJS(close)());
 
     }, [timer]);
 
@@ -81,7 +80,7 @@ const RestTimer = props => {
                     <RestCircle progress={progress}/>
                 </Row>
 
-                <TouchableOpacity style={{margin: 20, borderRadius: 100, backgroundColor: BACKGROUND}} onPress={close}>
+                <TouchableOpacity style={{margin: 30, borderRadius: 100, backgroundColor: BACKGROUND}} onPress={close}>
                     <Words><Ionicons size={60} name={'close'}/></Words>
                 </TouchableOpacity>
             </SafeAreaView>

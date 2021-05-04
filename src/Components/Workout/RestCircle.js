@@ -1,14 +1,10 @@
 import React from 'react';
-import { TextInput, View } from 'react-native';
+import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import Animated, {
     interpolate, interpolateColor,
     useAnimatedProps,
 } from 'react-native-reanimated';
-import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
-import Words from '../Simple/Words';
-import Write from '../Simple/Write';
-
 
 const RestCircle = ({progress}) => {
     const width = 200;
