@@ -1,22 +1,22 @@
 import React from 'react';
-import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import Animated, {
-    Easing,
     interpolate, interpolateColor,
-    useAnimatedProps, useSharedValue, withTiming,
+    useAnimatedProps,
 } from 'react-native-reanimated';
+import { SEC_TO_TIME } from '../../Utils/UtilFunctions';
+import Words from '../Simple/Words';
+import Write from '../Simple/Write';
 
 
-const RestCircle = (props) => {
+const RestCircle = ({progress}) => {
     const width = 200;
     const AnimatedCircle = Animated.createAnimatedComponent(Circle);
     const size = width-32;
     const strokeWidth = 5;
     const radius = (size-strokeWidth)/2;
     const circumference = radius * 2 * Math.PI;
-
-    const progress = useSharedValue(0.0);
 
     const animatedProps = useAnimatedProps(() => {
 
@@ -25,9 +25,10 @@ const RestCircle = (props) => {
             [0,1],
             ['green', 'red'],
         );
+
         return {
             strokeDashoffset,
-            stroke,
+            stroke: stroke,
         };
     });
 
@@ -46,12 +47,6 @@ const RestCircle = (props) => {
                 {...{strokeWidth, animatedProps}}
             />
         </Svg>
-        <TouchableOpacity
-            style={{width: 100, height: 100, backgroundColor: 'red'}}
-            onPress={() =>{
-                progress.value = withTiming(1.0, {duration: 3000, easing: Easing.linear})
-            }}
-        />
     </View>;
 };
 
