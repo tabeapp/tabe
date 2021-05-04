@@ -1,6 +1,5 @@
 import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
-import { PRIMARY } from '../Style/Colors';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
 import TopBar from '../Components/Navigation/TopBar';
@@ -8,7 +7,6 @@ import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
-    getFollowRelationship,
     getUserImage,
     getUserLocation,
     getUserRecord,
@@ -16,7 +14,7 @@ import {
 } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
-import { createFollowRelationship, createUserImage, deleteFollowRelationship } from '../../graphql/mutations';
+import { createUserImage } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
 import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -24,6 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NavBar from '../Components/Navigation/NavBar';
 import SafeBorder from '../Components/Navigation/SafeBorder';
+import FollowButton from '../Components/Profile/FollowButton';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -44,17 +43,6 @@ const ProfileScreen = props => {
     if(props.route.params)
         profileUser = props.route.params.userID;
 
-    const [isFollowing, setIsFollowing] = useState(false);
-
-    const getIsFollowing = async ({followeeID, followerID}) => {
-
-        const res = await API.graphql(graphqlOperation(getFollowRelationship, {
-            followeeID: followeeID,
-            followerID: followerID
-        }))
-        return res.data.getFollowRelationship !== null;
-
-    };
 
     const [profileURI, setProfileURI] = useState('');
     const [gym, setGym] = useState({name: '', id: ''});
@@ -63,13 +51,6 @@ const ProfileScreen = props => {
     useEffect(() => {
         if(!signedInUser || !profileUser)
             return;
-        const init = async () => {
-
-            setIsFollowing(await getIsFollowing({
-                followeeID: profileUser, followerID: signedInUser
-            }));
-        };
-        init();
 
         //this just gets the profile image, super simple
         API.graphql(graphqlOperation(getUserImage, {
@@ -111,30 +92,6 @@ const ProfileScreen = props => {
         });
 
     }, [signedInUser, profileUser])
-
-    const follow = async () => {
-        const input = {
-            followeeID: profileUser,
-            followerID: signedInUser,
-        };
-        const res = await API.graphql(graphqlOperation(createFollowRelationship, {
-            input: input
-        }));
-        if(!res.data.createFollowRelationship.errors)//is it errors or error?
-            setIsFollowing(true);
-    };
-
-    const unfollow = async () => {
-        const input = {
-            followeeID: profileUser,
-            followerID: signedInUser
-        };
-        const res = await API.graphql(graphqlOperation(deleteFollowRelationship, {
-            input: input
-        }));
-        if(!res.data.deleteFollowRelationship.errors)//is it errors or error?
-            setIsFollowing(false);
-    };
 
     const viewingSelf = signedInUser === profileUser;
 
@@ -238,25 +195,7 @@ const ProfileScreen = props => {
                         }</TouchableOpacity>
                     </View>
                 </Row>
-                {
-                    !viewingSelf &&
-                    (
-                        isFollowing ?
-                            <TouchableOpacity
-                                style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, borderColor: PRIMARY, borderWidth: 1}}
-                                onPress={unfollow}
-                            >
-                                <Words style={{fontWeight: 'bold'}}>Unfollow</Words>
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity
-                                style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, backgroundColor: PRIMARY}}
-                                onPress={follow}
-                            >
-                                <Words style={{fontWeight: 'bold'}}>Follow</Words>
-                            </TouchableOpacity>
-                    )
-                }
+                <FollowButton profileUser={profileUser}/>
 
                 <ScrollView>
 
