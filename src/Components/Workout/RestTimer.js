@@ -62,7 +62,7 @@ const RestTimer = props => {
         }
         setSeconds(1);
 
-        progress.value = withTiming(1, {duration: Math.round(diff)});
+        progress.value = withTiming(1, {duration: Math.round(diff)*1000});
 
         /*
         //start the countdown
