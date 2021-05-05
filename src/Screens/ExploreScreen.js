@@ -14,7 +14,6 @@ const ExploreScreen = props => {
 
     return (
         <SafeBorderNav {...props} screen={'explore'}>
-            <TopBar title='Global Feed'/>
             <Cool/>
         </SafeBorderNav>
     );

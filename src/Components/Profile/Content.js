@@ -6,16 +6,49 @@ import {
 
 import { Album, MAX_HEADER_HEIGHT, HEADER_DELTA } from './Model';
 import Track from './Track';
-import { LinearGradient } from 'react-native-svg';
+import Svg, { LinearGradient, Stop } from 'react-native-svg';
+import Animated, {
+    Extrapolate,
+    interpolate,
+    useAnimatedScrollHandler,
+    useAnimatedStyle,
+} from 'react-native-reanimated';
 
 interface ContentProps {
   album: Album;
 }
 
-export default ({ album: { artist, tracks } }: ContentProps) => {
+export default ({ album: { artist, tracks }, y }: ContentProps) => {
     const height = MAX_HEADER_HEIGHT;
+
+    const scrollHandler = useAnimatedScrollHandler(e =>
+        y.value = e.contentOffset.y
+    );
+
+    const animatedStyles = useAnimatedStyle(() => {
+        return {
+            height: interpolate(y.value,
+                [-MAX_HEADER_HEIGHT, 0],
+                [0, MAX_HEADER_HEIGHT],
+                Extrapolate.CLAMP
+            )
+        }
+    });
+
+    const textStyles = useAnimatedStyle(() => {
+        return {
+            opacity: interpolate(y.value,
+                [-MAX_HEADER_HEIGHT/2, 0, MAX_HEADER_HEIGHT/2],
+                [0,1,0],
+            Extrapolate.CLAMP
+            )
+        }
+    }, [y.value]);
+
+
     return (
-        <ScrollView
+        <Animated.ScrollView
+            onScroll={scrollHandler}
             style={styles.container}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={1}
@@ -24,15 +57,10 @@ export default ({ album: { artist, tracks } }: ContentProps) => {
                 <View
                     style={[styles.gradient, { height }]}
                 >
-                    <LinearGradient
-                        style={StyleSheet.absoluteFill}
-                        start={[0, 0.3]}
-                        end={[0, 1]}
-                        colors={['transparent', 'rgba(0, 0, 0, 0.2)', 'black']}
-                    />
+                    <View style={{...StyleSheet.absoluteFill, top: 300, height: 150, backgroundColor: 'black'}}/>
                 </View>
                 <View style={styles.artistContainer}>
-                    <Text style={styles.artist}>{artist}</Text>
+                    <Animated.Text style={[styles.artist, textStyles]}>{artist}</Animated.Text>
                 </View>
             </View>
             <View style={styles.tracks}>
@@ -45,7 +73,7 @@ export default ({ album: { artist, tracks } }: ContentProps) => {
                     ))
                 }
             </View>
-        </ScrollView>
+        </Animated.ScrollView>
     );
 };
 
