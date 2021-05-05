@@ -10,6 +10,8 @@ import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimen
 import SummaryDisplay from '../Workout/SummaryDisplay';
 import LikeButton from './LikeButton';
 import CommentBar from './CommentBar';
+import CachedImage from './CachedImage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 //this really is just for rendering for the most part
 const Post = ({post}) => {
@@ -64,8 +66,10 @@ const Post = ({post}) => {
                         //so we'd see all the images uploaded with the thing
                         post.media&&
                         post.media.items.map(({uri}) =>
-                            //width doesn't work the way you expect btw
-                            <S3Image key={uri} style={{width: width}} imgKey={uri}/>
+                            <CachedImage key={uri} imageKey={uri} width={width} height={width} placeholder={
+                                <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
+
+                            }/>
                         )
                     }
 
