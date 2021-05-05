@@ -7,7 +7,6 @@ import Row from '../Components/Simple/Row';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
-    getUserImage,
     getUserLocation,
     getUserRecord,
     listPostsSortedByUserAndTimestamp,
@@ -16,14 +15,11 @@ import PostList from '../Components/Social/PostList';
 import { onCreatePost } from '../../graphql/subscriptions';
 import { createUserImage } from '../../graphql/mutations';
 import { UserContext } from '../Contexts/UserProvider';
-import { S3Image } from 'aws-amplify-react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import NavBar from '../Components/Navigation/NavBar';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import FollowButton from '../Components/Profile/FollowButton';
-import CachedImage from '../Components/Social/CachedImage';
 import UserImage from '../Components/Profile/UserImage';
 
 const ProfileScreen = props => {
@@ -45,22 +41,12 @@ const ProfileScreen = props => {
     if(props.route.params)
         profileUser = props.route.params.userID;
 
-
-    const [profileURI, setProfileURI] = useState('');
     const [gym, setGym] = useState({name: '', id: ''});
 
     //this does so much lol
     useEffect(() => {
         if(!signedInUser || !profileUser)
             return;
-
-        //this just gets the profile image, super simple
-        API.graphql(graphqlOperation(getUserImage, {
-            userID: profileUser
-        })).then(result => {
-            if(result.data.getUserImage)
-                setProfileURI(result.data.getUserImage.uri);
-        });
 
         //jsut get gym name
         API.graphql(graphqlOperation(getUserLocation, {
@@ -134,9 +120,6 @@ const ProfileScreen = props => {
                                 uri: key
                             }
                         }))
-                            .then(result => {
-                                setProfileURI(result.data.createUserImage.uri);
-                            });
                     });
             }
         });
@@ -171,7 +154,7 @@ const ProfileScreen = props => {
             <View style={STYLES.body}>
                 <Row style={{padding: 10, justifyContent: 'space-around'}}>
                     <View style={{padding: 10}}>
-                        <UserImage onPress={handleProfilePress} imageKey={profileURI} userID={profileUser} size={100}/>
+                        <UserImage onPress={handleProfilePress} userID={profileUser} size={100}/>
                     </View>
 
                     <View style={{flex:1}}>
