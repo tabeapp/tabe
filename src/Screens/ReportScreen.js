@@ -14,10 +14,11 @@ import { generateReport } from '../../amplify/backend/function/createPostAndTime
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 import UserImage from '../Components/Profile/UserImage';
+import PostHeader from '../Components/Social/PostHeader';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
-    const {username, profileURI} = useContext(UserContext);
+    const {username, profileURI, location} = useContext(UserContext);
     const {saveWorkout, workout } = useContext(WorkoutContext);
     //you know what fuck this, report will always be sent as an object.
 
@@ -83,12 +84,18 @@ const ReportScreen = props => {
         <SafeBorder>
             <TopBar title='Workout Preview' rightText='Post' onPressRight={handleNext}/>
             <ScrollView style={{margin: 5}}>
-                <Row style={{justifyContent: 'flex-start'}}>
-                    <UserImage imageKey={profileURI} userID={username} onPress={_ => {}} size={50}/>
-                    <Words>{username}</Words>
-                </Row>
+                <PostHeader
+                    post={{
+                        userID: username,
+                        createdAt: new Date().getTime(),
+                        userImage: {
+                            uri: profileURI
+                        },
+                        gym: {name: location[3]}
+                    }}
+                    size={40}
+                />
                 <Write
-                    placeholder={'Add notes'}
                     style={{borderWidth: 1, fontSize: 30, height: 40}}
                     value={title}
                     onChange={setTitle}

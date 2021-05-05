@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import Animated, {
+    Extrapolate,
     interpolate, interpolateColor,
     useAnimatedProps,
 } from 'react-native-reanimated';
@@ -16,7 +17,7 @@ const RestCircle = ({progress}) => {
 
     const animatedProps = useAnimatedProps(() => {
 
-        const strokeDashoffset = interpolate(progress.value, [0, 1 ], [0, Math.PI * 2], 'CLAMP' ) * radius;
+        const strokeDashoffset = interpolate(progress.value, [0, 1 ], [0, Math.PI * 2], Extrapolate.CLAMP ) * radius;
         const stroke = interpolateColor(progress.value,
             [0,1],
             ['green', 'red'],
