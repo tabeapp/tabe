@@ -13,7 +13,7 @@ const ExercisesDisplay = props => {
     //here's how
 
     const effortVisForSet = (exercise, set) => {
-        const effort = efforts.items.find(e=>
+        const effort = efforts.find(e=>
             e.reps === set.reps &&
             e.weight === set.weight &&
             e.exercise === exercise.name

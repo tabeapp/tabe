@@ -58,7 +58,7 @@ const PostScreen = props => {
                         {post.description}
                     </Words>
 
-                    <ExercisesDisplay exercises={JSON.parse(post.data)} efforts={post.efforts}/>
+                    <ExercisesDisplay exercises={JSON.parse(post.data)} efforts={post.efforts.items}/>
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Comments

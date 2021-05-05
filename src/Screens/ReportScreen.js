@@ -5,16 +5,14 @@ import { WorkoutContext } from '../Contexts/WorkoutProvider';
 import Write from '../Components/Simple/Write';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
-import Row from '../Components/Simple/Row';
 import { CommonActions } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { DARK_GRAY } from '../Style/Colors';
 import { UserContext } from '../Contexts/UserProvider';
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import SummaryDisplay from '../Components/Workout/SummaryDisplay';
-import UserImage from '../Components/Profile/UserImage';
 import PostHeader from '../Components/Social/PostHeader';
+import SummaryDisplay from '../Components/Workout/SummaryDisplay';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
@@ -133,6 +131,7 @@ const ReportScreen = props => {
                 </ScrollView>
 
                 <SummaryDisplay exercises={report}/>
+
             </ScrollView>
         </SafeBorder>
     );
