@@ -7,10 +7,9 @@ import Row from '../Components/Simple/Row';
 import { API, graphqlOperation } from 'aws-amplify';
 import { getPost } from '../../graphql/queries';
 import PostHeader from '../Components/Social/PostHeader';
-import TrophyVisual from '../Components/Social/TrophyVisual';
 import LikeButton from '../Components/Social/LikeButton';
 import CommentBar from '../Components/Social/CommentBar';
-import { DARK_GRAY } from '../Style/Colors';
+import ExercisesDisplay from '../Components/Workout/ExercisesDisplay';
 
 //side note: for trophy info, use post location info to fill in info
 const PostScreen = props => {
@@ -43,32 +42,6 @@ const PostScreen = props => {
 
     }, [postID]);
 
-    //yeah this is dumb
-    const effortVisForSet = (exercise, set) => {
-        const effort = post.efforts.items.find(effort =>
-            effort.reps === set.reps &&
-            effort.weight === set.weight &&
-            effort.exercise === exercise.name
-        );
-
-        if(!effort)
-            return <View/>;
-
-        return <View>
-            {
-                effort.trophies.items.map(trophy =>
-                    <TrophyVisual
-                        key={trophy.id}
-                        trophy={trophy}
-                        exercise={effort.exercise}
-                        orm={effort.orm}
-                    />
-                )
-            }
-
-        </View>;
-    };
-
     return (
         <SafeBorder>
             <TopBar title='Workout Summary'/>
@@ -85,39 +58,7 @@ const PostScreen = props => {
                         {post.description}
                     </Words>
 
-                    {
-                        //this is kinda weird but we're gonna combine the data and the efforts
-                        //so for an exercise, you have set 1, set 2, set 3, and set 4
-                        //but set 4 has all the trophies under it, from efforts
-
-                        //another option: generate list of effort visuals and set visuals, sort them out then render
-                        JSON.parse(post.data).map(exercise =>
-                            <View
-                                key={exercise.name}
-                                style={{marginVertical: 5}}
-                            >
-                                <Words style={{fontSize: 30}}>{exercise.name}</Words>
-
-                                <View style={{width: '100%'}}>{
-                                    exercise.work.map((set,i) =>
-                                        <View key={i} style={{marginVertical: 2, width: '100%', backgroundColor: DARK_GRAY, justifyContent: 'center'}}>
-                                            <View style={{height: 50, justifyContent: 'center'}}>
-                                                <Words style={{ textAlign: 'center', fontSize: 20}}>
-                                                    {set.sets + 'x' + set.reps + 'x' + set.weight + 'lb'}
-                                                </Words>
-                                            </View>
-                                            {
-                                                //need some easier way to find if this set is one of the max efforts
-                                                effortVisForSet(exercise, set)
-                                            }
-                                        </View>
-                                    )
-                                }</View>
-                            </View>
-
-                        )
-
-                    }
+                    <ExercisesDisplay exercises={JSON.parse(post.data)} efforts={post.efforts}/>
 
                     <Words style={{fontWeight: 'bold', fontSize: 40}}>
                         Comments
