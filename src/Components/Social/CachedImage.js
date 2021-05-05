@@ -6,7 +6,7 @@ const dirs = RNFetchBlob.fs.dirs;
 
 //gonna simplify this a bit, and make a new component for userimages
 const CachedImage = props => {
-    const {placeholder, imageKey, width, height} = props;
+    const {placeholder, imageKey, width, height, style} = props;
     const [loaded, setLoaded] = useState(false);
 
     const downloadImage = async (key) => {
@@ -41,7 +41,7 @@ const CachedImage = props => {
     }, [imageKey]);
 
     if(loaded)
-        return <Image source={{uri: `file://${dirs.DocumentDir}/${imageKey}`}} style={{width: width, height: height}}/>;
+        return <Image source={{uri: `file://${dirs.DocumentDir}/${imageKey}`}} style={style}/>;
     else
         return <View style={{width: width, height: height, justifyContent: 'center', alignItems: 'center'}}>{placeholder}</View>;
 

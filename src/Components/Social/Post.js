@@ -65,7 +65,7 @@ const Post = ({post}) => {
                         //so we'd see all the images uploaded with the thing
                         post.media&&
                         post.media.items.map(({uri}) =>
-                            <CachedImage key={uri} imageKey={uri} width={width} height={width} placeholder={
+                            <CachedImage key={uri} imageKey={uri} style={{width: width, height: width}} placeholder={
                                 <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
 
                             }/>
