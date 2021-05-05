@@ -24,6 +24,7 @@ import NavBar from '../Components/Navigation/NavBar';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import FollowButton from '../Components/Profile/FollowButton';
 import CachedImage from '../Components/Social/CachedImage';
+import UserImage from '../Components/Profile/UserImage';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -170,19 +171,7 @@ const ProfileScreen = props => {
             <View style={STYLES.body}>
                 <Row style={{padding: 10, justifyContent: 'space-around'}}>
                     <View style={{padding: 10}}>
-                        <TouchableOpacity
-                            style={{borderRadius: 50, overflow: 'hidden'}}
-                            onPress={handleProfilePress}
-                        >
-                            {
-                                profileURI !== '' ?
-                                    <CachedImage size={100} imageKey={profileURI} userID={profileUser}/>:
-                                    <View style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}>
-                                        <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
-                                        <Words>Add image</Words>
-                                    </View>
-                            }
-                        </TouchableOpacity>
+                        <UserImage onPress={handleProfilePress} imageKey={profileURI} userID={profileUser} size={100}/>
                     </View>
 
                     <View style={{flex:1}}>

@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Image, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Image, View } from 'react-native';
 import { Storage } from 'aws-amplify';
 import RNFetchBlob from 'rn-fetch-blob';
-import Words from '../Simple/Words';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 const dirs = RNFetchBlob.fs.dirs;
 
+//gonna simplify this a bit, and make a new component for userimages
 const CachedImage = props => {
-
-    const navigation = useNavigation();
-    const {size, userID, imageKey} = props;
+    const {placeholder, imageKey, width, height} = props;
     const [loaded, setLoaded] = useState(false);
 
     const downloadImage = async (key) => {
@@ -32,6 +28,9 @@ const CachedImage = props => {
     };
 
     useEffect(() => {
+        if(!imageKey)
+            return;
+
         RNFetchBlob.fs.exists(`${dirs.DocumentDir}/${imageKey}`).then(imageSaved =>{
             if(imageSaved)
                 setLoaded(true);
@@ -41,21 +40,11 @@ const CachedImage = props => {
 
     }, [imageKey]);
 
-    return <TouchableOpacity
-        style={{height: size, width: size, borderRadius: size/2, overflow: 'hidden'}}
-        onPress={() => {
-            navigation.navigate('profile', {userID: userID})
-        }}
-    >
-        {
-            loaded ?
-                <Image source={{uri: `file://${dirs.DocumentDir}/${imageKey}`}} style={{width: size, height: size}}/> :
-                <View style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}>
-                    <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
-                    <Words>Add image</Words>
-                </View>
-        }
-    </TouchableOpacity>
+    if(loaded)
+        return <Image source={{uri: `file://${dirs.DocumentDir}/${imageKey}`}} style={{width: width, height: height}}/>;
+    else
+        return <View style={{width: width, height: height, justifyContent: 'center', alignItems: 'center'}}>{placeholder}</View>;
+
 };
 
 export default CachedImage;
