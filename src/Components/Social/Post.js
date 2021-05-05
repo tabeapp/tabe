@@ -4,7 +4,6 @@ import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
 import { DARK_GRAY } from '../../Style/Colors';
 import Row from '../Simple/Row';
-import { S3Image } from 'aws-amplify-react-native';
 import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
 import SummaryDisplay from '../Workout/SummaryDisplay';

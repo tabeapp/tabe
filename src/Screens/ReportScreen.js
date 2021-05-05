@@ -10,10 +10,10 @@ import { CommonActions } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { DARK_GRAY } from '../Style/Colors';
 import { UserContext } from '../Contexts/UserProvider';
-import { S3Image } from 'aws-amplify-react-native';
 import { generateReport } from '../../amplify/backend/function/createPostAndTimeline/src/AnalyzeRoutine/GenerateReport';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SummaryDisplay from '../Components/Workout/SummaryDisplay';
+import UserImage from '../Components/Profile/UserImage';
 
 // lets go add media additions, using s3
 const ReportScreen = props => {
@@ -84,10 +84,7 @@ const ReportScreen = props => {
             <TopBar title='Workout Preview' rightText='Post' onPressRight={handleNext}/>
             <ScrollView style={{margin: 5}}>
                 <Row style={{justifyContent: 'flex-start'}}>
-                    {
-                        profileURI !== '' &&
-                        <S3Image key={profileURI} style={{width: 50, height: 50, borderRadius: 25}} imgKey={profileURI}/>
-                    }
+                    <UserImage imageKey={profileURI} userID={username} onPress={_ => {}} size={50}/>
                     <Words>{username}</Words>
                 </Row>
                 <Write
