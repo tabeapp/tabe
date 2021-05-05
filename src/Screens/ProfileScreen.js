@@ -23,6 +23,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import NavBar from '../Components/Navigation/NavBar';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import FollowButton from '../Components/Profile/FollowButton';
+import CachedImage from '../Components/Social/CachedImage';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -175,7 +176,7 @@ const ProfileScreen = props => {
                         >
                             {
                                 profileURI !== '' ?
-                                    <S3Image key={profileURI} style={{width: 100, height: 100}} imgKey={profileURI}/> :
+                                    <CachedImage size={100} imageKey={profileURI} userID={profileUser}/>:
                                     <View style={{width: 100, height: 100, alignItems: 'center', justifyContent: 'center'}}>
                                         <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
                                         <Words>Add image</Words>
