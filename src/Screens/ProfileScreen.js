@@ -28,7 +28,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
 } from 'react-native-reanimated';
-import { BACKGROUND, DARK_GRAY, PRIMARY } from '../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = props => {
@@ -160,10 +160,26 @@ const ProfileScreen = props => {
                 [0, 100],
                 [HEADER_MAX_HEIGHT, HEADER_MAX_HEIGHT/2],
                 Extrapolate.CLAMP
+            ),
 
-            )
         }
     });
+
+    const headerTextStyle = useAnimatedStyle(() => ({
+        opacity: interpolate(y.value,
+            [0, 75],
+            [1, 0],
+            Extrapolate.CLAMP,
+        ),
+    }));
+
+    const simpleHeaderStyle = useAnimatedStyle(() => ({
+        opacity: interpolate(y.value,
+            [75, 125],
+            [0, 1],
+            Extrapolate.CLAMP,
+        ),
+    }));
 
     const scrollHandler = useAnimatedScrollHandler(e =>
         y.value = e.contentOffset.y
@@ -185,17 +201,22 @@ const ProfileScreen = props => {
                     <UserImage onPress={handleProfilePress} userID={profileUser} size={100}/>
                 </View>
 
+                <Animated.View style={[{zIndex: 2, height: 60, justifyContent: 'center', alignItems: 'center', position: 'absolute', top: 0, left: 0, right: 0}, simpleHeaderStyle]}>
+                    <Words style={{fontSize: 30, fontWeight: 'bold'}}>{profileUser}</Words>
+                </Animated.View>
+
                 <Animated.View style={[styles.header, headerStyle]}>
-                    <View style={{left: 120, flex: 1, justifyContent: 'center'}}>
+                    <Animated.View style={[{left: 120, flex: 1, justifyContent: 'center'}, headerTextStyle]}>
                         <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
                         <TouchableOpacity onPress={handleGymPress}>{
                             //no, you can't use location, you need to load the users location
+                            //should add more stuff here that isn't visible on close
                             (viewingSelf && !location[3]) ?
                                 <Words>Set Gym</Words>
                                 :
                                 <Words>{gym.name}</Words>
                         }</TouchableOpacity>
-                    </View>
+                    </Animated.View>
                     <View style={{width: 60, alignItems: 'center', justifyContent: 'center'}}>{
                         viewingSelf?
                             <TouchableOpacity onPress={() => props.navigation.navigate('settings')}>
@@ -253,8 +274,8 @@ const styles = StyleSheet.create({
     header: {
         top: 0,
         backgroundColor: BACKGROUND,
-        borderBottomWidth: 1,
-        borderColor: PRIMARY,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderColor: PRIMARY_DARKER,
 
         //justifyContent: 'center',
         //alignItems: 'center',
