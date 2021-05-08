@@ -28,7 +28,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
 } from 'react-native-reanimated';
-import { BACKGROUND, DARK_GRAY } from '../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = props => {
@@ -172,13 +172,13 @@ const ProfileScreen = props => {
     return (
         <SafeBorder {...props} screen={'profile'}>
             {
-                viewingSelf ?
+                /*viewingSelf ?
                     <TopBar
                         title={profileUser}
                         rightText='Settings'
                         onPressRight={() => props.navigation.navigate('settings')}
                     />:
-                    <TopBar title={profileUser}/>
+                    <TopBar title={profileUser}/>*/
             }
             <View style={STYLES.body}>
                 <View style={{zIndex: 2, position: 'absolute', top: 10, left: 10}}>
@@ -198,8 +198,11 @@ const ProfileScreen = props => {
                     </View>
                     <View style={{width: 60, alignItems: 'center', justifyContent: 'center'}}>{
                         viewingSelf?
-                            <FollowButton profileUser={profileUser}/> :
-                            <Words><Ionicons size={30} name='settings-outline'/></Words>
+                            <TouchableOpacity onPress={() => props.navigation.navigate('settings')}>
+                                <Words><Ionicons size={30} name='settings-outline'/></Words>
+                            </TouchableOpacity>
+                            :
+                            <FollowButton profileUser={profileUser}/>
                     }</View>
 
                 </Animated.View>
@@ -249,7 +252,10 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
     header: {
         top: 0,
-        backgroundColor: DARK_GRAY,
+        backgroundColor: BACKGROUND,
+        borderBottomWidth: 1,
+        borderColor: PRIMARY,
+
         //justifyContent: 'center',
         //alignItems: 'center',
         flexDirection: 'row',

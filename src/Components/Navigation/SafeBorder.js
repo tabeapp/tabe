@@ -1,12 +1,12 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { BACKGROUND, PRIMARY } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
 //not really sure what to call this but I use this a lot
 
 
 const SafeBorder = props => {
     return <>
-        <SafeAreaView style={{backgroundColor: PRIMARY, flex: 0}}/>
+        <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 0}}/>
         <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 1}}>{
             props.children
         }</SafeAreaView>
