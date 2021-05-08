@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useReducer, useState } from 'react';
-import { Modal, TouchableOpacity, View } from 'react-native';
+import { Modal, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
@@ -12,6 +12,7 @@ import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
 import { addNewGym, changeUserGym, createGym } from '../../graphql/mutations';
 import { BACKGROUND } from '../Style/Colors';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
 //MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
@@ -33,6 +34,8 @@ const reducer = (state, action) => {
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const GymMapScreen = props => {
+
+    const {width, height} = useWindowDimensions();
     const {username} = useContext(UserContext);
     //not doing this here lol
     const [gyms, dispatch] = useReducer(reducer, {});
@@ -217,6 +220,19 @@ const GymMapScreen = props => {
                 </Modal>*/
             }
             <View style={STYLES.body}>
+
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    //this top -90 is very wrong but it does give the look im going for
+                    style={{position: 'absolute', top: -90, flex: 1, width: width, height: height, zIndex: 0}}
+                    showsUserLocation={true}
+                    region={{
+                        latitude: center[1],
+                        longitude: center[0],
+                        latitudeDelta: 0.05,
+                        longitudeDelta: 0.05
+                    }}
+                />
                 {/*<MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
                     styleURL={MapBoxGL.StyleURL.Dark}

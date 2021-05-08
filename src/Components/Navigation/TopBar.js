@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: PRIMARY,
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        zIndex: 6,
     },
     topButton: {
         alignItems: 'center',
