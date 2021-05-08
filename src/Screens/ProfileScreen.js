@@ -1,5 +1,5 @@
-import { ScrollView, TouchableOpacity, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, ScrollView, TouchableOpacity, View } from 'react-native';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
 import TopBar from '../Components/Navigation/TopBar';
@@ -21,6 +21,15 @@ import NavBar from '../Components/Navigation/NavBar';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import FollowButton from '../Components/Profile/FollowButton';
 import UserImage from '../Components/Profile/UserImage';
+import Animated, {
+    Extrapolate,
+    interpolate,
+    useAnimatedScrollHandler,
+    useAnimatedStyle,
+    useSharedValue,
+} from 'react-native-reanimated';
+import { BACKGROUND, DARK_GRAY } from '../Style/Colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -140,6 +149,26 @@ const ProfileScreen = props => {
     //next up, lets clean up the user profile
     //we may eblae to get graphs and shit too
 
+    const y = useSharedValue(0);
+
+    const HEADER_MAX_HEIGHT = 120;
+
+    const headerStyle = useAnimatedStyle(() => {
+        return {
+            //transform: [{translateY: -1*Math.min(HEADER_MAX_HEIGHT, y.value)}]
+            height: interpolate(y.value,
+                [0, 100],
+                [HEADER_MAX_HEIGHT, HEADER_MAX_HEIGHT/2],
+                Extrapolate.CLAMP
+
+            )
+        }
+    });
+
+    const scrollHandler = useAnimatedScrollHandler(e =>
+        y.value = e.contentOffset.y
+    );
+
     return (
         <SafeBorder {...props} screen={'profile'}>
             {
@@ -152,12 +181,12 @@ const ProfileScreen = props => {
                     <TopBar title={profileUser}/>
             }
             <View style={STYLES.body}>
-                <Row style={{padding: 10, justifyContent: 'space-around'}}>
-                    <View style={{padding: 10}}>
-                        <UserImage onPress={handleProfilePress} userID={profileUser} size={100}/>
-                    </View>
+                <View style={{zIndex: 2, position: 'absolute', top: 10, left: 10}}>
+                    <UserImage onPress={handleProfilePress} userID={profileUser} size={100}/>
+                </View>
 
-                    <View style={{flex:1}}>
+                <Animated.View style={[styles.header, headerStyle]}>
+                    <View style={{left: 120, flex: 1, justifyContent: 'center'}}>
                         <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
                         <TouchableOpacity onPress={handleGymPress}>{
                             //no, you can't use location, you need to load the users location
@@ -167,10 +196,20 @@ const ProfileScreen = props => {
                                 <Words>{gym.name}</Words>
                         }</TouchableOpacity>
                     </View>
-                </Row>
-                <FollowButton profileUser={profileUser}/>
+                    <View style={{width: 60, alignItems: 'center', justifyContent: 'center'}}>{
+                        viewingSelf?
+                            <FollowButton profileUser={profileUser}/> :
+                            <Words><Ionicons size={30} name='settings-outline'/></Words>
+                    }</View>
 
-                <ScrollView>
+                </Animated.View>
+
+                <Animated.ScrollView
+                    style={{flex: 1}}
+                    onScroll={scrollHandler}
+                    showsVerticalScrollIndicator={false}
+                    scrollEventThrottle={1}
+                >
 
                     <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Maxes</Words>
                     <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
@@ -197,7 +236,7 @@ const ProfileScreen = props => {
                         }
                     />
 
-                </ScrollView>
+                </Animated.ScrollView>
             </View>
             {
                 viewingSelf &&
@@ -206,5 +245,19 @@ const ProfileScreen = props => {
         </SafeBorder>
     );
 };
+
+const styles = StyleSheet.create({
+    header: {
+        top: 0,
+        backgroundColor: DARK_GRAY,
+        //justifyContent: 'center',
+        //alignItems: 'center',
+        flexDirection: 'row',
+        width: '100%',
+        left: 0,
+        right: 0,
+
+    }
+})
 
 export default ProfileScreen;

@@ -6,6 +6,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { getFollowRelationship } from '../../../graphql/queries';
 import { UserContext } from '../../Contexts/UserProvider';
 import { createFollowRelationship, deleteFollowRelationship } from '../../../graphql/mutations';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const FollowButton = props => {
     const {profileUser} = props;
@@ -51,21 +52,21 @@ const FollowButton = props => {
     };
 
     return <View>{
-        !viewingSelf &&(
+        viewingSelf &&(
 
             isFollowing ?
                 <TouchableOpacity
-                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, borderColor: PRIMARY, borderWidth: 1}}
+                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 50, height: 40, borderColor: PRIMARY, borderWidth: 1}}
                     onPress={unfollow}
                 >
-                    <Words style={{fontWeight: 'bold'}}>Unfollow</Words>
+                    <Words><Ionicons size={25} name={'person-remove-outline'}/></Words>
                 </TouchableOpacity>
                 :
                 <TouchableOpacity
-                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 100, height: 40, backgroundColor: PRIMARY}}
+                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 50, height: 40, backgroundColor: PRIMARY}}
                     onPress={follow}
                 >
-                    <Words style={{fontWeight: 'bold'}}>Follow</Words>
+                    <Words><Ionicons size={25} name={'person-add-outline'}/></Words>
                 </TouchableOpacity>
         )
     }</View>
