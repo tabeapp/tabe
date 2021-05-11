@@ -11,7 +11,7 @@ import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
 import { UserContext } from '../Contexts/UserProvider';
 import { addNewGym, changeUserGym, createGym } from '../../graphql/mutations';
-import { BACKGROUND } from '../Style/Colors';
+import { BACKGROUND, PRIMARY } from '../Style/Colors';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
@@ -44,9 +44,9 @@ const GymMapScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     //this doesn't change unless user actually moves
-    const [userCoordinates, setUserCoordinates] = useState([45, 70]);
+    const [userCoordinates, setUserCoordinates] = useState({latitude: 45, longitude: 70});
     //this changes with view
-    const [center, setCenter] = useState([ 45, 70]);
+    const [center, setCenter] = useState({latitude: 45, longitude: 70});
 
     const [selectedGym, setSelectedGym] = useState(null);
 
@@ -58,8 +58,8 @@ const GymMapScreen = props => {
         setIsLoading(true);
         API.graphql(graphqlOperation(nearbyGyms, {
             location: {
-                lon: center[0],
-                lat: center[1],
+                lon: center.longitude,
+                lat: center.latitude,
             },
             //grr idk what to do with this
             km: 20
@@ -74,14 +74,8 @@ const GymMapScreen = props => {
 
     useEffect(() => {
         Geolocation.getCurrentPosition(info => {
-            setUserCoordinates([
-                info.coords.longitude,
-                info.coords.latitude
-            ]);
-            setCenter([
-                info.coords.longitude,
-                info.coords.latitude
-            ]);
+            setUserCoordinates({...info.coords});
+            setCenter({...info.coords});
         });
     }, []);
 
@@ -92,6 +86,9 @@ const GymMapScreen = props => {
     };
 
     //just need to change feature
+    //this will now handle cases where you don't specifically press on a gym
+    //so no suggestions for ya
+    //and no add new gym
     const pressNewGym = async feature => {
         const { coordinates } = feature.geometry;
 
@@ -111,40 +108,47 @@ const GymMapScreen = props => {
         }
 
 
-        let gymDraft = await API.graphql(graphqlOperation(addNewGym, {
-            coordinates: { lat: coordinates[1], lon: coordinates[0]}
-        }));
+        //let gymDraft = await API.graphql(graphqlOperation(addNewGym, {
+            //coordinates: { lat: coordinates[1], lon: coordinates[0]}
+        //}));
 
         //just make sure this work
-        gymDraft = gymDraft.data.addNewGym;
+        //gymDraft = gymDraft.data.addNewGym;
 
+        const gymDraft =  {
+            name: '',
+            center: {
+                ...coordinates
+                //lat: gymCenter[0],
+                //lon: gymCenter[1]
+            },
+        };
         //hmm
         setNewGym(gymDraft);
     };
 
-    const updateCenter = feature => {
-
-        const bounds = feature.properties.visibleBounds;
-        //there's gotta be somethign I can do with this
-        const diagonal = (bounds[0][0] - bounds[1][0])**2 + (bounds[0][1] - bounds[1][1])**2;
-        //only update if it's much different than the previous
-        const nextCoords = feature.geometry.coordinates;
+    const updateCenter = region => {
         //not perfect at all lol but one coordinates ~60 miles
-        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > 0.5**2)
-            setCenter(feature.geometry.coordinates);
+        if((center.longitude - region.longitude)**2 + (center.latitude - region.latitude)**2 > 0.5**2)
+            setCenter({longitude: region.longitude, latitude: region.latitude});
     };
 
     //take the new gym and save it to db
     //thid dhould be lambda
     //google maps update: this should work fine
     const onPressScreen = async () => {
+
+        //new idea
+        //call the labmda when you actually make a gym
+
+        //I got a new idea
         const gymResult = await API.graphql(graphqlOperation(createGym, {
             input: {
                 name: newGym.name,
                 location: newGym.center,
-                countryID: newGym.countryID,
-                stateID: newGym.stateID,
-                cityID: newGym.cityID,
+                //countryID: newGym.countryID, //we're not gonna have this anymore
+                //stateID: newGym.stateID,
+                //cityID: newGym.cityID,
             }
         }));
 
@@ -166,6 +170,41 @@ const GymMapScreen = props => {
 
         setSelectedGym(null);
     };
+
+    const handlePoiClick = e => {
+        const coordinates = e.nativeEvent.coordinate;
+        console.log(coordinates);
+        let closeGym = null;
+
+        Object.values(gyms).forEach(gym => {
+            //i know this .001 values aren't miles or kilometers, but hey they work
+            if ((gym.location.lon - coordinates.longitude) ** 2 + (gym.location.lat - coordinates.latitude) ** 2 < 0.001 ** 2)
+                closeGym = gym;
+        });
+
+        if (closeGym) {
+            console.log(closeGym);
+            setSelectedGym(closeGym);
+            setCenter({longitude: closeGym.location.lon, latitude: closeGym.location.lat});
+            return;
+        }
+
+        //e.nativeEvent has coordinate, name, and placeId
+
+        const newCoords = e.nativeEvent.coordinate;
+
+        //perfect
+        //otherwise we set a new gym
+        setNewGym({
+
+            name: e.nativeEvent.name,
+            location: e.nativeEvent.coordinate
+            //countryID: newGym.countryID,
+            //stateID: newGym.stateID,
+            //cityID: newGym.cityID,
+        })
+        setCenter({...newCoords});
+    }
 
     const mapStyle = [
         {
@@ -274,11 +313,28 @@ const GymMapScreen = props => {
             ]
         },
         {
+            'featureType': 'poi.sports_complex',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#6f9ba5'
+                }
+            ]
+        },
+        {
             'featureType': 'poi.park',
             'elementType': 'geometry.fill',
             'stylers': [
                 {
                     'color': '#023e58'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.medical',
+            'stylers': [
+                {
+                    'visibility': 'off'
                 }
             ]
         },
@@ -476,15 +532,36 @@ const GymMapScreen = props => {
                     provider={PROVIDER_GOOGLE}
                     //this top -90 is very wrong but it does give the look im going for
                     style={{position: 'absolute', top: -90, flex: 1, width: width, height: height, zIndex: 0}}
-                    showsUserLocation={true}
+                    showsUserLocation
+                    rotateEnabled={false}
                     region={{
-                        latitude: center[1],
-                        longitude: center[0],
+                        latitude: center.latitude,
+                        longitude: center.longitude,
                         latitudeDelta: 0.05,
                         longitudeDelta: 0.05
                     }}
+                    onPoiClick={handlePoiClick}
+                    //onLongPress={pressNewGym}
                     customMapStyle={mapStyle}
-                />
+                    onRegionChangeComplete={updateCenter}
+                >
+                    {
+                        Object.values(gyms).map(gym =>
+                            <MapView.Marker
+                                key={gym.id}
+                                coordinate={{longitude: gym.location.lon, latitude: gym.location.lat}}
+                                title={gym.name}
+                                description={gym.id}
+                            >
+                                <MapView.Callout tooltip onPress={() => {}}>
+                                    <TouchableOpacity>
+                                        <Words>{gym.name}</Words>
+                                    </TouchableOpacity>
+                                </MapView.Callout>
+                            </MapView.Marker>
+                        )
+                    }
+                </MapView>
                 {/*<MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
                     styleURL={MapBoxGL.StyleURL.Dark}
