@@ -150,20 +150,6 @@ export const deleteUserImage = /* GraphQL */ `
     }
   }
 `;
-export const updateRegion = /* GraphQL */ `
-  mutation UpdateRegion(
-    $input: UpdateRegionInput!
-    $condition: ModelRegionConditionInput
-  ) {
-    updateRegion(input: $input, condition: $condition) {
-      id
-      superRegionID
-      name
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const deleteRegion = /* GraphQL */ `
   mutation DeleteRegion(
     $input: DeleteRegionInput!
@@ -1220,6 +1206,20 @@ export const createRegion = /* GraphQL */ `
     }
   }
 `;
+export const updateRegion = /* GraphQL */ `
+  mutation UpdateRegion(
+    $input: UpdateRegionInput!
+    $condition: ModelRegionConditionInput
+  ) {
+    updateRegion(input: $input, condition: $condition) {
+      id
+      superRegionID
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createPost = /* GraphQL */ `
   mutation CreatePost(
     $input: CreatePostInput!
@@ -1779,16 +1779,40 @@ export const createPostAndTimeline = /* GraphQL */ `
   }
 `;
 export const addNewGym = /* GraphQL */ `
-  mutation AddNewGym($coordinates: LocationInput!) {
-    addNewGym(coordinates: $coordinates) {
+  mutation AddNewGym($coordinates: LocationInput!, $name: String!) {
+    addNewGym(coordinates: $coordinates, name: $name) {
+      id
       name
-      center {
+      location {
         lat
         lon
       }
       countryID
       stateID
       cityID
+      createdAt
+      updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

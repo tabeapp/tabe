@@ -87,7 +87,7 @@ type Gym @model @searchable
 type Region @model
 @auth(rules: [
   {allow: private, provider: userPools, operations: [read, create]}
-  {allow: private, provider: iam, operations: [read, create]}
+  {allow: private, provider: iam, operations: [read, update, create]}
 ])
 @key(name: "bySuperRegion", fields: ["superRegionID"], queryField: "listRegionsBySuperRegions")
 {

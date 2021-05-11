@@ -64,7 +64,8 @@ exports.handler = async (event, context, callback) => {
     }
 
     //call mapbox api with coords
-    const [lat, lon] = event.arguments.coordinates;
+    console.log(event.arguments);
+    const {lat, lon} = event.arguments.coordinates;
     const {name} = event.arguments;
 
     const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
@@ -118,22 +119,23 @@ exports.handler = async (event, context, callback) => {
     //but we'll do it async so no one notices the delay
     addRegions(regionInfo);
 
-    const gymResult = await graphqlClient.mutation({
+    return await graphqlClient.mutate({
         mutation: gql(createGym),
         variables: {
             input: {
                 name: name,
-                location: { lat: gymCenter[0], lon: gymCenter[1]},
+                location: { lat: gymCenter[0], lon: gymCenter[1] },
                 countryID: regionInfo.country.id,
                 stateID: regionInfo.state.id,
                 cityID: regionInfo.city.id,
             }
         }
     });
-
-    return gymResult;
 };
 
+//to do it might save time to start from city and go up
+//then quit once state or country exists
+//cuz its more likely a country is added than a city
 const addRegions = async (regionInfo) => {
     const regions = regionInfo;
     console.log(regions);
@@ -153,7 +155,7 @@ const addRegions = async (regionInfo) => {
         const {id, name} = regions[level];
         console.log(id, name);
         //could we combine these into one graphql request?
-        const result = graphqlClient.query({
+        const result = await graphqlClient.query({
             query: gql(getRegion),
             fetchPolicy: 'network-only',
             variables: {
@@ -168,7 +170,7 @@ const addRegions = async (regionInfo) => {
 
         //otherwise the region already exists, we're good to use the region id
         if(result.data.getRegion === null){
-            const regionCreate = graphqlClient.mutation({
+            const regionCreate = await graphqlClient.mutate({
                 mutation: gql(createRegion),
                 variables: {
                     input: {

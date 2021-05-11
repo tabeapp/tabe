@@ -3,7 +3,8 @@
     "api": {
       "tabe": [
         "create",
-        "read"
+        "read",
+        "update"
       ]
     }
   },

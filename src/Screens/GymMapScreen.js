@@ -139,6 +139,7 @@ const GymMapScreen = props => {
     //google maps update: this should work fine
     const onPressScreen = async () => {
 
+
         //new idea
         //call the labmda when you actually make a gym
 
@@ -524,14 +525,6 @@ const GymMapScreen = props => {
                     </TouchableOpacity>
                 </Modal>
             }
-            {
-                /*isLoading &&
-                <Modal transparent>
-                    <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center'}}>
-                        <Words>Loading...</Words>
-                    </View>
-                </Modal>*/
-            }
             <View style={STYLES.body}>
 
                 <MapView
@@ -569,35 +562,6 @@ const GymMapScreen = props => {
                         )
                     }
                 </MapView>
-                {/*<MapBoxGL.MapView
-                    style={{flex:1, width: '100%'}}
-                    styleURL={MapBoxGL.StyleURL.Dark}
-                    showUserLocation={true}
-                    onPress={pressNewGym}
-                    onRegionDidChange={updateCenter}
-                >
-                    <MapBoxGL.Camera
-                        centerCoordinate={userCoordinates}
-                        zoomLevel={14}
-                        animationDuration={0}
-                    />
-                    <MapBoxGL.PointAnnotation id={'me'} coordinate={userCoordinates}>
-                        <View style={{height: 30, width: 30, backgroundColor: 'blue'}}/>
-                    </MapBoxGL.PointAnnotation>
-                    {
-                        gyms&&
-                        Object.values(gyms).map(gym =>
-                            <MapBoxGL.PointAnnotation id={gym.id} key={gym.id} coordinate={[gym.location.lon, gym.location.lat]}>
-                                <TouchableOpacity onPress={() => pressOnGym(gym.id)}>
-                                    <Words style={{backgroundColor: 'green'}}>{gym.name}</Words>
-                                </TouchableOpacity>
-                            </MapBoxGL.PointAnnotation>
-
-                        )
-                    }
-
-                </MapBoxGL.MapView>*/}
-
             </View>
         </SafeBorder>
     );
