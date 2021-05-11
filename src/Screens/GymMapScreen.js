@@ -21,14 +21,14 @@ const ADD_GYMS = 'ADD_GYMS';
 
 const reducer = (state, action) => {
     switch(action.type){
-        case ADD_GYMS:
-            action.gyms.forEach(gym => {
-                state[gym.id] = gym;
-            });
-            return state;
+    case ADD_GYMS:
+        action.gyms.forEach(gym => {
+            state[gym.id] = gym;
+        });
+        return state;
 
-        default:
-            return state;
+    default:
+        return state;
     }
 };
 
@@ -91,6 +91,7 @@ const GymMapScreen = props => {
 
     };
 
+    //just need to change feature
     const pressNewGym = async feature => {
         const { coordinates } = feature.geometry;
 
@@ -100,7 +101,7 @@ const GymMapScreen = props => {
 
         Object.values(gyms).forEach(gym => {
             //i know this .001 values aren't miles or kilometers, but hey they work
-            if ((gym.location.lon - coordinates[0]) ** 2 + (gym.location.lat - coordinates[1]) ** 2 < .001 ** 2)
+            if ((gym.location.lon - coordinates[0]) ** 2 + (gym.location.lat - coordinates[1]) ** 2 < 0.001 ** 2)
                 closeGym = gym;
         });
 
@@ -117,6 +118,7 @@ const GymMapScreen = props => {
         //just make sure this work
         gymDraft = gymDraft.data.addNewGym;
 
+        //hmm
         setNewGym(gymDraft);
     };
 
@@ -128,12 +130,13 @@ const GymMapScreen = props => {
         //only update if it's much different than the previous
         const nextCoords = feature.geometry.coordinates;
         //not perfect at all lol but one coordinates ~60 miles
-        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > .5**2)
+        if((center[0]-nextCoords[0])**2 + (center[1] - nextCoords[1])**2 > 0.5**2)
             setCenter(feature.geometry.coordinates);
     };
 
     //take the new gym and save it to db
     //thid dhould be lambda
+    //google maps update: this should work fine
     const onPressScreen = async () => {
         const gymResult = await API.graphql(graphqlOperation(createGym, {
             input: {
@@ -149,6 +152,7 @@ const GymMapScreen = props => {
         setNewGym(null);
     };
 
+    //google maps update: this should work fine
     const joinGym = async () => {
         //just call the lamba
 
@@ -163,9 +167,256 @@ const GymMapScreen = props => {
         setSelectedGym(null);
     };
 
+    const mapStyle = [
+        {
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#1d2c4d'
+                }
+            ]
+        },
+        {
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#8ec3b9'
+                }
+            ]
+        },
+        {
+            'elementType': 'labels.text.stroke',
+            'stylers': [
+                {
+                    'color': '#1a3646'
+                }
+            ]
+        },
+        {
+            'featureType': 'administrative.country',
+            'elementType': 'geometry.stroke',
+            'stylers': [
+                {
+                    'color': '#4b6878'
+                }
+            ]
+        },
+        {
+            'featureType': 'administrative.land_parcel',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#64779e'
+                }
+            ]
+        },
+        {
+            'featureType': 'administrative.province',
+            'elementType': 'geometry.stroke',
+            'stylers': [
+                {
+                    'color': '#4b6878'
+                }
+            ]
+        },
+        {
+            'featureType': 'landscape.man_made',
+            'elementType': 'geometry.stroke',
+            'stylers': [
+                {
+                    'color': '#334e87'
+                }
+            ]
+        },
+        {
+            'featureType': 'landscape.natural',
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#023e58'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi',
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#283d6a'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#6f9ba5'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi',
+            'elementType': 'labels.text.stroke',
+            'stylers': [
+                {
+                    'color': '#1d2c4d'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.sports_complex',
+            'elementType': 'labels.text.stroke',
+            'stylers': [
+                {
+                    'color': '#1d2c4d'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.park',
+            'elementType': 'geometry.fill',
+            'stylers': [
+                {
+                    'color': '#023e58'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.attraction',
+            'stylers': [
+                {
+                    'visibility': 'off'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.business',
+            'stylers': [
+                {
+                    'visibility': 'off'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.government',
+            'stylers': [
+                {
+                    'visibility': 'off'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.place_of_worship',
+            'stylers': [
+                {
+                    'visibility': 'off'
+                }
+            ]
+        },
+        {
+            'featureType': 'poi.park',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#3C7680'
+                }
+            ]
+        },
+        {
+            'featureType': 'road',
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#304a7d'
+                }
+            ]
+        },
+        {
+            'featureType': 'road',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#98a5be'
+                }
+            ]
+        },
+        {
+            'featureType': 'road',
+            'elementType': 'labels.text.stroke',
+            'stylers': [
+                {
+                    'color': '#1d2c4d'
+                }
+            ]
+        },
+        {
+            'featureType': 'road.highway',
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#2c6675'
+                }
+            ]
+        },
+        {
+            'featureType': 'road.highway',
+            'elementType': 'geometry.stroke',
+            'stylers': [
+                {
+                    'color': '#255763'
+                }
+            ]
+        },
+        {
+            'featureType': 'road.highway',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#b0d5ce'
+                }
+            ]
+        },
+        {
+            'featureType': 'road.highway',
+            'elementType': 'labels.text.stroke',
+            'stylers': [
+                {
+                    'color': '#023e58'
+                }
+            ]
+        },
+        {
+            'featureType': 'transit',
+            'stylers': [
+                {
+                    'visibility': 'off'
+                }
+            ]
+        },
+        {
+            'featureType': 'water',
+            'elementType': 'geometry',
+            'stylers': [
+                {
+                    'color': '#0e1626'
+                }
+            ]
+        },
+        {
+            'featureType': 'water',
+            'elementType': 'labels.text.fill',
+            'stylers': [
+                {
+                    'color': '#4e6d70'
+                }
+            ]
+        }
+    ];
+
     return (
         <SafeBorder {...props} >
-            <TopBar title='Gym Map'/>
+            <TopBar title="Gym Map"/>
             {
                 selectedGym &&
                 <Modal transparent>
@@ -232,6 +483,7 @@ const GymMapScreen = props => {
                         latitudeDelta: 0.05,
                         longitudeDelta: 0.05
                     }}
+                    customMapStyle={mapStyle}
                 />
                 {/*<MapBoxGL.MapView
                     style={{flex:1, width: '100%'}}
