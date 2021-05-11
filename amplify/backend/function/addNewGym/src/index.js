@@ -13,7 +13,7 @@ const { emptyRegion, GLOBAL_REGION_ID } = require('./Constants/RegionConstants')
 const { createRegion } = require('./graphql/mutations');
 const { getRegion } = require('./graphql/queries');
 
-const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
+const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWNvIiwiYSI6ImNrb2o5b2Z2bTAzYnIydm5xaDBhN21xNHgifQ.vm0HWVRhrI5bClTNqvwLoA'
 
 let graphqlClient;
 
