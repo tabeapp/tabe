@@ -117,9 +117,9 @@ exports.handler = async (event, context, callback) => {
     //async create regions
     //it's a decent idea to create regions anywhere the user presses
     //but we'll do it async so no one notices the delay
-    addRegions(regionInfo);
+    await addRegions(regionInfo);
 
-    return await graphqlClient.mutate({
+    const createGymResult = await graphqlClient.mutate({
         mutation: gql(createGym),
         variables: {
             input: {
@@ -131,6 +131,8 @@ exports.handler = async (event, context, callback) => {
             }
         }
     });
+
+    return createGymResult.data.createGym;
 };
 
 //to do it might save time to start from city and go up

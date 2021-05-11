@@ -139,7 +139,6 @@ const GymMapScreen = props => {
     //google maps update: this should work fine
     const onPressScreen = async () => {
 
-
         //new idea
         //call the labmda when you actually make a gym
 
@@ -147,17 +146,6 @@ const GymMapScreen = props => {
             coordinates: { lat: newGym.center.latitude, lon: newGym.center.longitude},
             name: newGym.name
         }));
-
-        //I got a new idea
-        //const gymResult = await API.graphql(graphqlOperation(createGym, {
-            //input: {
-                //name: newGym.name,
-                //location: newGym.center,
-                ////countryID: newGym.countryID, //we're not gonna have this anymore
-                ////stateID: newGym.stateID,
-                ////cityID: newGym.cityID,
-            //}
-        //}));
 
         dispatch({type: ADD_GYMS, gyms: [gymResult.data.addNewGym]});
         setNewGym(null);

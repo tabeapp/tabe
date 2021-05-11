@@ -22,7 +22,7 @@
         },
         "addNewGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/addNewGym-4a59646b7a582f2f3569-build.zip"
+          "s3Key": "amplify-builds/addNewGym-3157524b7554336d694d-build.zip"
         },
         "library": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
