@@ -1,21 +1,16 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Modal, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
 import { API, graphqlOperation } from 'aws-amplify';
 import { nearbyGyms } from '../../graphql/queries';
 import Geolocation from '@react-native-community/geolocation';
-//import MapBoxGL from '@react-native-mapbox-gl/maps';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import Words from '../Components/Simple/Words';
 import Write from '../Components/Simple/Write';
-import { UserContext } from '../Contexts/UserProvider';
-import { addNewGym, changeUserGym, createGym } from '../../graphql/mutations';
-import { BACKGROUND, PRIMARY } from '../Style/Colors';
+import { addNewGym, changeUserGym } from '../../graphql/mutations';
+import { BACKGROUND } from '../Style/Colors';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
-
-const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWFwcCIsImEiOiJja2xuMjUwYjUwZXlyMnNxcGt2MG5scnBuIn0.azxOspBiyh1cbe3xtIGuLQ';
-//MapBoxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const ADD_GYMS = 'ADD_GYMS';
 
@@ -34,9 +29,7 @@ const reducer = (state, action) => {
 
 //https://amplify-sns.workshop.aws/en/30_mock/30_post_front_end.html
 const GymMapScreen = props => {
-
     const {width, height} = useWindowDimensions();
-    const {username} = useContext(UserContext);
     //not doing this here lol
     const [gyms, dispatch] = useReducer(reducer, {});
 
@@ -44,7 +37,6 @@ const GymMapScreen = props => {
     const [isLoading, setIsLoading] = useState(true);
 
     //this doesn't change unless user actually moves
-    const [userCoordinates, setUserCoordinates] = useState({latitude: 45, longitude: 70});
     //this changes with view
     const [center, setCenter] = useState({latitude: 45, longitude: 70});
 
@@ -74,7 +66,6 @@ const GymMapScreen = props => {
 
     useEffect(() => {
         Geolocation.getCurrentPosition(info => {
-            setUserCoordinates({...info.coords});
             setCenter({...info.coords});
         });
     }, []);
@@ -109,20 +100,9 @@ const GymMapScreen = props => {
         }
 
 
-        //let gymDraft = await API.graphql(graphqlOperation(addNewGym, {
-            //coordinates: { lat: coordinates[1], lon: coordinates[0]}
-        //}));
-
-        //just make sure this work
-        //gymDraft = gymDraft.data.addNewGym;
-
         const gymDraft =  {
             name: '',
-            center: {
-                ...coordinate
-                //lat: gymCenter[0],
-                //lon: gymCenter[1]
-            },
+            center: { ...coordinate },
         };
         //hmm
         setNewGym(gymDraft);
@@ -191,12 +171,8 @@ const GymMapScreen = props => {
         //perfect
         //otherwise we set a new gym
         setNewGym({
-
             name: e.nativeEvent.name,
             location: e.nativeEvent.coordinate
-            //countryID: newGym.countryID,
-            //stateID: newGym.stateID,
-            //cityID: newGym.cityID,
         })
         setCenter({...newCoords});
     }
