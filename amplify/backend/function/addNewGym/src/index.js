@@ -12,6 +12,7 @@ const { emptyRegion, GLOBAL_REGION_ID } = require('./Constants/RegionConstants')
 
 const { createRegion } = require('./graphql/mutations');
 const { getRegion } = require('./graphql/queries');
+const { createGym } = require('/opt/mutations');
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoidGFiZWNvIiwiYSI6ImNrb2o5b2Z2bTAzYnIydm5xaDBhN21xNHgifQ.vm0HWVRhrI5bClTNqvwLoA'
 
@@ -19,6 +20,7 @@ let graphqlClient;
 
 //redoing this to simplify methods in gymmapscreen
 //get coordinates, call mapbox, create regions if necessary, return gym name suggestion + region ids
+//this will now handle actually adding gyms and regions instead of just a draft
 exports.handler = async (event, context, callback) => {
 
     let env;
@@ -63,6 +65,7 @@ exports.handler = async (event, context, callback) => {
 
     //call mapbox api with coords
     const [lat, lon] = event.arguments.coordinates;
+    const {name} = event.arguments;
 
     const geocodeURL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lon},${lat}.json?types=poi&limit=3&access_token=${MAPBOX_ACCESS_TOKEN}`;
     let response = await fetch(geocodeURL);
@@ -80,7 +83,9 @@ exports.handler = async (event, context, callback) => {
     }
 
     //derive name suggestion
-    let gymName = 'New Gym Name';
+    //nope not anymore
+
+    //this is fine to keep
     let gymCenter = [lat, lon];
 
     if(obj.features.length !== 0){
@@ -93,7 +98,6 @@ exports.handler = async (event, context, callback) => {
         //if no gym is found, the user may be adding a home gym
         //dont use the center coordinates or text, let the user add something new
         if (gymSuggestion) {
-            gymName = gymSuggestion.text;
             gymCenter = gymSuggestion.center;
         }
 
@@ -114,18 +118,20 @@ exports.handler = async (event, context, callback) => {
     //but we'll do it async so no one notices the delay
     addRegions(regionInfo);
 
-    //retrun name + regionids
+    const gymResult = await graphqlClient.mutation({
+        mutation: gql(createGym),
+        variables: {
+            input: {
+                name: name,
+                location: { lat: gymCenter[0], lon: gymCenter[1]},
+                countryID: regionInfo.country.id,
+                stateID: regionInfo.state.id,
+                cityID: regionInfo.city.id,
+            }
+        }
+    });
 
-    return {
-        name: gymName,
-        center: {
-            lat: gymCenter[0],
-            lon: gymCenter[1]
-        },
-        countryID: regionInfo.country.id,
-        stateID: regionInfo.state.id,
-        cityID: regionInfo.city.id,
-    };
+    return gymResult;
 };
 
 const addRegions = async (regionInfo) => {
@@ -181,16 +187,8 @@ const addRegions = async (regionInfo) => {
 
     //keep this part in gymmapscreen until we're ready to make a gym
     /*//at this point we're good to use the region ids
-    const gymResult = await API.graphql(graphqlOperation(createGym, {
-        input: {
-            name: newGym.name,
-            location: newGym.location,
-            countryID: regions.country.id,
-            stateID: regions.state.id,
-            cityID: regions.city.id,
-        }
-    }));
-    console.log(gymResult);*/
+    console.log(gymResult);
+    */
 
 
 };

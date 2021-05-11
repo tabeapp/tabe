@@ -66,7 +66,7 @@ type UserImage @model
 type Gym @model @searchable
 @auth(rules: [
   {allow: private, provider: userPools, operations: [read, create]}
-  {allow: private, provider: iam, operations: [read]}
+  {allow: private, provider: iam, operations: [read, create]}
 ])
 @key(name: "byCity", fields: ["cityID"], queryField: "listGymsByCity")
 {
@@ -295,7 +295,8 @@ type Mutation{
 
   addNewGym(
     coordinates: LocationInput!
-  ): GymDraft!
+    name: String!
+  ): Gym!
   @function(name: "addNewGym-${env}")
   @auth(rules:[
     {allow: private, provider: userPools},

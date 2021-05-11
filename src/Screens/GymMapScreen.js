@@ -81,16 +81,17 @@ const GymMapScreen = props => {
 
     const pressOnGym = id => {
         setSelectedGym(gyms[id]);
-        //yeah there probably should be a modal or something to see
-
+        setCenter({longitude: gyms[id].location.lon, latitude: gyms[id].location.lat});
     };
 
     //just need to change feature
     //this will now handle cases where you don't specifically press on a gym
     //so no suggestions for ya
     //and no add new gym
-    const pressNewGym = async feature => {
-        const { coordinates } = feature.geometry;
+    //ya good
+    const pressNewGym = async e => {
+        const {coordinate} = e.nativeEvent;
+        //const { coordinates } = feature.geometry;
 
         //this is ok, this isn't a network request
         //if you press on the map super close to an existing gym, just go to that gym
@@ -98,7 +99,7 @@ const GymMapScreen = props => {
 
         Object.values(gyms).forEach(gym => {
             //i know this .001 values aren't miles or kilometers, but hey they work
-            if ((gym.location.lon - coordinates[0]) ** 2 + (gym.location.lat - coordinates[1]) ** 2 < 0.001 ** 2)
+            if ((gym.location.lon - coordinate.longitude) ** 2 + (gym.location.lat - coordinate.latitude) ** 2 < 0.001 ** 2)
                 closeGym = gym;
         });
 
@@ -118,7 +119,7 @@ const GymMapScreen = props => {
         const gymDraft =  {
             name: '',
             center: {
-                ...coordinates
+                ...coordinate
                 //lat: gymCenter[0],
                 //lon: gymCenter[1]
             },
@@ -141,18 +142,23 @@ const GymMapScreen = props => {
         //new idea
         //call the labmda when you actually make a gym
 
-        //I got a new idea
-        const gymResult = await API.graphql(graphqlOperation(createGym, {
-            input: {
-                name: newGym.name,
-                location: newGym.center,
-                //countryID: newGym.countryID, //we're not gonna have this anymore
-                //stateID: newGym.stateID,
-                //cityID: newGym.cityID,
-            }
+        let gymResult = await API.graphql(graphqlOperation(addNewGym, {
+            coordinates: { lat: newGym.center.latitude, lon: newGym.center.longitude},
+            name: newGym.name
         }));
 
-        dispatch({type: ADD_GYMS, gyms: [gymResult.data.createGym]});
+        //I got a new idea
+        //const gymResult = await API.graphql(graphqlOperation(createGym, {
+            //input: {
+                //name: newGym.name,
+                //location: newGym.center,
+                ////countryID: newGym.countryID, //we're not gonna have this anymore
+                ////stateID: newGym.stateID,
+                ////cityID: newGym.cityID,
+            //}
+        //}));
+
+        dispatch({type: ADD_GYMS, gyms: [gymResult.data.addNewGym]});
         setNewGym(null);
     };
 
@@ -496,7 +502,7 @@ const GymMapScreen = props => {
                 </Modal>
             }
             {
-                newGym &&
+                newGym &&//maybe this should be a marker popup?
                 <Modal transparent>
                     <TouchableOpacity
                         onPress={() => setNewGym(null)}
@@ -541,7 +547,7 @@ const GymMapScreen = props => {
                         longitudeDelta: 0.05
                     }}
                     onPoiClick={handlePoiClick}
-                    //onLongPress={pressNewGym}
+                    onLongPress={pressNewGym}
                     customMapStyle={mapStyle}
                     onRegionChangeComplete={updateCenter}
                 >
@@ -552,6 +558,7 @@ const GymMapScreen = props => {
                                 coordinate={{longitude: gym.location.lon, latitude: gym.location.lat}}
                                 title={gym.name}
                                 description={gym.id}
+                                onPress={() => pressOnGym(gym.id)}
                             >
                                 <MapView.Callout tooltip onPress={() => {}}>
                                     <TouchableOpacity>
