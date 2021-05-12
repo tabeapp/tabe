@@ -23,7 +23,8 @@ exports.checkRegionRanking = async (graphqlClient, effort, postID, key, value, n
 
     const result = await graphqlClient.query({
         query: gql(listRecordsByExercise),
-        variables: listInput
+        variables: listInput,
+        fetchPolicy: 'network-only',
     });
 
     const rank = result.data.listRecordsByExercise
