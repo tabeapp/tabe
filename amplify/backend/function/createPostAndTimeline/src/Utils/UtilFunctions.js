@@ -16,3 +16,5 @@ exports.REPS_TO_REPS = (weight, fromReps, toReps) => {
     }
 };
 
+exports.NUMBER_TO_THOU_STRING = weight => ('0000' + weight).slice(-4);
+

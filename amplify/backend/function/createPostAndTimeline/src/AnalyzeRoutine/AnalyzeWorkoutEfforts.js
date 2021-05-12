@@ -1,3 +1,4 @@
+const { NUMBER_TO_THOU_STRING } = require('../Utils/UtilFunctions');
 const { REPS_TO_REPS } = require('../Utils/UtilFunctions');
 
 exports.analyzeWorkoutEfforts = report => {
@@ -13,12 +14,14 @@ exports.analyzeWorkoutEfforts = report => {
         ex.work.forEach(info => {
             const calculatedOrm = REPS_TO_REPS(info.weight, info.reps, 1);
 
-            if(calculatedOrm > orm)
+            if(calculatedOrm > orm){
+                const formattedOrm = NUMBER_TO_THOU_STRING(orm);
                 workoutMaxes[name] = {
                     weight: info.weight,
                     reps: info.reps,
-                    orm: calculatedOrm,
+                    orm: formattedOrm,
                 };
+            }
         });
     });
 

@@ -12,7 +12,7 @@ type UserRecord @model
   #seems random, but actually is nice for showing records
   userImage: UserImage @connection(fields: ["userID"])
   postID: ID! #useful for seeing detail of records
-  orm: Int!
+  orm: String!
   exercise: String!
   countryID: ID!#it's bs but these change
   stateID: ID!
@@ -160,7 +160,7 @@ type Effort
   exercise: String!
   weight: Int!
   reps: Int!
-  orm: Int!
+  orm: String!
   createdAt: String!
   trophies: [Trophy] @connection(keyName: "byEffort", fields: ["id"])
 }
