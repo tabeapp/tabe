@@ -1,5 +1,5 @@
-const { getRoutine } = require('../graphql/queries');
-const { updateRoutine } = require('../graphql/mutations');
+const { getRoutine } = require('/opt/queries');
+const { updateRoutine } = require('/opt/mutations');
 const { analyzeWorkoutRoutine } = require('./AnalyzeWorkoutRoutine');
 const gql = require('graphql-tag');
 

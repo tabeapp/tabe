@@ -2,8 +2,8 @@ const {
     getUserRecord,
     listEffortsByExerciseAndUser,
     getUserStats
-} = require('../graphql/queries');
-const { createTrophy, createUserRecord, updateUserRecord } = require('../graphql/mutations');
+} = require('/opt/queries');
+const { createTrophy, createUserRecord, updateUserRecord } = require('/opt/mutations');
 const { GLOBAL_REGION_ID } = require('../Constants/RegionConstants');
 const { checkRegionRanking } = require('./CheckRegionRanking');
 const gql = require('graphql-tag');

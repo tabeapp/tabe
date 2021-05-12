@@ -1,5 +1,5 @@
-const { listRecordsByExercise } = require('../graphql/queries');
-const { createTrophy } = require('../graphql/mutations');
+const { listRecordsByExercise } = require('/opt/queries');
+const { createTrophy } = require('/opt/mutations');
 const gql = require('graphql-tag');
 
 exports.checkRegionRanking = async (graphqlClient, effort, postID, key, value, name, type) => {

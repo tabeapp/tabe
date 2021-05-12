@@ -16,6 +16,7 @@ exports.analyzeWorkoutEfforts = report => {
 
             if(calculatedOrm > orm){
                 const formattedOrm = NUMBER_TO_THOU_STRING(orm);
+                console.log(orm, formattedOrm);
                 workoutMaxes[name] = {
                     weight: info.weight,
                     reps: info.reps,

@@ -1,4 +1,4 @@
-const { createPostMedia } = require('../graphql/mutations');
+const { createPostMedia } = require('/opt/mutations');
 const gql = require('graphql-tag');
 
 exports.uploadImages = async (graphqlClient, postID, imageUrls) => {

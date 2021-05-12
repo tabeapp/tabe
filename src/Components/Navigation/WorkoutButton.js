@@ -40,7 +40,7 @@ const WorkoutButton = () => {
         //rest day
         Alert.alert(
             "Recovery Day",
-            "Are you sure you want to skip recovery?",
+            "Skip recovery day?",
             [
                 {
                     text: "Cancel",//don't do the workout

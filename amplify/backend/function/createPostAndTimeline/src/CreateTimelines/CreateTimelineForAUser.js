@@ -1,4 +1,4 @@
-const { createTimeline } = require('../graphql/mutations');
+const { createTimeline } = require('/opt/mutations');
 const gql = require('graphql-tag');
 
 exports.createTimelineForAUser = async (graphqlClient, follower, postID) => {

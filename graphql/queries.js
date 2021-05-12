@@ -109,7 +109,7 @@ export const listUserRecords = /* GraphQL */ `
 export const listRecordsByUser = /* GraphQL */ `
   query ListRecordsByUser(
     $userID: ID
-    $orm: ModelIntKeyConditionInput
+    $orm: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelUserRecordFilterInput
     $limit: Int
@@ -149,7 +149,7 @@ export const listRecordsByUser = /* GraphQL */ `
 export const listRecordsByExercise = /* GraphQL */ `
   query ListRecordsByExercise(
     $exercise: String
-    $orm: ModelIntKeyConditionInput
+    $orm: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelUserRecordFilterInput
     $limit: Int

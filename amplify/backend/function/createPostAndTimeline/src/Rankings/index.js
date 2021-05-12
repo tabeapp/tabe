@@ -1,4 +1,4 @@
-const { createEffort } = require('../graphql/mutations');
+const { createEffort } = require('/opt/mutations');
 const { checkEffortRankings } = require('./CheckEffortRankings');
 const gql = require('graphql-tag');
 

@@ -10,8 +10,8 @@ const gql = require('graphql-tag');
 global.fetch = require('node-fetch');
 
 
-const { createPost } = require('./graphql/mutations');
-const { getUserLocation } = require('./graphql/queries');
+const { createPost } = require('/opt/mutations');
+const { getUserLocation } = require('/opt/queries');
 
 const { uploadImages } = require('./ImageUpload');
 const { analyzeRoutine } = require('./AnalyzeRoutine');

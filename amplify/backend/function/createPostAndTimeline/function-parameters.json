@@ -9,9 +9,8 @@
   },
   "lambdaLayers": [
     {
-      "type": "ProjectLayer",
-      "resourceName": "library",
-      "version": 6
+      "type": "ExternalLayer",
+      "arn": "arn:aws:lambda:us-east-1:008513856317:layer:library-dev:10"
     }
   ]
 }

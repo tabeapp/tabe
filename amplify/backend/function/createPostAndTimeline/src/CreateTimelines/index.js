@@ -1,4 +1,4 @@
-const { listFollowRelationships } = require('../graphql/queries');
+const { listFollowRelationships } = require('/opt/queries');
 const { createTimelineForAUser } = require('./CreateTimelineForAUser');
 const gql = require('graphql-tag');
 
