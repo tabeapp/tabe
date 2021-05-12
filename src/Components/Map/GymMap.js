@@ -135,12 +135,18 @@ const GymMap = props => {
         //just call the lamba
 
 
+        console.log(selectedGym.id, selectedGym.cityID, selectedGym.stateID, selectedGym.countryID);
+
+        //this should just send the gym id but whatever I guess
         await API.graphql(graphqlOperation(changeUserGym, {
-            id: selectedGym.id,
-            cityID: selectedGym.cityID,
-            stateID: selectedGym.stateID,
-            countryID: selectedGym.countryID,
+            gymChangeInput:{
+                id: selectedGym.id,
+                countryID: selectedGym.countryID,
+                stateID: selectedGym.stateID,
+                cityID: selectedGym.cityID,
+            }
         }));
+
         props.navigation.goBack();
 
         setSelectedGym(null);

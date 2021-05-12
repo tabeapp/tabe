@@ -30,7 +30,7 @@
         },
         "changeUserGym": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
-          "s3Key": "amplify-builds/changeUserGym-517a664176725459434b-build.zip"
+          "s3Key": "amplify-builds/changeUserGym-505639636748436f776d-build.zip"
         },
         "generateWorkout": {
           "deploymentBucketName": "amplify-tabe-dev-153424-deployment",
@@ -97,6 +97,14 @@
                 }
               ],
               "hash": "m3Z74xJ5m+dhz6B/zsZ5HYVsDxie4Wy2eqEokMGEsMA="
+            },
+            "8": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ],
+              "hash": "r/5VVkMOf4Bd9wTDP5XAkohiGQlUaulS8axuHJYZPRQ="
             }
           }
         }

@@ -61,7 +61,7 @@ exports.handler = async (event) => {
 
     const userID = event.identity.username;
 
-    const selectedGym = event.identity.newGym;
+    const selectedGym = event.arguments.gymChangeInput;
 
     //this is // a lambda
 
@@ -75,7 +75,7 @@ exports.handler = async (event) => {
 
     //delete
     if(userGym.data.getUserLocation){
-        await graphqlClient.mutation({
+        await graphqlClient.mutate({
             mutation: gql(deleteUserLocation),
             variables: {
                 input: {
@@ -116,7 +116,7 @@ exports.handler = async (event) => {
     const male = stats.data.getUserStats.male === undefined ? true: stats.data.getUserStats.male;
 
     for(let i = 0; i < records.data.listRecordsByUser.items.length; i++){
-        const record = records.data.listRecordsByUser.items[i]
+        const record = records.data.listRecordsByUser.items[i];
 
         await graphqlClient.mutate({
             mutation: gql(deleteUserRecord),
@@ -133,17 +133,17 @@ exports.handler = async (event) => {
             variables: {
                 input: {
                     userID: record.userID,
-                    exercise: record.exercise,
-                    male: male,
+                    postID: record.postID,
                     orm: record.orm,
-                    effortID: record.effortID,
-                    gymID: selectedGym.id,
-                    cityID: selectedGym.cityID,
-                    stateID: selectedGym.stateID,
+                    exercise: record.exercise,
                     countryID: selectedGym.countryID,
+                    stateID: selectedGym.stateID,
+                    cityID: selectedGym.cityID,
+                    gymID: selectedGym.id,
+                    male: male,
                 }
             }
-        })
+        });
     }
 
     return {

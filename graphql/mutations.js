@@ -1,32 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const deleteUserRecord = /* GraphQL */ `
-  mutation DeleteUserRecord(
-    $input: DeleteUserRecordInput!
-    $condition: ModelUserRecordConditionInput
-  ) {
-    deleteUserRecord(input: $input, condition: $condition) {
-      userID
-      postID
-      orm
-      exercise
-      countryID
-      stateID
-      cityID
-      gymID
-      male
-      createdAt
-      updatedAt
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
 export const deleteUserStats = /* GraphQL */ `
   mutation DeleteUserStats(
     $input: DeleteUserStatsInput!
@@ -49,53 +23,6 @@ export const updateUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     updateUserLocation(input: $input, condition: $condition) {
-      userID
-      gymID
-      createdAt
-      updatedAt
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        createdAt
-        updatedAt
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
-export const deleteUserLocation = /* GraphQL */ `
-  mutation DeleteUserLocation(
-    $input: DeleteUserLocationInput!
-    $condition: ModelUserLocationConditionInput
-  ) {
-    deleteUserLocation(input: $input, condition: $condition) {
       userID
       gymID
       createdAt
@@ -964,6 +891,32 @@ export const updateUserRecord = /* GraphQL */ `
     }
   }
 `;
+export const deleteUserRecord = /* GraphQL */ `
+  mutation DeleteUserRecord(
+    $input: DeleteUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    deleteUserRecord(input: $input, condition: $condition) {
+      userID
+      postID
+      orm
+      exercise
+      countryID
+      stateID
+      cityID
+      gymID
+      male
+      createdAt
+      updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 export const createUserStats = /* GraphQL */ `
   mutation CreateUserStats(
     $input: CreateUserStatsInput!
@@ -1002,6 +955,53 @@ export const createUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     createUserLocation(input: $input, condition: $condition) {
+      userID
+      gymID
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const deleteUserLocation = /* GraphQL */ `
+  mutation DeleteUserLocation(
+    $input: DeleteUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    deleteUserLocation(input: $input, condition: $condition) {
       userID
       gymID
       createdAt

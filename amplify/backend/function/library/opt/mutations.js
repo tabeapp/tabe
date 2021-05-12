@@ -1,32 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-exports.deleteUserRecord = /* GraphQL */ `
-  mutation DeleteUserRecord(
-    $input: DeleteUserRecordInput!
-    $condition: ModelUserRecordConditionInput
-  ) {
-    deleteUserRecord(input: $input, condition: $condition) {
-      userID
-      postID
-      orm
-      exercise
-      countryID
-      stateID
-      cityID
-      gymID
-      male
-      createdAt
-      updatedAt
-      userImage {
-        userID
-        uri
-        createdAt
-        updatedAt
-      }
-    }
-  }
-`;
 exports.deleteUserStats = /* GraphQL */ `
   mutation DeleteUserStats(
     $input: DeleteUserStatsInput!
@@ -90,53 +64,6 @@ exports.updateUserLocation = /* GraphQL */ `
     }
   }
 `;
-exports.deleteUserLocation = /* GraphQL */ `
-  mutation DeleteUserLocation(
-    $input: DeleteUserLocationInput!
-    $condition: ModelUserLocationConditionInput
-  ) {
-    deleteUserLocation(input: $input, condition: $condition) {
-      userID
-      gymID
-      createdAt
-      updatedAt
-      gym {
-        id
-        name
-        location {
-          lat
-          lon
-        }
-        countryID
-        stateID
-        cityID
-        createdAt
-        updatedAt
-        country {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        state {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-        city {
-          id
-          superRegionID
-          name
-          createdAt
-          updatedAt
-        }
-      }
-    }
-  }
-`;
 exports.deleteUserImage = /* GraphQL */ `
   mutation DeleteUserImage(
     $input: DeleteUserImageInput!
@@ -145,20 +72,6 @@ exports.deleteUserImage = /* GraphQL */ `
     deleteUserImage(input: $input, condition: $condition) {
       userID
       uri
-      createdAt
-      updatedAt
-    }
-  }
-`;
-exports.updateRegion = /* GraphQL */ `
-  mutation UpdateRegion(
-    $input: UpdateRegionInput!
-    $condition: ModelRegionConditionInput
-  ) {
-    updateRegion(input: $input, condition: $condition) {
-      id
-      superRegionID
-      name
       createdAt
       updatedAt
     }
@@ -978,6 +891,32 @@ exports.updateUserRecord = /* GraphQL */ `
     }
   }
 `;
+exports.deleteUserRecord = /* GraphQL */ `
+  mutation DeleteUserRecord(
+    $input: DeleteUserRecordInput!
+    $condition: ModelUserRecordConditionInput
+  ) {
+    deleteUserRecord(input: $input, condition: $condition) {
+      userID
+      postID
+      orm
+      exercise
+      countryID
+      stateID
+      cityID
+      gymID
+      male
+      createdAt
+      updatedAt
+      userImage {
+        userID
+        uri
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 exports.createUserStats = /* GraphQL */ `
   mutation CreateUserStats(
     $input: CreateUserStatsInput!
@@ -1016,6 +955,53 @@ exports.createUserLocation = /* GraphQL */ `
     $condition: ModelUserLocationConditionInput
   ) {
     createUserLocation(input: $input, condition: $condition) {
+      userID
+      gymID
+      createdAt
+      updatedAt
+      gym {
+        id
+        name
+        location {
+          lat
+          lon
+        }
+        countryID
+        stateID
+        cityID
+        createdAt
+        updatedAt
+        country {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        state {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+        city {
+          id
+          superRegionID
+          name
+          createdAt
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+exports.deleteUserLocation = /* GraphQL */ `
+  mutation DeleteUserLocation(
+    $input: DeleteUserLocationInput!
+    $condition: ModelUserLocationConditionInput
+  ) {
+    deleteUserLocation(input: $input, condition: $condition) {
       userID
       gymID
       createdAt
@@ -1212,6 +1198,20 @@ exports.createRegion = /* GraphQL */ `
     $condition: ModelRegionConditionInput
   ) {
     createRegion(input: $input, condition: $condition) {
+      id
+      superRegionID
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+exports.updateRegion = /* GraphQL */ `
+  mutation UpdateRegion(
+    $input: UpdateRegionInput!
+    $condition: ModelRegionConditionInput
+  ) {
+    updateRegion(input: $input, condition: $condition) {
       id
       superRegionID
       name
@@ -1779,16 +1779,40 @@ exports.createPostAndTimeline = /* GraphQL */ `
   }
 `;
 exports.addNewGym = /* GraphQL */ `
-  mutation AddNewGym($coordinates: LocationInput!) {
-    addNewGym(coordinates: $coordinates) {
+  mutation AddNewGym($coordinates: LocationInput!, $name: String!) {
+    addNewGym(coordinates: $coordinates, name: $name) {
+      id
       name
-      center {
+      location {
         lat
         lon
       }
       countryID
       stateID
       cityID
+      createdAt
+      updatedAt
+      country {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
+      state {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
+      city {
+        id
+        superRegionID
+        name
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

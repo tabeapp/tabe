@@ -2,7 +2,7 @@ type UserRecord @model
 @key(fields: ["userID", "exercise"])
 @auth(rules: [
   {allow: private, provider: userPools, operations: [read]}
-  {allow: private, provider: iam, operations: [read, update, create]}
+  {allow: private, provider: iam, operations: [read, update, create, delete]}
 ])
 #sneaky feeling we don't even need all these keys, just use filters
 @key(name: "byUser", fields: ["userID", "orm"], queryField: "listRecordsByUser")
@@ -40,7 +40,7 @@ type UserLocation @model
 @auth(rules: [
   {allow: owner, ownerField: "userID", provider: userPools, operations:[read, create]}
   {allow: private, provider: userPools, operations: [read]}
-  {allow: private, provider: iam, operations: [read]}
+  {allow: private, provider: iam, operations: [create, read, delete]}
 ])
 @key(fields: ["userID"])
 @key(name: "byGym", fields: ["gymID"])
@@ -319,16 +319,6 @@ type Mutation{
 
 input GymChangeInput{
   id: ID!
-  countryID: ID!
-  stateID: ID!
-  cityID: ID!
-}
-
-
-#intermediate suggestion for gym
-type GymDraft{
-  name: String!
-  center: Coordinates!
   countryID: ID!
   stateID: ID!
   cityID: ID!

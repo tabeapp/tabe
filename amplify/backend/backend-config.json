@@ -83,13 +83,6 @@
             "GraphQLAPIIdOutput",
             "GraphQLAPIEndpointOutput"
           ]
-        },
-        {
-          "category": "function",
-          "resourceName": "library",
-          "attributes": [
-            "Arn"
-          ]
         }
       ]
     },
