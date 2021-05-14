@@ -84,6 +84,7 @@ const PostList = props => {
         return () => subscription.unsubscribe();
     }, [sortValue]);
 
+    //this should be a flatlist, it's huge
     return <View>
         {
             isLoading

@@ -166,32 +166,6 @@ const ProfileScreen = props => {
     const {width} = useWindowDimensions();
     const imageHeight = width;
 
-    const headerStyle = useAnimatedStyle(() => {
-        return {
-            //transform: [{translateY: -1*Math.min(HEADER_MAX_HEIGHT, y.value)}]
-            //transform: [{translateY: -1*Math.min(imageHeight, y.value)}],
-            top: interpolate(y.value,
-                [0, imageHeight],
-                [imageHeight, 0],
-                Extrapolate.CLAMP
-            ),
-            height: interpolate(y.value,
-                [0, 100],
-                [HEADER_MAX_HEIGHT, HEADER_MAX_HEIGHT/2],
-                Extrapolate.CLAMP
-            ),
-
-        }
-    });
-
-    const headerTextStyle = useAnimatedStyle(() => ({
-        opacity: interpolate(y.value,
-            [0, 75],
-            [1, 0],
-            Extrapolate.CLAMP,
-        ),
-    }));
-
     const simpleHeaderStyle = useAnimatedStyle(() => ({
         opacity: interpolate(y.value,
             [imageHeight-25, imageHeight],
@@ -203,8 +177,6 @@ const ProfileScreen = props => {
     const scrollHandler = useAnimatedScrollHandler(e =>
         y.value = e.contentOffset.y
     );
-
-
 
     const imageStyle = useAnimatedStyle(() => {
         const scale = interpolate(y.value,
@@ -236,106 +208,90 @@ const ProfileScreen = props => {
     });
 
     return (
-        <SafeBorder {...props} screen={'profile'}>
-            {
-                /*viewingSelf ?
-                    <TopBar
-                        title={profileUser}
-                        rightText='Settings'
-                        onPressRight={() => props.navigation.navigate('settings')}
-                    />:
-                    <TopBar title={profileUser}/>*/
-            }
-            <View style={STYLES.body}>
-                <Animated.View style={[{position: 'absolute'}, imageStyle]}>
-                    <CachedImage imageKey={imageKey} style={{height: width, width: width}}/>
-                </Animated.View>
+        <View style={STYLES.body}>
+            <Animated.View style={[{position: 'absolute'}, imageStyle]}>
+                <CachedImage imageKey={imageKey} style={{height: width, width: width}}/>
+            </Animated.View>
 
-                <View style={{position: 'absolute', top: 0, right: 0}}>
-                    <SafeAreaView style={{height: 60, alignItems: 'center', width: 60}}>
-                        {
-                            viewingSelf?
-                                <TouchableOpacity style={{height: 60}} onPress={() => props.navigation.navigate('settings')}>
-                                    <Words><Ionicons size={30} name='settings-outline'/></Words>
-                                </TouchableOpacity>
-                                :
-                                <FollowButton profileUser={profileUser}/>
-                        }
-                    </SafeAreaView>
-                </View>
+            <SafeAreaView/>
 
-                <Animated.View style={[{zIndex: 5, position: 'absolute', top: 10, left: 10}, fadeInProfile]}>
-                    <SafeAreaView>
-                        <UserImage onPress={handleProfilePress} imageKey={imageKey} userID={profileUser} size={100}/>
-                    </SafeAreaView>
-                </Animated.View>
-
-
-                <SafeAreaView>
-                    <Animated.View style={[{ left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}, simpleHeaderStyle]}>
-
-                        <Words style={{fontSize: 30, fontWeight: 'bold'}}>{profileUser}</Words>
-                    </Animated.View>
+            <View style={{position: 'absolute', top: 0, right: 0}}>
+                <SafeAreaView style={{height: 60, alignItems: 'center', width: 60}}>
+                    {
+                        viewingSelf?
+                            <TouchableOpacity style={{height: 60}} onPress={() => props.navigation.navigate('settings')}>
+                                <Words><Ionicons size={30} name='settings-outline'/></Words>
+                            </TouchableOpacity>
+                            :
+                            <FollowButton profileUser={profileUser}/>
+                    }
                 </SafeAreaView>
-
-
-                <Animated.ScrollView
-                    onScroll={scrollHandler}
-                    showsVerticalScrollIndicator={false}
-                    scrollEventThrottle={1}
-                >
-                    <Animated.View
-                        style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
-                    >
-
-                        {/*make this just chill at top*/}
-
-                        <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
-                        <TouchableOpacity onPress={handleGymPress}>{
-                            //no, you can't use location, you need to load the users location
-                            //should add more stuff here that isn't visible on close
-                            (viewingSelf && !location[3]) ?
-                                <Words>Set Gym</Words>
-                                :
-                                <Words>{gym.name}</Words>
-                        }</TouchableOpacity>
-
-                        <Words style={{fontWeight: 'bold', fontSize: 40, width: '100%', textAlign: 'left'}}>Maxes</Words>
-                        <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
-                            Object.entries(records).map(([k,v]) =>
-                                <TouchableOpacity key={k} onPress={() =>
-                                    props.navigation.navigate('post', {postID: v.postID})
-                                }>
-                                    <Row style={{display: 'flex', justifyContent: 'space-between'}}>
-                                        <WeightVisual weight={v.weight} reverse={true} />
-                                        <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
-                                        <WeightVisual weight={v.weight}/>
-                                    </Row>
-                                </TouchableOpacity>
-                            )
-                        }</View>
-
-                        <PostList
-                            listOperation={listPostsSortedByUserAndTimestamp}
-                            sortKey={'userID'}
-                            sortValue={profileUser}
-                            filledSubscriptionOperation={graphqlOperation(onCreatePost)}
-                            subscriptionCriteria={post =>
-                                post.userID === profileUser
-                            }
-                        />
-                    </Animated.View>
-
-                </Animated.ScrollView>
             </View>
-            {
-                viewingSelf &&
-                <SafeAreaView>
 
-                    <NavBar current={'profile'}/>
+            <Animated.View style={[{zIndex: 5, position: 'absolute', top: 10, left: 10}, fadeInProfile]}>
+                <SafeAreaView>
+                    <UserImage onPress={handleProfilePress} imageKey={imageKey} userID={profileUser} size={100}/>
                 </SafeAreaView>
-            }
-        </SafeBorder>
+            </Animated.View>
+
+
+            <Animated.View style={[{ left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}, simpleHeaderStyle]}>
+                <Words style={{fontSize: 30, fontWeight: 'bold'}}>{profileUser}</Words>
+            </Animated.View>
+
+
+            <Animated.ScrollView
+                onScroll={scrollHandler}
+                showsVerticalScrollIndicator={false}
+                scrollEventThrottle={1}
+            >
+                <Animated.View
+                    style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
+                >
+
+                    {/*make this just chill at top*/}
+
+                    <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
+                    <TouchableOpacity onPress={handleGymPress}>{
+                        //no, you can't use location, you need to load the users location
+                        //should add more stuff here that isn't visible on close
+                        (viewingSelf && !location[3]) ?
+                            <Words>Set Gym</Words>
+                            :
+                            <Words>{gym.name}</Words>
+                    }</TouchableOpacity>
+
+                    <Words style={{fontWeight: 'bold', fontSize: 40, width: width, textAlign: 'left'}}>Maxes</Words>
+                    <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
+                        Object.entries(records).map(([k,v]) =>
+                            <TouchableOpacity key={k} onPress={() =>
+                                props.navigation.navigate('post', {postID: v.postID})
+                            }>
+                                <Row style={{display: 'flex', justifyContent: 'space-between'}}>
+                                    <WeightVisual weight={v.weight} reverse={true} />
+                                    <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
+                                    <WeightVisual weight={v.weight}/>
+                                </Row>
+                            </TouchableOpacity>
+                        )
+                    }</View>
+
+                    <PostList
+                        listOperation={listPostsSortedByUserAndTimestamp}
+                        sortKey={'userID'}
+                        sortValue={profileUser}
+                        filledSubscriptionOperation={graphqlOperation(onCreatePost)}
+                        subscriptionCriteria={post =>
+                            post.userID === profileUser
+                        }
+                    />
+                </Animated.View>
+
+            </Animated.ScrollView>
+
+            <NavBar current={'profile'}/>
+            <SafeAreaView/>
+        </View>
     );
 };
 

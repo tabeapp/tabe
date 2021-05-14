@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Words from '../Simple/Words';
-import { BACKGROUND, PRIMARY } from '../../Style/Colors';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../Contexts/UserProvider';
 import WorkoutButton from './WorkoutButton';
@@ -67,8 +67,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: BACKGROUND,
         justifyContent: 'space-around',
-        borderColor: PRIMARY,
-        borderTopWidth: 1,
+        borderColor: PRIMARY_DARKER,
+        borderTopWidth: StyleSheet.hairlineWidth,
         alignItems: 'center',
     },
 });
