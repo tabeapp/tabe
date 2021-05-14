@@ -1,39 +1,53 @@
 import React from 'react';
-import { View } from 'react-native';
-import Row from '../Components/Simple/Row';
+import Svg, { Rect } from 'react-native-svg';
 
 //adjustable?
 //this is based on rouge plates
 const denoms = [
-    //{weight: 55, style: {width: 15, height: 100, backgroundColor: 'red'}},
-    {weight: 45, style: {width: 12, height: 100, backgroundColor: 'blue'}},
-    {weight: 25, style: {width: 7, height: 100, backgroundColor: 'green'}},
-    {weight: 10, style: {width: 5, height: 50, backgroundColor: 'white'}},
-    {weight: 5, style: {width: 4, height: 42, backgroundColor: 'blue'}},
-    {weight: 2.5, style: {width: 3, height: 36, backgroundColor: 'green'}},
+    //{weight: 55, style: {width: 15, height: 100, fill: 'red'}},
+    {weight: 45, style: {width: 12, height: 100, fill: 'blue'}},
+    {weight: 25, style: {width: 7, height: 100, fill: 'green'}},
+    {weight: 10, style: {width: 5, height: 50, fill: 'white'}},
+    {weight: 5, style: {width: 4, height: 42, fill: 'blue'}},
+    {weight: 2.5, style: {width: 3, height: 36, fill: 'green'}},
 ];
 
+//consider just saying how many plates there are for very large values...
 const WeightVisual = props => {
     let {weight, reverse} = props;
     let info = [];
     //bar
     weight -= 45;
+
+    const gap = 2;
+
+    let x = gap;
+
+    //stroke width?
+
     for(let i = 0; i < denoms.length; i++) {
         while(weight >= denoms[i].weight*2){
             weight -= denoms[i].weight*2;
-            info.push(denoms[i]);
+            info.push({
+                x: x,
+                y: gap + (denoms[0].style.height - denoms[i].style.height) / 2,
+                height: denoms[i].style.height,
+                width: denoms[i].style.width,
+                fill: denoms[i].style.fill,
+            });
+            x += gap + denoms[i].style.width;
         }
     }
-    if(reverse)
-        info = info.reverse();
 
-    return (<Row style={{display: 'flex'}}>
+    //time to make this an svg
+    //more complex but worth
+    return <Svg width={200} height={100 + 2*gap} style={reverse&&{transform: [{rotate: '180deg'}]}}>
         {
-            info.map((i,index) =>
-                <View key={index} style={{...i.style, margin: 1}} />
+            info.map((i, index) =>
+                <Rect x={i.x} y={i.y} width={i.width} height={i.height} fill={i.fill}/>
             )
         }
-    </Row>);
-}
+    </Svg>;
+};
 
 export default WeightVisual;
