@@ -181,7 +181,7 @@ const ProfileScreen = props => {
     const imageStyle = useAnimatedStyle(() => {
         const scale = interpolate(y.value,
             [-width, 0, width/2],
-           [4, 1.2, 1],
+            [4, 1.2, 1],
             Extrapolate.CLAMP
         );
         const opacity = interpolate(y.value,
@@ -208,89 +208,89 @@ const ProfileScreen = props => {
     });
 
     return (
-        <View style={STYLES.body}>
+        <View style={{flex: 1, backgroundColor: BACKGROUND}}>
             <Animated.View style={[{position: 'absolute'}, imageStyle]}>
                 <CachedImage imageKey={imageKey} style={{height: width, width: width}}/>
             </Animated.View>
 
-            <SafeAreaView/>
 
-            <View style={{position: 'absolute', top: 0, right: 0}}>
-                <SafeAreaView style={{height: 60, alignItems: 'center', width: 60}}>
-                    {
-                        viewingSelf?
-                            <TouchableOpacity style={{height: 60}} onPress={() => props.navigation.navigate('settings')}>
-                                <Words><Ionicons size={30} name='settings-outline'/></Words>
-                            </TouchableOpacity>
-                            :
-                            <FollowButton profileUser={profileUser}/>
-                    }
-                </SafeAreaView>
-            </View>
-
-            <Animated.View style={[{zIndex: 5, position: 'absolute', top: 10, left: 10}, fadeInProfile]}>
-                <SafeAreaView>
-                    <UserImage onPress={handleProfilePress} imageKey={imageKey} userID={profileUser} size={100}/>
-                </SafeAreaView>
-            </Animated.View>
+            <SafeAreaView style={{flex: 1}}>
+                <View style={{flex: 1}}>
 
 
-            <Animated.View style={[{ left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}, simpleHeaderStyle]}>
-                <Words style={{fontSize: 30, fontWeight: 'bold'}}>{profileUser}</Words>
-            </Animated.View>
-
-
-            <Animated.ScrollView
-                onScroll={scrollHandler}
-                showsVerticalScrollIndicator={false}
-                scrollEventThrottle={1}
-            >
-                <Animated.View
-                    style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
-                >
-
-                    {/*make this just chill at top*/}
-
-                    <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
-                    <TouchableOpacity onPress={handleGymPress}>{
-                        //no, you can't use location, you need to load the users location
-                        //should add more stuff here that isn't visible on close
-                        (viewingSelf && !location[3]) ?
-                            <Words>Set Gym</Words>
-                            :
-                            <Words>{gym.name}</Words>
-                    }</TouchableOpacity>
-
-                    <Words style={{fontWeight: 'bold', fontSize: 40, width: width, textAlign: 'left'}}>Maxes</Words>
-                    <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
-                        Object.entries(records).map(([k,v]) =>
-                            <TouchableOpacity key={k} onPress={() =>
-                                props.navigation.navigate('post', {postID: v.postID})
-                            }>
-                                <Row style={{display: 'flex', justifyContent: 'space-between'}}>
-                                    <WeightVisual weight={v.weight} reverse={true} />
-                                    <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
-                                    <WeightVisual weight={v.weight}/>
-                                </Row>
-                            </TouchableOpacity>
-                        )
-                    }</View>
-
-                    <PostList
-                        listOperation={listPostsSortedByUserAndTimestamp}
-                        sortKey={'userID'}
-                        sortValue={profileUser}
-                        filledSubscriptionOperation={graphqlOperation(onCreatePost)}
-                        subscriptionCriteria={post =>
-                            post.userID === profileUser
+                    <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
+                        {
+                            viewingSelf?
+                                <TouchableOpacity onPress={() => props.navigation.navigate('settings')}>
+                                    <Words><Ionicons size={30} name='settings-outline'/></Words>
+                                </TouchableOpacity>
+                                :
+                                <FollowButton profileUser={profileUser}/>
                         }
-                    />
-                </Animated.View>
+                    </View>
 
-            </Animated.ScrollView>
+                    <Animated.View style={[{zIndex: 5, position: 'absolute', top: 10, left: 10}, fadeInProfile]}>
+                        <UserImage onPress={handleProfilePress} imageKey={imageKey} userID={profileUser} size={100}/>
+                    </Animated.View>
 
-            <NavBar current={'profile'}/>
-            <SafeAreaView/>
+
+                    <Animated.View style={[{ alignItems: 'center', right:0,left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}, simpleHeaderStyle]}>
+                        <Words style={{fontSize: 30, fontWeight: 'bold'}}>{profileUser}</Words>
+                    </Animated.View>
+
+
+                    <Animated.ScrollView
+                        onScroll={scrollHandler}
+                        showsVerticalScrollIndicator={false}
+                        scrollEventThrottle={1}
+                    >
+                        <View
+                            style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
+                        >
+
+                            {/*make this just chill at top*/}
+
+                            <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
+                            <TouchableOpacity onPress={handleGymPress}>{
+                                //no, you can't use location, you need to load the users location
+                                //should add more stuff here that isn't visible on close
+                                (viewingSelf && !location[3]) ?
+                                    <Words>Set Gym</Words>
+                                    :
+                                    <Words>{gym.name}</Words>
+                            }</TouchableOpacity>
+
+                            <Words style={{fontWeight: 'bold', fontSize: 40, textAlign: 'left'}}>Maxes</Words>
+                            <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
+                                Object.entries(records).map(([k,v]) =>
+                                    <TouchableOpacity key={k} onPress={() =>
+                                        props.navigation.navigate('post', {postID: v.postID})
+                                    }>
+                                        <Row style={{display: 'flex', justifyContent: 'space-between'}}>
+                                            <WeightVisual weight={v.weight} reverse={true} />
+                                            <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
+                                            <WeightVisual weight={v.weight}/>
+                                        </Row>
+                                    </TouchableOpacity>
+                                )
+                            }</View>
+
+                            <PostList
+                                listOperation={listPostsSortedByUserAndTimestamp}
+                                sortKey={'userID'}
+                                sortValue={profileUser}
+                                filledSubscriptionOperation={graphqlOperation(onCreatePost)}
+                                subscriptionCriteria={post =>
+                                    post.userID === profileUser
+                                }
+                            />
+                        </View>
+
+                    </Animated.ScrollView>
+
+                    <NavBar current={'profile'}/>
+                </View>
+            </SafeAreaView>
         </View>
     );
 };

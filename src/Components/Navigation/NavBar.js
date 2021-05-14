@@ -60,6 +60,7 @@ const NavBar = props => {
             </TouchableOpacity>); })
     }</View>);
 };
+//needs to be placed in safeareaview and view with flex:1
 const styles = StyleSheet.create({
     navBar: {
         height: 60,
@@ -70,6 +71,8 @@ const styles = StyleSheet.create({
         borderColor: PRIMARY_DARKER,
         borderTopWidth: StyleSheet.hairlineWidth,
         alignItems: 'center',
+        position: 'absolute',
+        bottom: 0
     },
 });
 
