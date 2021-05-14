@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, View, useWindowDimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, useWindowDimensions, SafeAreaView } from 'react-native';
 import WeightVisual from '../Utils/WeightVisual';
 import Words from '../Components/Simple/Words';
-import TopBar from '../Components/Navigation/TopBar';
 import Row from '../Components/Simple/Row';
-import { STYLES } from '../Style/Values';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
     getUserImage,
@@ -19,7 +17,6 @@ import { UserContext } from '../Contexts/UserProvider';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { v4 as uuidv4 } from 'uuid';
 import NavBar from '../Components/Navigation/NavBar';
-import SafeBorder from '../Components/Navigation/SafeBorder';
 import FollowButton from '../Components/Profile/FollowButton';
 import UserImage from '../Components/Profile/UserImage';
 import Animated, {
@@ -29,7 +26,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
 } from 'react-native-reanimated';
-import { BACKGROUND, DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../Style/Colors';
+import { BACKGROUND, PRIMARY_DARKER } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CachedImage from '../Components/Social/CachedImage';
 
@@ -207,6 +204,16 @@ const ProfileScreen = props => {
 
     });
 
+    const coolText = useAnimatedStyle(() => {
+        return {
+            opacity: interpolate(y.value,
+                [0, imageHeight],
+                [1, 0],
+                Extrapolate.CLAMP
+            )
+        }
+    })
+
     return (
         <View style={{flex: 1, backgroundColor: BACKGROUND}}>
             <Animated.View style={[{position: 'absolute'}, imageStyle]}>
@@ -248,9 +255,10 @@ const ProfileScreen = props => {
                             style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
                         >
 
-                            {/*make this just chill at top*/}
+                            <Animated.View style={[{paddingHorizontal: 10, borderRadius: 10, position: 'absolute', left: 0, top: -70, zIndex: 20, backgroundColor: 'rgba(93,93,93,0.37)'},coolText]}>
+                                <Words style={{fontSize: 60, fontWeight: 'bold'}}>{profileUser}</Words>
+                            </Animated.View>
 
-                            <Words style={{fontWeight: 'bold'}}>{profileUser}</Words>
                             <TouchableOpacity onPress={handleGymPress}>{
                                 //no, you can't use location, you need to load the users location
                                 //should add more stuff here that isn't visible on close
