@@ -29,6 +29,7 @@ import Animated, {
 import { BACKGROUND, PRIMARY_DARKER } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CachedImage from '../Components/Social/CachedImage';
+import { RoutinesContext } from '../Contexts/RoutinesProvider';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -44,6 +45,8 @@ const ProfileScreen = props => {
 
     //this is useful, but only when viewing yourself
     const {location} = useContext(UserContext);
+
+    const {getCurrent} = useContext(RoutinesContext);
 
     let profileUser = signedInUser;
     if(props.route.params)
@@ -95,7 +98,7 @@ const ProfileScreen = props => {
                 });
         });
 
-    }, [signedInUser, profileUser])
+    }, [signedInUser, profileUser]);
 
     const viewingSelf = signedInUser === profileUser;
 
@@ -255,7 +258,7 @@ const ProfileScreen = props => {
                             style={{backgroundColor: BACKGROUND, top: imageHeight-HEADER_MAX_HEIGHT}}
                         >
 
-                            <Animated.View style={[{paddingHorizontal: 10, borderRadius: 10, position: 'absolute', left: 0, top: -70, zIndex: 20, backgroundColor: 'rgba(93,93,93,0.37)'},coolText]}>
+                            <Animated.View style={[{paddingHorizontal: 10, borderRadius: 10, position: 'absolute', right: 0, top: -70, zIndex: 20, backgroundColor: 'rgba(93,93,93,0.37)'},coolText]}>
                                 <Words style={{fontSize: 60, fontWeight: 'bold'}}>{profileUser}</Words>
                             </Animated.View>
 
@@ -267,6 +270,9 @@ const ProfileScreen = props => {
                                     :
                                     <Words>{gym.name}</Words>
                             }</TouchableOpacity>
+
+                            {/*more on this later...*/}
+                            <Words>{getCurrent().title}</Words>
 
                             <Words style={{fontWeight: 'bold', fontSize: 40, textAlign: 'left'}}>Maxes</Words>
                             <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
