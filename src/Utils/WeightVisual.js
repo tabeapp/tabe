@@ -44,7 +44,7 @@ const WeightVisual = props => {
     return <Svg width={200} height={100 + 2*gap} style={reverse&&{transform: [{rotate: '180deg'}]}}>
         {
             info.map((i, index) =>
-                <Rect x={i.x} y={i.y} width={i.width} height={i.height} fill={i.fill}/>
+                <Rect key={index} x={i.x} y={i.y} width={i.width} height={i.height} fill={i.fill}/>
             )
         }
     </Svg>;

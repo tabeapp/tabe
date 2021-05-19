@@ -7,7 +7,7 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import {
     getUserImage,
     getUserLocation,
-    getUserRecord,
+    getUserRecord, listCurrentRoutinesByUser,
     listPostsSortedByUserAndTimestamp,
 } from '../../graphql/queries';
 import PostList from '../Components/Social/PostList';
@@ -29,7 +29,6 @@ import Animated, {
 import { BACKGROUND, PRIMARY_DARKER } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CachedImage from '../Components/Social/CachedImage';
-import { RoutinesContext } from '../Contexts/RoutinesProvider';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -46,14 +45,13 @@ const ProfileScreen = props => {
     //this is useful, but only when viewing yourself
     const {location} = useContext(UserContext);
 
-    const {getCurrent} = useContext(RoutinesContext);
-
     let profileUser = signedInUser;
     if(props.route.params)
         profileUser = props.route.params.userID;
 
     const [gym, setGym] = useState({name: '', id: ''});
     const [imageKey, setImageKey] = useState('');
+    const [routineTitle, setRoutineTitle] = useState('');
 
     //this does so much lol
     useEffect(() => {
@@ -73,6 +71,14 @@ const ProfileScreen = props => {
         })).then(result => {
             if(result.data.getUserImage)
                 setImageKey(result.data.getUserImage.uri);
+        });
+
+        API.graphql(graphqlOperation(listCurrentRoutinesByUser, {
+            userID: profileUser,
+            current: {eq: 1}
+        })).then(result => {
+            if(result.data.listCurrentRoutinesByUser)
+                setRoutineTitle(result.data.listCurrentRoutinesByUser.items[0].title)
         });
 
         //todo just get the userRecord objects
@@ -271,8 +277,7 @@ const ProfileScreen = props => {
                                     <Words>{gym.name}</Words>
                             }</TouchableOpacity>
 
-                            {/*more on this later...*/}
-                            <Words>{getCurrent().title}</Words>
+                            <Words>{routineTitle}</Words>
 
                             <Words style={{fontWeight: 'bold', fontSize: 40, textAlign: 'left'}}>Maxes</Words>
                             <View style={{height: 500, alignItems: 'center', justifyContent: 'space-around'}}>{
