@@ -45,3 +45,6 @@ export const PAST_DATE_FORMAT = (timestamp, now) => {
 
     return 0 + scales[scales.length - 1].charAt(0);
 };
+
+//ughh... we're gonna have to do kg/lb here eventually aren't we
+export const FORMAT_WEIGHT = parseInt;

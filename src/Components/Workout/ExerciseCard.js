@@ -101,9 +101,7 @@ const ExerciseCard = (props) => {
 
                 {
                     barbell&&
-                    <>
                         <WeightVisual key={'b'} weight={currentWeight} reverse/>
-                    </>
                 }
                 <Row style={{ flex: 1, justifyContent: 'space-around'}}>
                     <MidLine key={'-1-'} completion={0}/>
@@ -169,9 +167,7 @@ const ExerciseCard = (props) => {
                 </Row>
                 {
                     barbell&&
-                    <>
                         <WeightVisual key={'y'} weight={currentWeight} />
-                    </>
                 }
                 {
                     //the mod buttons arent causing key error
@@ -188,8 +184,8 @@ export const styles = StyleSheet.create({
         padding: 10,
         margin: 5,
         minHeight: 150,
-        backgroundColor: DARK_GRAY,
-        borderRadius: 15
+        //backgroundColor: DARK_GRAY,
+        //borderRadius: 15
     },
 });
 

@@ -6,6 +6,7 @@ import Row from '../Simple/Row';
 import TrophyIcon from '../../Utils/TrophyIcon';
 import { View } from 'react-native';
 import { BACKGROUND } from '../../Style/Colors';
+import { FORMAT_WEIGHT } from '../../Utils/UtilFunctions';
 
 //this is acutally pretty complex logic regarding the color of the trophy,
 // as well as determining where to navigate to (gym vs personal vs region)
@@ -39,7 +40,7 @@ const TrophyVisual = (props) => {
                 <Words style={{paddingHorizontal: 10}}><TrophyIcon rank={rank}/></Words>
                 <View>
                     <Words>{type==='personal'? targetID: name}</Words>
-                    <Words>#{rank+1} - {orm}lb ORM</Words>
+                    <Words>#{rank+1} - {FORMAT_WEIGHT(orm)}lb ORM</Words>
                 </View>
             </Row>
         </TouchableOpacity>

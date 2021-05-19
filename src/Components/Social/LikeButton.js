@@ -25,9 +25,12 @@ const LikeButton = props => {
             setN(n-1);
             setLiked(false);
 
-            const likeID = likes.items.find(like =>
+            const theLike = likes.items.find(like =>
                 like.userID === username
-            ).id;
+            )
+            if(!theLike)
+                return;
+            const likeID = theLike.id;
 
             //this needs id
             API.graphql(graphqlOperation(deleteLike, {

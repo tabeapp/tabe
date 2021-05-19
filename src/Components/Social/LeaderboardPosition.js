@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { BACKGROUND, DARK_GRAY } from '../../Style/Colors';
 import PostHeader from './PostHeader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { FORMAT_WEIGHT } from '../../Utils/UtilFunctions';
 
 //concepttually simliar to trophy visual, but with very different information
 const LeaderboardPosition = props => {
@@ -40,7 +41,7 @@ const LeaderboardPosition = props => {
                 />
             </View>
 
-            <Words style={{width: 60}}>{record.orm}lb</Words>
+            <Words style={{width: 60}}>{FORMAT_WEIGHT(record.orm)}lb</Words>
         </TouchableOpacity>
     );
 };

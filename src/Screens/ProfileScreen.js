@@ -29,6 +29,7 @@ import Animated, {
 import { BACKGROUND, PRIMARY_DARKER } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import CachedImage from '../Components/Social/CachedImage';
+import { FORMAT_WEIGHT } from '../Utils/UtilFunctions';
 
 const ProfileScreen = props => {
     //fuck it, we'll just do it straight from this without using the context
@@ -109,17 +110,7 @@ const ProfileScreen = props => {
     const viewingSelf = signedInUser === profileUser;
 
     const handleGymPress = () => {
-        //i guess this should show the gym stats of the user if it's not the same
-        //or edit if it is
-        if(viewingSelf)
-            props.navigation.navigate('gymmap');
-        else{
-            //navigate to the gyms home page
-            //tbd...
-            props.navigation.navigate('leaderboard', {gymID: gym.id, exercise: 'Squat'});
-        }
-
-        //https://github.com/afshintalebi/react-native-map-picker/blob/master/src/LocationPicker.js
+        props.navigation.navigate('leaderboard', {gymID: gym.id, exercise: 'Squat'});
     };
 
     const handleProfilePress = () => {
@@ -234,7 +225,7 @@ const ProfileScreen = props => {
                 <View style={{flex: 1}}>
 
 
-                    <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
+                    <View style={{zIndex: 10, position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
                         {
                             viewingSelf?
                                 <TouchableOpacity onPress={() => props.navigation.navigate('settings')}>
@@ -287,7 +278,7 @@ const ProfileScreen = props => {
                                     }>
                                         <Row style={{display: 'flex', justifyContent: 'space-between'}}>
                                             <WeightVisual weight={v.weight} reverse={true} />
-                                            <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + v.weight}</Words>
+                                            <Words style={{fontSize: 20, textAlign: 'center'}}>{k + '\n' + FORMAT_WEIGHT(v.weight)}</Words>
                                             <WeightVisual weight={v.weight}/>
                                         </Row>
                                     </TouchableOpacity>

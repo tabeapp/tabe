@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { PRIMARY } from '../../Style/Colors';
+import { PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Words from '../Simple/Words';
 import { API, graphqlOperation } from 'aws-amplify';
 import { getFollowRelationship } from '../../../graphql/queries';
@@ -63,7 +63,7 @@ const FollowButton = props => {
                 </TouchableOpacity>
                 :
                 <TouchableOpacity
-                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 50, height: 40, backgroundColor: PRIMARY}}
+                    style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5, width: 50, height: 40, backgroundColor: PRIMARY_DARKER}}
                     onPress={follow}
                 >
                     <Words><Ionicons size={25} name={'person-add-outline'}/></Words>

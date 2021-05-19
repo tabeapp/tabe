@@ -121,9 +121,10 @@ const LeaderboardScreen = props => {
             API.graphql(graphqlOperation(listRecordsByExercise, {
                 ...listOpInput,
                 filter: {
-                    gymID: {
-                        eq: gymID
-                    }
+                    and: [
+                        { gymID: { eq: gymID } },
+                        { male: { eq: male } }
+                    ]
                 },
             }))
                 .then(result => {
@@ -202,7 +203,7 @@ const LeaderboardScreen = props => {
             {
                 //you know, these would ideally link to posts
                 records.map((record, index) =>
-                    <LeaderboardPosition key={record.id} record={record} rank={index}/>
+                    <LeaderboardPosition key={index} record={record} rank={index}/>
                 )
             }
 

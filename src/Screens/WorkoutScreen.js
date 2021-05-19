@@ -94,14 +94,14 @@ const WorkoutScreen = props => {
     };
 
     return (
-        <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 1}}>
+        <SafeBorder>
             <TopBar
                 leftText={
                     <Ionicons size={30} color={TEXT_COLOR} name={'close'}/>
                 }
                 title={workout.title}
                 rightText={
-                    <Ionicons size={30} color={TEXT_COLOR} name={'chevron-forward'}/>
+                    <Ionicons size={30} color={TEXT_COLOR} name={'checkmark'}/>
                 }
                 onPressLeft={() =>{
                     quitWorkout();
@@ -176,7 +176,7 @@ const WorkoutScreen = props => {
                 })
             } visible={modal} close={() => setModal(false)}/>
 
-        </SafeAreaView>
+        </SafeBorder>
     );
 };
 

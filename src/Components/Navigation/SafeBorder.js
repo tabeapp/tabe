@@ -5,11 +5,9 @@ import { BACKGROUND, DARK_GRAY, PRIMARY } from '../../Style/Colors';
 
 
 const SafeBorder = props => {
-    return <>
-        <View style={{backgroundColor: BACKGROUND, flex: 1}}>{
-            props.children
-        }</View>
-    </>
+    return <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 1}}>{
+        props.children
+    }</SafeAreaView>;
 };
 
 export default SafeBorder;

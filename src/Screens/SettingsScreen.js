@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { Pressable, TouchableOpacity, View } from 'react-native';
 import Words from '../Components/Simple/Words';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
@@ -8,12 +8,14 @@ import { UserContext } from '../Contexts/UserProvider';
 import { getUserStats } from '../../graphql/queries';
 import { createUserStats, updateUserStats } from '../../graphql/mutations';
 import Row from '../Components/Simple/Row';
-import { DARK_GRAY } from '../Style/Colors';
+import { DARK_GRAY, TEXT_COLOR } from '../Style/Colors';
 import NumericSelector from '../Components/Routine/NumericSelector';
 import { INCH_TO_HEIGHT } from '../Utils/UtilFunctions';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import GenderSelector from '../Components/Profile/GenderSelector';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+//looks messy but it's got the necessary stuff
 const SettingsScreen = props => {
     const {username} = useContext(UserContext);
 
@@ -22,6 +24,7 @@ const SettingsScreen = props => {
     const [weight, setWeight] = useState(0);
     const [birthday, setBirthday] = useState(new Date());
 
+    const {location} = useContext(UserContext);
 
     useEffect(() => {
         if(!username)
@@ -66,7 +69,7 @@ const SettingsScreen = props => {
     return (
         <SafeBorder>
             <TopBar
-                title='Settings' rightText='Save'
+                title='Settings' rightText={<Ionicons size={30} color={TEXT_COLOR} name={'checkmark'}/>}
                 onPressRight={() => {
                     API.graphql(graphqlOperation(updateUserStats, {
                         input: {
@@ -126,6 +129,12 @@ const SettingsScreen = props => {
                 <TouchableOpacity style={{justifyContent: 'center', position: 'absolute', height: 50, bottom: 0, backgroundColor: DARK_GRAY, width: '100%', alignItems: 'center'}} onPress={signOut} >
                     <Words style={{color: 'red', fontSize: 25}}>Sign out</Words>
                 </TouchableOpacity>
+                <Pressable
+                    style={{height: 50, backgroundColor: DARK_GRAY, justifyContent: 'center'}}
+                    onPress={() => props.navigation.navigate('gymmap') }
+                >
+                    <Words>{location[3]}</Words>
+                </Pressable>
             </View>
         </SafeBorder>
     );
