@@ -13,7 +13,7 @@ const TopBar = props => {
             <Words style={{fontSize: 20}}>{leftText}</Words>
         </TouchableOpacity>
 
-        <Words style={{fontSize: 20}}>{title}</Words>
+        <Words style={{fontSize: 30, fontWeight: 'bold'}}>{title}</Words>
 
         <TouchableOpacity onPress={onPressRight} style={styles.topButton}>
             <Words style={{fontSize: 20, textAlign: 'right'}}>{rightText}</Words>
@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
         height: 40,
         width: '100%',
         flexDirection: 'row',
-        backgroundColor: PRIMARY,
+        //backgroundColor: PRIMARY,
         alignItems: 'center',
         justifyContent: 'space-between',
-        zIndex: 6,
+
     },
     topButton: {
         alignItems: 'center',

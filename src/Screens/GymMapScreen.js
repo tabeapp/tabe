@@ -8,10 +8,12 @@ import GymMap from '../Components/Map/GymMap';
 const GymMapScreen = props => {
 
     return (
-        <SafeBorder {...props} >
-            <TopBar title="Gym Map"/>
+        <>
             <GymMap/>
-        </SafeBorder>
+            <SafeBorder {...props} >
+                <TopBar title="Gym Map"/>
+            </SafeBorder>
+        </>
     );
 };
 

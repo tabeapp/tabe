@@ -307,7 +307,10 @@ const ProfileScreen = props => {
 
                     </Animated.ScrollView>
 
-                    <NavBar current={'profile'}/>
+                    {
+                        viewingSelf &&
+                        <NavBar current={'profile'}/>
+                    }
                 </View>
             </SafeAreaView>
         </View>

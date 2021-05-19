@@ -185,7 +185,7 @@ const GymMap = props => {
 
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             {
                 selectedGym &&
                 <Modal transparent>
