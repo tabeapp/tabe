@@ -6,6 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { API, graphqlOperation } from 'aws-amplify';
 import { getUserImage } from '../../../graphql/queries';
+import { TEXT_COLOR } from '../../Style/Colors';
 
 //nice and circular, with default little icon if not loaded
 const UserImage = props => {
@@ -36,7 +37,7 @@ const UserImage = props => {
         }}
     >
         <CachedImage imageKey={imageKey} style={{height: size, width: size}} placeholder={
-            <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
+            <Words><Ionicons color={TEXT_COLOR} name='person-outline' size={40}/></Words>
         }/>
     </TouchableOpacity>;
 };

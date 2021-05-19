@@ -185,7 +185,7 @@ const GymMap = props => {
 
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{position: 'absolute'}}>
             {
                 selectedGym &&
                 <Modal transparent>
@@ -235,8 +235,7 @@ const GymMap = props => {
 
             <MapView
                 provider={PROVIDER_GOOGLE}
-                //this top -90 is very wrong but it does give the look im going for
-                style={{position: 'absolute', top: -90, flex: 1, width: width, height: height, zIndex: 0}}
+                style={{width, height}}
                 showsUserLocation
                 rotateEnabled={false}
                 region={{

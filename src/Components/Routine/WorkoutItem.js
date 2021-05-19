@@ -75,7 +75,7 @@ const WorkoutItem = props => {
             }
             {
                 !Array.isArray(ex) &&
-                <Words style={{ color: 'white', fontSize: 30 }}>{ex}</Words>
+                <Words style={{fontSize: 30 }}>{ex}</Words>
             }
         </Row>
         <TouchableOpacity onPress={() => deleteAnExercise(ex)}>

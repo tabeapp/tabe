@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Words from '../Simple/Words';
-import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER, TEXT_COLOR } from '../../Style/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../../Contexts/UserProvider';
 import WorkoutButton from './WorkoutButton';
@@ -55,7 +55,7 @@ const NavBar = props => {
 
             return (<TouchableOpacity style={styles.button} key={r} onPress={() => handlePress(r)}>
                 <Words>
-                    <Ionicons name={icon} color={'white'} size={40}/>
+                    <Ionicons name={icon} color={TEXT_COLOR} size={40}/>
                 </Words>
             </TouchableOpacity>); })
     }</View>);

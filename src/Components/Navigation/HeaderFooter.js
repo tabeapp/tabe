@@ -1,14 +1,19 @@
 import React from 'react';
+
+//this is the header and the footer combined into one
 import { SafeAreaView, View } from 'react-native';
 import { BACKGROUND, PRIMARY } from '../../Style/Colors';
 import NavBar from './NavBar';
 import Svg, { Defs, LinearGradient, Rect, Stop } from 'react-native-svg';
+import TopBar from './TopBar';
 
 const GRADIENT_HEIGHT = 70;
 
-const SafeBorderNav = props => {
+//combination of header and navbar
+const HeaderFooter = props => {
     return <>
         <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 1}}>
+            <TopBar {...props}/>
             <Svg width={'100%'} height={GRADIENT_HEIGHT} style={{zIndex: 1, position: 'absolute'}}>
                 <Defs>
                     <LinearGradient id='grad' x1='0' y1='0' x2='0' y2='1'>
@@ -26,4 +31,4 @@ const SafeBorderNav = props => {
     </>;
 };
 
-export default SafeBorderNav;
+export default HeaderFooter;

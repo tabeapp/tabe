@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import Words from '../Simple/Words';
 import { useNavigation } from '@react-navigation/native';
-import { DARK_GRAY } from '../../Style/Colors';
+import { DARK_GRAY, TEXT_COLOR } from '../../Style/Colors';
 import Row from '../Simple/Row';
 import PostHeader from './PostHeader';
 import useWindowDimensions from 'react-native/Libraries/Utilities/useWindowDimensions';
@@ -66,7 +66,7 @@ const Post = ({post}) => {
                         post.media&&
                         post.media.items.map(({uri}) =>
                             <CachedImage key={uri} imageKey={uri} style={{width: width, height: width}} placeholder={
-                                <Words><Ionicons color={'white'} name='person-outline' size={40}/></Words>
+                                <Words><Ionicons color={TEXT_COLOR} name='person-outline' size={40}/></Words>
 
                             }/>
                         )

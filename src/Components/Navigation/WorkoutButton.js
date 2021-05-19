@@ -5,6 +5,7 @@ import Words from '../Simple/Words';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { RoutinesContext } from '../../Contexts/RoutinesProvider';
 import { useNavigation } from '@react-navigation/native';
+import { TEXT_COLOR } from '../../Style/Colors';
 
 const WorkoutButton = () => {
     const {getCurrent, checkRest} = useContext(RoutinesContext);
@@ -62,7 +63,7 @@ const WorkoutButton = () => {
 
     return (<TouchableOpacity style={styles.workoutButton} key={'workout'} onPress={routineStart} onLongPress={customStart}>
         <Words>
-            <Ionicons name={icon} color={'white'} size={50} />
+            <Ionicons name={icon} color={TEXT_COLOR} size={50} />
         </Words>
     </TouchableOpacity>);
 };

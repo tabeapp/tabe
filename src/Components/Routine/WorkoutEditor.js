@@ -180,7 +180,7 @@ const WorkoutEditor = props => {
                 //yeah maybe these should be separate components...
                 setModal(true);
             }}>
-                <Words style={{color: 'white', fontSize: 30}}>Add Exercise</Words>
+                <Words style={{fontSize: 30}}>Add Exercise</Words>
             </TouchableOpacity>
 
             {
@@ -192,7 +192,7 @@ const WorkoutEditor = props => {
                             return prev;
                         })
                     }} >
-                        <Words style={{color: 'white', fontSize: 30}}>Add Superset</Words>
+                        <Words style={{fontSize: 30}}>Add Superset</Words>
                     </TouchableOpacity>
                 </>
 

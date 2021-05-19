@@ -1,34 +1,44 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
-import { PRIMARY } from '../../Style/Colors';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FollowButton from '../Profile/FollowButton';
+import Animated from 'react-native-reanimated';
 //again, this appears in nearly every screen
 
 //this takes rightText, onPressLeft, title, onPressRight, and rightText
 const TopBar = props => {
     const {leftText, onPressLeft, title, onPressRight, rightText} = props;
-
-    return <View style={styles.top}>
-        <TouchableOpacity onPress={onPressLeft} style={styles.topButton}>
-            <Words style={{fontSize: 20}}>{leftText}</Words>
-        </TouchableOpacity>
-
+    return <View style={{ zIndex: 5, alignItems: 'center', right:0,left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}}>
         <Words style={{fontSize: 30, fontWeight: 'bold'}}>{title}</Words>
 
-        <TouchableOpacity onPress={onPressRight} style={styles.topButton}>
-            <Words style={{fontSize: 20, textAlign: 'right'}}>{rightText}</Words>
-        </TouchableOpacity>
+        <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
+            <TouchableOpacity onPress={onPressRight} style={styles.topButton}>
+                <Words style={{fontSize: 30, textAlign: 'right'}}>{rightText}</Words>
+            </TouchableOpacity>
+        </View>
     </View>
+/*
+    return <View style={styles.top}>
+        <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
+            <TouchableOpacity onPress={onPressLeft} style={styles.topButton}>
+                <Words style={{fontSize: 30}}>{leftText}</Words>
+            </TouchableOpacity>
+        </View>
+
+
+    </View>*/
 };
 
 const styles = StyleSheet.create({
     top: {
-        height: 40,
+        height: 120,
         width: '100%',
         flexDirection: 'row',
         //backgroundColor: PRIMARY,
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'center'
 
     },
     topButton: {
