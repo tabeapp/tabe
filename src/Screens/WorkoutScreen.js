@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import ExerciseCard from '../Components/Workout/ExerciseCard';
 import Words from '../Components/Simple/Words';
@@ -11,7 +11,7 @@ import RestTimer from '../Components/Workout/RestTimer';
 import SafeBorder from '../Components/Navigation/SafeBorder';
 import TopBar from '../Components/Navigation/TopBar';
 import { STYLES } from '../Style/Values';
-import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../Style/Colors';
+import { BACKGROUND, PRIMARY, PRIMARY_DARKER, TEXT_COLOR } from '../Style/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WorkoutScreen = props => {
@@ -94,9 +94,15 @@ const WorkoutScreen = props => {
     };
 
     return (
-        <SafeBorder>
+        <SafeAreaView style={{backgroundColor: BACKGROUND, flex: 1}}>
             <TopBar
-                leftText='Quit' title={workout.title} rightText='Done'
+                leftText={
+                    <Ionicons size={30} color={TEXT_COLOR} name={'close'}/>
+                }
+                title={workout.title}
+                rightText={
+                    <Ionicons size={30} color={TEXT_COLOR} name={'chevron-forward'}/>
+                }
                 onPressLeft={() =>{
                     quitWorkout();
                     props.navigation.navigate('home');
@@ -170,7 +176,7 @@ const WorkoutScreen = props => {
                 })
             } visible={modal} close={() => setModal(false)}/>
 
-        </SafeBorder>
+        </SafeAreaView>
     );
 };
 

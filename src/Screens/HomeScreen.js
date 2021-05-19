@@ -12,24 +12,22 @@ const HomeScreen = props => {
     const {username} = useContext(UserContext);
 
     return (
-        <>
-            <HeaderFooter {...props} title='Feed' screen={'home'}>
-                <View style={STYLES.body}>
-                    {
-                        username !== '' &&
-                        <PostList
-                            listOperation={listTimelines}
-                            sortKey={'userID'}
-                            sortValue={username}
-                            filledSubscriptionOperation={graphqlOperation(onCreateTimeline, {
-                                userID: username
-                            })}
-                            subscriptionCriteria={() => true}//this isn't ideal, oncreate timelines takes a userid
-                        />
-                    }
-                </View>
-            </HeaderFooter>
-        </>
+        <HeaderFooter {...props} title='Feed' screen={'home'}>
+            <View style={STYLES.body}>
+                {
+                    username !== '' &&
+                    <PostList
+                        listOperation={listTimelines}
+                        sortKey={'userID'}
+                        sortValue={username}
+                        filledSubscriptionOperation={graphqlOperation(onCreateTimeline, {
+                            userID: username
+                        })}
+                        subscriptionCriteria={() => true}//this isn't ideal, oncreate timelines takes a userid
+                    />
+                }
+            </View>
+        </HeaderFooter>
     );
 };
 

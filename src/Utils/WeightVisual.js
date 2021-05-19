@@ -38,10 +38,11 @@ const WeightVisual = props => {
             x += gap + denoms[i].style.width;
         }
     }
+    x += gap;
 
     //time to make this an svg
     //more complex but worth
-    return <Svg width={200} height={100 + 2*gap} style={reverse&&{transform: [{rotate: '180deg'}]}}>
+    return <Svg width={x} height={100 + 2*gap} style={reverse&&{transform: [{rotate: '180deg'}]}}>
         {
             info.map((i, index) =>
                 <Rect key={index} x={i.x} y={i.y} width={i.width} height={i.height} fill={i.fill}/>

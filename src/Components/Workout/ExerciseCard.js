@@ -5,7 +5,7 @@ import SetCircle from './SetCircle';
 import Words from '../Simple/Words';
 import { WorkoutContext } from '../../Contexts/WorkoutProvider';
 import { CURRENT } from '../../Constants/Symbols';
-import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
+import { BACKGROUND, DARK_GRAY, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
 import Row from '../Simple/Row';
 import NumericSelector from '../Routine/NumericSelector';
 
@@ -14,7 +14,7 @@ const MidLine = (props) => {
 
     //use key here to check a timer
     //clever flex
-    return <View style={{alignSelf: 'center', height:4, maxWidth: 20, flex: 1, flexDirection: 'row'}}>
+    return <View style={{alignSelf: 'center', height:4, minWidth: 18, flex: 1, flexDirection: 'row'}}>
         <View style={{ flex: props.completion, backgroundColor: 'white' }} />
         <View style={{ flex: 1-props.completion, backgroundColor: 'gray' }} />
     </View>
@@ -102,11 +102,11 @@ const ExerciseCard = (props) => {
                 {
                     barbell&&
                     <>
-                        <WeightVisual key={'b'} weight={currentWeight} reverse={true} />
-                        <MidLine key={'c'} completion={1}/>
+                        <WeightVisual key={'b'} weight={currentWeight} reverse/>
                     </>
                 }
                 <Row style={{ flex: 1, justifyContent: 'space-around'}}>
+                    <MidLine key={'-1-'} completion={0}/>
                     {
                         sets.map((set, index) => {
                             //this could probably be its own component
@@ -128,7 +128,7 @@ const ExerciseCard = (props) => {
                                 text = reps + '+';
 
                             return <React.Fragment key={index}>
-                                <View key={index} style={{flex: 1, maxWidth: 50, height: 50}}>
+                                <View key={index} style={{flex: 12, maxWidth: 50, height: 50}}>
                                     <SetCircle
                                         setInfo={set} edit={edit} current={current} info={[exerciseN, index]} text={text}
                                         style={{backgroundColor: twoColors[index][0], borderColor: current?PRIMARY:twoColors[index][1]}}
@@ -161,10 +161,7 @@ const ExerciseCard = (props) => {
                                     }
                                 </View>
 
-                                {
-                                    index !== sets.length-1&&
-                                    <MidLine key={index+'-'} completion={completion}/>
-                                }
+                                <MidLine key={index+'-'} completion={completion}/>
                             </React.Fragment>
 
                         })
@@ -173,8 +170,7 @@ const ExerciseCard = (props) => {
                 {
                     barbell&&
                     <>
-                        <MidLine key={'x'} completion={1}/>
-                        <WeightVisual key={'y'} weight={currentWeight} reverse={false} />
+                        <WeightVisual key={'y'} weight={currentWeight} />
                     </>
                 }
                 {
@@ -192,8 +188,8 @@ export const styles = StyleSheet.create({
         padding: 10,
         margin: 5,
         minHeight: 150,
-        borderColor: PRIMARY,
-        borderBottomWidth: 1,
+        backgroundColor: DARK_GRAY,
+        borderRadius: 15
     },
 });
 

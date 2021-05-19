@@ -11,6 +11,12 @@ import Animated from 'react-native-reanimated';
 const TopBar = props => {
     const {leftText, onPressLeft, title, onPressRight, rightText} = props;
     return <View style={{ zIndex: 5, alignItems: 'center', right:0,left: 0, top: 0, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: PRIMARY_DARKER, height: 60, justifyContent: 'center'}}>
+        <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, left: 0}}>
+            <TouchableOpacity onPress={onPressLeft} style={styles.topButton}>
+                <Words style={{fontSize: 30}}>{leftText}</Words>
+            </TouchableOpacity>
+        </View>
+
         <Words style={{fontSize: 30, fontWeight: 'bold'}}>{title}</Words>
 
         <View style={{position: 'absolute', alignItems: 'center', justifyContent: 'center', width: 60, height: 60, top: 0, right: 0}}>
