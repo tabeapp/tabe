@@ -1,10 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Words from '../Simple/Words';
-import { BACKGROUND, PRIMARY, PRIMARY_DARKER } from '../../Style/Colors';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FollowButton from '../Profile/FollowButton';
-import Animated from 'react-native-reanimated';
+import { PRIMARY_DARKER } from '../../Style/Colors';
 //again, this appears in nearly every screen
 
 //this takes rightText, onPressLeft, title, onPressRight, and rightText
